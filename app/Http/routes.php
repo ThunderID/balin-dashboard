@@ -1,16 +1,51 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+Route::group(['prefix' => 'cms'], function()
+{
+	Route::any('dashboard',										['uses' => 'admin\\HomeController@index', 'as' => 'admin.dashboard']);
+	
+	Route::group(['prefix' => 'barang', 'namespace' => 'Barang\\'], function()
+	{
+		Route::resource('produk',  	'ProductController',		['names' => ['index' => 'admin.product.index', 'create' => 'admin.product.create', 'store' => 'admin.product.store', 'show' => 'admin.product.show', 'edit' => 'admin.product.edit', 'update' => 'admin.product.update', 'destroy' => 'admin.product.destroy']]);
+		Route::resource('harga',  	'PriceController',			['names' => ['index' => 'admin.price.index', 'create' => 'admin.price.create', 'store' => 'admin.price.store', 'show' => 'admin.price.show', 'edit' => 'admin.price.edit', 'update' => 'admin.price.update', 'destroy' => 'admin.price.destroy']]);
+		Route::resource('stok',  	'StockController',			['names' => ['index' => 'admin.stock.index', 'create' => 'admin.stock.create', 'store' => 'admin.stock.store', 'show' => 'admin.stock.show', 'edit' => 'admin.stock.edit', 'update' => 'admin.stock.update', 'destroy' => 'admin.stock.destroy']]);
+		Route::resource('kategori', 'CategoryController',		['names' => ['index' => 'admin.category.index', 'create' => 'admin.category.create', 'store' => 'admin.category.store', 'show' => 'admin.category.show', 'edit' => 'admin.category.edit', 'update' => 'admin.category.update', 'destroy' => 'admin.category.destroy']]);
+		Route::resource('tag', 		'TagController',			['names' => ['index' => 'admin.tag.index', 'create' => 'admin.tag.create', 'store' => 'admin.tag.store', 'show' => 'admin.tag.show', 'edit' => 'admin.tag.edit', 'update' => 'admin.tag.update', 'destroy' => 'admin.tag.destroy']]);
+		Route::resource('label', 	'LabelController',			['names' => ['index' => 'admin.label.index', 'create' => 'admin.label.create', 'store' => 'admin.label.store', 'show' => 'admin.label.show', 'edit' => 'admin.label.edit', 'update' => 'admin.label.update', 'destroy' => 'admin.tag.destroy']]);
+	});
 
-Route::get('/', function () {
-    return view('welcome');
+	Route::group(['prefix' => 'toko', 'namespace' => 'Toko\\'], function()
+	{
+		Route::resource('penjualan', 'SellController',			['names' => ['index' => 'admin.sell.index', 'create' => 'admin.sell.create', 'store' => 'admin.sell.store', 'show' => 'admin.sell.show', 'edit' => 'admin.sell.edit', 'update' => 'admin.sell.update', 'destroy' => 'admin.sell.destroy']]);
+		Route::resource('bayar', 'PayController',				['names' => ['index' => 'admin.pay.index', 'create' => 'admin.pay.create', 'store' => 'admin.pay.store', 'show' => 'admin.pay.show', 'edit' => 'admin.pay.edit', 'update' => 'admin.pay.update', 'destroy' => 'admin.pay.destroy']]);
+		Route::resource('packing', 'PackingController',			['names' => ['index' => 'admin.packing.index', 'create' => 'admin.packing.create', 'store' => 'admin.packing.store', 'show' => 'admin.packing.show', 'edit' => 'admin.packing.edit', 'update' => 'admin.packing.update', 'destroy' => 'admin.packing.destroy']]);
+		Route::resource('kirim', 'ShippController',				['names' => ['index' => 'admin.shipp.index', 'create' => 'admin.shipp.create', 'store' => 'admin.shipp.store', 'show' => 'admin.shipp.show', 'edit' => 'admin.shipp.edit', 'update' => 'admin.shipp.update', 'destroy' => 'admin.shipp.destroy']]);
+		Route::resource('done', 'FinishedTransactionController',['names' => ['index' => 'admin.finishedTransaction.index', 'create' => 'admin.finishedTransaction.create', 'store' => 'admin.finishedTransaction.store', 'show' => 'admin.finishedTransaction.show', 'edit' => 'admin.finishedTransaction.edit', 'update' => 'admin.finishedTransaction.update', 'destroy' => 'admin.finishedTransaction.destroy']]);
+		Route::resource('kurir', 'CourierController',			['names' => ['index' => 'admin.courier.index', 'create' => 'admin.courier.create', 'store' => 'admin.courier.store', 'show' => 'admin.courier.show', 'edit' => 'admin.courier.edit', 'update' => 'admin.courier.update', 'destroy' => 'admin.courier.destroy']]);
+		Route::resource('buy', 'BuyController',					['names' => ['index' => 'admin.buy.index', 'create' => 'admin.buy.create', 'store' => 'admin.buy.store', 'show' => 'admin.buy.show', 'edit' => 'admin.buy.edit', 'update' => 'admin.buy.update', 'destroy' => 'admin.buy.destroy']]);
+	});
+
+	Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan\\'], function()
+	{
+	});
+
+	Route::group(['prefix' => 'konfigurasi', 'namespace' => 'Konfigurasi\\'], function()
+	{
+		Route::resource('admin', 'AdministrativeController',	['names' => ['index' => 'admin.administrative.index', 'create' => 'admin.administrative.create', 'store' => 'admin.administrative.store', 'show' => 'admin.administrative.show', 'edit' => 'admin.administrative.edit', 'update' => 'admin.administrative.update', 'destroy' => 'admin.administrative.destroy']]);
+		Route::resource('website', 'WebsiteController',			['names' => ['index' => 'admin.website.index', 'create' => 'admin.website.create', 'store' => 'admin.website.store', 'show' => 'admin.website.show', 'edit' => 'admin.website.edit', 'update' => 'admin.website.update', 'destroy' => 'admin.website.destroy']]);
+		Route::resource('policy', 'PolicyController',			['names' => ['index' => 'admin.policy.index', 'create' => 'admin.policy.create', 'store' => 'admin.policy.store', 'show' => 'admin.policy.show', 'edit' => 'admin.policy.edit', 'update' => 'admin.policy.update', 'destroy' => 'admin.policy.destroy']]);
+	});
+
+	Route::group(['prefix' => 'customer', 'namespace' => 'Customer\\'], function()
+	{
+		Route::resource('customer', 'CustomerController',		['names' => ['index' => 'admin.customer.index', 'create' => 'admin.customer.create', 'store' => 'admin.customer.store', 'show' => 'admin.customer.show', 'edit' => 'admin.customer.edit', 'update' => 'admin.customer.update', 'destroy' => 'admin.customer.destroy']]);
+		Route::resource('point', 'PointController',				['names' => ['index' => 'admin.point.index', 'create' => 'admin.point.create', 'store' => 'admin.point.store', 'show' => 'admin.point.show', 'edit' => 'admin.point.edit', 'update' => 'admin.point.update', 'destroy' => 'admin.point.destroy']]);
+		Route::resource('referral', 'ReferralController',		['names' => ['index' => 'admin.referral.index', 'create' => 'admin.referral.create', 'store' => 'admin.referral.store', 'show' => 'admin.referral.show', 'edit' => 'admin.referral.edit', 'update' => 'admin.referral.update', 'destroy' => 'admin.referral.destroy']]);
+	});
+
+	Route::group(['prefix' => 'promosi', 'namespace' => 'Promosi\\'], function()
+	{
+		Route::resource('voucher', 'VoucherController',		['names' => ['index' => 'admin.voucher.index', 'create' => 'admin.voucher.create', 'store' => 'admin.voucher.store', 'show' => 'admin.voucher.show', 'edit' => 'admin.voucher.edit', 'update' => 'admin.voucher.update', 'destroy' => 'admin.voucher.destroy']]);
+		Route::resource('diskon', 'DiscountController',		['names' => ['index' => 'admin.discount.index', 'create' => 'admin.discount.create', 'store' => 'admin.discount.store', 'show' => 'admin.discount.show', 'edit' => 'admin.discount.edit', 'update' => 'admin.discount.update', 'destroy' => 'admin.discount.destroy']]);
+	});
 });

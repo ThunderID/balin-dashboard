@@ -1,0 +1,36 @@
+// Google Fonts
+@import url("//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amplang=en");
+
+// Variables, Mixins
+@import "template/variables";
+@import "template/mixins";
+
+// INSPINIA Theme Elements
+@import "template/typography";
+@import "template/navigation";
+@import "template/top_navigation";
+@import "template/buttons";
+@import "template/badgets_labels";
+@import "template/elements";
+@import "template/sidebar";
+@import "template/base";
+@import "template/pages";
+
+// RTL Support
+@import "template/rtl";
+
+// For demo only - config box style
+@import "template/theme-config";
+
+// INSPINIA Skins
+@import "template/skins";
+
+// Media query style
+@import "template/media";
+
+// Custom style
+// Your custom style to override base style
+@import "template/custom";
+
+
+
