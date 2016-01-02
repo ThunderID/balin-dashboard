@@ -53,7 +53,32 @@ class TagController extends AdminController
 
 	public function create($id = null)
 	{
-	
+		//initialize
+		if (is_null($id))
+		{
+			$breadcrumb								=	[
+															'Data Baru' => route('admin.tag.create'),
+														];
+
+			$this->page_attributes->subtitle 		= 'Data Baru';
+		}
+		else
+		{
+			$data 									= ['name' => 'nama'];
+
+			$breadcrumb								=	[
+															'Edit Data ' . $data['name']  =>  route('admin.tag.create'),
+														];
+
+			// $this->page_attributes->subtitle 		= $tag->name;
+		}
+
+		//generate View
+		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
+
+		$this->page_attributes->source 				=  $this->page_attributes->source . 'create';
+
+		return $this->generateView();
 	}
 
 	public function edit($id)
@@ -74,5 +99,12 @@ class TagController extends AdminController
 	public function destroy($id)
 	{
 
-	}		
+	}	
+
+
+	//AJAX
+	public function AjaxFindName()
+	{
+		return json_encode('test');
+	}	
 }

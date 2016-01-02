@@ -19,6 +19,9 @@ Route::group(['prefix' => 'cms'], function()
 		Route::resource('kategori', 'CategoryController',		['names' => ['index' => 'admin.category.index', 'create' => 'admin.category.create', 'store' => 'admin.category.store', 'show' => 'admin.category.show', 'edit' => 'admin.category.edit', 'update' => 'admin.category.update', 'destroy' => 'admin.category.destroy']]);
 		Route::resource('tag', 		'TagController',			['names' => ['index' => 'admin.tag.index', 'create' => 'admin.tag.create', 'store' => 'admin.tag.store', 'show' => 'admin.tag.show', 'edit' => 'admin.tag.edit', 'update' => 'admin.tag.update', 'destroy' => 'admin.tag.destroy']]);
 		Route::resource('label', 	'LabelController',			['names' => ['index' => 'admin.label.index', 'create' => 'admin.label.create', 'store' => 'admin.label.store', 'show' => 'admin.label.show', 'edit' => 'admin.label.edit', 'update' => 'admin.label.update', 'destroy' => 'admin.tag.destroy']]);
+	
+		//ajax
+		Route::get('tag/ajax/findName',							['uses' => 'TagController@AjaxFindName', 	'as' => 'admin.ajax.tag.findName']);
 	});
 
 	Route::group(['prefix' => 'toko', 'namespace' => 'Toko\\'], function()
