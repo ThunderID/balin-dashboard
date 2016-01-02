@@ -11,6 +11,7 @@
 	</div>
 <!-- end of head -->
 
+<!-- body -->
 	@if(!isset($data['id']))
     {!! Form::open(['url' => route('admin.courier.update', $data['id']), 'method' => 'PATCH']) !!}
     @else
@@ -148,4 +149,5 @@
 			</div>                                     
 		</div>
 	{!! Form::close() !!}
+<!-- end of body -->
 @stop

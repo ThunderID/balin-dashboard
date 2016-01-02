@@ -80,7 +80,7 @@ class CourierController extends AdminController
 															'Edit Data ' . $data['name']  =>  route('admin.courier.create'),
 														];
 
-			$this->page_attributes->subtitle 		= $courier->name;
+			// $this->page_attributes->subtitle 		= $courier->name;
 		}
 
 		//generate View
