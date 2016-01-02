@@ -1,7 +1,9 @@
 <?php 
 namespace App\Http\Controllers\Barang;
 
+use App\API\connectors\APIProduct;
 use App\Http\Controllers\AdminController;
+
 use Input, Session, DB, Redirect, Response, Auth;
 
 class LabelController extends AdminController
@@ -26,17 +28,16 @@ class LabelController extends AdminController
 			$filters 								= ['name' => Input::get('q')];
 			$this->page_attributes->search 			= Input::get('q');
 		}
-		else
-		{
-			$searchResult							= null;
-		}
 
 		// data here
-		$this->page_attributes->data				= [];
-
+		$this->page_attributes->data				= 	[
+															['id' => '0' ,'name' => 'Best Seller'],
+															['id' => '1' ,'name' => 'New Item'],
+															['id' => '2' ,'name' => 'Sale']
+														];
 
 		//breadcrumb
-		$breadcrumb 								= [];	
+		$breadcrumb 								= 	[];	
 
 		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
@@ -48,7 +49,41 @@ class LabelController extends AdminController
 
 	public function show($id)
 	{
+		//initialize 
+		$tmpData									= ['Best Seller', 'New Item', 'Sale'];
 
+		$this->page_attributes->subtitle 			= $tmpData[$id];
+
+		// filters
+		if(Input::has('q'))
+		{
+			$this->page_attributes->search 			= Input::get('q');
+		}		
+
+		// data here
+		$APIProduct 								= new APIProduct;
+		$product 									= $APIProduct->getProducts([
+															// 'labelname' => $tmpData[$id],
+															'name' 	=> Input::get('q')
+														]);
+
+		$this->page_attributes->data				= 	[
+															'id' => $id,
+															'name' => $tmpData[$id],
+															'product' => $product
+														];
+
+		//breadcrumb
+		$breadcrumb 								=	[
+															$tmpData[$id] => route('admin.label.show', $id)
+														];	
+
+		//generate View
+		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
+
+		$this->page_attributes->source 				= $this->page_attributes->source . 'show';
+
+		return $this->generateView();
 	}	
 
 	public function create($id = null)

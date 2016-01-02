@@ -12,10 +12,10 @@ abstract class AdminController extends Controller
 	{
 		$this->errors 				= new MessageBag();
 
-		$this->page_attributes 	= new \Stdclass;
+		$this->page_attributes 		= new \Stdclass;
 
 		//nanti kalu butuh template lebih dari satu, switch case aja disini.
-		$this->layout = view('page_templates.layout');
+		$this->layout 				= view('page_templates.layout');
 	}
 
 	public function generateView()

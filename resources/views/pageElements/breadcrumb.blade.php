@@ -1,4 +1,4 @@
-<div class="hidden-xs">
+<div class="">
 	<ol class="breadcrumb hollow m-t-xs m-b-sm p-l-none" style="background:none">
 		<li>
 			<a class="hover-black" href="{{ route('admin.dashboard') }}">
@@ -21,7 +21,7 @@
 </div>
 
 
-<div class="hidden-lg hidden-md hidden-sm">
+<!-- <div class="hidden-lg hidden-md hidden-sm">
 	<ol class="breadcrumb hollow m-t-xs m-b-sm p-l-none" style="background:none">
 		<li>
 			<i class="fa fa-home"></i>
@@ -48,4 +48,4 @@
 			@endif
 		@endforeach
 	</ol>
-</div>
+</div> -->

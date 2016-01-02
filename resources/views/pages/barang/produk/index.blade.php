@@ -12,29 +12,10 @@
 
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
-			<div class="row">
-				<div class="col-md-8 col-sm-4 hidden-xs">
-					<a class="btn btn-default" href="{{ URL::route('admin.product.create') }}"> Data Baru </a>
-				</div>
-				<div class="col-md-4 col-sm-8 col-xs-12">
-					{!! Form::open(array('route' => 'admin.product.index', 'method' => 'get' )) !!}
-					<div class="row">
-						<div class="col-md-2 col-sm-3 hidden-xs">
-						</div>
-						<div class="col-md-7 col-sm-6 col-xs-8" style="padding-right:2px;">
-							{!! Form::input('text', 'q', Null , [
-										'class'         => 'form-control',
-										'placeholder'   => 'Cari nama produk',
-										'required'      => 'required',
-							]) !!}                                          
-						</div>
-						<div class="col-md-3 col-sm-3 col-xs-4" style="padding-left:2px;">
-							<button type="submit" class="btn btn-default pull-right btn-block">Cari</button>
-						</div>
-					</div>
-					{!! Form::close() !!}
-				</div>				
-			</div>
+			@include('pageElements.indexNavigation', [
+				'newDataRoute' 		=> route('admin.product.create'),
+				'filterDataRoute' 	=> route('admin.product.index')
+			])
 			@include('pageElements.searchResult', ['closeSearchLink' => route('admin.product.index') ])
 		</div>
 	</div>

@@ -2,8 +2,15 @@
 
 Route::group(['prefix' => 'cms'], function()
 {
-	Route::any('dashboard',										['uses' => 'admin\\HomeController@index', 'as' => 'admin.dashboard']);
+	Route::group(['namespace' => 'Admin\\'], function()
+	{
+		Route::get('login',										['uses' => 'AuthController@login', 	'as' => 'backend.login']);
+		Route::post('login',									['uses' => 'AuthController@doLogin', 	'as' => 'backend.dologin']);
 	
+		Route::any('dashboard',									['uses' => 'HomeController@index', 'as' => 'admin.dashboard']);
+	});
+	
+
 	Route::group(['prefix' => 'barang', 'namespace' => 'Barang\\'], function()
 	{
 		Route::resource('produk',  	'ProductController',		['names' => ['index' => 'admin.product.index', 'create' => 'admin.product.create', 'store' => 'admin.product.store', 'show' => 'admin.product.show', 'edit' => 'admin.product.edit', 'update' => 'admin.product.update', 'destroy' => 'admin.product.destroy']]);
