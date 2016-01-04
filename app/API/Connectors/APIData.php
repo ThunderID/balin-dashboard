@@ -2,7 +2,7 @@
 namespace App\API\connectors;
 
 use App\API\API;
-use Exception, Session;
+use Exception, Session, Redirect;
 
 abstract class APIData
 {
@@ -12,6 +12,11 @@ abstract class APIData
 	function __construct() 
 	{
 		$this->apiData 				= ['access_token' => Session::get('APIToken')];
+		
+		if(is_null(Session::get('APIToken')))
+		{
+			Redirect::route('backend.login')->send();
+		}
 	}
 
 	protected function get()
@@ -57,13 +62,28 @@ abstract class APIData
 
 	private function validateResponse($result)
 	{
-		if($result['status'] != 'success')
+		// validate response
+		try 
 		{
-			dd($result['message']);
-			// case fail
-			// case error
+		    if(empty($result['status']))
+		    {
+				print_r("RESPONSE ERROR : NO STATUS FROM SERVER!");
+				dd($result);
+		    }
+
+		    if(empty($result['data']))
+		    {
+				print_r("RESPONSE ERROR : NO DATA FROM SERVER!");
+				dd($result);
+		    }
+		} 
+		catch (Exception $e) 
+		{
+			print_r("ERROR : UNKNOWN RESPONSE FROM SERVER!");
+			dd($result);
 		}
 
+		// data
 		if(is_null($result['data']))
 		{
 			$result['data'] 		= [];
