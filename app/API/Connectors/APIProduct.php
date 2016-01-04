@@ -8,16 +8,25 @@ class APIProduct extends APIData
 	function __construct() 
 	{
 		parent::__construct();
-		$this->apiUrl	 				= '/products';
 	}
 
-	public function getProducts($filter = null)
+	public function getIndex($filter = null)
 	{
 		if(!is_null($filter))
 		{
+			$this->apiUrl 				= '/products';
 			$this->apiData 				= array_merge($this->apiData, ["search" => $filter]);
 		}
 
 		return $this->get();
 	}
+
+
+	public function postData($data)
+	{
+		$this->apiUrl 				= '/product/store';
+		$this->apiData 				= array_merge($this->apiData, ["product" => $data]);
+
+		return $this->post();
+	}	
 }
