@@ -32,13 +32,13 @@
 							<th class="text-center">
 								No.
 							</th>
-							<th class="col-md-2 text-center">
+							<th class="col-md-2 text-left">
 								Thumbnail
 							</th>
 							<th class="col-md-2">
 								Nama Produk
 							</th>
-							<th class="col-md-2 text-center">
+							<th class="col-md-2 text-right">
 								Harga 
 							</th>
 							<th class="col-md-2 text-center">
@@ -60,47 +60,31 @@
 								</td>
 							</tr>
 						@else                                                                 
-							<?php
-								$nop = ($data->currentPage() - 1) * 15;
-								$ctr = 1 + $nop;
-							?> 
-							@foreach($data as $dt)
+							@foreach($data['product']['data'] as $dt)
 								<tr>
 									<td class="text-center">
-										{{ $ctr }}
+										no
 									</td>
 									<td>
-										{!! HTML::image($dt['default_image'], 'default', ['class' => 'img-responsive', 'style' => 'max-width:100px;']) !!}
+										{!! HTML::image($dt['thumbnail'], 'default', ['class' => 'img-responsive', 'style' => 'max-width:100px;']) !!}
 									</td>
 									<td>
 										{{ $dt['name'] }}
-										<br/>
-										@foreach($dt['lables'] as $lable)
-							                <label class="label label-success">{{ str_replace('_', ' ', ucfirst($lable['lable'] ) )}}</label> &nbsp;
-										@endforeach
 									</td>
 									<td class="text-right">
 										@money_indo($dt['price'])
-										</br>
-										<a href="{{ route('admin.product.price.create', ['pid' => $dt['id']]) }}">Edit</a>
 									</td>
 									<td class="text-center">
 										@foreach($dt['varians'] as $varian)
 											{{ $varian['size'] }} &nbsp;
 										@endforeach
-										 <br/>
-										<a href="{{ URL::route('admin.product.varian.create', ['uid' => $dt['id'] ]) }}">Tambah</a>
 									</td>
-									<td class="text-right">
+									<td class="text-center">
 										{{$dt['current_stock']}}
-										 <br/>
-										@if($dt['current_stock'] < $stock->value && count($dt->varians))
-										<a href="{{ route('admin.transaction.create', ['type' => 'buy']) }}">Tambah</a>
-										@endif
 									</td>
 									<td class="text-center">
 										<a href="{{ route('admin.product.show', $dt['id']) }}"> Detail</a>,
-										<a href="{{ url::route('admin.product.edit', $dt['id']) }}"> Edit</a>, 
+										<a href="{{ route('admin.product.edit', $dt['id']) }}"> Edit</a>, 
 										<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
 											data-target="#product_del"
 											data-id="{{$dt['id']}}"
@@ -110,10 +94,9 @@
 										</a>                                                                                      
 									</td>    
 								</tr>       
-								<?php $ctr += 1; ?>                     
 							@endforeach 
 							
-							@include('admin.widgets.pageElements.modalDelete', [
+							@include('pageElements.modalDelete', [
 									'modal_id'      => 'product_del', 
 									'modal_route'   => route('admin.product.destroy')
 							])						

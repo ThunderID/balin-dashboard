@@ -110,4 +110,11 @@ class LabelController extends AdminController
 	{
 
 	}		
+
+
+	//AJAX
+	public function AjaxFindName()
+	{
+		return json_encode('test');
+	}	
 }

@@ -23,6 +23,8 @@ Route::group(['prefix' => 'cms'], function()
 		//ajax
 		Route::get('tag/ajax/findName',							['uses' => 'TagController@AjaxFindName', 	'as' => 'admin.ajax.tag.findName']);
 		Route::get('category/ajax/findName',					['uses' => 'CategoryController@AjaxFindName', 	'as' => 'admin.ajax.category.findName']);
+		Route::get('label/ajax/findName',						['uses' => 'LabelController@AjaxFindName', 	'as' => 'admin.ajax.label.findName']);
+		Route::get('product/ajax/findName',						['uses' => 'ProductController@AjaxFindName', 	'as' => 'admin.ajax.product.findName']);
 	});
 
 	Route::group(['prefix' => 'toko', 'namespace' => 'Toko\\'], function()
