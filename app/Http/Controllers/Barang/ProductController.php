@@ -106,7 +106,7 @@ class ProductController extends AdminController
 																				'description' 	=> Input::get('description'),
 																				'fit'			=> Input::get('fit'),
 																				]),
-															'category'		=> Input::get('category'),
+															'categories'	=> Input::get('category'),
 															'tag'			=> Input::get('tag'),
 															'started_at'	=> Input::get('started_at'),
 															'price'			=> Input::get('price'),
@@ -119,16 +119,20 @@ class ProductController extends AdminController
 															'slug'			=> NULL,
 														];
 
-
 		//api
 		$APIProduct 								= new APIProduct;
 
 		$result 									= $APIProduct->postData($data);
 
-
 		//result
-		dd($result);
+		if($result['status'] != 'success')
+		{
+			$error 									= json_decode($result['message'], true);
+			dd($error);
+		}
 
+		$this->page_attributes->success 			= "Data telah ditambahkan";
+		return $this->generateRedirectRoute('admin.product.index');
 	}
 
 	public function Update($id)
