@@ -1,6 +1,8 @@
 <?php 
 namespace App\Http\Controllers\Barang;
 
+use App\API\connectors\APIProduct;
+
 use App\Http\Controllers\AdminController;
 use Input, Session, DB, Redirect, Response, Auth;
 
@@ -32,7 +34,14 @@ class PriceController extends AdminController
 		}
 
 		// data here
-		$this->page_attributes->data				= [];
+		$APIProduct 								= new APIProduct;
+		$product 									= $APIProduct->getIndex([
+															'name' 	=> Input::get('q')
+														]);
+
+		$this->page_attributes->data				= 	[
+															'product' => $product
+														];
 
 
 		//breadcrumb
@@ -49,7 +58,10 @@ class PriceController extends AdminController
 	public function show($id)
 	{
 		//initialize 
-		$this->page_attributes->subtitle 			= 'Product name';
+		$APIProduct 								= new APIProduct;
+		$product 									= $APIProduct->getShow($id);
+
+		$this->page_attributes->subtitle 			= $product['data']['name'];
 
 		// filters
 		if(Input::has('start') && Input::has('end'))
@@ -59,13 +71,12 @@ class PriceController extends AdminController
 
 		// data here
 		$this->page_attributes->data				= 	[
-															'id' => 1,
-
+															'product' => $product,
 														];
 
 		//breadcrumb
 		$breadcrumb 								=	[
-															'Produk Name' => route('admin.label.index')
+															$product['data']['name'] => route('admin.price.show', ['id' => $id])
 														];	
 
 		//generate View
@@ -76,29 +87,53 @@ class PriceController extends AdminController
 		return $this->generateView();
 	}	
 
-	public function create($id = null)
+	public function create($productId = null,  $id = null)
 	{
 		//initialize
-		if (is_null($id))
+		if(!is_null($productId))
 		{
-			$breadcrumb								=	[
+			//initialize 
+			$APIProduct 							= new APIProduct;
+			$product 								= $APIProduct->getShow($productId);
+
+			if(is_null($id))
+			{
+				$data 								= 	[
+															'productId' 	=> $productId,
+														];
+
+				$breadcrumb							=	[
+															$product['data']['name'] => route('admin.price.show', ['productId' => $productId]),
 															'Data Baru' => route('admin.price.create'),
 														];
 
-			$this->page_attributes->subtitle 		= 'Data Baru';
+				$this->page_attributes->subtitle 	= 'Data Baru';
+			}
+			else
+			{
+				$data 								= 	[
+															'productId' 	=> $productId,
+														];
+
+				$breadcrumb							=	[
+															$product['data']['name'] => route('admin.price.show', ['productId' => $productId]),
+															'Edit Data ' . $data['name']  =>  route('admin.price.create'),
+														];
+			}
 		}
 		else
 		{
-			$data 									= ['name' => 'nama'];
-
-			$breadcrumb								=	[
-															'Edit Data ' . $data['name']  =>  route('admin.price.create'),
+			$data 									= 	[
+															'productId' 	=> $productId,
 														];
 
-			// $this->page_attributes->subtitle 		= $tag->name;
+			$breadcrumb								=	[
+															'Data Baru' => route('admin.price.create'),
+														];
 		}
 
 		//generate View
+		$this->page_attributes->data				= $data;
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'create';
