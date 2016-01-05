@@ -1,3 +1,7 @@
+<?php
+	$dt = $data['product']['data'];
+?>
+
 @extends('page_templates.layout')
 @section('content')
 <div class="container-fluid">
@@ -17,13 +21,13 @@
 				<div class="col-md-5 col-sm-6 col-xs-11">
 					<div class="row">
 						<div class="col-md-6 col-sm-6 col-xs-5">
-							<h4>SKU</h4> 
+							<h4>UPC</h4> 
 						</div>
 						<div class="col-md-1 col-sm-1 col-xs-2">
 							<h4>:</h4> 
 						</div>
 						<div class="col-md-5 col-sm-5 col-xs-5">
-							<h4>dummy</h4> 
+							<h4>{{ $dt['upc'] }}</h4> 
 						</div>
 					</div>
 					<div class="row">
@@ -34,7 +38,7 @@
 							<h4>:</h4> 
 						</div>
 						<div class="col-md-5 col-sm-5 col-xs-5">
-							<h4> dummy & varian</h4> 
+							<h4>{{ $dt['name'] }}</h4> 
 						</div>
 					</div>
 					<div class="row">
@@ -45,7 +49,7 @@
 							<h4>:</h4> 
 						</div>
 						<div class="col-md-5 col-sm-5 col-xs-5">
-							<h4> dummy </h4> 
+							<h4> @money_indo($dt['price']) </h4> 
 						</div>
 					</div>	
 					<div class="row">
@@ -56,16 +60,27 @@
 							<h4>:</h4> 
 						</div>
 						<div class="col-md-5 col-sm-5 col-xs-5">
-							<h4> dummy </h4> 
+							<h4> @money_indo($dt['promo_price']) </h4> 
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-5">
+							<h4>Harga Mulai Berlaku</h4> 
+						</div>
+						<div class="col-md-1 col-sm-1 col-xs-2">
+							<h4>:</h4> 
+						</div>
+						<div class="col-md-5 col-sm-5 col-xs-5">
+							<h4>  Belum ada </h4> 
+						</div>
+					</div>					
 				</div>
 				<div class="col-md-7 col-sm-6 col-xs-12">
 					<div class="row">
 						<div class="col-md-9 col-sm-8 hidden-xs">
 						</div>
 						<div class="col-md-3 col-sm-4 col-xs-12">
-							<a class="btn btn-default btn-block" href="#"> Harga Baru </a>
+							<a class="btn btn-default btn-block"  href="{{ route('admin.price.show.create', ['id' => $dt['id']] ) }}"> Harga Baru </a>
 						</div>
 					</div>
 				</div>
@@ -77,10 +92,10 @@
 				</div>
 				<div class="col-md-12 m-t-sm m-b-lg">
 					@include('pageElements.dateRangeNavigation', [
-						'filterDataRoute' 	=> route('admin.price.show', ['id' => $data['id']])
+						'filterDataRoute' 	=> route('admin.price.show', ['id' => $dt['id']])
 					])	
 					@include('pageElements.filterResult', [
-						'closeSearchLink' 	=>  route('admin.price.show', ['id' => $data['id']]) 
+						'closeSearchLink' 	=>  route('admin.price.show', ['id' => $dt['id']]) 
 					])
 				</div>			
 				<div class="col-md-12">
@@ -138,17 +153,18 @@
 												jumlah stok
 											</td>
 
-
 											<td class="text-center">
-<!-- 	        									<a href="{{ route('admin.product.show', $dt['id']) }}"> Detail</a>,
-												<a href="{{ route('admin.product.edit', $dt['id']) }}"> Edit</a>, 
-												<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
-													data-target="#stock_del"
-													data-id="{{$dt['id']}}"
-													data-title="Hapus Data Produk {{$dt['name']}}"
-													data-action="{{ route('admin.stock.destroy', $dt['id']) }}">
-													Hapus
-												</a>  -->                                         
+												<?php
+							        			// <a href="{{ route('admin.product.show', $dt['id']) }}"> Detail</a>,
+												// <a href="{{ route('admin.product.edit', $dt['id']) }}"> Edit</a>, 
+												// <a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
+												// 	data-target="#stock_del"
+												// 	data-id="{{$dt['id']}}"
+												// 	data-title="Hapus Data Produk {{$dt['name']}}"
+												// 	data-action="{{ route('admin.stock.destroy', $dt['id']) }}">
+												// 	Hapus
+												// </a>
+												?>                                          
 											</td>    
 										</tr>       
 									@endforeach 

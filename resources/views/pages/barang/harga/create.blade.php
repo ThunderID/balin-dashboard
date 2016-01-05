@@ -13,9 +13,9 @@
 
 <!-- body -->
 	@if(!isset($data['id']))
-    {!! Form::open(['url' => route('admin.price.update', $data['id']), 'method' => 'PATCH']) !!}
-    @else
     {!! Form::open(['url' => route('admin.price.store'), 'method' => 'POST']) !!}
+    @else
+    {!! Form::open(['url' => route('admin.price.update', $data['id']), 'method' => 'PATCH']) !!}
     @endif
 	<div class="row">
 		<div class="col-md-12">
@@ -24,18 +24,19 @@
 			</h4>
 		</div>
 
+		@if(is_null($data['productId']))
 		<div class="col-md-12">
 			<div class="form-group">
 				<label for="category">Produk</label>
 				{!! Form::text('produk', null, [
 							'class'         => 'select-product', 
-							'tabindex'      => '6',
+							'tabindex'      => '1',
 							'id'            => 'find_product',
 							'style'         => 'width:100%',
 				]) !!}
 			</div>
 		</div>
-
+		@endif
 
 		<div class="col-md-4">
 			<div class="form-group">
@@ -72,7 +73,11 @@
 		<div class="col-md-12">             
 			</br>
 			<div class="form-group text-right">
-				<a href="{{ route('admin.price.index') }}" class="btn btn-md btn-default" tabindex="4">Batal</a>
+				@if(is_null($data['productId']))
+					<a href="{{ route('admin.price.index') }}" class="btn btn-md btn-default" tabindex="4">Batal</a>
+				@else
+					<a href="{{ route('admin.price.show', ['productId' => $data['productId']]) }}" class="btn btn-md btn-default" tabindex="4">Batal</a>
+				@endif
 				<button type="submit" class="btn btn-md btn-primary" tabindex="5">Simpan</button>
 			</div>
 		</div>
