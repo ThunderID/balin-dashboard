@@ -22,7 +22,6 @@
 
 
 		<div class="wrapper white-bg">
-			@include('pageElements.alertbox')
 			@yield('content')			
 		</div>
 					
