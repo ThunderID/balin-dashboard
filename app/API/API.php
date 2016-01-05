@@ -3,7 +3,7 @@ use Exception;
 
 class API
 {
-	protected $domain			= 'localhost';
+	protected $domain			= '192.168.1.118';
 	protected $port				= '8800';
 	protected $basic_url;
 
@@ -66,7 +66,7 @@ class API
 		$results 		= curl_exec($curl);
 		if(!json_decode($results))
 		{
-			print('API.php Error : cannot decode json result');
+			print_r('API.php Error : cannot decode json result');
 			print_r($results);
 		}
 		return $results;
