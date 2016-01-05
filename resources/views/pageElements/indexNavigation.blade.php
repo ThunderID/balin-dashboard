@@ -4,15 +4,21 @@
 		$disabled = false;
 	}
 
+	if(!isset($newDataLabel)){
+		$newDataLabel = 'Data Baru';
+	}
+
+	if(!isset($searchLabel)){
+		$searchLabel = 'Cari Data';
+	}
+
 	if($disabled == false)
 	{
 		if(!isset($newDataRoute)){
-			// array push Link untuk data baru tidak ada
 			array_push($errors, "Link untuk data baru tidak ada ( var : newDataRoute )");
 		}
 
 		if(!isset($filterDataRoute)){
-			// array push Link untuk cari data tidak ada
 			array_push($errors, "Link untuk cari data tidak ada ( var : filterDataRoute )");
 		}	
 	}
@@ -22,9 +28,9 @@
 <div class="row">		
 	<div class="col-md-8 col-sm-4 hidden-xs">
 		@if($disabled ==  false)
-			<a class="btn btn-default" href="{{ $newDataRoute }}"> Data Baru </a>
+			<a class="btn btn-default" href="{{ $newDataRoute }}"> {{$newDataLabel}} </a>
 		@else
-			<a class="btn btn-default disabled" href="#"> Data Baru </a>
+			<a class="btn btn-default disabled" href="#"> {{$newDataLabel}} </a>
 		@endif
 	</div>
     <div class="col-md-4 col-sm-8 col-xs-12">
@@ -39,7 +45,7 @@
 					{!! Form::input('text', 'q', Null ,
 							[
 								'class'         => 'form-control',
-								'placeholder'   => 'Cari label',
+								'placeholder'   => $searchLabel,
 								'required'      => 'required',
 								'disabled'		=> 'disabled'
 							]
@@ -48,7 +54,7 @@
 					{!! Form::input('text', 'q', Null ,
 							[
 								'class'         => 'form-control',
-								'placeholder'   => 'Cari label',
+								'placeholder'   => $searchLabel,
 								'required'      => 'required',
 							]
 					) !!} 
