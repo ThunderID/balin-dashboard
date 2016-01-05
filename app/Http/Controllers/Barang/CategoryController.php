@@ -48,7 +48,32 @@ class CategoryController extends AdminController
 
 	public function show($id)
 	{
+		//initialize 
+		$this->page_attributes->subtitle 			= 'Product name';
 
+		// filters
+		if(Input::has('start') && Input::has('end'))
+		{
+			$this->page_attributes->search 			= 'Periode ' . Input::get('start') . ' sampai ' . Input::get('end');
+		}		
+
+		// data here
+		$this->page_attributes->data				= 	[
+															'id' => 1,
+
+														];
+
+		//breadcrumb
+		$breadcrumb 								=	[
+															'Produk Name' => route('admin.label.index')
+														];	
+
+		//generate View
+		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
+
+		$this->page_attributes->source 				= $this->page_attributes->source . 'show';
+
+		return $this->generateView();
 	}	
 
 	public function create($id = null)
