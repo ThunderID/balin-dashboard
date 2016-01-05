@@ -11,6 +11,12 @@
 	</div>
 
 	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			@include('pageElements.alertbox')
+		</div>
+	</div>
+
+	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			@include('pageElements.indexNavigation', [
 				'newDataRoute' 		=> route('admin.product.create'),
@@ -35,11 +41,8 @@
 							<th class="col-md-2 text-left">
 								Thumbnail
 							</th>
-							<th class="col-md-2">
+							<th class="col-md-4">
 								Nama Produk
-							</th>
-							<th class="col-md-2 text-right">
-								Harga 
 							</th>
 							<th class="col-md-2 text-center">
 								Ukuran
@@ -53,7 +56,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						@if(count($data) == 0)
+						@if(count($data['product']['data']) == 0)
 							<tr>
 								<td colspan="7" class="text-center">
 									Tidak ada data
@@ -70,9 +73,6 @@
 									</td>
 									<td>
 										{{ $dt['name'] }}
-									</td>
-									<td class="text-right">
-										@money_indo($dt['price'])
 									</td>
 									<td class="text-center">
 										@foreach($dt['varians'] as $varian)
