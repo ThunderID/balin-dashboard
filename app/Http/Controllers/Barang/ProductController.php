@@ -56,7 +56,34 @@ class ProductController extends AdminController
 
 	public function show($id)
 	{
+		//initialize 
+		$APIProduct 								= new APIProduct;
+		$product 									= $APIProduct->getShow($id);
 
+		$this->page_attributes->subtitle 			= $product['data']['name'];
+
+		// filters
+		if(Input::has('q'))
+		{
+			$this->page_attributes->search 			= Input::get('q');
+		}		
+
+		// data here
+		$this->page_attributes->data				= 	[
+															'product' => $product,
+														];
+
+		//breadcrumb
+		$breadcrumb 								=	[
+															$product['data']['name'] => route('admin.price.show', ['id' => $id])
+														];	
+
+		//generate View
+		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
+
+		$this->page_attributes->source 				= $this->page_attributes->source . 'show';
+
+		return $this->generateView();
 	}	
 
 	public function create($id = null)
@@ -68,21 +95,27 @@ class ProductController extends AdminController
 															'Data Baru' => route('admin.product.create'),
 														];
 
+			$data 									= null;														
+
 			$this->page_attributes->subtitle 		= 'Data Baru';
 		}
 		else
 		{
-			$data 									= ['name' => 'nama'];
+			$APIProduct 							= new APIProduct;
+			$data 									= $APIProduct->getShow($id);	
 
 			$breadcrumb								=	[
-															'Edit Data ' . $data['name']  =>  route('admin.product.create'),
+															$data['data']['name']  =>  route('admin.product.show', ['id' => $data['data']['id']] ),
+															'Edit'  =>  route('admin.product.create', ['id' => $data['data']['id']] ),
 														];
 
-			// $this->page_attributes->subtitle 		= $tag->name;
+			$this->page_attributes->subtitle 		= $data['data']['name'];
 		}
 
 		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
+
+		$this->page_attributes->data 				=  $data;
 
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'create';
 
@@ -96,6 +129,39 @@ class ProductController extends AdminController
 
 	public function store($id = null)
 	{
+		//price
+		$prices 									= [];
+
+		$tmpPrice 									= 	[
+															'id' 			=> "",
+															'price'			=> str_replace('IDR ', '', str_replace('.', '', Input::get('price'))),
+															'promo_price'	=> str_replace('IDR ', '', str_replace('.', '', Input::get('promo_price'))),
+															'started_at'	=> date('Y-m-d H:i:s', strtotime(Input::get('started_at'))),
+														];		
+		array_push($prices,$tmpPrice);
+
+
+		//image
+		$images 									= [];
+		foreach (Input::get('thumbnail') as $key => $image)
+		{
+
+			//image
+			$tmpImage 								= 	[
+															'id' 			=> null,
+															'thumbnail'		=> Input::get('thumbnail')[$key],
+															'image_xs'		=> Input::get('image_xs')[$key],
+															'image_sm'		=> Input::get('image_sm')[$key],
+															'image_md'		=> Input::get('image_md')[$key],
+															'image_lg'		=> Input::get('image_lg')[$key],
+														];
+
+			if(!empty($tmpImage['thumbnail']) || !empty($tmpImage['image_xs']) || !empty($tmpImage['image_sm']) || !empty($tmpImage['image_md']) || !empty($tmpImage['lg']) )
+			{
+				array_push($images,$tmpImage);
+			}														
+		}
+
 		//init
 		$data 										= 	[
 															'id' 			=> $id,
@@ -109,15 +175,16 @@ class ProductController extends AdminController
 															'categories'	=> Input::get('category'),
 															'tag'			=> Input::get('tag'),
 															'started_at'	=> Input::get('started_at'),
-															'price'			=> Input::get('price'),
-															'promo_price'	=> Input::get('promo_price'),
-															'thumbnail'		=> Input::get('thumbnail'),
-															'image_xs'		=> Input::get('image_xs'),
-															'image_sm'		=> Input::get('image_sm'),
-															'image_md'		=> Input::get('image_md'),
-															'image_lg'		=> Input::get('image_lg'),
+															'images'		=> $images,
+															'prices'		=> $prices,
 															'slug'			=> NULL,
 														];
+
+		//check is null image												
+		if(empty($data['images']))
+		{
+			unset($data['images']);
+		}
 
 		//api
 		$APIProduct 								= new APIProduct;
@@ -127,7 +194,7 @@ class ProductController extends AdminController
 		//result
 		if($result['status'] != 'success')
 		{
-			$error 									= json_decode($result['message'], true);
+			$error 									= $result['message'];
 			dd($error);
 		}
 
