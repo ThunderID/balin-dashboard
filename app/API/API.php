@@ -42,10 +42,11 @@ class API
 	{
 		$client 				= new Client([
 										'base_uri' => $this->basic_url,
-									    'timeout'  => 2.0
+									    'timeout'  => 2.0,
 									]);
 
-		$response 				= $client->request('POST',  $this->basic_url . $url, $data);
+
+		$response 				= $client->request('POST',  $this->basic_url . $url, ['form_params' => $data] );
 
 		$body 					= $response->getBody();
 
