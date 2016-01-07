@@ -1,5 +1,8 @@
 <?php namespace App\API;
+
 use Exception;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 
 class API
 {
@@ -20,29 +23,19 @@ class API
 		}
 	}
 
-	public function get($url, $data = [])
+	public function get($url)
 	{
-		try
-		{
-			fsockopen($this->domain, $this->port, $errno, $errstr, 60);
-		}
-		catch (Exception $e) 
-		{
-			return json_encode(['status' => 'error' , 'message' => $e->getMessage()]);			
-		}
+		$client 				= new Client([
+										'base_uri' => $this->basic_url,
+									    'timeout'  => 2.0
+									]);
 
-		$curl 			= curl_init($this->basic_url.$url);
-		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); 
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
-		// curl_setopt($curl, CURLOPT_GET, true);
-		$results 		= curl_exec($curl);
-		if(!json_decode($results))
-		{
-			print('API.php Error : cannot decode json result');
-			print_r($results);
-		}
-		return $results;
+		$request 				= new Request('GET',  $this->basic_url . $url);
+		$response 				= $client->send($request, ['timeout' => 2]);
+		$body 					= $response->getBody();
+		
+		return (string) $body;
+
 	}
 
 	public function post($url, $data = [])

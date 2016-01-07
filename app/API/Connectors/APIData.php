@@ -46,7 +46,7 @@ abstract class APIData
 
 		$this->apiUrl				= $this->apiUrl . '?' . $queryString;
 
-		$result 					= json_decode($api->get($this->apiUrl, $this->apiData), true);
+		$result 					= json_decode($api->get($this->apiUrl), true);
 
 		return $this->validateResponse($result);
 	}
