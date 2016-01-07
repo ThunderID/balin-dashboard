@@ -33,35 +33,22 @@ class API
 		$request 				= new Request('GET',  $this->basic_url . $url);
 		$response 				= $client->send($request, ['timeout' => 2]);
 		$body 					= $response->getBody();
-		
+
 		return (string) $body;
 
 	}
 
 	public function post($url, $data = [])
 	{
-		try
-		{
-			fsockopen($this->domain, $this->port, $errno, $errstr, 60);
-		}
-		catch (Exception $e) 
-		{
-			return json_encode(['status' => 'error' , 'message' => $e->getMessage()]);			
-		}
+		$client 				= new Client([
+										'base_uri' => $this->basic_url,
+									    'timeout'  => 2.0
+									]);
 
-		$content 		= json_encode($data);
-		$curl 			= curl_init($this->basic_url.$url);
-		curl_setopt($curl, CURLOPT_HEADER, false);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
-		curl_setopt($curl, CURLOPT_POST, true);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
-		$results 		= curl_exec($curl);
-		if(!json_decode($results))
-		{
-			print_r('API.php Error : cannot decode json result');
-			print_r($results);
-		}
-		return $results;
+		$response 				= $client->request('POST',  $this->basic_url . $url, $data);
+
+		$body 					= $response->getBody();
+
+		return (string) $body;
 	}
 }
