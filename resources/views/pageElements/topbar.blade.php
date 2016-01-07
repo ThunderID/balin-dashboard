@@ -621,4 +621,4 @@
 		$('.mobile-submenu-page').addClass('hidden');
 		$('.mobile-menu-page').removeClass('hidden');
 	});
-@stop
+@append
