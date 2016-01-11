@@ -45,11 +45,11 @@ abstract class AdminController extends Controller
 	}
 
 
-	public function generateRedirectRoute($to = null)
+	public function generateRedirectRoute($to = null, $parameter = null)
 	{
 		if(count($this->errors) == 0)
 		{
-			return Redirect::route($to)
+			return Redirect::route($to, $parameter)
 					->with('msg',$this->page_attributes->success)
 					->with('msg-type', 'success');
 		}
