@@ -14,6 +14,7 @@ Route::group(['prefix' => 'cms'], function()
 	Route::group(['prefix' => 'barang', 'namespace' => 'Barang\\'], function()
 	{
 		Route::resource('produk',  	'ProductController',		['names' => ['index' => 'admin.product.index', 'create' => 'admin.product.create', 'store' => 'admin.product.store', 'show' => 'admin.product.show', 'edit' => 'admin.product.edit', 'update' => 'admin.product.update', 'destroy' => 'admin.product.destroy']]);
+		Route::resource('produk/{pid}/varian','VarianController',['names' => ['index' => 'admin.varian.index', 'create' => 'admin.varian.create', 'store' => 'admin.varian.store', 'show' => 'admin.varian.show', 'edit' => 'admin.varian.edit', 'update' => 'admin.varian.update', 'destroy' => 'admin.varian.destroy']]);
 		Route::resource('harga',  	'PriceController',			['names' => ['index' => 'admin.price.index', 'create' => 'admin.price.create', 'store' => 'admin.price.store', 'show' => 'admin.price.show', 'edit' => 'admin.price.edit', 'update' => 'admin.price.update', 'destroy' => 'admin.price.destroy']]);
 		Route::get('harga/{id}/new',							['uses' => 'PriceController@create', 'as' => 'admin.price.show.create']);
 		Route::resource('stok',  	'StockController',			['names' => ['index' => 'admin.stock.index', 'create' => 'admin.stock.create', 'store' => 'admin.stock.store', 'show' => 'admin.stock.show', 'edit' => 'admin.stock.edit', 'update' => 'admin.stock.update', 'destroy' => 'admin.stock.destroy']]);

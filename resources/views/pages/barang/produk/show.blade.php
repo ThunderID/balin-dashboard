@@ -12,6 +12,17 @@
 			@include('pageElements.breadcrumb')
 		</div>
 	</div>
+
+	<!-- title sub-page -->
+	<div class="row">
+		<div class="col-md-12 m-b-md">
+			<h2 style="margin-top:0px;">Data Produk</h2>
+
+			@include('pageElements.alertbox')
+		</div>
+	</div>
+	<!-- end of title sub-page -->
+
 <!-- end of head -->
 
 <!-- content -->
@@ -19,7 +30,7 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			<div class="row">
 				<div class="col-md-12">
-					<h3>Data Produk</h3>
+					<a class="btn btn-default pull-right"  href="{{ route('admin.product.edit', ['id' => $dt['id']] ) }}"> Edit Data </a>
 				</div>
 			</div>			
 			<div class="row">
@@ -70,7 +81,7 @@
 									@if($key!=0)
 										,
 									@endif
-									<a href="{{route('backend.settings.category.show', $value['id'])}}">{!! $value['name'] !!}</a>
+									<a href="#">{!! $value['name'] !!}</a>
 								@endforeach
 								<br/>
 								<br/>
@@ -79,7 +90,7 @@
 									@if($key!=0)
 										,
 									@endif
-									<a href="{{route('backend.settings.tag.show', $value['id'])}}">{!! $value['name'] !!}</a>
+									<a href="#">{!! $value['name'] !!}</a>
 								@endforeach
 							</h5>
 							</br>
@@ -98,7 +109,7 @@
 
 			<div class="row">
 				<div class="col-md-12">
-					<a class="btn btn-default" href="#">Varian Baru</a>
+					<a class="btn btn-default" href="{{ route('admin.varian.create', ['pid' => $dt['id']] ) }}">Varian Baru</a>
 					<div class="table-responsive">
 						</br>
 						<table class="table table-bordered table-hover table-striped">
@@ -106,17 +117,18 @@
 								<tr>
 									<th class="text-center">No</th>
 									<th class="text-center">Ukuran</th>
+									<th class="text-center">SKU</th>
 									<th class="text-center">Stok Display</th>
 									<th class="text-center">Stok Gudang</th>
 									<th class="text-center">Stok Dibayar</th>
 									<th class="text-center">Stok Dipesan</th>
-									<th class="text-center">Kontrol</th>
+									<th class="text-center col-md-2">Kontrol</th>
 								</tr>
 							</thead>
 							<tbody>
 								@if (count($dt['varians']) == 0)
 									<tr>
-										<td colspan="7">
+										<td colspan="8">
 											<p class="text-center">Tidak ada data</p>
 										</td>
 									</tr>
@@ -124,33 +136,20 @@
 									@foreach($dt['varians'] as $ctr => $product)
 										<tr>
 											<td class="text-center">{{ $ctr+1 }}</td>
-											<td class="text-left">{{ $product['size'] }} <br/> [SKU {{ $product['sku']  }}]</td>
-											<td class="text-right">{{ $product['current_stock'] }}
-												@if($product['current_stock'] < $stock->value && $data->varians()->count())
-												<br/>
-												<a href="{{ route('backend.data.transaction.create', ['type' => 'buy']) }}">Stok Barang</a>
-												@endif
+											<td class="text-center">{{ $product['size'] }}</td>
+											<td class="text-center">{{ $product['sku'] }}</td>
+											<td class="text-center">{{ $product['current_stock'] }}
 											</td>
-											<td class="text-right">{{ $product['inventory_stock'] }}</td>
-											<td class="text-right">{{ $product['reserved_stock'] }}</td>
-											<td class="text-right">{{ $product['on_hold_stock'] }}</td>
+											<td class="text-center">{{ $product['inventory_stock'] }}</td>
+											<td class="text-center">{{ $product['reserved_stock'] }}</td>
+											<td class="text-center">{{ $product['on_hold_stock'] }}</td>
 											<td class="text-center"> 
-												<a href="{{ route('backend.data.product.varian.show', ['pid' => $id, 'id' => $product['id'] ]) }}"> Detail</a>,
-												<a href="{{ route('backend.data.product.varian.edit', ['pid' => $id, 'id' => $product['id'] ]) }}"> Edit</a>,
-												
-												<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#var_del"
-													data-id="{{$data['id']}}"
-													data-title="Hapus Data Produk Varian {{$product['size']}}"
-													data-action="{{ route('backend.data.product.varian.destroy', ['pid' => $id, 'id' => $product['id']]) }}">
-													Hapus
-												</a> 								  
+												<a href="{{ route( 'admin.varian.show', ['pid' => $dt['id'] , 'id' => $product['id']] ) }}"> Detail</a>,
+												<a href="{{ route( 'admin.varian.edit', ['pid' => $dt['id'] , 'id' => $product['id']] ) }}"> Edit</a>,
+												<a href="#"> Delete</a>
 											</td>
 										</tr>
 									@endforeach
-									@include('widgets.pageelements.formmodaldelete', [
-											'modal_id'      => 'var_del', 
-											'modal_route'   => route('backend.data.product.varian.destroy', 0)
-									])					
 								@endif
 							</tbody>
 						</table>
