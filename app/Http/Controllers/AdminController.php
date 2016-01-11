@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use Illuminate\Support\MessageBag;
-use Redirect, URL;
+use Redirect, Input, URL;
 
 abstract class AdminController extends Controller 
 {
@@ -56,6 +56,7 @@ abstract class AdminController extends Controller
 		else
 		{
 			return Redirect::back()
+					->withInput(Input::all())
 					->withErrors($this->errors)
 					->with('msg-type', 'danger');
 
