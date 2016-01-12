@@ -146,10 +146,19 @@
 											<td class="text-center"> 
 												<a href="{{ route( 'admin.varian.show', ['pid' => $dt['id'] , 'id' => $product['id']] ) }}"> Detail</a>,
 												<a href="{{ route( 'admin.varian.edit', ['pid' => $dt['id'] , 'id' => $product['id']] ) }}"> Edit</a>,
-												<a href="#"> Delete</a>
+												<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#var_del"
+													data-id="{{$product['id']}}"
+													data-title="Hapus Varian Ukuran {{$product['size']}}"
+													data-action="{{ route('admin.varian.destroy', ['pid' => $dt['id'], 'id' => $product['id']]) }}">
+													Hapus
+												</a> 												
 											</td>
 										</tr>
 									@endforeach
+									@include('pageElements.modaldelete', [
+											'modal_id'      => 'var_del', 
+											'modal_route'   => route('admin.varian.destroy', 0)
+									])									
 								@endif
 							</tbody>
 						</table>

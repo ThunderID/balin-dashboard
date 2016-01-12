@@ -21,6 +21,7 @@ class VarianController extends AdminController
 	public function index()
 	{
 		// ga ada
+		return Redirect::back();
 	}
 
 	public function show($pid = null, $id = null)
@@ -167,9 +168,32 @@ class VarianController extends AdminController
 		return $this->store($pid, $id);
 	}
 
-	public function destroy($id)
+	public function destroy($pid = null, $id = null)
 	{
+		//cek auth
 
+		//get data
+		$APIProduct 								= new APIProduct;
+		$product 									= $APIProduct->getShow($pid);
+
+		$varian 									= $this->VarianFindData($product['data']['varians'], $id);
+
+		//delete varian
+		unset($product['data']['varians'][$varian['key']]);
+
+		//save
+		$result 									= $APIProduct->postData($product['data']);
+
+		//response
+		if($result['status'] != 'success')
+		{
+			$this->errors 							= $result['message'];
+		}
+
+		//return view
+		$this->page_attributes->success 			= "Data Varian Telah Dihapus";
+
+		return $this->generateRedirectRoute('admin.product.show', ['id' => $pid]);		
 	}		
 
 

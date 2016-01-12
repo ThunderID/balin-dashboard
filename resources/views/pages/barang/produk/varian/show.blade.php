@@ -33,7 +33,7 @@
 			<div class="panel panel-list panel-default">
 				<div class="panel-heading">
 					Stok Display
-		            <button type="button" data-title="Stok Display" data-toggle="modal" data-target="#myModal" class="close togle-info" aria-hidden="true" style="margin-top:-2px;margin-right:-6px;"><i class="fa fa-info-circle"></i></button>
+		            <button type="button" data-title="Stok Display" data-description="Jumlah stok yang tersedia untuk dijual" data-toggle="modal" data-target="#myModal" class="close togle-info" aria-hidden="true" style="margin-top:-2px;margin-right:-6px;"><i class="fa fa-info-circle"></i></button>
 				</div>
 				<div class="panel-body">
 					<h2 class="m-r-sm m-t-sm text-right">
@@ -51,7 +51,7 @@
 			<div class="panel panel-list panel-default">
 				<div class="panel-heading">
 					Stok Gudang
-		            <button type="button" data-title="Stok Gudang" data-toggle="modal" data-target="#myModal" class="close togle-info" aria-hidden="true" style="margin-top:-2px;margin-right:-6px;"><i class="fa fa-info-circle"></i></button>
+		            <button type="button" data-title="Stok Gudang" data-description="Total stok yang ada didalam gudang" data-toggle="modal" data-target="#myModal" class="close togle-info" aria-hidden="true" style="margin-top:-2px;margin-right:-6px;"><i class="fa fa-info-circle"></i></button>
 				</div>
 				<div class="panel-body">
 					<h2 class="m-r-sm m-t-sm text-right">
@@ -69,7 +69,7 @@
 			<div class="panel panel-list panel-default">
 				<div class="panel-heading">
 					Terjual
-		            <button type="button" data-title="Terjual" data-toggle="modal" data-target="#myModal" class="close togle-info" aria-hidden="true" style="margin-top:-2px;margin-right:-6px;"><i class="fa fa-info-circle"></i></button>
+		            <button type="button" data-title="Terjual" data-description="Total stok terjual" data-toggle="modal" data-target="#myModal" class="close togle-info" aria-hidden="true" style="margin-top:-2px;margin-right:-6px;"><i class="fa fa-info-circle"></i></button>
 				</div>
 				<div class="panel-body">
 					<h2 class="m-r-sm m-t-sm text-right">
@@ -87,7 +87,7 @@
 			<div class="panel panel-list panel-default">
 				<div class="panel-heading">
 					In Cart
-		            <button type="button" data-title="In Cart" data-toggle="modal" data-target="#myModal" class="close togle-info" aria-hidden="true" style="margin-top:-2px;margin-right:-6px;"><i class="fa fa-info-circle"></i></button>
+		            <button type="button" data-title="In Cart" data-description="Total stok yang ada dalam cart customer" data-toggle="modal" data-target="#myModal" class="close togle-info" aria-hidden="true" style="margin-top:-2px;margin-right:-6px;"><i class="fa fa-info-circle"></i></button>
 				</div>
 				<div class="panel-body">
 					<h2 class="m-r-sm m-t-sm text-right">
@@ -105,7 +105,7 @@
 			<div class="panel panel-list panel-default">
 				<div class="panel-heading">
 					Stok Dipesan
-		            <button type="button" data-title="Stok Dipesan" data-toggle="modal" data-target="#myModal" class="close togle-info" aria-hidden="true" style="margin-top:-2px;margin-right:-6px;"><i class="fa fa-info-circle"></i></button>
+		            <button type="button" data-title="Stok Dipesan" data-description="Total stok yang telah dicheckout dan menunggu pembayaran" data-toggle="modal" data-target="#myModal" class="close togle-info" aria-hidden="true" style="margin-top:-2px;margin-right:-6px;"><i class="fa fa-info-circle"></i></button>
 				</div>
 				<div class="panel-body">
 					<h2 class="m-r-sm m-t-sm text-right">
@@ -123,7 +123,7 @@
 			<div class="panel panel-list panel-default">
 				<div class="panel-heading">
 					Stok Dibayar
-		            <button type="button" data-title ="Stok Dibayar" data-toggle="modal" data-target="#myModal" class="close togle-info" aria-hidden="true" style="margin-top:-2px;margin-right:-6px;"><i class="fa fa-info-circle"></i></button>
+		            <button type="button" data-title ="Stok Dibayar" data-description="Total stok yang telah dibayar dan sedang menunggu untuk dipacking" data-toggle="modal" data-target="#myModal" class="close togle-info" aria-hidden="true" style="margin-top:-2px;margin-right:-6px;"><i class="fa fa-info-circle"></i></button>
 				</div>
 				<div class="panel-body">
 					<h2 class="m-r-sm m-t-sm text-right">
@@ -141,7 +141,7 @@
 			<div class="panel panel-list panel-default">
 				<div class="panel-heading">
 					Packing
-		            <button type="button" data-title="Packing" data-toggle="modal" data-target="#myModal" class="close togle-info"  aria-hidden="true" style="margin-top:-2px;margin-right:-6px;"><i class="fa fa-info-circle"></i></button>
+		            <button type="button" data-title="Packing" data-description="Total stok yang sedang dipacking dan akan dikirim" data-toggle="modal" data-target="#myModal" class="close togle-info"  aria-hidden="true" style="margin-top:-2px;margin-right:-6px;"><i class="fa fa-info-circle"></i></button>
 				</div>
 				<div class="panel-body">
 					<h2 class="m-r-sm m-t-sm text-right">
@@ -163,7 +163,7 @@
 
 @section('modals')
 <!-- mobile user menu -->
-	<div id="myModal" class="modal modal-center fade" role="dialog">
+	<div id="myModal" class="modal modal-center" role="dialog">
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-body p-b-none">
@@ -172,11 +172,8 @@
 					</div>
 					<div class="row p-t-md p-b-md">
 						<h2 class="modal-title text-center" id="info_title"></h2>
+						<p class="text-center" id="info_description"></p>
 					</div>
-				</div>
-				<div class="modal-footer">
-					<div class="col-sm-12 col-xs-12 m-b-sm" id="info_description">
-					</div>												
 				</div>
 			</div>
 		</div>
@@ -187,5 +184,6 @@
 @section('scripts')
 	$('.togle-info').on('click', function () {
 		$('#info_title').text($(this).attr("data-title"));
+		$('#info_description').text($(this).attr("data-description"));
 	})
 @stop
