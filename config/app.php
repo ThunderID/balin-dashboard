@@ -194,7 +194,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Form'      => 'Illuminate\Html\FormFacade',
         'HTML'      => 'Illuminate\Html\HtmlFacade',
-
+        'Collection'=> Illuminate\Database\Eloquent\Collection::class,
     ],
 
 ];
