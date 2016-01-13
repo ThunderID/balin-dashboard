@@ -13,11 +13,9 @@
 	<!-- title sub-page -->
 	<div class="row">
 		<div class="col-md-12 m-b-md">
-			<h2 style="margin-top:0px;">{{ ucwords($data['name']) }}</h2>
-			<h5>
-				<strong>UPC</strong> 
-				{{ $data['upc'] }}
-			</h5> 				
+			<h4 class="sub-header">
+				Data varian {{ $data['data']['size'] }}
+			</h4> 				
 
 			@include('pageElements.alertbox')
 		</div>
