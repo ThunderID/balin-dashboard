@@ -12,9 +12,10 @@ class APIProduct extends APIData
 
 	public function getIndex($filter = null)
 	{
+		$this->apiUrl 					= '/products';
+		
 		if(!is_null($filter))
 		{
-			$this->apiUrl 				= '/products';
 			$this->apiData 				= array_merge($this->apiData, ["search" => $filter]);
 		}
 
