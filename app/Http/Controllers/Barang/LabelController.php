@@ -62,7 +62,7 @@ class LabelController extends AdminController
 
 		// data here
 		$APIProduct 								= new APIProduct;
-		$product 									= $APIProduct->getProducts([
+		$product 									= $APIProduct->getIndex([
 															// 'labelname' => $tmpData[$id],
 															'name' 	=> Input::get('q')
 														]);
