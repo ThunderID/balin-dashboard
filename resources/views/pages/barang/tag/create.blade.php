@@ -9,6 +9,18 @@
 			@include('pageElements.breadcrumb')
 		</div>
 	</div>
+
+    <!-- title sub-page -->
+    <div class="row">
+        <div class="col-md-12 m-b-md">
+            <h4 class="sub-header">
+                Data Tag {{ $data['name'] }}
+            </h4>               
+
+            @include('pageElements.alertbox')
+        </div>
+    </div>
+    <!-- end of title sub-page -->      
 <!-- end of head -->
 
 <!-- body -->
