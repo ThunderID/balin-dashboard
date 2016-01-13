@@ -75,20 +75,22 @@ class VarianController extends AdminController
 															$data['name']  =>  route('admin.product.show', ['id' => $data['pid']] ),
 															'Varian Baru'  =>  route('admin.varian.create', ['pid' => $pid ] ),
 														];
+
+			$this->page_attributes->subtitle 		= $data['name'];
 		}
 		else
 		{
 			$breadcrumb								=	[
 															$data['name']  =>  route('admin.product.show', ['id' => $data['pid']] ),
-															'Edit Varian'  =>  route('admin.varian.create', ['pid' => $pid ] ),
+															'Edit Varian ' . $data['data']['size']  =>  route('admin.varian.edit', ['pid' => $pid,'id' => $id] ),
 														];
+
+			$this->page_attributes->subtitle 		= $data['data']['size'];
 		}
 
-
-
-		$this->page_attributes->subtitle 			= $data['name'];
-
 		//generate View
+		$this->page_attributes->title 	 			= $data['name'];
+
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
 		$this->page_attributes->data 				= array_merge($data, ['pid' => $pid]);
@@ -195,14 +197,6 @@ class VarianController extends AdminController
 
 		return $this->generateRedirectRoute('admin.product.show', ['id' => $pid]);		
 	}		
-
-
-	//AJAX
-	public function AjaxFindName()
-	{
-		return json_encode('test');
-	}
-
 
 	//FUNCTIONS
 	private function VarianFindData($arraySource, $id)
