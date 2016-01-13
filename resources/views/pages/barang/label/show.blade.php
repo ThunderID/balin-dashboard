@@ -8,14 +8,30 @@
 			@include('pageElements.breadcrumb')
 		</div>
 	</div>
+
+	<!-- title sub-page -->
+	<div class="row">
+		<div class="col-md-12 m-b-md">
+			<h2 style="margin-top:0px;">Detail Label</h2>
+
+			@include('pageElements.alertbox')
+		</div>
+	</div>
+	<!-- end of title sub-page -->	
 <!-- end of head -->
 
 <!-- content -->
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			<div class="row">
+				<div class="col-md-12">
+					<a class="btn btn-default pull-right disabled"  href="{{ route('admin.label.edit', ['id' => $data['id']] ) }}"> Edit Data </a>
+				</div>
+			</div>			
+			<div class="row">
 				<div class="col-md-5 col-sm-6 col-xs-11">
 					<div class="row">
+
 						<div class="col-md-6 col-sm-7 col-xs-5">
 							<h4>Nama Label</h4> 
 						</div>
@@ -68,35 +84,32 @@
 									<th class="col-md-2 text-left">
 										Thumbnail
 									</th>
-									<th class="col-md-2">
+									<th class="col-md-4">
 										Nama Produk
 									</th>
-									<th class="col-md-2 text-right">
-										Harga 
-									</th>
 									<th class="col-md-2 text-center">
-										Ukuran
+										UPC
 									</th>
 									<th class="col-md-2 text-center">
 										Stok
 									</th>
 									<th class="text-center">
 										Kontrol
-									</th>							
+									</th>								
 								</tr>
 							</thead>
 							<tbody>
-								@if(count($data['product']['data']) == 0)
+								@if(count($data['product']['data']['data']) == 0)
 									<tr>
 										<td colspan="7" class="text-center">
 											Tidak ada data
 										</td>
 									</tr>
 								@else                                                                 
-									@foreach($data['product']['data'] as $dt)
+									@foreach($data['product']['data']['data'] as $ctr => $dt)
 										<tr>
 											<td class="text-center">
-												loading
+												{{  $ctr+1 }}
 											</td>
 											<td>
 												{!! HTML::image($dt['thumbnail'], 'default', ['class' => 'img-responsive', 'style' => 'max-width:100px;']) !!}
@@ -104,13 +117,9 @@
 											<td>
 												{{ $dt['name'] }}
 											</td>
-											<td class="text-right">
-												@money_indo($dt['price'])
-											</td>
 											<td class="text-center">
-												@foreach($dt['varians'] as $varian)
-													{{ $varian['size'] }} &nbsp;
-												@endforeach
+												{{ $dt['upc'] }}
+											</td>											
 											</td>
 											<td class="text-center">
 												{{$dt['current_stock']}}
