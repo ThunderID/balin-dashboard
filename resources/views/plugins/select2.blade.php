@@ -9,7 +9,7 @@
 		minimumInputLength: 3,
 		tags: false,
 		ajax: {
-			url: "{{ route('admin.ajax.tag.findName') }}",
+			url: "{{ route('ajax.tag.findName') }}",
 			dataType: 'json',
 			data: function (term, path) {
 				return {
@@ -47,7 +47,7 @@
 		minimumInputLength: 3,
 		tags: false,
 		ajax: {
-			url: "{{ route('admin.ajax.category.findName') }}",
+			url: "{{ route('ajax.category.findName') }}",
 			dataType: 'json',
 			data: function (term, path) {
 				return {
@@ -85,7 +85,7 @@
 		minimumInputLength: 3,
 		tags: false,
 		ajax: {
-			url: "{{ route('admin.ajax.label.findName') }}",
+			url: "{{ route('ajax.label.findName') }}",
 			dataType: 'json',
 			data: function (term, path) {
 				return {
@@ -123,7 +123,7 @@
 		minimumInputLength: 3,
 		tags: false,
 		ajax: {
-			url: "{{ route('admin.ajax.product.findName') }}",
+			url: "{{ route('ajax.product.findName') }}",
 			dataType: 'json',
 			data: function (term, path) {
 				return {
