@@ -36,14 +36,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						@if (count($data) == 0)
+						@if (count($data['data']) == 0)
 							<tr>
 								<td colspan="6" class="text-center">
 									Tidak ada data
 								</td>
 							</tr>
 						@else                                                                                           
-							@foreach ($data as $dt)
+							@foreach ($data['data'] as $dt)
 								<tr>
 									<td>
 										@if ($dt['category_id'] == 0)
@@ -59,18 +59,18 @@
 										</p>
 									</td>
 									<td class="text-center">
-										<a href="{{ route('backend.settings.category.show',  $dt['id']) }}"> Detail</a>,
-										<a href="{{ route('backend.settings.category.edit', ['id' => $dt['id']]) }}"> Edit</a>, 
+										<a href="{{ route('admin.category.show',  $dt['id']) }}"> Detail</a>,
+										<a href="{{ route('admin.category.edit', ['id' => $dt['id']]) }}"> Edit</a>, 
 										<a href="#" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#category_del"
 											data-id="{{$dt['id']}}"
 											data-title="Hapus Data category {{$dt['name']}}"
-											data-action="{{ route('backend.settings.category.destroy', $dt['id']) }}">
+											data-action="{{ route('admin.category.destroy', $dt['id']) }}">
 											Hapus
 										</a>                                                                                 
 									</td>    
 								</tr>
 							@endforeach 
-							@include('widgets.pageelements.formmodaldelete', [
+							@include('pageElements.modaldelete', [
 								'modal_id'      => 'category_del', 
 								'modal_route'   => 'pageElements.modalDelete'
 							])                                    

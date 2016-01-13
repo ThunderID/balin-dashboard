@@ -9,13 +9,25 @@
 			@include('pageElements.breadcrumb')
 		</div>
 	</div>
+
+    <!-- title sub-page -->
+    <div class="row">
+        <div class="col-md-12 m-b-md">
+            <h4 class="sub-header">
+                Data Kategori {{ $data['name'] }}
+            </h4>               
+
+            @include('pageElements.alertbox')
+        </div>
+    </div>
+    <!-- end of title sub-page -->   
 <!-- end of head -->
 
 <!-- body -->
 	@if(!isset($data['id']))
-    {!! Form::open(['url' => route('admin.category.update', $data['id']), 'method' => 'PATCH']) !!}
-    @else
     {!! Form::open(['url' => route('admin.category.store'), 'method' => 'POST']) !!}
+    @else
+    {!! Form::open(['url' => route('admin.category.update', $data['id']), 'method' => 'PATCH']) !!}
     @endif
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12">

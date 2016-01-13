@@ -1,6 +1,8 @@
 <?php 
 namespace App\Http\Controllers\Barang;
 
+use App\API\connectors\APICategory;
+
 use App\Http\Controllers\AdminController;
 use Input, Session, DB, Redirect, Response, Auth;
 
@@ -28,12 +30,17 @@ class CategoryController extends AdminController
 		}
 		else
 		{
-			$searchResult							= null;
+			$this->page_attributes->search 			= null;
 		}
 
 		// data here
-		$this->page_attributes->data				= [];
+		$APICategory 								= new APICategory;
+		$category 									= $APICategory->getIndex([
+															'name' 	=> Input::get('q')
+														]);
 
+
+		$this->page_attributes->data				= $category['data'];
 
 		//breadcrumb
 		$breadcrumb 								= [];	
@@ -48,24 +55,30 @@ class CategoryController extends AdminController
 
 	public function show($id)
 	{
-		//initialize 
-		$this->page_attributes->subtitle 			= 'Product name';
+		//get data 
+		$APICategory	 							= new APICategory;
+		$category									= $APICategory->getShow($id);
+
+		$this->page_attributes->subtitle 			= $category['data']['name'];
+
 
 		// filters
-		if(Input::has('start') && Input::has('end'))
+		if(Input::has('q'))
 		{
-			$this->page_attributes->search 			= 'Periode ' . Input::get('start') . ' sampai ' . Input::get('end');
-		}		
+			$filters 								= ['name' => Input::get('q')];
+			$this->page_attributes->search 			= Input::get('q');
+		}
+		else
+		{
+			$this->page_attributes->search 			= null;
+		}
 
 		// data here
-		$this->page_attributes->data				= 	[
-															'id' => 1,
-
-														];
+		$this->page_attributes->data				= $category['data'];
 
 		//breadcrumb
 		$breadcrumb 								=	[
-															'Produk Name' => route('admin.label.index')
+															$category['data']['name'] => route('admin.category.show', ['id' => $category['data']['name']])
 														];	
 
 		//generate View
@@ -89,13 +102,17 @@ class CategoryController extends AdminController
 		}
 		else
 		{
-			$data 									= ['name' => 'nama'];
+			$APICategory							= new APICategory;
+
+			$category 								= $APICategory->getShow($id)['data'];
+
+			$this->page_attributes->data			= $category;
 
 			$breadcrumb								=	[
-															'Edit Data ' . $data['name']  =>  route('admin.category.create'),
+															'Edit Kategori '. $category['name'] =>  route('admin.category.edit', ['id' => $id]),
 														];
 
-			// $this->page_attributes->subtitle 		= $tag->name;
+			$this->page_attributes->subtitle 		= 'Edit Data';
 		}
 
 		//generate View
@@ -111,8 +128,33 @@ class CategoryController extends AdminController
 		return $this->create($id);
 	}
 
-	public function store($id = null)
+	public function store($id = "")
 	{
+		//get data
+		$data 										= 	[
+															'id' 			=> $id,
+															'category_id'	=> Input::get('category_id'),
+															'name'			=> Input::get('name'),
+															'slug'			=> "",
+														];
+
+		//is edit
+		if(!empty($id))
+		{
+			dd(1);
+		}
+
+
+		//save
+		$APICategory 								= new APICategory;
+		$result 									= $APICategory->postData($data);
+
+		dd($result);
+
+
+		//response
+
+		//return
 
 	}
 
