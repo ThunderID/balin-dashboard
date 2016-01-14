@@ -1,10 +1,12 @@
 {!! HTML::style('plugins/select2/select2.css') !!}
-{!! HTML::script('plugins/select2/select2.js') !!}
+{!! HTML::style('plugins/select2/select2-bootstrap.css') !!}
+{!! HTML::script('plugins/select2/select2.min.js') !!}
 
 <script>
 	$('.select2').select2();
 
 	$('.select-tag').select2({
+		theme: "bootstrap",
 		placeholder: 'Masukkan nama tag',
 		minimumInputLength: 3,
 		tags: false,
