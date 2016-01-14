@@ -28,21 +28,20 @@ abstract class APIData
 			if(is_array($data))
 			{
 				foreach ($data as $subTitle => $subData) {
-					$queryString 	= $queryString . $title . "[" .  $subTitle . "]=" . $subData . "&";				
+					if(!is_null($subData) || !empty($subData))
+					{
+						$queryString = $queryString . $title . "[" .  $subTitle . "]=" . $subData . "&";				
+					}
 				}
 			}
 			else
 			{
-				$queryString 		= $queryString . $title . "=" . $data;
-			}
-
-			if($title != key($this->apiData))
-			{
-				$queryString 		= $queryString . "&";
+				$queryString 		= $queryString . $title . "=" . $data . "&";
 			}		
 		}
 
 		$queryString 				= str_replace(' ', '%20', $queryString);
+
 
 		$this->apiUrl				= $this->apiUrl . '?' . $queryString;
 
