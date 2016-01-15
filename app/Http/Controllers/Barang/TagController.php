@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Barang;
 use App\API\connectors\APITag;
 
 use App\Http\Controllers\AdminController;
-use Input, Session, DB, Redirect, Response, Auth;
+use Input, Session, DB, Redirect, Response, Auth, Collection;
 
 class TagController extends AdminController
 {
@@ -69,13 +69,20 @@ class TagController extends AdminController
 		{
 			$filters 								= ['name' => Input::get('q')];
 			$this->page_attributes->search 			= Input::get('q');
+
+			$collection 							= collect($tag['data']['products']);
+
+			$result 								= 	$collection->filter(function ($col) {
+															return strpos(strtolower($col['name']), strtolower(Input::get('q'))) !== FALSE;
+														});
+
+			$category['data']['products']			= $result;				
 		}
 		else
 		{
 			$this->page_attributes->search 			= null;
 		}
 	
-
 		// data here
 		$this->page_attributes->data				= $tag['data'];
 
@@ -145,22 +152,14 @@ class TagController extends AdminController
 
 		$result 									= $APITag->postData($data);
 
-		//result
+		//response
 		if($result['status'] != 'success')
 		{
-			$error 									= $result['message'];
-			dd($error);
+			$this->errors 							= $result['message'];
 		}
 
 		//return
-		if(empty($id))
-		{
-			$this->page_attributes->success 		= "Data telah ditambahkan";
-		}
-		else
-		{
-			$this->page_attributes->success 		= "Data telah diedit";
-		}
+		$this->page_attributes->success 			= "Data telah dihapus";
 		
 		return $this->generateRedirectRoute('admin.tag.index');														
 	}
@@ -177,7 +176,16 @@ class TagController extends AdminController
 		//api
 		$result 									= $APITag->deleteData($id);
 
-		dd($result);
+		//response
+		if($result['status'] != 'success')
+		{
+			$this->errors 							= $result['message'];
+		}
+
+		//return
+		$this->page_attributes->success 			= "Data telah dihapus";
+		
+		return $this->generateRedirectRoute('admin.tag.index');	
 	}	
 
 
