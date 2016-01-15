@@ -32,8 +32,8 @@
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="form-group">
-                    <label for="parent" class="text-capitalize">Kelompok Kategori</label>
-                    {!! Form::text('parent', $data['category_id'], [
+                    <label for="category_id" class="text-capitalize">Kelompok Kategori</label>
+                    {!! Form::text('category_id', $data['category_id'], [
                                 'class'         => 'select-category', 
                                 'tabindex'      => '1', 
                                 'id'            => 'find_category',

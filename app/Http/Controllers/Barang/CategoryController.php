@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Barang;
 use App\API\connectors\APICategory;
 
 use App\Http\Controllers\AdminController;
-use Input, Session, DB, Redirect, Response, Auth;
+use Input, Session, DB, Redirect, Response, Auth, Collection;
 
 class CategoryController extends AdminController
 {
@@ -67,6 +67,14 @@ class CategoryController extends AdminController
 		{
 			$filters 								= ['name' => Input::get('q')];
 			$this->page_attributes->search 			= Input::get('q');
+
+			$collection 							= collect($category['data']['products']);
+
+			$result 								= 	$collection->filter(function ($col) {
+															return strpos(strtolower($col['name']), strtolower(Input::get('q'))) !== FALSE;
+														});
+
+			$category['data']['products']			= $result;			
 		}
 		else
 		{
@@ -142,11 +150,10 @@ class CategoryController extends AdminController
 
 		$result 									= $APICategory->postData($data);
 
-		//result
+		//response
 		if($result['status'] != 'success')
 		{
-			$error 									= $result['message'];
-			dd($error);
+			$this->errors 							= $result['message'];
 		}
 
 		//return
@@ -161,7 +168,21 @@ class CategoryController extends AdminController
 
 	public function destroy($id)
 	{
+		$APICategory 								= new APICategory;
 
+		//api
+		$result 									= $APICategory->deleteData($id);
+
+		//response
+		if($result['status'] != 'success')
+		{
+			$this->errors 							= $result['message'];
+		}
+
+		//return
+		$this->page_attributes->success 			= "Data telah dihapus";
+		
+		return $this->generateRedirectRoute('admin.category.index');	
 	}		
 
 	//AJAX

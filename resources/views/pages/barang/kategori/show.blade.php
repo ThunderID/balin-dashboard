@@ -27,7 +27,25 @@
 				<div class="col-md-12">
 					<a class="btn btn-default pull-right"  href="{{ route('admin.category.edit', ['id' => $data['id']] ) }}"> Edit Data </a>
 				</div>
-			</div>			
+			</div>	
+
+			<div class="row">
+				<div class="col-md-5 col-sm-6 col-xs-11">
+					<div class="row">
+
+						<div class="col-md-6 col-sm-7 col-xs-5">
+							<h4>Kelompok Kategori</h4> 
+						</div>
+						<div class="col-md-1 col-sm-1 col-xs-2">
+							<h4>:</h4> 
+						</div>
+						<div class="col-md-5 col-sm-3 col-xs-5">
+							<h4>{{ isset($data['category']['name']) ? $data['category']['name'] : '_'  }}</h4> 
+						</div>
+					</div>
+				</div>
+			</div>	
+
 			<div class="row">
 				<div class="col-md-5 col-sm-6 col-xs-11">
 					<div class="row">
@@ -44,6 +62,7 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="col-md-5 col-sm-6 col-xs-11">
 					<div class="row">
