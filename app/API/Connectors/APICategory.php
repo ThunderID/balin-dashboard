@@ -38,5 +38,13 @@ class APICategory extends APIData
 		$this->apiUrl 				= '/cluster/category/' . $id;
 
 		return $this->get();
-	}		
+	}
+
+	public function deleteData($id)
+	{
+		$this->apiUrl 				= '/cluster/category/delete/' . $id;
+		$this->apiData 				= array_merge($this->apiData,  ["id" => $id]);
+
+		return $this->delete();
+	}			
 }

@@ -63,8 +63,12 @@ abstract class APIData
 	{
 		$api 						= new API;
 		
-		$queryString 				= 'id=' . $this->apiData['id'] . '&access_token=' . $this->apiData['access_token'] . '&type=' . $this->apiData['type'];
+		$queryString 				= null;
 
+		foreach ($this->apiData as $key => $data) 
+		{
+			$queryString 			= $queryString . $key . '=' . $data . '?' ;
+		}
 
 		$this->apiUrl				= $this->apiUrl . '?' . $queryString;
 
