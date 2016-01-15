@@ -40,7 +40,7 @@ class APITag extends APIData
 
 	public function deleteData($id)
 	{
-		$this->apiUrl 				= '/cluster/delete/type/' . $id;
+		$this->apiUrl 				= '/cluster/tag/delete/' . $id;
 		$this->apiData 				= array_merge($this->apiData,  ["id" => $id]);
 
 		return $this->delete();
