@@ -63,18 +63,17 @@
 <!-- end of body -->
 @stop
 
-@section('script')
-    var preload_data = [];
+@section('scripts')
+    var preload_data_category = [];
     @if($data['category_id'])
-        var preload_data_tag    = [];
-        var id              = {!! $data['category_id'] !!};
-        var text            = "{!! $data['category']['name'] !!}";
-        preload_data_tag.push({ id: id, text: text});
+        var id                      = {!! $data['category_id'] !!};
+        var text                    = "{!! $data['category']['name'] !!}";
+        preload_data_category.push({ id: id, text: text});
     @else
-        var preload_data_tag    = [];
+        var preload_data_category   = [];
     @endif
 @stop
 
 @section('script_plugin')
-    @include('plugins.select2')
+    @include('plugins.select2', ['max_input' => 1, 'section' => 'category'])
 @stop

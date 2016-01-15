@@ -24,15 +24,15 @@ class APIProduct extends APIData
 
 	public function postData($data)
 	{
-		$this->apiUrl 				= '/product/store';
-		$this->apiData 				= array_merge($this->apiData, ["product" => $data]);
+		$this->apiUrl 					= '/product/store';
+		$this->apiData 					= array_merge($this->apiData, ["product" => $data]);
 
 		return $this->post();
 	}	
 
 	public function getShow($id)
 	{
-		$this->apiUrl 				= '/product/' . $id;
+		$this->apiUrl 					= '/product/' . $id;
 
 		return $this->get();
 	}	

@@ -75,7 +75,7 @@ class ProductController extends AdminController
 
 		//breadcrumb
 		$breadcrumb 								=	[
-															$product['data']['name'] => route('admin.price.show', ['id' => $id])
+															$product['data']['name'] => route('admin.product.show', ['id' => $id])
 														];	
 
 		//generate View
@@ -103,6 +103,10 @@ class ProductController extends AdminController
 		{
 			$APIProduct 							= new APIProduct;
 			$data 									= $APIProduct->getShow($id);	
+
+			$tmp									= json_decode($data['data']['description'], true);
+			$data['data']['description']			= $tmp['description'];			
+			$data['data']['fit']					= $tmp['fit'];		
 
 			$breadcrumb								=	[
 															$data['data']['name']  =>  route('admin.product.show', ['id' => $data['data']['id']] ),
@@ -162,7 +166,7 @@ class ProductController extends AdminController
 			}														
 		}
 
-		//init
+		//get data
 		$data 										= 	[
 															'id' 			=> $id,
 															'name'			=> Input::get('name'),

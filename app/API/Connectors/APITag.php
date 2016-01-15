@@ -28,8 +28,6 @@ class APITag extends APIData
 		$this->apiUrl 				= '/cluster/tag/store';
 		$this->apiData 				= array_merge($this->apiData,  ["tag" => $data]);
 
-		// dd($this->apiData);
-
 		return $this->post();
 	}		
 
@@ -38,5 +36,13 @@ class APITag extends APIData
 		$this->apiUrl 				= '/cluster/tag/' . $id;
 
 		return $this->get();
-	}		
+	}	
+
+	public function deleteData($id)
+	{
+		$this->apiUrl 				= '/cluster/delete/type/' . $id;
+		$this->apiData 				= array_merge($this->apiData,  ["id" => $id]);
+
+		return $this->delete();
+	}			
 }

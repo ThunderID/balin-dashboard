@@ -11,6 +11,12 @@
 
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
+			@include('pageElements.alertbox')
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			@include('pageElements.indexNavigation', [
 				'newDataRoute' 		=> route('admin.tag.create'),
 				'filterDataRoute' 	=> route('admin.tag.index')
@@ -60,18 +66,20 @@
 									<td class="text-center">
 										<a href="{{ route('admin.tag.show',  $dt['id']) }}"> Detail</a>,
 										<a href="{{ route('admin.tag.edit', ['id' => $dt['id']]) }}"> Edit</a>, 
-										<a href="#" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#tag_del"
+										<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
+											data-target="#tag_del"
 											data-id="{{$dt['id']}}"
 											data-title="Hapus Data Tag {{$dt['name']}}"
 											data-action="{{ route('admin.tag.destroy', $dt['id']) }}">
 											Hapus
-										</a>                                                                                 
+										</a>                                                                                
 									</td>    
 								</tr>
 							@endforeach 
+
 							@include('pageElements.modaldelete', [
 								'modal_id'      => 'tag_del', 
-								'modal_route'   => 'pageElements.modalDelete'
+								'modal_route'   => route('admin.tag.destroy', 0),
 							])                                    
 						@endif
 					</tbody>

@@ -131,9 +131,38 @@ class TagController extends AdminController
 		return $this->create($id);
 	}
 
-	public function store($id = null)
+	public function store($id = "")
 	{
+		//get data
+		$data 										= 	[
+															'id' 			=> $id,
+															'name'			=> Input::get('name'),
+															'category_id'	=> Input::get('category_id'),
+														];
 
+		//api
+		$APITag 									= new APITag;
+
+		$result 									= $APITag->postData($data);
+
+		//result
+		if($result['status'] != 'success')
+		{
+			$error 									= $result['message'];
+			dd($error);
+		}
+
+		//return
+		if(empty($id))
+		{
+			$this->page_attributes->success 		= "Data telah ditambahkan";
+		}
+		else
+		{
+			$this->page_attributes->success 		= "Data telah diedit";
+		}
+		
+		return $this->generateRedirectRoute('admin.tag.index');														
 	}
 
 	public function Update($id)
@@ -143,7 +172,12 @@ class TagController extends AdminController
 
 	public function destroy($id)
 	{
+		$APITag 									= new APITag;
 
+		//api
+		$result 									= $APITag->deleteData($id);
+
+		dd($result);
 	}	
 
 

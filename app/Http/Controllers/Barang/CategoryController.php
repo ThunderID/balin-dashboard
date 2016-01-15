@@ -133,29 +133,25 @@ class CategoryController extends AdminController
 		//get data
 		$data 										= 	[
 															'id' 			=> $id,
-															'category_id'	=> Input::get('category_id'),
 															'name'			=> Input::get('name'),
-															'slug'			=> "",
+															'category_id'	=> Input::get('category_id'),
 														];
 
-		//is edit
-		if(!empty($id))
-		{
-			dd(1);
-		}
-
-
-		//save
+		//api
 		$APICategory 								= new APICategory;
+
 		$result 									= $APICategory->postData($data);
 
-		dd($result);
-
-
-		//response
+		//result
+		if($result['status'] != 'success')
+		{
+			$error 									= $result['message'];
+			dd($error);
+		}
 
 		//return
-
+		$this->page_attributes->success 			= "Data telah ditambahkan";
+		return $this->generateRedirectRoute('admin.category.index');	
 	}
 
 	public function Update($id)

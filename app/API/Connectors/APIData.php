@@ -59,6 +59,20 @@ abstract class APIData
 		return $this->validateResponse($result);
 	}
 
+	protected function delete()
+	{
+		$api 						= new API;
+		
+		$queryString 				= 'id=' . $this->apiData['id'] . '&access_token=' . $this->apiData['access_token'] . '&type=' . $this->apiData['type'];
+
+
+		$this->apiUrl				= $this->apiUrl . '?' . $queryString;
+
+		$result 					= json_decode($api->delete($this->apiUrl), true);		
+
+		return $this->validateResponse($result);
+	}	
+
 	private function validateResponse($result)
 	{
 		// validate response

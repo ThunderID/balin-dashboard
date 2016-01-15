@@ -3,12 +3,15 @@
 {!! HTML::script('plugins/select2/select2.min.js') !!}
 
 <script>
+	var max_input = {{ isset($max_input) ? $max_input : '0' }};
+
 	$('.select2').select2();
 
+@if($section == "tag")
 	$('.select-tag').select2({
-		theme: "bootstrap",
-		placeholder: 'Masukkan nama tag',
+		placeholder: 'Masukkan nama kategori',
 		minimumInputLength: 3,
+		maximumSelectionSize: max_input,
 		tags: false,
 		ajax: {
 			url: "{{ route('ajax.tag.findName') }}",
@@ -19,12 +22,12 @@
 					path : '{{ isset($data['path']) ? $data['path'] : '' }}'
 				};
 			},
-		   results: function (data) {
+		   	results: function (data) {
 				return {
 					results: $.map(data, function (item) {
 						return {
-							text: item.name +' ',
-							id: item.id +' ',
+							text: item.name,
+							id: item.id,
 							path: item.path
 						}
 					})
@@ -32,46 +35,8 @@
 			},
 			query: function (query){
 				var data = {results: []};
-				 
-				$.each(preload_data, function(){
-					if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
-						data.results.push({id: this.id, text: this.text });
-					}
-				});
-	
-				query.callback(data);
-			}
-		}
-	});
 
-	$('.select-category').select2({
-		placeholder: 'Masukkan nama kategori',
-		minimumInputLength: 3,
-		tags: false,
-		ajax: {
-			url: "{{ route('ajax.category.findName') }}",
-			dataType: 'json',
-			data: function (term, path) {
-				return {
-					name: term,
-					path : '{{ isset($data['path']) ? $data['path'] : '' }}'
-				};
-			},
-		   results: function (data) {
-				return {
-					results: $.map(data, function (item) {
-						return {
-							text: item.name +' ',
-							id: item.id +' ',
-							path: item.path
-						}
-					})
-				};
-			},
-			query: function (query){
-				var data = {results: []};
-				 
-				$.each(preload_data, function(){
+				$.each(preload_data_tag, function(){
 					if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
 						data.results.push({id: this.id, text: this.text });
 					}
@@ -81,7 +46,53 @@
 			}
 		}
 	});	
+	$('.select-tag').select2('data', preload_data_tag);
+@endif
 
+@if($section == "category")
+	$('.select-category').select2({
+		placeholder: 'Masukkan nama kategori',
+		minimumInputLength: 3,
+		maximumSelectionSize: max_input,
+		tags: false,
+		ajax: {
+			url: "{{ route('ajax.category.findName') }}",
+			dataType: 'json',
+			data: function (term, path) {
+				return {
+					name: term,
+					path : '{{ isset($data['category_id']) ? $data['category_id'] : '' }}'
+				};
+			},
+		   results: function (data) {
+				return {
+					results: $.map(data, function (item) {
+						return {
+							text: item.name,
+							id: item.id,
+							path: item.path
+						}
+					})
+				};
+			},
+			query: function (query){
+				var data = {results: []};
+				 
+				$.each(preload_data_category, function(){
+					if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
+						data.results.push({id: this.id, text: this.text });
+					}
+				});
+	
+				query.callback(data);
+			}
+		}
+	});	
+	$('.select-category').select2('data', preload_data_category);
+@endif
+
+
+@if($section == "label")
 	$('.select-label').select2({
 		placeholder: 'Masukkan nama label',
 		minimumInputLength: 3,
@@ -109,7 +120,7 @@
 			query: function (query){
 				var data = {results: []};
 				 
-				$.each(preload_data, function(){
+				$.each(preload_data_label, function(){
 					if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
 						data.results.push({id: this.id, text: this.text });
 					}
@@ -118,7 +129,9 @@
 				query.callback(data);
 			}
 		}
-	});		
+	});	
+	$('.select-label').select2('data', preload_data_label);
+@endif
 
 	$('.select-product').select2({
 		placeholder: 'Masukkan nama product',

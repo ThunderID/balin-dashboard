@@ -40,7 +40,7 @@ class PriceController extends AdminController
 														]);
 
 		$this->page_attributes->data				= 	[
-															'product' => $product
+															'product' => $product['data']
 														];
 
 
@@ -107,7 +107,7 @@ class PriceController extends AdminController
 															'Data Baru' => route('admin.price.create'),
 														];
 
-				$this->page_attributes->subtitle 	= 'Data Baru';
+				$this->page_attributes->subtitle 	= $product['data']['name'];
 			}
 			else
 			{
@@ -130,6 +130,8 @@ class PriceController extends AdminController
 			$breadcrumb								=	[
 															'Data Baru' => route('admin.price.create'),
 														];
+
+			$this->page_attributes->subtitle 		= 'Data Baru';
 		}
 
 		//generate View

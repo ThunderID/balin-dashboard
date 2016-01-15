@@ -38,13 +38,24 @@
 				<table class="table table-bordered table-hover table-striped">
 					<thead>
 						<tr>
-							<th class="text-left">No.</th>							
-							<th class="col-md-2 text-left">Thumbnail</th>
-							<th class="col-md-3 text-left">Nama Produk</th>
-							<th class="col-md-2 text-center">UPC</th>
-							<th class="col-md-2 text-right">Harga</th>
-							<th class="col-md-2 text-right">Harga Promo</th>
-							<th class="text-center col-md-1">Kontrol</th>
+							<th class="text-center">
+								No.
+							</th>
+							<th class="col-md-2 text-left">
+								Thumbnail
+							</th>
+							<th class="col-md-4">
+								Nama Produk
+							</th>
+							<th class="col-md-2 text-center">
+								UPC
+							</th>
+							<th class="col-md-2 text-center">
+								Stok
+							</th>
+							<th class="text-center">
+								Kontrol
+							</th>	
 						</tr>
 					</thead>
 					<tbody>
@@ -73,13 +84,9 @@
 									{{ $dt['upc'] }}
 								</td>							
 
-								<td class="text-right">
-									@money_indo($dt['price'])
+								<td class="text-center">
+									{{$dt['current_stock']}}
 								</td>
-
-								<td class="text-right">
-									@money_indo($dt['promo_price'])
-								</td>		
 
 								<td class="text-center">
 									<a href="{{ route('admin.price.show', $dt['id']) }}"> Detail</a>

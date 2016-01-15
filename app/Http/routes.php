@@ -20,13 +20,13 @@ Route::group(['prefix' => 'cms'], function()
 		Route::resource('stok',  	'StockController',			['names' => ['index' => 'admin.stock.index', 'create' => 'admin.stock.create', 'store' => 'admin.stock.store', 'show' => 'admin.stock.show', 'edit' => 'admin.stock.edit', 'update' => 'admin.stock.update', 'destroy' => 'admin.stock.destroy']]);
 		Route::resource('kategori', 'CategoryController',		['names' => ['index' => 'admin.category.index', 'create' => 'admin.category.create', 'store' => 'admin.category.store', 'show' => 'admin.category.show', 'edit' => 'admin.category.edit', 'update' => 'admin.category.update', 'destroy' => 'admin.category.destroy']]);
 		Route::resource('tag', 		'TagController',			['names' => ['index' => 'admin.tag.index', 'create' => 'admin.tag.create', 'store' => 'admin.tag.store', 'show' => 'admin.tag.show', 'edit' => 'admin.tag.edit', 'update' => 'admin.tag.update', 'destroy' => 'admin.tag.destroy']]);
-		Route::resource('label', 	'LabelController',			['names' => ['index' => 'admin.label.index', 'create' => 'admin.label.create', 'store' => 'admin.label.store', 'show' => 'admin.label.show', 'edit' => 'admin.label.edit', 'update' => 'admin.label.update', 'destroy' => 'admin.tag.destroy']]);
+		Route::resource('label', 	'LabelController',			['names' => ['index' => 'admin.label.index', 'create' => 'admin.label.create', 'store' => 'admin.label.store', 'show' => 'admin.label.show', 'edit' => 'admin.label.edit', 'update' => 'admin.label.update', 'destroy' => 'admin.label.destroy']]);
 	
 		//ajax
-		Route::get('tag/ajax/findName',							['uses' => 'TagController@AjaxFindName', 	'as' => 'admin.ajax.tag.findName']);
-		Route::get('category/ajax/findName',					['uses' => 'CategoryController@AjaxFindName', 	'as' => 'admin.ajax.category.findName']);
-		Route::get('label/ajax/findName',						['uses' => 'LabelController@AjaxFindName', 	'as' => 'admin.ajax.label.findName']);
-		Route::get('product/ajax/findName',						['uses' => 'ProductController@AjaxFindName', 	'as' => 'admin.ajax.product.findName']);
+		Route::get('tag/ajax/findName',							['uses' => 'AjaxController@FindTagByName', 	'as' => 'ajax.tag.findName']);
+		Route::get('category/ajax/findName',					['uses' => 'AjaxController@FindCategoryByName', 	'as' => 'ajax.category.findName']);
+		Route::get('label/ajax/findName',						['uses' => 'AjaxController@FindLabelByName', 	'as' => 'ajax.label.findName']);
+		Route::get('product/ajax/findName',						['uses' => 'ProductController@AjaxFindName', 	'as' => 'ajax.product.findName']);
 	});
 
 	Route::group(['prefix' => 'toko', 'namespace' => 'Toko\\'], function()

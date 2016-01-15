@@ -6,7 +6,7 @@ use GuzzleHttp\Psr7\Request;
 
 class API
 {
-	protected $domain			= '192.168.1.118';
+	protected $domain			= 'localhost';
 	protected $port				= '8800';
 	protected $basic_url;
 
@@ -45,11 +45,26 @@ class API
 									    'timeout'  => 2.0,
 									]);
 
-
 		$response 				= $client->request('POST',  $this->basic_url . $url, ['form_params' => $data] );
 
 		$body 					= $response->getBody();
 
 		return (string) $body;
 	}
+
+	public function delete($url, $data = [])
+	{
+		$client 				= new Client([
+										'base_uri' => $this->basic_url,
+									    'timeout'  => 2.0,
+									]);
+
+
+		$request 				= new Request('DELETE',  $this->basic_url . $url);
+		$response 				= $client->send($request, ['timeout' => 2]);
+
+		$body 					= $response->getBody();
+
+		return (string) $body;
+	}	
 }

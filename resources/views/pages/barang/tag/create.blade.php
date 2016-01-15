@@ -25,15 +25,15 @@
 
 <!-- body -->
 	@if(!isset($data['id']))
-    {!! Form::open(['url' => route('admin.tag.update', $data['id']), 'method' => 'PATCH']) !!}
-    @else
     {!! Form::open(['url' => route('admin.tag.store'), 'method' => 'POST']) !!}
+    @else
+    {!! Form::open(['url' => route('admin.tag.update', $data['id']), 'method' => 'PATCH']) !!}
     @endif
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12">
                 <div class="form-group">
-                    <label for="parent" class="text-capitalize">Kelompok Tag</label>
-                    {!! Form::text('parent', $data['category_id'], [
+                    <label for="category_id" class="text-capitalize">Kelompok Tag</label>
+                    {!! Form::text('category_id', $data['category_id'], [
                                 'class'         => 'select-tag', 
                                 'tabindex'      => '1', 
                                 'id'            => 'find_tag',
@@ -63,18 +63,19 @@
 <!-- end of body -->
 @stop
 
-@section('script')
-    var preload_data = [];
+
+@section('scripts')
+    var preload_data_tag            = [];
     @if($data['category_id'])
-        var preload_data_tag    = [];
-        var id              = {!! $data['category_id'] !!};
-        var text            = "{!! $data['category']['name'] !!}";
+        var id                      = {!! $data['category_id'] !!};
+        var text                    = '{!! $data['tag']['name'] !!}';
         preload_data_tag.push({ id: id, text: text});
     @else
-        var preload_data_tag    = [];
+        var preload_data_tag        = [];
     @endif
 @stop
 
+
 @section('script_plugin')
-    @include('plugins.select2')
+    @include('plugins.select2', ['max_input' => 1, 'section' => 'tag'])
 @stop
