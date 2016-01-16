@@ -1,3 +1,6 @@
+<?php
+	dd($paging->render());
+?>
 @extends('page_templates.layout')
 
 @section('content')
@@ -94,6 +97,8 @@
 								</tr>       
 							@endforeach 
 							
+							{!! $paginator->render() !!}
+
 							@include('pageElements.modalDelete', [
 									'modal_id'      => 'product_del', 
 									'modal_route'   => route('admin.product.destroy')

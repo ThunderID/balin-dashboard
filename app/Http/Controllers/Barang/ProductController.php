@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Barang;
 use App\API\connectors\APIProduct;
 
 use App\Http\Controllers\AdminController;
+use Illuminate\Pagination\Paginator;
+
 use Input, Session, DB, Redirect, Response, Auth;
 
 class ProductController extends AdminController
@@ -33,11 +35,25 @@ class ProductController extends AdminController
 			$searchResult							= null;
 		}
 
+		//paginate
+
 		// data here
 		$APIProduct 								= new APIProduct;
+
 		$product 									= $APIProduct->getIndex([
-															'name' 	=> Input::get('q')
+														'search' 	=> 	[
+																			'name' 	=> Input::get('q'),
+																		],
+														'sort' 		=> 	[
+																			'name'	=> 'asc',
+																		],																		
+														'take'		=> 5,
+														'skip'		=> 0,
 														]);
+
+		$this->page_attributes->paginator 			= new Paginator(range(1,3), 5, Input::get('page'));
+	    $this->page_attributes->paginator->setPath('admin.product.index');
+
 
 		$this->page_attributes->data				= 	[
 															'product' => $product

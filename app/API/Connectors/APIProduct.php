@@ -10,13 +10,13 @@ class APIProduct extends APIData
 		parent::__construct();
 	}
 
-	public function getIndex($filter = null)
+	public function getIndex($parameter = null)
 	{
 		$this->apiUrl 					= '/products';
 		
-		if(!is_null($filter))
+		if(!is_null($parameter))
 		{
-			$this->apiData 				= array_merge($this->apiData, ["search" => $filter]);
+			$this->apiData 				= array_merge($this->apiData, $parameter);
 		}
 
 		return $this->get();

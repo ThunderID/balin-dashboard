@@ -25,9 +25,12 @@ abstract class AdminController extends Controller
   		if(!isset($this->page_attributes->title)){$this->page_attributes->title = null;}
   		if(!isset($this->page_attributes->subtitle)){$this->page_attributes->subtitle = null;}
   		if(!isset($this->page_attributes->data)){$this->page_attributes->data = null;}
+  		if(!isset($this->page_attributes->paginator)){$this->page_attributes->paginator = null;}
+
+  		$paging				= $this->page_attributes->paginator;
 
 		//initialize view
-  		$this->layout 			= view($this->page_attributes->source)
+  		$this->layout 			= view($this->page_attributes->source, compact('paging'))
 									->with('breadcrumb', $this->page_attributes->breadcrumb)
 									->with('pagetitle', $this->page_attributes->title)
 									->with('pagesubtitle', $this->page_attributes->subtitle)
