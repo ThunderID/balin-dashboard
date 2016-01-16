@@ -1,6 +1,3 @@
-<?php
-	dd($paging->render());
-?>
 @extends('page_templates.layout')
 
 @section('content')
@@ -96,8 +93,6 @@
 									</td>    
 								</tr>       
 							@endforeach 
-							
-							{!! $paginator->render() !!}
 
 							@include('pageElements.modalDelete', [
 									'modal_id'      => 'product_del', 
@@ -111,6 +106,11 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-12 hollow-pagination" style="text-align:right;">
+			{!! $paging->appends(Input::all())->render() !!}
+		</div>	
+	</div>	
 <!-- end of content -->
 
 </div>
