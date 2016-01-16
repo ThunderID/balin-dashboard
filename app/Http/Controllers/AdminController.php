@@ -1,5 +1,7 @@
 <?php namespace App\Http\Controllers;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+
 use Illuminate\Support\MessageBag;
 use Redirect, Input, URL;
 
@@ -7,6 +9,7 @@ abstract class AdminController extends Controller
 {
 	protected $page_attributes;
 	protected $errors;
+	protected $take 				= 10;
 
 	function __construct() 
 	{
@@ -64,5 +67,16 @@ abstract class AdminController extends Controller
 					->with('msg-type', 'danger');
 
 		}
+	}
+
+	public function paginate($route = null, $count = null, $current = null)
+	{
+		//README
+		//$route : route current page. $route = route('admin.product.index')
+		//$count : number of data. $count = count($data)
+		//$current : current page. $current = input::get($page)
+
+		$this->page_attributes->paginator 			= new LengthAwarePaginator($count, $count, $this->take, $current);
+	    $this->page_attributes->paginator->setPath($route);
 	}
 }
