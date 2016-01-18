@@ -17,7 +17,7 @@ class APITag extends APIData
 
 		if(!is_null($filter))
 		{
-			$this->apiData 				= array_merge($this->apiData, ["search" => $filter]);
+			$this->apiData 				= array_merge($this->apiData, $filter);
 		}
 
 		return $this->get();
