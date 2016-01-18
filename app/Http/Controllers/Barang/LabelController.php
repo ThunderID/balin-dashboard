@@ -1,7 +1,9 @@
 <?php 
 namespace App\Http\Controllers\Barang;
 
+use App\API\connectors\APILabel;
 use App\API\connectors\APIProduct;
+
 use App\Http\Controllers\AdminController;
 
 use Input, Session, DB, Redirect, Response, Auth;
@@ -29,15 +31,39 @@ class LabelController extends AdminController
 			$this->page_attributes->search 			= Input::get('q');
 		}
 
+		//get curent page
+		if(is_null(Input::get('page')))
+		{
+			$page 									= 1;
+		}
+		else
+		{
+			$page 									= Input::get('page');
+		}
+
 		// data here
-		$this->page_attributes->data				= 	[
-															['id' => '0' ,'name' => 'Best Seller'],
-															['id' => '1' ,'name' => 'New Item'],
-															['id' => '2' ,'name' => 'Sale']
-														];
+		$APILabel	 								= new APILabel;
+
+		$labels										= $APILabel->getIndex([
+															'search' 	=> 	[
+																				'name' 	=> Input::get('q'),
+																			],																	
+															'take'		=> $this->take,
+															'skip'		=> ($page - 1) * $this->take,
+														]);
+
+		$this->page_attributes->data 				= ['take' => $this->take, 'data' => []];
+
+		foreach ($labels['data']['data'] as $key => $value) 
+		{
+			$this->page_attributes->data['data']  			= array_merge($this->page_attributes->data['data'], [$key => ['id' => $value['label'] ,'name' => ucwords(str_replace('_', ' ', $value['label'])) ]] );
+		}
 
 		//breadcrumb
 		$breadcrumb 								= 	[];	
+
+		//paginate
+		$this->paginate(route('admin.label.index'), $labels['data']['count'], $page);
 
 		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
@@ -47,12 +73,10 @@ class LabelController extends AdminController
 		return $this->generateView();
 	}
 
-	public function show($id)
+	public function show($id = null)
 	{
 		//initialize 
-		$tmpData									= ['Best Seller', 'New Item', 'Sale'];
-
-		$this->page_attributes->subtitle 			= $tmpData[$id];
+		$this->page_attributes->subtitle 			= ucwords(str_replace('_', ' ', $id));
 
 		// filters
 		if(Input::has('q'))
@@ -60,22 +84,42 @@ class LabelController extends AdminController
 			$this->page_attributes->search 			= Input::get('q');
 		}		
 
+		//get curent page
+		if(is_null(Input::get('page')))
+		{
+			$page 									= 1;
+		}
+		else
+		{
+			$page 									= Input::get('page');
+		}
+
 		// data here
 		$APIProduct 								= new APIProduct;
 		$product 									= $APIProduct->getIndex([
-															// 'labelname' => $tmpData[$id],
-															'name' 	=> Input::get('q')
+															'search' 	=> 	[
+																				'labelname' => $id,
+																				'name' 	=> Input::get('q')
+																			],
+															'sort' 		=> 	[
+																				'name'	=> 'asc',
+																			],																		
+															'take'		=> $this->take,
+															'skip'		=> ($page - 1) * $this->take,
 														]);
 
 		$this->page_attributes->data				= 	[
 															'id' => $id,
-															'name' => $tmpData[$id],
-															'product' => $product
+															'name' => ucwords(str_replace('_', ' ', $id)),
+															'product' => $product['data']['data'],
 														];
+
+		//paginate
+		$this->paginate(route('admin.label.show', ['id' => $id]), $product['data']['count'], $page);
 
 		//breadcrumb
 		$breadcrumb 								=	[
-															$tmpData[$id] => route('admin.label.show', $id)
+															ucwords(str_replace('_', ' ', $id)) => route('admin.label.show', $id)
 														];	
 
 		//generate View

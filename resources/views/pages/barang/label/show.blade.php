@@ -54,7 +54,7 @@
 							<h4>:</h4> 
 						</div>
 						<div class="col-md-5 col-sm-3 col-xs-5">
-							<h4> {{ count($data['product']['data']) }}</h4> 
+							<h4> {{ count($data['product']) }}</h4> 
 						</div>
 					</div>
 				</div>
@@ -99,14 +99,14 @@
 								</tr>
 							</thead>
 							<tbody>
-								@if(count($data['product']['data']['data']) == 0)
+								@if(count($data['product']) == 0)
 									<tr>
 										<td colspan="7" class="text-center">
 											Tidak ada data
 										</td>
 									</tr>
 								@else                                                                 
-									@foreach($data['product']['data']['data'] as $ctr => $dt)
+									@foreach($data['product'] as $ctr => $dt)
 										<tr>
 											<td class="text-center">
 												{{  $ctr+1 }}

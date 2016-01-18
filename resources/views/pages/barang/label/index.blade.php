@@ -11,7 +11,11 @@
 
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
-			@include('pageElements.indexNavigation', ['disabled' => true])
+			@include('pageElements.indexNavigation', [
+				'disabled'			=> 'false',
+				'newDataRoute' 		=> route('admin.label.create'),
+				'filterDataRoute' 	=> route('admin.label.index'),
+			])			
 			@include('pageElements.searchResult', ['closeSearchLink' => route('admin.label.index') ])
 		</div>  
 	</div>
@@ -31,17 +35,17 @@
 						</tr>
 					</thead>                            
 					<tbody>
-						@if (count($data) == 0)
+						@if(count($data['data']) == 0)
 							<tr>
 								<td colspan="6" class="text-center">
 									Tidak ada data
 								</td>
 							</tr>
 						@else                                                                                           
-							@foreach ($data as $dt)
+							@foreach ($data['data'] as $key => $dt)
 								<tr>
 									<td>
-										{{$dt['id'] + 1}}
+										{{ ($data['take'] * (Input::get('page'))) + $key + 1}}
 									</td>
 									<td class="col-md-10">
 										<p class="text-capitalize">
@@ -59,6 +63,11 @@
 			</div>                 
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-12 hollow-pagination" style="text-align:right;">
+			{!! $paging->appends(Input::all())->render() !!}
+		</div>	
+	</div>		
 <!-- end of content -->
 
 </div>
