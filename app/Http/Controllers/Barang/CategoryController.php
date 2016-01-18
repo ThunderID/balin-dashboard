@@ -33,14 +33,36 @@ class CategoryController extends AdminController
 			$this->page_attributes->search 			= null;
 		}
 
+		//get curent page
+		if(is_null(Input::get('page')))
+		{
+			$page 									= 1;
+		}
+		else
+		{
+			$page 									= Input::get('page');
+		}
+
 		// data here
 		$APICategory 								= new APICategory;
 		$category 									= $APICategory->getIndex([
-															'name' 	=> Input::get('q')
+														'search' 	=> 	[
+																			'name' 	=> Input::get('q'),
+																		],
+														'sort' 		=> 	[
+																			'name'	=> 'asc',
+																		],																		
+														'take'		=> $this->take,
+														'skip'		=> ($page - 1) * $this->take,
 														]);
 
 
-		$this->page_attributes->data				= $category['data'];
+		$this->page_attributes->data				= 	[
+															'category' => $category['data']
+														];
+
+		//paginate
+		$this->paginate(route('admin.category.index'), $category['data']['count'], $page);
 
 		//breadcrumb
 		$breadcrumb 								= [];	

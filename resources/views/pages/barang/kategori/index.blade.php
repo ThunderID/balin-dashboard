@@ -42,14 +42,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						@if (count($data['data']) == 0)
+						@if (count($data['category']['data']) == 0)
 							<tr>
 								<td colspan="6" class="text-center">
 									Tidak ada data
 								</td>
 							</tr>
 						@else                                                                                           
-							@foreach ($data['data'] as $dt)
+							@foreach ($data['category']['data'] as $dt)
 								<tr>
 									<td>
 										@if ($dt['category_id'] == 0)
@@ -86,6 +86,11 @@
 			</div>                 
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-12 hollow-pagination" style="text-align:right;">
+			{!! $paging->appends(Input::all())->render() !!}
+		</div>	
+	</div>		
 <!-- end of content -->
 
 </div>					
