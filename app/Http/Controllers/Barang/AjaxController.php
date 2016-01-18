@@ -10,6 +10,30 @@ class AjaxController extends Controller
 {
 	public function FindLabelByName($name = null)
 	{
+		//get input 
+		$input 										= Input::get('name');
+
+		//get data 
+		$APIAjax	 								= new APIAjax;
+		$label										= $APIAjax->getLabel(['name' => $input]);		
+
+		//check if success
+		if($label['status'] != 'success')
+		{
+			dd($label);
+			return abort(404);
+		}
+
+		//formating data
+		$datas 										= [];
+		foreach ($label['data']['data'] as $key => $data) 
+		{
+			$datas[$key]['id']						= $data['label'];
+			$datas[$key]['name']					= ucwords(str_replace('_', ' ', $data['label']));
+		}										
+
+		//return
+		return $datas;		
 	}
 
 	public function FindCategoryByName($name = null)

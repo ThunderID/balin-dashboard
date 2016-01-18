@@ -10,6 +10,18 @@ class APIAjax extends APIData
 		parent::__construct();
 	}
 
+	public function getLabel($filter = null)
+	{
+		$this->apiUrl 					= '/balin/public/labels';
+
+		if(!is_null($filter))
+		{
+			$this->apiData 				= array_merge($this->apiData, ["search" => $filter]);
+		}
+
+		return $this->get();
+	}		
+
 	public function getCategory($filter = null)
 	{
 		$this->apiUrl 					= '/balin/store/clusters/category/';
