@@ -124,7 +124,7 @@ class ProductController extends AdminController
 		else
 		{
 			$APIProduct 							= new APIProduct;
-			$data 									= $APIProduct->getShow($id);	
+			$data 									= ['data' => $APIProduct->getShow($id)['data'] ];	
 
 			$tmp									= json_decode($data['data']['description'], true);
 			$data['data']['description']			= $tmp['description'];			
@@ -153,7 +153,7 @@ class ProductController extends AdminController
 		return $this->create($id);
 	}
 
-	public function store($id = null)
+	public function store($id = "")
 	{
 		//price
 		$prices 									= [];
@@ -171,8 +171,6 @@ class ProductController extends AdminController
 		$images 									= [];
 		foreach (Input::get('thumbnail') as $key => $image)
 		{
-
-			//image
 			$tmpImage 								= 	[
 															'id' 			=> null,
 															'thumbnail'		=> Input::get('thumbnail')[$key],
@@ -188,23 +186,64 @@ class ProductController extends AdminController
 			}														
 		}
 
+
+		//label
+		$labels										= [];
+		$tmpLabel 									= explode( ',', trim(Input::get('label'), ' '));
+
+		foreach ($tmpLabel as $key => $tmp)
+		{
+			$labels[$key] 							= 	[
+															'id' 			=> "",
+															'product_id'	=> $id,
+															'value'			=> "",
+															"label"			=> $tmp,
+															"started_at"	=> date('Y-m-d H:i:s', strtotime('now')),
+														];
+		}
+
+		//category
+		$categories									= [];
+		$tmpCategory								= explode( ',', trim(Input::get('category'), ' '));
+
+		foreach ($tmpCategory as $key => $tmp)
+		{
+			$categories[$key] 						= 	[
+															'id' 			=> $tmp,
+															'slug' 			=> "",
+														];
+		}
+
+		//tag
+		$tags										= [];
+		$tmpTag										= explode( ',', trim(Input::get('tag'), ' '));
+
+		foreach ($tmpTag as $key => $tmp)
+		{
+			$tags[$key] 							= 	[
+															'id' 			=> $tmp,
+															'slug' 			=> "",
+														];
+		}	
+
 		//get data
 		$data 										= 	[
 															'id' 			=> $id,
 															'name'			=> Input::get('name'),
 															'upc'			=> Input::get('upc'),
-															'label'			=> Input::get('lable'),
+															'label'			=> Input::get('label'),
 															'description'	=> json_encode([
 																				'description' 	=> Input::get('description'),
 																				'fit'			=> Input::get('fit'),
 																				]),
-															'categories'	=> Input::get('category'),
-															'tag'			=> Input::get('tag'),
 															'started_at'	=> Input::get('started_at'),
 															'images'		=> $images,
 															'prices'		=> $prices,
+															'labels'		=> $labels,
+															'categories'	=> $categories,
+															'tags'			=> $tags,
 															'slug'			=> NULL,
-														];
+														];											
 
 		//check is null image												
 		if(empty($data['images']))

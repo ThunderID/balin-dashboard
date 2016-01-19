@@ -69,7 +69,11 @@
 										no
 									</td>
 									<td>
-										{!! HTML::image($dt['thumbnail'], 'default', ['class' => 'img-responsive', 'style' => 'max-width:100px;']) !!}
+										@if(is_null($dt['thumbnail']))
+											{!! HTML::image('https://pbs.twimg.com/profile_images/600060188872155136/st4Sp6Aw.jpg', 'default', ['class' => 'img-responsive', 'style' => 'width:100px;height:144px;']) !!}
+										@else
+											{!! HTML::image($dt['thumbnail'], 'default', ['class' => 'img-responsive', 'style' => 'max-width:100px;']) !!}
+										@endif
 									</td>
 									<td>
 										{{ $dt['name'] }}

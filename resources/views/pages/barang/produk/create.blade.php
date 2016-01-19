@@ -20,7 +20,7 @@
 
 <!-- micro template section	-->
 	<div class="hidden">
-		<div id="tmplt">
+		<div id="tmplt" class="m-b-sm">
 			<div class="col-md-4">
 				<div class="form-group">
 					<label for="thumbnail" class="text-capitalize">URL Image (320 X 463 px)</label>
@@ -265,7 +265,34 @@
 @section('scripts')
 	$( document ).ready(function() {
 	<!-- init microtemplate -->
+	<!-- preload images -->
+	@if(count($data['data']['images']))
+		@for($key=0; $key < count($data['data']['images']); $key++)
+			$('#tmplt').find('.input-image-thumbnail').val('{{$data['data']['images'][$key]['thumbnail']}}');
+			$('#tmplt').find('.input-image-lg').val('{{$data['data']['images'][$key]['image_lg']}}');
+			$('#tmplt').find('.input-image-md').val('{{$data['data']['images'][$key]['image_md']}}');
+			$('#tmplt').find('.input-image-sm').val('{{$data['data']['images'][$key]['image_sm']}}');
+			$('#tmplt').find('.input-image-xs').val('{{$data['data']['images'][$key]['image_xs']}}');
+			$('#tmplt').find('.default').val({{$data['data']['images'][$key]['is_default']}});
+			@if($key == 0)
+				template_add_image($('.base'));
+			@else
+				$('#template-image').find('.btn-add-image').trigger('click');
+			@endif	
+		@endfor
+
+		$('#tmplt').find('.input-image-thumbnail').val('');
+		$('#tmplt').find('.input-image-lg').val('');
+		$('#tmplt').find('.input-image-md').val('');
+		$('#tmplt').find('.input-image-sm').val('');
+		$('#tmplt').find('.input-image-xs').val('');
+		$('#tmplt').find('.default').val(0);
+
+		$('#template-image').find('.btn-add-image').trigger('click');
+	@else
 		template_add_image($('.base'));
+	@endif	
+	<!-- end of preload images -->
 	<!-- endof init microtemplate -->
 	});
 
@@ -276,38 +303,38 @@
 	}
 	<!-- end of image default validator -->
 
+	<!-- preload select2 label -->
+    var preload_data_label 			= [];
+    @if(isset($data['data']['labels']))
+	    @foreach($data['data']['labels'] as $label)
+	        var id                      = '{{ $label['lable'] }}';
+	        var text                    = '{{ ucwords(str_replace('_', ' ', $label['lable'])) }}';
+	        preload_data_label.push({ id: id, text: text});
+	    @endforeach
+    @endif
+	<!-- end of preload select2 label -->
+
 	<!-- preload select2 category -->
     var preload_data_category = [];
-    @if(count($data['data']['categories']) > 0)
-        var id                      = 1;
-        var text                    = "dummy still";
-        preload_data_category.push({ id: id, text: text});
-    @else
-        var preload_data_category   = [];
+    @if(isset($data['data']['categories']))
+	    @foreach($data['data']['categories'] as $category)
+	        var id                      = {{$category['id']}};
+	        var text                    = '{{$category['name']}}';
+	        preload_data_category.push({ id: id, text: text});
+	    @endforeach
     @endif
 	<!-- end of preload select2 category -->
 
 	<!-- preload select2 tag -->
     var preload_data_tag = [];
-    @if(count($data['data']['tags']) > 0)
-        var id                      = 1;
-        var text                    = "dummy still";
-        preload_data_tag.push({ id: id, text: text});
-    @else
-        var preload_data_tag   = [];
+    @if(isset($data['data']['tags']))
+	    @foreach($data['data']['tags'] as $tag)
+	        var id                      = {{$tag['id']}};
+	        var text                    = '{{$tag['slug']}}';
+	        preload_data_tag.push({ id: id, text: text});    
+	    @endforeach
     @endif
-	<!-- end of preload select2 tag -->
-
-	<!-- preload select2 label -->
-    var preload_data_label = [];
-    @if(count($data['data']['labels']) > 0)
-        var id                      = 1;
-        var text                    = "dummy still";
-        preload_data_label.push({ id: id, text: text});
-    @else
-        var preload_data_label   = [];
-    @endif	
-	<!-- end of preload select2 label -->
+	<!-- end of preload select2 tag -->	
 @stop
 
 
