@@ -110,8 +110,8 @@
 				return {
 					results: $.map(data, function (item) {
 						return {
-							text: item.name +' ',
-							id: item.id +' ',
+							text: item.name,
+							id: item.id,
 							path: item.path
 						}
 					})
@@ -150,8 +150,8 @@
 				return {
 					results: $.map(data, function (item) {
 						return {
-							text: item.name +' ',
-							id: item.id +' ',
+							text: item.name,
+							id: item.id,
 							path: item.path
 						}
 					})
