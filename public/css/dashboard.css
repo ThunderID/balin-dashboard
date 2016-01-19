@@ -6487,6 +6487,11 @@ button.dim:active:before {
   padding-right: 6px;
   text-shadow: none; }
 
+.label-default {
+  background-color: white;
+  border-color: #5e5e5e;
+  border: 1px solid; }
+
 .label-primary, .badge-primary {
   background-color: #1ab394;
   color: white; }
