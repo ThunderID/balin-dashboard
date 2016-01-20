@@ -96,6 +96,7 @@
 	$('.select-label').select2({
 		placeholder: 'Masukkan nama label',
 		minimumInputLength: 3,
+		maximumSelectionSize: max_input,
 		tags: false,
 		ajax: {
 			url: "{{ route('ajax.label.findName') }}",
@@ -133,9 +134,11 @@
 	$('.select-label').select2('data', preload_data_label);
 @endif
 
+@if($section == "product")
 	$('.select-product').select2({
 		placeholder: 'Masukkan nama product',
 		minimumInputLength: 3,
+		maximumSelectionSize: max_input,
 		tags: false,
 		ajax: {
 			url: "{{ route('ajax.product.findName') }}",
@@ -170,4 +173,5 @@
 			}
 		}
 	});	
+@endif
 </script>
