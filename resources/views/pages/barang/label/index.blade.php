@@ -45,7 +45,7 @@
 							@foreach ($data['data'] as $key => $dt)
 								<tr>
 									<td>
-										{{ ($data['take'] * (Input::get('page'))) + $key + 1}}
+										{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $key + 1}}
 									</td>
 									<td class="col-md-10">
 										<p class="text-capitalize">

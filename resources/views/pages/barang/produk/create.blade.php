@@ -3,19 +3,7 @@
 @section('content')
 <div class="container-fluid">
 <!-- head -->
-	<div class="row">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md border-bottom">
-			@include('pageElements.pagetitle')
-			@include('pageElements.breadcrumb')
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			@include('pageElements.alertbox')
-		</div>
-	</div>
-
+    @include('pageElements.createHeader', ['title' => 'Data Produk ' . $data['data']['name'] ])    
 <!-- end of head -->
 
 <!-- micro template section	-->
@@ -100,11 +88,6 @@
     {!! Form::open(['url' => route('admin.product.store'), 'method' => 'POST']) !!}
     @endif
 		<div class="row">
-			<div class="col-md-12">
-				<h4 class="sub-header">
-					Produk
-				</h4>
-			</div>
 			<div class="col-md-6">
 				<div class="form-group">
 					<label for="name">Nama Produk</label>
@@ -164,7 +147,7 @@
 
 		<div class="clearfix">&nbsp;</div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12 m-b-md">
 				<h4 class="sub-header">
 					Filter
 				</h4>
@@ -195,7 +178,7 @@
 
 		<div class="clearfix">&nbsp;</div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12 m-b-md">
 				<h4 class="sub-header">
 					Harga
 				</h4>
@@ -235,7 +218,7 @@
 	<!-- image section -->
 		<div class="clearfix">&nbsp;</div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-md-12 m-b-md">
 				<h4 class="sub-header">
 					Gambar
 				</h4>

@@ -6,7 +6,8 @@ use GuzzleHttp\Psr7\Request;
 
 class API
 {
-	protected $domain			= 'localhost';
+	protected $domain			= '192.168.1.118';
+	// protected $domain			= 'localhost';
 	protected $port				= '8800';
 	protected $basic_url;
 
@@ -35,7 +36,6 @@ class API
 		$body 					= $response->getBody();
 
 		return (string) $body;
-
 	}
 
 	public function post($url, $data = [])

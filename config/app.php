@@ -195,6 +195,7 @@ return [
         'Form'      => 'Illuminate\Html\FormFacade',
         'HTML'      => 'Illuminate\Html\HtmlFacade',
         'Collection'=> Illuminate\Database\Eloquent\Collection::class,
+        'Carbon'    => 'Carbon\Carbon',
     ],
 
 ];

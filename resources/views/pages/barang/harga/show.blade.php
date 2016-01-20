@@ -1,5 +1,5 @@
 <?php
-	$dt = $data['product']['data'];
+	$dt = $data['product'];
 ?>
 
 @extends('page_templates.layout')
@@ -12,9 +12,24 @@
 			@include('pageElements.breadcrumb')
 		</div>
 	</div>
+
+	<!-- title sub-page -->
+	<div class="row">
+		<div class="col-md-12 m-b-md">
+			<h2 style="margin-top:0px;">Data Harga</h2>
+
+			@include('pageElements.alertbox')
+		</div>
+	</div>
+	<!-- end of title sub-page -->	
 <!-- end of head -->
 
 <!-- content -->
+	<div class="row">
+		<div class="col-md-12">
+			<a class="btn btn-default pull-right"  href="{{ route('admin.price.detail.create', ['id' => $dt['id']] ) }}"> Harga Baru </a>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			<div class="row">
@@ -38,7 +53,7 @@
 							<h4>:</h4> 
 						</div>
 						<div class="col-md-5 col-sm-5 col-xs-5">
-							<h4>{{ $dt['name'] }}</h4> 
+							<h4>{{ ucwords($dt['name']) }}</h4> 
 						</div>
 					</div>
 					<div class="row">
@@ -71,18 +86,11 @@
 							<h4>:</h4> 
 						</div>
 						<div class="col-md-5 col-sm-5 col-xs-5">
-							<h4>  Belum ada </h4> 
+							<h4> 
+								@datetime_indo(new Carbon($dt['price_start']))
+							</h4> 
 						</div>
 					</div>					
-				</div>
-				<div class="col-md-7 col-sm-6 col-xs-12">
-					<div class="row">
-						<div class="col-md-9 col-sm-8 hidden-xs">
-						</div>
-						<div class="col-md-3 col-sm-4 col-xs-12">
-							<a class="btn btn-default btn-block"  href="{{ route('admin.price.show.create', ['id' => $dt['id']] ) }}"> Harga Baru </a>
-						</div>
-					</div>
 				</div>
 			</div>						
 			<div class="row clearfix m-b-md">&nbsp;</div>
@@ -109,14 +117,11 @@
 									<th class="col-md-3 text-left">
 										Tanggal
 									</th>
-									<th class="col-md-2 text-center">
-										Stok Masuk
+									<th class="col-md-3 text-right">
+										Harga
 									</th>
-									<th class="col-md-2 text-center">
-										Stok Keluar 
-									</th>
-									<th class="col-md-2 text-center">
-										Jumlah Stok
+									<th class="col-md-3 text-right">
+										Harga Promo
 									</th>
 									<th class="text-center">
 										Kontrol
@@ -124,53 +129,50 @@
 								</tr>
 							</thead>
 							<tbody>
-								@if(count($data) == 0)
+								@if(count($dt['prices']) == 0)
 									<tr>
 										<td colspan="6" class="text-center">
 											Tidak ada data
 										</td>
 									</tr>
-								@else                                                                 
-									@foreach($data as $dt)
+								@else                
+									<?php $ctr = 0; ?>
+									@foreach($dt['prices'] as $key => $price)
 										<tr>
 											<td class="text-left">
-												nomer
+												{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $key + 1}}
 											</td>
 
 											<td class="text-left">
-												tanggal
+												@datetime_indo(new Carbon($price['started_at']))
+											</td>
+
+											<td class="text-right">
+												@money_indo($price['price'])
+											</td>
+
+											<td class="text-right">
+												@money_indo($price['promo_price'])
 											</td>
 
 											<td class="text-center">
-												stok masuk
-											</td>
-
-											<td class="text-center">
-												stok keluar
-											</td>
-
-											<td class="text-center">
-												jumlah stok
-											</td>
-
-											<td class="text-center">
+												<a href="{{ route('admin.price.detail.edit', ['productId' => $dt['id'] ,'id' => $price['id']]) }}">Edit</a>, 
+												<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
+													data-target="#price_del"
+													data-id="{{$price['id']}}"
+													data-title="Hapus Data Harga Produk {{$dt['name']}}"
+													data-action="{{ route('admin.price.detail.destroy', ['productId' => $dt['id'] ,'id' => $price['id']]) }}">
+													Hapus
+												</a>
 												<?php
 							        			// <a href="{{ route('admin.product.show', $dt['id']) }}"> Detail</a>,
-												// <a href="{{ route('admin.product.edit', $dt['id']) }}"> Edit</a>, 
-												// <a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
-												// 	data-target="#stock_del"
-												// 	data-id="{{$dt['id']}}"
-												// 	data-title="Hapus Data Produk {{$dt['name']}}"
-												// 	data-action="{{ route('admin.stock.destroy', $dt['id']) }}">
-												// 	Hapus
-												// </a>
 												?>                                          
 											</td>    
 										</tr>       
 									@endforeach 
 									
 									@include('pageElements.modalDelete', [
-											'modal_id'      => 'stock_del', 
+											'modal_id'      => 'price_del', 
 											'modal_route'   => route('admin.stock.destroy')
 									])						
 
@@ -180,9 +182,13 @@
 						</table>
 					</div>					
 				</div>
-			</div>		
+			</div>	
+			<div class="row">
+				<div class="col-md-12 hollow-pagination" style="text-align:right;">
+					{!! $paging->appends(Input::all())->render() !!}
+				</div>	
+			</div>							
 		</div>
 	<div>
-
 <!-- end of content -->
 @stop

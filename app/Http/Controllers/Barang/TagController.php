@@ -179,8 +179,15 @@ class TagController extends AdminController
 			$this->errors 							= $result['message'];
 		}
 
-		//return
-		$this->page_attributes->success 			= "Data telah dihapus";
+		//return view
+		if(!empty($id))
+		{
+			$this->page_attributes->success 		= "Data Tag Telah Diedit";
+		}
+		else
+		{
+			$this->page_attributes->success 		= "Data Tag Telah Ditambahkan";
+		}
 		
 		return $this->generateRedirectRoute('admin.tag.index');														
 	}

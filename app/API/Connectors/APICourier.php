@@ -11,11 +11,11 @@ class APICourier extends APIData
 		$this->apiUrl	 				= '/couriers';
 	}
 
-	public function getCouriers($filter = null)
+	public function getIndex($parameter = null)
 	{
-		if(!is_null($filter))
+		if(!is_null($parameter))
 		{
-			$this->apiData 				= array_merge($this->apiData, ["search" => $filter]);
+			$this->apiData 				= array_merge($this->apiData, $parameter);
 		}
 
 		return $this->get();

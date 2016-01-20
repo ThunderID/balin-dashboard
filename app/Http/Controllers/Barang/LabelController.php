@@ -52,7 +52,9 @@ class LabelController extends AdminController
 															'skip'		=> ($page - 1) * $this->take,
 														]);
 
-		$this->page_attributes->data 				= ['take' => $this->take, 'data' => []];
+		$this->page_attributes->data 				= 	[
+															'data' 		=> []
+														];
 
 		foreach ($labels['data']['data'] as $key => $value) 
 		{

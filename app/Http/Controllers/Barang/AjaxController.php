@@ -90,5 +90,33 @@ class AjaxController extends Controller
 
 		//return
 		return $datas;
+	}
+
+	public function FindProductByName()
+	{
+		//get input 
+		$input 										= Input::get('name');
+
+		//get data 
+		$APIAjax	 								= new APIAjax;
+		$product									= $APIAjax->getProduct(['name' => $input]);		
+
+		//check if success
+		if($product['status'] != 'success')
+		{
+			dd($product);
+			return abort(404);
+		}
+
+		//formating data
+		$datas 										= [];
+		foreach ($product['data']['data'] as $key => $data) 
+		{
+			$datas[$key]['id']						= $data['id'];
+			$datas[$key]['name']					= $data['name'];
+		}										
+
+		//return
+		return $datas;
 	}		
 }

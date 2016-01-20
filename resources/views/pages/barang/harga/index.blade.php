@@ -44,36 +44,43 @@
 							<th class="col-md-2 text-left">
 								Thumbnail
 							</th>
-							<th class="col-md-4">
+							<th class="col-md-3">
 								Nama Produk
 							</th>
-							<th class="col-md-2 text-center">
+							<th class="col-md-1 text-center">
 								UPC
 							</th>
-							<th class="col-md-2 text-center">
-								Stok
+							<th class="col-md-2 text-right">
+								Harga
 							</th>
+							<th class="col-md-2 text-right">
+								Harga Promo
+							</th>							
 							<th class="text-center">
 								Kontrol
 							</th>	
 						</tr>
 					</thead>
 					<tbody>
-						@if(count($data['product']['data']) == 0)
+						@if(count($data['product']['data']['data']) == 0)
 							<tr>
 								<td colspan="7" class="text-center">
 									Tidak ada data
 								</td>
 							</tr>
 						@else                                                                 
-							@foreach($data['product']['data'] as $dt)						
+							@foreach($data['product']['data']['data'] as $key => $dt)						
 							<tr>
 								<td class="text-left">
-									nomer
+									{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $key + 1}}
 								</td>
 
 								<td class="text-left">
-									{!! HTML::image($dt['thumbnail'], 'default', ['class' => 'img-responsive', 'style' => 'max-width:100px;']) !!}
+									@if(is_null($dt['thumbnail']))
+										{!! HTML::image('https://pbs.twimg.com/profile_images/600060188872155136/st4Sp6Aw.jpg', 'default', ['class' => 'img-responsive', 'style' => 'width:100px;height:144px;']) !!}
+									@else
+										{!! HTML::image($dt['thumbnail'], 'default', ['class' => 'img-responsive', 'style' => 'max-width:100px;']) !!}
+									@endif									
 								</td>
 
 								<td class="text-left">
@@ -84,12 +91,16 @@
 									{{ $dt['upc'] }}
 								</td>							
 
-								<td class="text-center">
-									{{$dt['current_stock']}}
+								<td class="text-right">
+									 @money_indo($dt['price'])
+								</td>								
+
+								<td class="text-right">
+									 @money_indo($dt['promo_price'])
 								</td>
 
 								<td class="text-center">
-									<a href="{{ route('admin.price.show', $dt['id']) }}"> Detail</a>
+									<a href="{{ route('admin.price.show', ['productId' => $dt['id']]) }}"> Detail</a>
 								</td>																		
 							</tr>
 							@endforeach
@@ -99,6 +110,11 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-12 hollow-pagination" style="text-align:right;">
+			{!! $paging->appends(Input::all())->render() !!}
+		</div>	
+	</div>		
 <!-- end of content -->
 
 </div>

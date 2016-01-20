@@ -59,43 +59,115 @@
 					<div class="row">
 						<div class="col-md-12">
 							<h2 style="margin-top:0px;">{{ ucwords($dt['name']) }}</h2>
-							<h5>
-								<strong>UPC</strong> 
-								{{ $dt['upc'] }}
-							</h5> 							
-							<h5>
-								<strong>Harga</strong> 
-								@money_indo($dt['price'])
-								<span><a href="{{ route('admin.price.show', ['pid' => $dt['id']]) }}">[ Histori Harga ]</a></span>
-							</h5> 
-							<h5><strong>Harga Promo</strong> @money_indo($dt['price'])</h5>
-							<h5><strong>Label &nbsp;</strong>
-								@foreach($dt['labels'] as $lable)
-					                <label class="label label-success">{{ str_replace('_', ' ', ucfirst($lable['lable'] ) )}}</label> &nbsp;
-								@endforeach
-							</h5>
-							</br>
-							<h5>
-								<i class = "fa fa-folder"></i>
-								@foreach($dt['categories'] as $key => $value)
-									@if($key!=0)
-										,
-									@endif
-									<a href="#">{!! $value['name'] !!}</a>
-								@endforeach
-								<br/>
-								<br/>
-								<i class = "fa fa-tags"></i>
-								@foreach($dt['tags'] as $key => $value)
-									@if($key!=0)
-										,
-									@endif
-									<a href="#">{!! $value['name'] !!}</a>
-								@endforeach
-							</h5>
-							</br>
 						</div>
 					</div>
+
+					<div class="row">
+						<div class="col-md-12 col-sm-6 col-xs-11">
+							<div class="row">
+								<div class="col-md-3 col-sm-7 col-xs-5">
+									<h4>UPC</h4> 
+								</div>
+								<div class="col-md-1 col-sm-1 col-xs-2">
+									<h4>:</h4> 
+								</div>
+								<div class="col-md-8 col-sm-3 col-xs-5">
+									<h4>{{ $dt['upc'] }}</h4> 
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12 col-sm-6 col-xs-11">
+							<div class="row">
+								<div class="col-md-3 col-sm-7 col-xs-5">
+									<h4>Harga</h4> 
+								</div>
+								<div class="col-md-1 col-sm-1 col-xs-2">
+									<h4>:</h4> 
+								</div>
+								<div class="col-md-8 col-sm-3 col-xs-5">
+									<h4>
+										@money_indo($dt['price']) &nbsp;
+										<span><a href="{{ route('admin.price.show', ['pid' => $dt['id']]) }}">[ Histori Harga ]</a></span>
+									</h4>
+								</div>
+							</div>
+						</div>
+					</div>		
+
+					<div class="row">
+						<div class="col-md-12 col-sm-6 col-xs-11">
+							<div class="row">
+								<div class="col-md-3 col-sm-7 col-xs-5">
+									<h4>Harga Promo</h4> 
+								</div>
+								<div class="col-md-1 col-sm-1 col-xs-2">
+									<h4>:</h4> 
+								</div>
+								<div class="col-md-8 col-sm-3 col-xs-5">
+									<h4>@money_indo($dt['price'])</h4> 
+								</div>
+							</div>
+						</div>
+					</div>								
+							
+ 
+					<div class="row">
+						<div class="col-md-12 col-sm-6 col-xs-11">
+							<div class="row">
+								<div class="col-md-3 col-sm-7 col-xs-5">
+									<h4>Label</h4> 
+								</div>
+								<div class="col-md-1 col-sm-1 col-xs-2">
+									<h4>:</h4> 
+								</div>
+								<div class="col-md-8 col-sm-3 col-xs-5">
+									@foreach($dt['labels'] as $lable)
+						                <label class="label label-default">{{ str_replace('_', ' ', ucfirst($lable['lable'] ) )}}</label> &nbsp;
+									@endforeach
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12 col-sm-6 col-xs-11">
+							<div class="row">
+								<div class="col-md-3 col-sm-7 col-xs-5">
+									<h4>Kategori</h4> 
+								</div>
+								<div class="col-md-1 col-sm-1 col-xs-2">
+									<h4>:</h4> 
+								</div>
+								<div class="col-md-8 col-sm-3 col-xs-5">
+									@foreach($dt['categories'] as $category)
+						                <label class="label label-default">{{ str_replace('_', ' ', ucfirst($category['name'] ) )}}</label> &nbsp;
+									@endforeach									
+								</div>
+							</div>
+						</div>
+					</div>		
+
+					<div class="row">
+						<div class="col-md-12 col-sm-6 col-xs-11">
+							<div class="row">
+								<div class="col-md-3 col-sm-7 col-xs-5">
+									<h4>Tag</h4> 
+								</div>
+								<div class="col-md-1 col-sm-1 col-xs-2">
+									<h4>:</h4> 
+								</div>
+								<div class="col-md-8 col-sm-3 col-xs-5">
+									@foreach($dt['tags'] as $tag)
+						                <label class="label label-default">{{ str_replace('_', ' ', ucfirst($tag['slug'] ) )}}</label> &nbsp;
+									@endforeach									
+								</div>
+							</div>
+						</div>
+					</div>
+
 				</div>
 			</div>
 

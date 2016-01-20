@@ -45,4 +45,17 @@ class APIAjax extends APIData
 
 		return $this->get();
 	}	
+
+	public function getProduct($filter = null)
+	{
+		$this->apiUrl 					= '/products';
+
+		if(!is_null($filter))
+		{
+			$this->apiData 				= array_merge($this->apiData, ["search" => $filter]);
+		}
+
+		return $this->get();
+	}	
+
 }

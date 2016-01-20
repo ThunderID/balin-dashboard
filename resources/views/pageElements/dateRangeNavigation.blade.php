@@ -26,7 +26,7 @@
 					{!! Form::input('text', 'start', Null ,
 							[
 								'class'         => 'form-control',
-								'placeholder'   => 'Cari label',
+								'placeholder'   => 'Tanggal Mulai',
 								'required'      => 'required',
 								'disabled'		=> 'disabled'
 							]
@@ -34,8 +34,8 @@
 				@else
 					{!! Form::input('text', 'start', Null ,
 							[
-								'class'         => 'form-control',
-								'placeholder'   => 'Cari label',
+								'class'         => 'form-control date-format',
+								'placeholder'   => 'Tanggal Mulai',
 								'required'      => 'required',
 							]
 					) !!} 
@@ -54,7 +54,7 @@
 					{!! Form::input('text', 'end', Null ,
 							[
 								'class'         => 'form-control',
-								'placeholder'   => 'Cari label',
+								'placeholder'   => 'Tanggal Akhir',
 								'required'      => 'required',
 								'disabled'		=> 'disabled'
 							]
@@ -62,8 +62,8 @@
 				@else
 					{!! Form::input('text', 'end', Null ,
 							[
-								'class'         => 'form-control',
-								'placeholder'   => 'Cari label',
+								'class'         => 'form-control date-format',
+								'placeholder'   => 'Tanggal Akhir',
 								'required'      => 'required',
 							]
 					) !!} 
@@ -97,3 +97,8 @@
     </div>
 </div>
 @endif
+
+
+@section('script_plugin')
+	@include('plugins.inputMask')
+@append

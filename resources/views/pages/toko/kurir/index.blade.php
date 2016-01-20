@@ -1,3 +1,7 @@
+<?php
+	dd($data['courier']['data']);
+?>
+
 @extends('page_templates.layout')
 @section('content')
 <div class="container-fluid">
@@ -48,7 +52,7 @@
 							@foreach($data['courier']['data'] as $dt)
 								<tr>
 									<td class="text-center">1</td>
-									<td class="text-center">{!! HTML::image($dt->logo, 'logo', ['class' => 'img-responsive', 'style' => 'max-width:100px;']) !!}</td>
+									<td class="text-center"></td>
 									<td>{{ $dt['name'] }}</td>
 									<td>
 										{{ $dt['address']['address'] }}

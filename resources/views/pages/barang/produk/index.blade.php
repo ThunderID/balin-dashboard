@@ -63,10 +63,10 @@
 								</td>
 							</tr>
 						@else                                                                 
-							@foreach($data['product']['data']['data'] as $dt)
+							@foreach($data['product']['data']['data'] as $key => $dt)
 								<tr>
 									<td class="text-center">
-										no
+										{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $key + 1}}
 									</td>
 									<td>
 										@if(is_null($dt['thumbnail']))

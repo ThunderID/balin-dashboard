@@ -33,17 +33,32 @@ class CourierController extends AdminController
 			$searchResult							= null;
 		}
 
+		//get curent page
+		if(is_null(Input::get('page')))
+		{
+			$page 									= 1;
+		}
+		else
+		{
+			$page 									= Input::get('page');
+		}
+
 		// data here
-		// $APICourier 								= new APICourier;
-		// $courier 									= $APICourier->getCouriers([
-		// 													'name' 	=> Input::get('q')
-		// 												]);		
-		$courier 									=   ['data' => [] ];
+		$APICourier 								= new APICourier;
+		$courier 									= $APICourier->getIndex([
+															'search' 	=> 	[
+																				'name' 	=> Input::get('q'),
+																			],
+															'sort' 		=> 	[
+																				'name'	=> 'asc',
+																			],																		
+															'take'		=> $this->take,
+															'skip'		=> ($page - 1) * $this->take,
+														]);
 
 		$this->page_attributes->data				= 	[
-															'courier' => $courier
+															'courier' 	=> $courier['data']
 														];
-
 
 		//breadcrumb
 		$breadcrumb 								= [];	

@@ -15,8 +15,8 @@ Route::group(['prefix' => 'cms'], function()
 	{
 		Route::resource('produk',  	'ProductController',		['names' => ['index' => 'admin.product.index', 'create' => 'admin.product.create', 'store' => 'admin.product.store', 'show' => 'admin.product.show', 'edit' => 'admin.product.edit', 'update' => 'admin.product.update', 'destroy' => 'admin.product.destroy']]);
 		Route::resource('produk/{pid}/varian','VarianController',['names' => ['index' => 'admin.varian.index', 'create' => 'admin.varian.create', 'store' => 'admin.varian.store', 'show' => 'admin.varian.show', 'edit' => 'admin.varian.edit', 'update' => 'admin.varian.update', 'destroy' => 'admin.varian.destroy']]);
-		Route::resource('harga',  	'PriceController',			['names' => ['index' => 'admin.price.index', 'create' => 'admin.price.create', 'store' => 'admin.price.store', 'show' => 'admin.price.show', 'edit' => 'admin.price.edit', 'update' => 'admin.price.update', 'destroy' => 'admin.price.destroy']]);
-		Route::get('harga/{id}/new',							['uses' => 'PriceController@create', 'as' => 'admin.price.show.create']);
+		Route::resource('harga',  	'PriceController',			['names' => ['index' => 'admin.price.index', 'create' => 'admin.price.create', 'store' => 'admin.price.store', 'show' => 'admin.price.show']]);
+		Route::resource('harga/{productId}/detail', 'PriceController', ['names' => ['create' => 'admin.price.detail.create', 'store' => 'admin.price.detail.store', 'edit' => 'admin.price.detail.edit', 'update' => 'admin.price.detail.update', 'destroy' => 'admin.price.detail.destroy']]);
 		Route::resource('stok',  	'StockController',			['names' => ['index' => 'admin.stock.index', 'create' => 'admin.stock.create', 'store' => 'admin.stock.store', 'show' => 'admin.stock.show', 'edit' => 'admin.stock.edit', 'update' => 'admin.stock.update', 'destroy' => 'admin.stock.destroy']]);
 		Route::resource('kategori', 'CategoryController',		['names' => ['index' => 'admin.category.index', 'create' => 'admin.category.create', 'store' => 'admin.category.store', 'show' => 'admin.category.show', 'edit' => 'admin.category.edit', 'update' => 'admin.category.update', 'destroy' => 'admin.category.destroy']]);
 		Route::resource('tag', 		'TagController',			['names' => ['index' => 'admin.tag.index', 'create' => 'admin.tag.create', 'store' => 'admin.tag.store', 'show' => 'admin.tag.show', 'edit' => 'admin.tag.edit', 'update' => 'admin.tag.update', 'destroy' => 'admin.tag.destroy']]);
@@ -26,7 +26,7 @@ Route::group(['prefix' => 'cms'], function()
 		Route::get('tag/ajax/findName',							['uses' => 'AjaxController@FindTagByName', 	'as' => 'ajax.tag.findName']);
 		Route::get('category/ajax/findName',					['uses' => 'AjaxController@FindCategoryByName', 	'as' => 'ajax.category.findName']);
 		Route::get('label/ajax/findName',						['uses' => 'AjaxController@FindLabelByName', 	'as' => 'ajax.label.findName']);
-		Route::get('product/ajax/findName',						['uses' => 'ProductController@AjaxFindName', 	'as' => 'ajax.product.findName']);
+		Route::get('product/ajax/findName',						['uses' => 'AjaxController@FindProductByName', 	'as' => 'ajax.product.findName']);
 	});
 
 	Route::group(['prefix' => 'toko', 'namespace' => 'Toko\\'], function()

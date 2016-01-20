@@ -59,7 +59,7 @@ class ProductController extends AdminController
 														]);
 
 		$this->page_attributes->data				= 	[
-															'product' => $product
+															'product' => $product,
 														];
 
 		//paginate
@@ -263,7 +263,16 @@ class ProductController extends AdminController
 			dd($error);
 		}
 
-		$this->page_attributes->success 			= "Data telah ditambahkan";
+		//return view
+		if(!empty($id))
+		{
+			$this->page_attributes->success 		= "Data Produk Telah Diedit";
+		}
+		else
+		{
+			$this->page_attributes->success 		= "Data Produk Telah Ditambahkan";
+		}
+
 		return $this->generateRedirectRoute('admin.product.index');
 	}
 
@@ -278,9 +287,4 @@ class ProductController extends AdminController
 	}		
 
 	
-	//AJAX
-	public function AjaxFindName()
-	{
-		return json_encode('test');
-	}	
 }
