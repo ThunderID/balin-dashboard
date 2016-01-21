@@ -36,4 +36,12 @@ class APICourier extends APIData
 
 		return $this->get();
 	}	
+
+	public function deleteData($id)
+	{
+		$this->apiUrl 				= '/courier/delete/' . $id;
+		$this->apiData 				= array_merge($this->apiData,  ["id" => $id]);
+
+		return $this->delete();
+	}		
 }
