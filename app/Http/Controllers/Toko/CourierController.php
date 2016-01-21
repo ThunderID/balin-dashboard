@@ -60,6 +60,9 @@ class CourierController extends AdminController
 															'courier' 	=> $courier['data']
 														];
 
+		//paginate
+		$this->paginate(route('admin.courier.index'), $courier['data']['count'], $page);
+
 		//breadcrumb
 		$breadcrumb 								= [];	
 
@@ -73,6 +76,47 @@ class CourierController extends AdminController
 
 	public function show($id)
 	{
+		//get data 
+		$APICourier									= new APICourier;
+		$courier									= $APICourier->getShow($id);
+
+		$this->page_attributes->subtitle 			= $courier['data']['name'];		
+
+		// filters
+		if(Input::has('q'))
+		{
+			$filters 								= ['name' => Input::get('q')];
+			$this->page_attributes->search 			= Input::get('q');
+
+			// $collection 							= collect($courier['data']['products']);
+
+			// $result 								= 	$collection->filter(function ($col) {
+			// 												return strpos(strtolower($col['name']), strtolower(Input::get('q'))) !== FALSE;
+			// 											});
+
+			// $category['data']['products']			= $result;				
+		}
+		else
+		{
+			$this->page_attributes->search 			= null;
+		}
+
+		// data here
+		$this->page_attributes->data				= 	[
+															'courier' 	=> $courier['data'],
+															'recents' 	=> [],
+														];															
+		//breadcrumb
+		$breadcrumb 								=	[
+															$courier['data']['name'] => route('admin.courier.show', ['id' => $courier['data']['name']])
+														];	
+
+		//generate View
+		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
+
+		$this->page_attributes->source 				= $this->page_attributes->source . 'show';
+
+		return $this->generateView();
 
 	}	
 
@@ -89,13 +133,17 @@ class CourierController extends AdminController
 		}
 		else
 		{
-			$data 									= ['name' => 'nama'];
+			$APICourier								= new APICourier;
+
+			$courier 								= $APICourier->getShow($id)['data'];
+
+			$this->page_attributes->data			= $courier;
 
 			$breadcrumb								=	[
-															'Edit Data ' . $data['name']  =>  route('admin.courier.create'),
+															'Edit'  =>  route('admin.courier.edit', ['id' => $id]),
 														];
 
-			// $this->page_attributes->subtitle 		= $courier->name;
+			$this->page_attributes->subtitle 		= 'Edit Data';
 		}
 
 		//generate View
@@ -111,9 +159,58 @@ class CourierController extends AdminController
 		return $this->create($id);
 	}
 
-	public function store($id = null)
+	public function store($id = "")
 	{
+		//price
+		$tmpAddress 								= 	[
+															'id' 			=> "",
+															'phone'			=> Input::get('phone'),
+															'address'		=> Input::get('address'),
+															'zipcode'		=> Input::get('zipcode'),
+														];
 
+		//image
+		$tmpImage 									= 	[
+															'id' 			=> "",
+															'thumbnail'		=> Input::get('thumbnail'),
+															'image_xs'		=> Input::get('image_xs'),
+															'image_sm'		=> Input::get('image_sm'),
+															'image_md'		=> Input::get('image_md'),
+															'image_lg'		=> Input::get('image_lg'),
+															'is_default'	=> TRUE,
+														];	
+
+		//get data
+		$data 										= 	[
+															'id' 			=> $id,
+															'name'			=> Input::get('name'),
+															'shippingcosts'	=> [],
+															'images'		=> ['0' => $tmpImage],
+															'addresses'		=> ['0' => $tmpAddress],
+														];
+
+		//api
+		$APICourier 								= new APICourier;
+
+		$result 									= $APICourier->postData($data);
+
+		//response
+		if($result['status'] != 'success')
+		{
+			$this->errors 							= $result['message'];
+		}
+
+		//return view
+		if(!empty($id))
+		{
+			$this->page_attributes->success 		= "Data Kurir Telah Diedit";
+		}
+		else
+		{
+			$this->page_attributes->success 		= "Data Kurir Telah Ditambahkan";
+		}
+		
+		return $this->generateRedirectRoute('admin.courier.index');				
 	}
 
 	public function Update($id)
@@ -123,6 +220,20 @@ class CourierController extends AdminController
 
 	public function destroy($id)
 	{
+		$APICourier 								= new APICourier;
 
+		//api
+		$result 									= $APICourier->deleteData($id);
+
+		//response
+		if($result['status'] != 'success')
+		{
+			$this->errors 							= $result['message'];
+		}
+
+		//return
+		$this->page_attributes->success 			= "Data telah dihapus";
+		
+		return $this->generateRedirectRoute('admin.courier.index');	
 	}		
 }
