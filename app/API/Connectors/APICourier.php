@@ -8,11 +8,12 @@ class APICourier extends APIData
 	function __construct() 
 	{
 		parent::__construct();
-		$this->apiUrl	 				= '/couriers';
 	}
 
 	public function getIndex($parameter = null)
 	{
+		$this->apiUrl	 				= '/couriers';
+
 		if(!is_null($parameter))
 		{
 			$this->apiData 				= array_merge($this->apiData, $parameter);
@@ -20,4 +21,19 @@ class APICourier extends APIData
 
 		return $this->get();
 	}
+
+	public function postData($data)
+	{
+		$this->apiUrl 					= '/courier/store';
+		$this->apiData 					= array_merge($this->apiData, ["courier" => $data]);
+
+		return $this->post();
+	}		
+
+	public function getShow($id)
+	{
+		$this->apiUrl 					= '/courier/' . $id;
+
+		return $this->get();
+	}	
 }
