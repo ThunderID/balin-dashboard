@@ -9,73 +9,83 @@
 <!-- micro template section	-->
 	<div class="hidden">
 		<div id="tmplt" class="m-b-sm">
-			<div class="col-md-4">
-				<div class="form-group">
-					<label for="thumbnail" class="text-capitalize">URL Image (320 X 463 px)</label>
-					{!! Form::text('thumbnail[]', null, [
-								'class'         => 'form-control input-image-thumbnail', 
-								'tabindex'      => '11',
-								'placeholder'   => 'Masukkan url image thumbnail',
-					]) !!}
+			<div class="row">
+				<div class="col-md-2 col-sm-3 col-xs-12">
+					<label for="thumbnail" class="text-capitalize">Preview</label>
+					{!! HTML::image('https://pbs.twimg.com/profile_images/600060188872155136/st4Sp6Aw.jpg', 'default', ['class' => 'img-responsive img-preview']) !!}				
+				</div>
+				<div class="col-md-10 col-sm-9 col-xs-12">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="thumbnail" class="text-capitalize">URL Image (320 X 463 px)</label>
+								{!! Form::text('thumbnail[]', null, [
+											'class'         => 'form-control input-image-thumbnail', 
+											'tabindex'      => '11',
+											'placeholder'   => 'Masukkan url image thumbnail',
+								]) !!}
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="logo" class="text-capitalize">URL Image (320 X 463 px)</label>
+								{!! Form::text('image_xs[]', null, [
+											'class'         => 'form-control input-image-xs', 
+											'tabindex'      => '11',
+											'placeholder'   => 'Masukkan url image xs',
+								]) !!}
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="logo" class="text-capitalize">URL Image (320 X 463 px)</label>
+								{!! Form::text('image_sm[]', null, [
+											'class'         => 'form-control input-image-sm', 
+											'tabindex'      => '11',
+											'placeholder'   => 'Masukkan url image sm',
+								]) !!}
+							</div>
+						</div>											
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="logo" class="text-capitalize">URL Image (772 X 1043 px)</label>
+								{!! Form::text('image_md[]', null, [
+											'class'         => 'form-control input-image-md', 
+											'tabindex'      => '11',
+											'placeholder'   => 'Masukkan url image md',
+								]) !!}
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="logo" class="text-capitalize">URL Image (992 X 1434 px)</label>
+								{!! Form::text('image_lg[]', null, [
+											'class'         => 'form-control input-image-lg', 
+											'tabindex'      => '11',
+											'placeholder'   => 'Masukkan url image lg',
+								]) !!}							
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">					
+								<label for="default" class="text-capitalize">Default</label>
+								<select name="default[]" class="form-control default" tabindex="11" onchange="ImageDefaultValidation(this)">
+							        <option value="0" selected="selected">False</option>
+							        <option value="1" >True</option>
+								</select>							
+							</div>						
+						</div>
+						<div class="col-md-1">
+							<div class="form-group">
+								<a href="javascript:;" class="btn btn-sm btn-default m-t-mds btn-add-image pull-left">
+									<i class="fa fa-plus"></i>
+								</a>
+							</div>
+						</div>					
+						<div class="clearfix">&nbsp;</div>
+					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="form-group">
-					<label for="logo" class="text-capitalize">URL Image (320 X 463 px)</label>
-					{!! Form::text('image_xs[]', null, [
-								'class'         => 'form-control input-image-xs', 
-								'tabindex'      => '11',
-								'placeholder'   => 'Masukkan url image xs',
-					]) !!}
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="form-group">
-					<label for="logo" class="text-capitalize">URL Image (320 X 463 px)</label>
-					{!! Form::text('image_sm[]', null, [
-								'class'         => 'form-control input-image-sm', 
-								'tabindex'      => '11',
-								'placeholder'   => 'Masukkan url image sm',
-					]) !!}
-				</div>
-			</div>											
-			<div class="col-md-4">
-				<div class="form-group">
-					<label for="logo" class="text-capitalize">URL Image (772 X 1043 px)</label>
-					{!! Form::text('image_md[]', null, [
-								'class'         => 'form-control input-image-md', 
-								'tabindex'      => '11',
-								'placeholder'   => 'Masukkan url image md',
-					]) !!}
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="form-group">
-					<label for="logo" class="text-capitalize">URL Image (992 X 1434 px)</label>
-					{!! Form::text('image_lg[]', null, [
-								'class'         => 'form-control input-image-lg', 
-								'tabindex'      => '11',
-								'placeholder'   => 'Masukkan url image lg',
-					]) !!}							
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="form-group">					
-					<label for="default" class="text-capitalize">Default</label>
-					<select name="default[]" class="form-control default" tabindex="11" onchange="ImageDefaultValidation(this)">
-				        <option value="0" selected="selected">False</option>
-				        <option value="1" >True</option>
-					</select>							
-				</div>						
-			</div>
-			<div class="col-md-1">
-				<div class="form-group">
-					<a href="javascript:;" class="btn btn-sm btn-default m-t-mds btn-add-image pull-left">
-						<i class="fa fa-plus"></i>
-					</a>
-				</div>
-			</div>					
-			<div class="clearfix">&nbsp;</div>
 		</div>
 	</div>
 <!-- end of micro template section -->
@@ -294,6 +304,10 @@
 	        var text                    = '{{ ucwords(str_replace('_', ' ', $label['lable'])) }}';
 	        preload_data_label.push({ id: id, text: text});
 	    @endforeach
+	@elseif(Input::get('label_id') && Input::get('label'))    
+        var id                      = '{{ Input::get('label_id') }}';
+        var text                    = '{{ ucwords(str_replace('_', ' ', Input::get('label'))) }}';
+        preload_data_label.push({ id: id, text: text});
     @endif
 	<!-- end of preload select2 label -->
 
@@ -305,6 +319,10 @@
 	        var text                    = '{{$category['name']}}';
 	        preload_data_category.push({ id: id, text: text});
 	    @endforeach
+	@elseif(Input::get('category_id') && Input::get('category'))    
+        var id                      = '{{ Input::get('category_id') }}';
+        var text                    = '{{ ucwords(str_replace('_', ' ', Input::get('category'))) }}';
+        preload_data_category.push({ id: id, text: text});
     @endif
 	<!-- end of preload select2 category -->
 
@@ -316,6 +334,10 @@
 	        var text                    = '{{$tag['slug']}}';
 	        preload_data_tag.push({ id: id, text: text});    
 	    @endforeach
+	@elseif(Input::get('tag_id') && Input::get('tag'))    
+        var id                      = '{{ Input::get('tag_id') }}';
+        var text                    = '{{ ucwords(str_replace('_', ' ', Input::get('tag'))) }}';
+        preload_data_tag.push({ id: id, text: text});
     @endif
 	<!-- end of preload select2 tag -->	
 @stop

@@ -13,7 +13,7 @@
 	<!-- title sub-page -->
 	<div class="row">
 		<div class="col-md-12 m-b-md">
-			<h2 style="margin-top:0px;">Detail Varian</h2>
+			<h2 style="margin-top:0px;">Detail Ukuran</h2>
 
 			@include('pageElements.alertbox')
 		</div>
@@ -35,13 +35,13 @@
 				<div class="col-md-5 col-sm-6 col-xs-11">
 					<div class="row">
 						<div class="col-md-6 col-sm-7 col-xs-5">
-							<h4>Nama Varian</h4> 
+							<h4>Ukuran</h4> 
 						</div>
 						<div class="col-md-1 col-sm-1 col-xs-2">
 							<h4>:</h4> 
 						</div>
 						<div class="col-md-5 col-sm-3 col-xs-5">
-							<h4>Ukuran {{ $data['data']['size'] }}</h4> 
+							<h4>{{ $data['data']['size'] }}</h4> 
 						</div>
 					</div>
 				</div>
@@ -65,7 +65,7 @@
 			<div class="row clearfix m-b-md">&nbsp;</div>
 			<div class="row">
 				<div class="col-md-12 m-b-xs">
-					<h4>Daftar Produk Dalam Label Ini</h4> 
+					<h4>Data Stok</h4> 
 				</div>
 
 				<div class="col-md-4 col-sm-6">

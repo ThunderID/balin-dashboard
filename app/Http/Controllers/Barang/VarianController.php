@@ -39,7 +39,7 @@ class VarianController extends AdminController
 		//breadcrumb
 		$breadcrumb 								=	[
 															$product['data']['name'] => route('admin.product.show', ['id' => $pid]),
-															'Size ' . $this->page_attributes->data['data']['size'] => route('admin.varian.show', ['pid' => $pid, 'id' => $id])
+															'Ukuran ' . $this->page_attributes->data['data']['size'] => route('admin.varian.show', ['pid' => $pid, 'id' => $id])
 														];	
 
 		//generate View
@@ -73,23 +73,19 @@ class VarianController extends AdminController
 		{
 			$breadcrumb								=	[
 															$data['name']  =>  route('admin.product.show', ['id' => $data['pid']] ),
-															'Varian Baru'  =>  route('admin.varian.create', ['pid' => $pid ] ),
+															'Ukuran Baru'  =>  route('admin.varian.create', ['pid' => $pid ] ),
 														];
-
-			$this->page_attributes->subtitle 		= $data['name'];
 		}
 		else
 		{
 			$breadcrumb								=	[
 															$data['name']  =>  route('admin.product.show', ['id' => $data['pid']] ),
-															'Edit Varian ' . $data['data']['size']  =>  route('admin.varian.edit', ['pid' => $pid,'id' => $id] ),
+															'Edit Ukuran ' . $data['data']['size']  =>  route('admin.varian.edit', ['pid' => $pid,'id' => $id] ),
 														];
-
-			$this->page_attributes->subtitle 		= $data['data']['size'];
 		}
 
 		//generate View
-		$this->page_attributes->title 	 			= $data['name'];
+		$this->page_attributes->subtitle 			= $data['name'];
 
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 

@@ -14,7 +14,7 @@
 	<div class="row">
 		<div class="col-md-12 m-b-md">
 			<h4 class="sub-header">
-				Data varian {{ $data['data']['size'] }}
+				Data Ukuran {{ $data['data']['size'] }}
 			</h4> 				
 
 			@include('pageElements.alertbox')

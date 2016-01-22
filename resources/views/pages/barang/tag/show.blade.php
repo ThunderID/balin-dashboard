@@ -85,7 +85,7 @@
 				</div>
 				<div class="col-md-12 m-t-sm m-b-lg">
 					@include('pageElements.indexNavigation', [
-						'newDataRoute' 		=> route('admin.product.create'),
+						'newDataRoute' 		=> route('admin.product.create', ['tag_id' => $data['id'], 'tag' => $data['name']]),
 						'filterDataRoute' 	=> route('admin.tag.show', ['id' => $data['id']])
 					])	
 					@include('pageElements.searchResult', [

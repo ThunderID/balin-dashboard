@@ -140,10 +140,11 @@ class CourierController extends AdminController
 			$this->page_attributes->data			= $courier;
 
 			$breadcrumb								=	[
+															$courier['name']  =>  route('admin.courier.show', ['id' => $id]),
 															'Edit'  =>  route('admin.courier.edit', ['id' => $id]),
 														];
 
-			$this->page_attributes->subtitle 		= 'Edit Data';
+			$this->page_attributes->subtitle 		= $courier['name'];
 		}
 
 		//generate View

@@ -14,7 +14,7 @@
 	$('.btn-del').click(function() {template_del_product($(this))});
 	function template_del_product(e)
 	{
-		e.parent().parent().parent().remove();
+		e.parent().parent().parent().parent().parent().remove();
 		$('.wizard .content').animate({ height: $('.body.current').outerHeight() }, "slow");
 		$('.btn-del').click(function() {template_del_product($(this))});
 		// calculate_total_transaction();

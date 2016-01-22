@@ -93,11 +93,12 @@ class TagController extends AdminController
 
 			$collection 							= collect($tag['data']['products']);
 
+
 			$result 								= 	$collection->filter(function ($col) {
 															return strpos(strtolower($col['name']), strtolower(Input::get('q'))) !== FALSE;
-														});
+														});			
 
-			$category['data']['products']			= $result;				
+			$tag['data']['products']			= $result;				
 		}
 		else
 		{
@@ -140,10 +141,11 @@ class TagController extends AdminController
 			$this->page_attributes->data			= $tag;
 
 			$breadcrumb								=	[
-															'Edit Tag ' . $tag['name']  =>  route('admin.tag.edit', ['id' => $id]),
+															$tag['name']  =>  route('admin.tag.show', ['id' => $id]),
+															'Edit'  =>  route('admin.tag.edit', ['id' => $id]),
 														];
 
-			$this->page_attributes->subtitle 		= 'Edit Data';
+			$this->page_attributes->subtitle 		= $tag['name'];
 		}
 
 		//generate View

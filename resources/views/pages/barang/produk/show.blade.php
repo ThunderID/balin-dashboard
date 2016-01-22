@@ -175,13 +175,13 @@
 
 			<div class="row">
 				<div class="col-md-12">
-					<h3>Varian Produk</h3>
+					<h3>Ukuran Produk</h3>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-12">
-					<a class="btn btn-default" href="{{ route('admin.varian.create', ['pid' => $dt['id']] ) }}">Varian Baru</a>
+					<a class="btn btn-default" href="{{ route('admin.varian.create', ['pid' => $dt['id']] ) }}">Ukuran Baru</a>
 					<div class="table-responsive">
 						</br>
 						<table class="table table-bordered table-hover table-striped">

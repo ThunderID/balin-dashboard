@@ -139,10 +139,11 @@ class CategoryController extends AdminController
 			$this->page_attributes->data			= $category;
 
 			$breadcrumb								=	[
-															'Edit Kategori '. $category['name'] =>  route('admin.category.edit', ['id' => $id]),
+															$category['name'] =>  route('admin.category.show', ['id' => $id]),
+															'Edit' =>  route('admin.category.edit', ['id' => $id]),
 														];
 
-			$this->page_attributes->subtitle 		= 'Edit Data';
+			$this->page_attributes->subtitle 		= $category['name'];
 		}
 
 		//generate View

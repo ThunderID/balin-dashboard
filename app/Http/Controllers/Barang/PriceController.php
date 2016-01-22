@@ -155,7 +155,7 @@ class PriceController extends AdminController
 
 				$breadcrumb							=	[
 															$product['data']['name'] => route('admin.price.show', ['productId' => $productId]),
-															'Data Baru' => route('admin.price.detail.create', ['productId' => $productId]),
+															'Harga Baru' => route('admin.price.detail.create', ['productId' => $productId]),
 														];
 
 				$this->page_attributes->subtitle 	= $product['data']['name'];
@@ -177,7 +177,7 @@ class PriceController extends AdminController
 
 				$breadcrumb							=	[
 															$product['data']['name'] => route('admin.price.show', ['productId' => $productId]),
-															'Edit'  =>  route('admin.price.detail.create', ['productId' => $productId]),
+															'Edit Harga'   =>  route('admin.price.detail.edit', ['productId' => $productId, 'id' => $id]),
 														];
 			}
 		}
