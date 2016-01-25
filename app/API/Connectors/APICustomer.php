@@ -22,14 +22,6 @@ class APICustomer extends APIData
 		return $this->get();
 	}
 
-	public function postData($data)
-	{
-		$this->apiUrl 					= '/customer/store';
-		$this->apiData 					= array_merge($this->apiData, ["customer" => $data]);
-
-		return $this->post();
-	}	
-
 	public function getShow($id)
 	{
 		$this->apiUrl 					= '/customer/' . $id;
