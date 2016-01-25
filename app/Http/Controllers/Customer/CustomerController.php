@@ -1,6 +1,7 @@
 <?php 
 namespace App\Http\Controllers\Customer;
 
+use App\API\Connectors\APICustomer;
 use App\Http\Controllers\AdminController;
 use Input, Session, DB, Redirect, Response, Auth;
 
@@ -31,17 +32,45 @@ class CustomerController extends AdminController
 			$searchResult							= null;
 		}
 
-		// data here
-		$this->page_attributes->data				= [];
+		//get curent page
+		if(is_null(Input::get('page')))
+		{
+			$page 									= 1;
+		}
+		else
+		{
+			$page 									= Input::get('page');
+		}
 
+		// data here
+		$APICustomer 								= new APICustomer;
+
+		$customer 									= $APICustomer->getIndex([
+														'search' 	=> 	[
+																			'name' 	=> Input::get('q'),
+																		],
+														'sort' 		=> 	[
+																			'name'	=> 'asc',
+																		],																		
+														'take'		=> $this->take,
+														'skip'		=> ($page - 1) * $this->take,
+														]);
+
+		$this->page_attributes->data				= 	[
+															'customer' => $customer,
+														];
+
+		//paginate
+		$this->paginate(route('admin.customer.index'), $customer['data']['count'], $page);
 
 		//breadcrumb
-		$breadcrumb 								= [];	
+		$breadcrumb								=	[
+													];
 
 		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
-		$this->page_attributes->source 				=  $this->page_attributes->source . 'index';
+		$this->page_attributes->source 				=  $this->page_attributes->source . '.index';
 
 		return $this->generateView();
 	}
