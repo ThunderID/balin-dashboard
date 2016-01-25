@@ -98,10 +98,6 @@ class PointController extends AdminController
 			$APIPoint 								= new APIPoint;
 			$data 									= ['data' => $APIPoint->getShow($id)['data'] ];	
 
-			$tmp									= json_decode($data['data']['description'], true);
-			$data['data']['description']			= $tmp['description'];			
-			$data['data']['fit']					= $tmp['fit'];		
-
 			$breadcrumb								=	[
 															$data['data']['name']  =>  route('admin.point.show', ['id' => $data['data']['id']] ),
 															'Edit'  =>  route('admin.point.create', ['id' => $data['data']['id']] ),

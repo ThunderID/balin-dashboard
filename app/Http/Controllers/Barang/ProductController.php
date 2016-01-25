@@ -285,6 +285,4 @@ class ProductController extends AdminController
 	{
 
 	}		
-
-	
 }
