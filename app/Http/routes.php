@@ -43,6 +43,7 @@ Route::group(['prefix' => 'cms'], function()
 	Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan\\'], function()
 	{
 		Route::get('penggunaan/voucher',						['uses' => 'ReportController@voucherusage', 'as' => 'admin.report.voucherusage']);
+		Route::get('penjualan/barang',							['uses' => 'ReportController@soldproduct', 'as' => 'admin.report.soldproduct']);
 	});
 
 	Route::group(['prefix' => 'konfigurasi', 'namespace' => 'Konfigurasi\\'], function()

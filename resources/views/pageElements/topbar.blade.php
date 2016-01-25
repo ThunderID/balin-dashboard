@@ -56,7 +56,7 @@
 							</a>
 							<ul class="dropdown-menu submenu-desktop">
 								<li><a href="{{ URL::route('admin.report.voucherusage') }}">Penggunaan Voucher</a></li>
-								<li><a href="#">Penjualan Barang</a></li>
+								<li><a href="{{ URL::route('admin.report.soldproduct') }}">Penjualan Barang</a></li>
 							</ul>
 						</li>
 
