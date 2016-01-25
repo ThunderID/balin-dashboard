@@ -55,12 +55,8 @@
 								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu submenu-desktop">
-								<li><a href="#">Finance</a></li>
-								<li><a href="#">Inventory</a></li>
-								<li><a href="#">Marketing</a></li>
-								<li><a href="#">Customer</a></li>
-								<li><a href="#">System</a></li>
-								<li><a href="#">Internal</a></li>
+								<li><a href="{{ URL::route('admin.report.voucherusage') }}">Penggunaan Voucher</a></li>
+								<li><a href="#">Penjualan Barang</a></li>
 							</ul>
 						</li>
 
