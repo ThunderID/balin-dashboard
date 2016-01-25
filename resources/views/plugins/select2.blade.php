@@ -91,7 +91,6 @@
 	$('.select-category').select2('data', preload_data_category);
 @endif
 
-
 @if($section == "label")
 	$('.select-label').select2({
 		placeholder: 'Masukkan nama label',
@@ -174,4 +173,47 @@
 		}
 	});	
 @endif
+
+@if($section == "customer")
+	$('.select-customer').select2({
+		placeholder: 'Masukkan nama kostumer',
+		minimumInputLength: 3,
+		maximumSelectionSize: max_input,
+		tags: false,
+		ajax: {
+			url: "{{ route('ajax.customer.findName') }}",
+			dataType: 'json',
+			data: function (term, path) {
+				return {
+					name: term,
+					path : '{{ isset($data['customer_id']) ? $data['customer_id'] : '' }}'
+				};
+			},
+		   results: function (data) {
+				return {
+					results: $.map(data, function (item) {
+						return {
+							text: item.name,
+							id: item.id,
+							path: item.path
+						}
+					})
+				};
+			},
+			query: function (query){
+				var data = {results: []};
+				 
+				$.each(preload_data_customer, function(){
+					if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
+						data.results.push({id: this.id, text: this.text });
+					}
+				});
+	
+				query.callback(data);
+			}
+		}
+	});	
+	$('.select-customer').select2('data', preload_data_customer);
+@endif
+
 </script>

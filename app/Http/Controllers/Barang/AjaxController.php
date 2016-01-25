@@ -118,5 +118,5 @@ class AjaxController extends Controller
 
 		//return
 		return $datas;
-	}		
+	}
 }

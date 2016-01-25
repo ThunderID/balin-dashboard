@@ -30,35 +30,51 @@
 				<table class="table table-bordered table-hover table-striped">
 					<thead>
 						<tr>
-							<th class="col-md-1 text-left">No.</th>							
-							<th class="col-md-6 text-left">Nama Customer</th>
-							<th class="col-md-3 text-center">Jumlah Poin</th>
-							<th class="text-center col-md-2">Kontrol</th>
+							<th class="col-md-1 text-center">No.</th>
+							<th class="col-md-4 text-center">Nama Customer</th>
+							<th class="col-md-2 text-center">Expire</th>
+							<th class="col-md-2 text-center">Jumlah Poin</th>
+							<th class="text-center col-md-3">Notes</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td class="text-left">
-								nomer
-							</td>
-
-							<td class="text-left">
-								nama
-							</td>
-
-							<td class="text-center">
-								poin
-							</td>
-
-							<td class="text-right">
-								
-							</td>																		
-						</tr>
+						@if(count($data['point']['data']['data']) == 0)
+							<tr>
+								<td colspan="5" class="text-center">
+									Tidak ada data
+								</td>
+							</tr>
+						@else
+							@foreach($data['point']['data']['data'] as $key => $dt)
+								<tr>
+									<td class="text-center">
+										{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $key + 1}}
+									</td>
+									<td class="text-left">
+										{{ $dt['user']['name'] }}
+									</td>
+									<td class="text-left">
+										@datetime_indo(new Carbon($dt['expired_at']))
+									</td>
+									<td class="text-right">
+										@money_indo($dt['amount'])
+									</td>
+									<td class="text-right">
+										{{$dt['notes']}}
+									</td>
+								</tr>       
+							@endforeach 
+						@endif
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-12 hollow-pagination" style="text-align:right;">
+			{!! $paging->appends(Input::all())->render() !!}
+		</div>	
+	</div>	
 <!-- end of content -->
 
 </div>

@@ -78,7 +78,7 @@
 									Tidak ada data
 								</td>
 							</tr>
-						@else                                                                 
+						@else
 							@foreach($data['report']['data']['data'] as $key => $dt)
 								<tr>
 									<td class="text-center">
@@ -133,7 +133,6 @@
 								</tr>       
 							@endforeach 
 						@endif
-				
 					</tbody>
 				</table>
 			</div>

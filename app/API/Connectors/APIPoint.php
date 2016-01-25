@@ -3,7 +3,7 @@ namespace App\API\Connectors;
 
 use Exception, Session;
 
-class APICustomer extends APIData
+class APIPoint extends APIData
 {
 	function __construct() 
 	{
@@ -12,8 +12,8 @@ class APICustomer extends APIData
 
 	public function getIndex($parameter = null)
 	{
-		$this->apiUrl 					= '/customers';
-
+		$this->apiUrl 					= '/points';
+		
 		if(!is_null($parameter))
 		{
 			$this->apiData 				= array_merge($this->apiData, $parameter);
@@ -22,10 +22,11 @@ class APICustomer extends APIData
 		return $this->get();
 	}
 
-	public function getShow($id)
+	public function postData($data)
 	{
-		$this->apiUrl 					= '/customer/' . $id;
+		$this->apiUrl 					= '/point/store';
+		$this->apiData 					= array_merge($this->apiData, ["point" => $data]);
 
-		return $this->get();
+		return $this->post();
 	}	
 }
