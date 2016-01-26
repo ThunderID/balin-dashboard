@@ -30,36 +30,53 @@
 				<table class="table table-bordered table-hover table-striped">
 					<thead>
 						<tr>
-							<th class="col-md-1 text-left">No.</th>							
-							<th class="col-md-6 text-left">Nama Customer</th>
-							<th class="col-md-3 text-center">Jumlah Referral</th>
+							<th class="col-md-1 text-center">No.</th>
+							<th class="col-md-2 text-center">Nama</th>
+							<th class="col-md-2 text-center">Email</th>
+							<th class="col-md-2 text-center">Total Referral</th>
+							<th class="col-md-3 text-center">Referral</th>
 							<th class="text-center col-md-2">Kontrol</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td class="text-left">
-								nomer
-							</td>
-
-							<td class="text-left">
-								nama
-							</td>
-
-							<td class="text-center">
-								jumlah
-							</td>
-
-							<td class="text-right">
-								
-							</td>																		
-						</tr>
+						@if(count($data['customer']['data']['data']) == 0)
+							<tr>
+								<td colspan="11" class="text-center">
+									Tidak ada data
+								</td>
+							</tr>
+						@else
+							@foreach($data['customer']['data']['data'] as $key => $dt)
+								<tr>
+									<td class="text-center">
+										{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $key + 1}}
+									</td>
+									<td class="text-left">
+										{{ $dt['name'] }}
+									</td>
+									<td class="text-left">
+										{{ $dt['email'] }}
+									</td>
+									<td class="text-center">
+										{{ $dt['total_reference'] }}
+									</td>
+									<td class="text-center">
+										@foreach($dt['myreferrals'] as $key => $value)
+											<p>{{$value['user']['name']}}</p>
+										@endforeach
+									</td>
+									<td class="text-center">
+										<a href="{{ route('admin.customer.show', $dt['id']) }}"> Detail</a>
+									</td>
+								</tr>
+							@endforeach 
+						@endif
+				
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
 <!-- end of content -->
-
 </div>
 @stop
