@@ -1,6 +1,8 @@
 <?php 
 namespace App\Http\Controllers\Promosi;
 
+use App\API\connectors\APIProduct;
+
 use App\Http\Controllers\AdminController;
 use Input, Session, DB, Redirect, Response, Auth;
 
@@ -31,9 +33,37 @@ class DiscountController extends AdminController
 			$searchResult							= null;
 		}
 
-		// data here
-		$this->page_attributes->data				= [];
+		//get curent page
+		if(is_null(Input::get('page')))
+		{
+			$page 									= 1;
+		}
+		else
+		{
+			$page 									= Input::get('page');
+		}
 
+		// data here
+		$APIProduct 								= new APIProduct;
+
+		$product 									= $APIProduct->getIndex([
+														'search' 	=> 	[
+																			'name' 	=> Input::get('q'),
+																			'discount' => true,
+																		],
+														'sort' 		=> 	[
+																			'name'	=> 'asc',
+																		],																		
+														'take'		=> $this->take,
+														'skip'		=> ($page - 1) * $this->take,
+														]);
+
+		$this->page_attributes->data				= 	[
+															'product' => $product,
+														];
+
+		//paginate
+		$this->paginate(route('admin.discount.index'), $product['data']['count'], $page);
 
 		//breadcrumb
 		$breadcrumb 								= [];	
