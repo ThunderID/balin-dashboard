@@ -38,6 +38,9 @@ Route::group(['prefix' => 'cms'], function()
 		Route::resource('done', 'FinishedTransactionController',['names' => ['index' => 'admin.finishedTransaction.index', 'create' => 'admin.finishedTransaction.create', 'store' => 'admin.finishedTransaction.store', 'show' => 'admin.finishedTransaction.show', 'edit' => 'admin.finishedTransaction.edit', 'update' => 'admin.finishedTransaction.update', 'destroy' => 'admin.finishedTransaction.destroy']]);
 		Route::resource('kurir', 'CourierController',			['names' => ['index' => 'admin.courier.index', 'create' => 'admin.courier.create', 'store' => 'admin.courier.store', 'show' => 'admin.courier.show', 'edit' => 'admin.courier.edit', 'update' => 'admin.courier.update', 'destroy' => 'admin.courier.destroy']]);
 		Route::resource('buy', 'BuyController',					['names' => ['index' => 'admin.buy.index', 'create' => 'admin.buy.create', 'store' => 'admin.buy.store', 'show' => 'admin.buy.show', 'edit' => 'admin.buy.edit', 'update' => 'admin.buy.update', 'destroy' => 'admin.buy.destroy']]);
+
+		//ajax
+		Route::get('sell/ajax/findAmount',						['uses' => 'AjaxController@FindTransactionByAmount', 	'as' => 'ajax.sell.findAmount']);
 	});
 
 	Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan\\'], function()

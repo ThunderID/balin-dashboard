@@ -17,8 +17,6 @@
 	<div class="row">
 		<div class="col-md-6 m-b-md">
 			<h2 style="margin-top:0px;">BALIN Invoice</h2>
-
-			@include('pageElements.alertbox')
 		</div>
 		<div class="col-md-6 m-b-md">
 			<a class="btn btn-default pull-right"  href="{{ route('admin.sell.edit', ['id' => $dt['id']] ) }}"> Edit Data </a>

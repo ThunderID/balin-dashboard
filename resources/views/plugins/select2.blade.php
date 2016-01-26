@@ -215,5 +215,46 @@
 	});	
 	$('.select-customer').select2('data', preload_data_customer);
 @endif
+@if($section == "payment")
+	$('.select-payment').select2({
+		placeholder: 'Masukkan jumlah bayar',
+		minimumInputLength: 3,
+		maximumSelectionSize: max_input,
+		tags: false,
+		ajax: {
+			url: "{{ route('ajax.sell.findAmount') }}",
+			dataType: 'json',
+			data: function (term, path) {
+				return {
+					amount: term,
+					path : '{{ isset($data['payment_id']) ? $data['payment_id'] : '' }}'
+				};
+			},
+		   results: function (data) {
+				return {
+					results: $.map(data, function (item) {
+						return {
+							text: item.bills,
+							id: item.id,
+							path: item.path
+						}
+					})
+				};
+			},
+			query: function (query){
+				var data = {results: []};
+				 
+				$.each(preload_data_payment, function(){
+					if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
+						data.results.push({id: this.id, text: this.text });
+					}
+				});
+	
+				query.callback(data);
+			}
+		}
+	});	
+	$('.select-payment').select2('data', preload_data_payment);
+@endif
 
 </script>
