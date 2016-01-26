@@ -32,7 +32,7 @@ class APISale extends APIData
 
 	public function getShow($id)
 	{
-		$this->apiUrl 					= '/sale/' . $id;
+		$this->apiUrl 					= '/sale' .'/'.$id;
 
 		return $this->get();
 	}
