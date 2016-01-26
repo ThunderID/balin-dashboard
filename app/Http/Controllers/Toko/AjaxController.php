@@ -52,7 +52,7 @@ class AjaxController extends Controller
 		$sale 										= $APISale->getIndex([
 														'search' 	=> 	[
 																			'refnumber' 		=> $input,
-																			'status'			=> 'paid',
+																			// 'status'			=> 'paid',
 																		],
 														'sort' 		=> 	[
 																		],																		

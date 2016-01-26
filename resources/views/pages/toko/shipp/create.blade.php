@@ -57,7 +57,7 @@
     @if(isset($data['data']['transactions']))
 	    @foreach($data['data']['transactions'] as $transaction)
 	        var id                      = {{$transaction['transaction_id']}};
-	        var text                    = '{{$transaction['amount']}}';
+	        var text                    = '{{$transaction['ref_number']}}';
 	        preload_data_transaction.push({ id: id, text: text});
 	    @endforeach
 	@elseif(Input::get('transaction_id') && Input::get('transaction'))    

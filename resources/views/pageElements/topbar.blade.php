@@ -43,7 +43,7 @@
 								<li><a href="{{ URL::route('admin.pay.create') }}">Validasi Bayar</a></li>
 								<li><a href="{{ URL::route('admin.packing.create') }}">Packing</a></li>
 								<li><a href="{{ URL::route('admin.shipp.create') }}">Kirim Barang</a></li>
-								<li><a href="{{ URL::route('admin.finishedTransaction.index') }}">Transaksi Selesai</a></li>
+								<li><a href="{{ URL::route('admin.finishedTransaction.create') }}">Transaksi Selesai</a></li>
 								<li><a href="{{ URL::route('admin.courier.index') }}">Kurir</a></li>
 								<li><a href="{{ URL::route('admin.buy.index') }}">Data Pembelian</a></li>
 							</ul>

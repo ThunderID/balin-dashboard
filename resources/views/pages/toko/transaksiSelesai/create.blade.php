@@ -3,14 +3,14 @@
 @section('content')
 <div class="container-fluid">
 <!-- head -->
-    @include('pageElements.createHeader', ['title' => 'Data Packing ' . $data['data']['ref_number'] ])    
+    @include('pageElements.createHeader', ['title' => 'Data Transaksi Terkirim ' . $data['data']['ref_number'] ])    
 <!-- end of head -->
 
 <!-- body -->
 	@if(isset(  $data['data']['id'] ))
-    {!! Form::open(['url' => route('admin.packing.update', $data['data']['id']), 'method' => 'PATCH']) !!}
+    {!! Form::open(['url' => route('admin.finishedTransaction.update', $data['data']['id']), 'method' => 'PATCH']) !!}
     @else
-    {!! Form::open(['url' => route('admin.packing.store'), 'method' => 'POST']) !!}
+    {!! Form::open(['url' => route('admin.finishedTransaction.store'), 'method' => 'POST']) !!}
     @endif
 		<div class="row">
 			<div class="col-md-12">
@@ -24,13 +24,23 @@
 					]) !!}
 				</div>  
 			</div> 
+			<div class="col-md-12">
+				<div class="form-group">
+					<label for="notes">Catatan Penerima</label>
+					{!! Form::text('notes', $data['data']['notes'], [
+								'class'        		=> 'form-control', 
+								'tabindex'     		=> '2', 
+								'placeholder'  		=> 'Nama Penerima',
+					]) !!}
+				</div>  
+			</div>  
 		</div> 
 
 		<div class="clearfix">&nbsp;</div>
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group text-right">
-					<a href="{{ URL::route('admin.packing.index') }}" class="btn btn-md btn-default" tabindex="13">Batal</a>
+					<a href="{{ URL::route('admin.finishedTransaction.index') }}" class="btn btn-md btn-default" tabindex="13">Batal</a>
 					<button type="submit" class="btn btn-md btn-primary" tabindex="12">Simpan</button>
 				</div>        
 			</div>        
