@@ -8,6 +8,24 @@
 			@include('pageElements.breadcrumb')
 		</div>
 	</div>
+
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
+			@include('pageElements.alertbox')
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
+			@include('pageElements.indexNavigation', [
+				'newDataRoute' 		=> route('admin.sell.index'),
+				'filterDataRoute' 	=> route('admin.sell.index'),
+				'searchLabel' 		=> 'cari status'
+			])
+			@include('pageElements.searchResult', ['closeSearchLink' => route('admin.sell.index') ])
+		</div>
+	</div>
+	</br> 	
 <!-- end of head -->
 
 <!-- content -->

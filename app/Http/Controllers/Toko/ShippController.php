@@ -1,6 +1,8 @@
 <?php 
 namespace App\Http\Controllers\Toko;
 
+use App\API\Connectors\APISale;
+
 use App\Http\Controllers\AdminController;
 use Input, Session, DB, Redirect, Response, Auth;
 
@@ -53,6 +55,38 @@ class ShippController extends AdminController
 
 	public function create($id = null)
 	{
+		//initialize
+		if (is_null($id))
+		{
+			$breadcrumb								=	[
+															'Data Baru' => route('admin.shipp.create'),
+														];
+
+			$data 									= null;														
+
+			$this->page_attributes->subtitle 		= 'Data Baru';
+		}
+		else
+		{
+			$APISale 								= new APISale;
+			$data 									= ['data' => $APISale->getShow($id)['data'] ];	
+
+			$breadcrumb								=	[
+															$data['data']['ref_number']  =>  route('admin.shipp.show', ['id' => $data['data']['id']] ),
+															'Edit'  =>  route('admin.shipp.create', ['id' => $data['data']['id']] ),
+														];
+
+			$this->page_attributes->subtitle 		= $data['data']['ref_number'];
+		}
+
+		//generate View
+		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
+
+		$this->page_attributes->data 				=  $data;
+
+		$this->page_attributes->source 				=  $this->page_attributes->source . 'create';
+
+		return $this->generateView();	
 	
 	}
 
@@ -63,7 +97,39 @@ class ShippController extends AdminController
 
 	public function store($id = null)
 	{
+		$saleid 									= Input::get('transaction_id');
 
+		$APISale 									= new APISale;
+
+		$data 										= $APISale->getShow($saleid);
+		$sale 										= $data['data'];
+
+		//format input
+		$inputShipment 								= Input::get('receipt_number');
+
+		$sale['shipment']['receipt_number']			= $inputShipment;
+		$sale['status']								= 'shipping';
+
+		//save
+		$result 									= $APISale->postData($sale);
+
+		//response
+		if($result['status'] != 'success')
+		{
+			$this->errors 							= $result['message'];
+		}
+
+		//return view
+		if(!empty($id))
+		{
+			$this->page_attributes->success 		= "Pesanan sedang dalam pengiriman!";
+		}
+		else
+		{
+			$this->page_attributes->success 		= "Pesanan sedang dalam pengiriman!";
+		}
+
+		return $this->generateRedirectRoute('admin.sell.show', ['id' => $saleid]);
 	}
 
 	public function Update($id)

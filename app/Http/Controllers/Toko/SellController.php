@@ -24,7 +24,7 @@ class SellController extends AdminController
 
 		if(Input::has('q'))
 		{
-			$filters 								= ['ondate' => Input::get('q')];
+			$filters 								= ['status' => Input::get('q')];
 			$this->page_attributes->search 			= Input::get('q');
 		}
 		else
@@ -47,7 +47,7 @@ class SellController extends AdminController
 
 		$sale 										= $APISale->getIndex([
 														'search' 	=> 	[
-																			'ondate' 		=> Input::get('q'),
+																			'status' 		=> Input::get('q'),
 																		],
 														'sort' 		=> 	[
 																			'transact_at'	=> 'asc',
