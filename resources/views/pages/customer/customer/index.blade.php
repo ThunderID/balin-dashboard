@@ -42,7 +42,7 @@
 					<tbody>
 						@if(count($data['customer']['data']['data']) == 0)
 							<tr>
-								<td colspan="11" class="text-center">
+								<td colspan="7" class="text-center">
 									Tidak ada data
 								</td>
 							</tr>
@@ -67,7 +67,7 @@
 									<td class="text-right">
 										@money_indo($dt['total_point'])
 									</td>
-									<td class="text-right">
+									<td class="text-center">
 										<a href="{{ route('admin.customer.show', $dt['id']) }}"> Detail</a>
 									</td>
 								</tr>
