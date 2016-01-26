@@ -15,11 +15,21 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group">
+					<label for="name">Nama</label>
+					{!! Form::text('name', $data['data']['name'], [
+								'class'         => 'form-control', 
+								'placeholder'   => 'Masukkan nama',
+								'tabindex'      => '1',
+					]) !!}
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
 					<label for="name">Email</label>
 					{!! Form::text('email', $data['data']['email'], [
 								'class'         => 'form-control', 
 								'placeholder'   => 'Masukkan email',
-								'tabindex'      => '1',
+								'tabindex'      => '2',
 					]) !!}
 				</div>
 			</div>
@@ -28,7 +38,7 @@
 					<label for="role">Role</label>
 					{!! Form::select('role',  array('admin' => 'Admin', 'store_manager' => 'Manager Toko', 'staff' => 'Staff'), $data['data']['role'], [
 								'class'         => 'form-control', 
-								'tabindex'      => '2',
+								'tabindex'      => '3',
 					]) !!}
 				</div>
 			</div>
@@ -37,7 +47,7 @@
 					<label for="password">Password</label>
 					{!! Form::password('password', [
 								'class'        		=> 'form-control', 
-								'tabindex'     		=> '3', 
+								'tabindex'     		=> '4', 
 								'placeholder'  		=> 'password',
 					]) !!}
 				</div>  
@@ -47,7 +57,7 @@
 					<label for="password_confirmation">Konfirmasi Password</label>
 					{!! Form::password('password_confirmation', [
 								'class'        		=> 'form-control', 
-								'tabindex'     		=> '4', 
+								'tabindex'     		=> '5', 
 								'placeholder'  		=> 'konfirmasi password',
 					]) !!}
 				</div>  
@@ -59,7 +69,7 @@
 					<label for="is_active">Aktif</label>
 					{!! Form::checkbox('is_active', $data['data']['is_active'], [
 								'class'         => 'form-control',
-								'tabindex'      => '5', 
+								'tabindex'      => '6', 
 					]) !!}
 				</div>  
 			</div>  

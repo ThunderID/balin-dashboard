@@ -3,7 +3,7 @@ namespace App\Http\Controllers\konfigurasi;
 
 use App\API\Connectors\APIAdmin;
 use App\Http\Controllers\AdminController;
-use Input, Session, DB, Redirect, Response, Auth;
+use Input, Session, DB, Redirect, Response, Auth, Validator;
 
 class AdministrativeController extends AdminController
 {
@@ -153,6 +153,7 @@ class AdministrativeController extends AdminController
 		$APIAdmin 									= new APIAdmin;
 		
 		//format input
+		$inputName 									= Input::get('name');
 		$inputEmail 								= Input::get('email');
 		$inputRole 									= Input::get('role');
 
@@ -173,7 +174,7 @@ class AdministrativeController extends AdminController
 
 			if(!$validator->passes())
 			{
-				$this->errors 							= $validator->errors;
+				$this->errors 						= $validator->errors();
 	
 				return $this->generateRedirectRoute('admin.administrative.show', ['id' => Input::get('admin')]);
 			}
@@ -186,7 +187,7 @@ class AdministrativeController extends AdminController
 			$data 									= $APIAdmin->getShow($id);
 
 			$admin['id']							= $data['data']['id'];
-			$admin['name']							= $data['data']['name'];
+			$admin['name']							= $inputName;
 			$admin['gender']						= $data['data']['gender'];
 			if(strtotime($data['data']['date_of_birth']))
 			{
@@ -202,6 +203,7 @@ class AdministrativeController extends AdminController
 		}
 		else
 		{
+			$admin['name']							= $inputName;
 			$admin['email']							= $inputEmail;
 			$admin['role']							= $inputRole;
 			$admin['is_active']						= $inputIsActive;
