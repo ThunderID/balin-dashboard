@@ -8,6 +8,17 @@
 			@include('pageElements.breadcrumb')
 		</div>
 	</div>
+
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
+			@include('pageElements.indexNavigation', [
+				'newDataRoute' 		=> route('admin.product.create'),
+				'filterDataRoute' 	=> route('admin.discount.index')
+			])
+			@include('pageElements.searchResult', ['closeSearchLink' => route('admin.discount.index') ])
+		</div>
+	</div>
+	</br> 	
 <!-- end of head -->
 
 	<div class="row">
