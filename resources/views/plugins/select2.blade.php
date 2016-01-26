@@ -215,6 +215,7 @@
 	});	
 	$('.select-customer').select2('data', preload_data_customer);
 @endif
+
 @if($section == "payment")
 	$('.select-payment').select2({
 		placeholder: 'Masukkan jumlah bayar',
@@ -255,6 +256,46 @@
 		}
 	});	
 	$('.select-payment').select2('data', preload_data_payment);
+@endif
+
+@if($section == "transaction")
+	$('.select-transaction').select2({
+		placeholder: 'Masukkan nomor pesanan',
+		minimumInputLength: 3,
+		maximumSelectionSize: max_input,
+		tags: false,
+		ajax: {
+			url: "{{ route('ajax.sell.findRefNumber') }}",
+			dataType: 'json',
+			data: function (term, path) {
+				return {
+					ref_number: term
+				};
+			},
+		   results: function (data) {
+				return {
+					results: $.map(data, function (item) {
+						return {
+							text: item.ref_number,
+							id: item.id,
+						}
+					})
+				};
+			},
+			query: function (query){
+				var data = {results: []};
+				 
+				$.each(preload_data_transaction, function(){
+					if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
+						data.results.push({id: this.id, text: this.text });
+					}
+				});
+	
+				query.callback(data);
+			}
+		}
+	});	
+	$('.select-transaction').select2('data', preload_data_transaction);
 @endif
 
 </script>

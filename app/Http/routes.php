@@ -41,6 +41,7 @@ Route::group(['prefix' => 'cms'], function()
 
 		//ajax
 		Route::get('sell/ajax/findAmount',						['uses' => 'AjaxController@FindTransactionByAmount', 	'as' => 'ajax.sell.findAmount']);
+		Route::get('sell/ajax/findRefNumber',					['uses' => 'AjaxController@FindTransactionByRefNumber', 	'as' => 'ajax.sell.findRefNumber']);
 	});
 
 	Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan\\'], function()

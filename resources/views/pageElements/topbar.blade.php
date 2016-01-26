@@ -41,7 +41,7 @@
 							<ul class="dropdown-menu submenu-desktop">
 								<li><a href="{{ URL::route('admin.sell.index') }}">Data Penjualan</a></li>
 								<li><a href="{{ URL::route('admin.pay.create') }}">Validasi Bayar</a></li>
-								<li><a href="{{ URL::route('admin.packing.index') }}">Packing</a></li>
+								<li><a href="{{ URL::route('admin.packing.create') }}">Packing</a></li>
 								<li><a href="{{ URL::route('admin.shipp.index') }}">Kirim Barang</a></li>
 								<li><a href="{{ URL::route('admin.finishedTransaction.index') }}">Transaksi Selesai</a></li>
 								<li><a href="{{ URL::route('admin.courier.index') }}">Kurir</a></li>
