@@ -47,7 +47,8 @@
 										{{ str_replace('_', ' ', $dt['role']) }}
 									</td>
 									<td class="text-center">
-										<a href="{{ route('admin.administrative.show', $dt['id']) }}"> Detail</a>
+										<a href="{{ route('admin.administrative.show', $dt['id']) }}"> Detail</a>,
+										<a href="{{ route('admin.administrative.edit', $dt['id']) }}"> Edit</a>
 									</td>
 								</tr>
 							@endforeach 

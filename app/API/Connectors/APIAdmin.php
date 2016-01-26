@@ -28,4 +28,12 @@ class APIAdmin extends APIData
 
 		return $this->get();
 	}	
+	
+	public function postData($data)
+	{
+		$this->apiUrl 					= '/admin/store';
+		$this->apiData 					= array_merge($this->apiData, ["admin" => $data]);
+
+		return $this->post();
+	}	
 }

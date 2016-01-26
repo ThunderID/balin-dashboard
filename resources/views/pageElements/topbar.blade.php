@@ -66,7 +66,7 @@
 								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu submenu-desktop">
-								<li><a href="{{ URL::route('admin.administrative.index') }}">Adminsitrasi</a></li>
+								<li><a href="{{ URL::route('admin.administrative.index') }}">Administrasi</a></li>
 								<li><a href="{{ URL::route('admin.website.index') }}">Website</a></li>
 								<li><a href="{{ URL::route('admin.policy.index') }}">Policy</a></li>
 							</ul>
