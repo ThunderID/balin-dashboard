@@ -1,8 +1,8 @@
 <?php 
 namespace App\Http\Controllers\Barang;
 
-use App\API\connectors\APILabel;
-use App\API\connectors\APIProduct;
+use App\API\Connectors\APILabel;
+use App\API\Connectors\APIProduct;
 
 use App\Http\Controllers\AdminController;
 
@@ -14,7 +14,7 @@ class LabelController extends AdminController
 	{
 		parent::__construct();
 		$this->page_attributes->title 				= 'Label';
-		$this->page_attributes->source 				= 'pages.barang.Label.';
+		$this->page_attributes->source 				= 'pages.barang.label.';
 		$this->page_attributes->breadcrumb			=	[
 															'Label' 	=> route('admin.label.index'),
 														];			

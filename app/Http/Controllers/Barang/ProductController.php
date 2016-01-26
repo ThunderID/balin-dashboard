@@ -283,6 +283,20 @@ class ProductController extends AdminController
 
 	public function destroy($id)
 	{
+		$APIProduct 								= new APIProduct;
 
+		//api
+		$result 									= $APIProduct->deleteData($id);
+
+		//response
+		if($result['status'] != 'success')
+		{
+			$this->errors 							= $result['message'];
+		}
+
+		//return
+		$this->page_attributes->success 			= "Data telah dihapus";
+		
+		return $this->generateRedirectRoute('admin.product.index');	
 	}		
 }
