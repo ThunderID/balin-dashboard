@@ -20,7 +20,7 @@
 		// calculate_total_transaction();
 	}
 
-// section product create
+	// section product create
 	$('.btn-add-image').click(function() {template_add_image($(this));});
 	function template_add_image(e)
 	{
@@ -36,5 +36,23 @@
 		$('.btn-add-image').click(function() {template_add_image($(this));});
 		$('.wizard .content').animate({ height: $('.body.current').outerHeight() }, "slow");
 	}
-// end of section product create
+	// end of section product create
+
+	// section detail create
+	$('.btn-add-details').click(function() {template_add_details($(this));});
+	function template_add_details(e)
+	{
+		var default_val 	= $('#tmplt').find('.default').val();
+		var tmp 			= $('#tmplt').clone();
+
+		tmp.find('.default').val(default_val);
+
+		$('#template-details').append(tmp);
+		change_button_add(e);
+
+		$('#default select').val($('.fieldsetwrapper select').val());
+		$('.btn-add-details').click(function() {template_add_details($(this));});
+		$('.wizard .content').animate({ height: $('.body.current').outerHeight() }, "slow");
+	}
+	// end of section detail create
 </script>

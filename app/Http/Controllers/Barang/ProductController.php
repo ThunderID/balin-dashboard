@@ -320,7 +320,7 @@ class ProductController extends AdminController
 		//result
 		if($result['status'] != 'success')
 		{
-			$error 									= $result['message'];
+			$this->errors							= $result['message'];
 		}
 
 		//return view

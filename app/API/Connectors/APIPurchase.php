@@ -24,7 +24,7 @@ class APIPurchase extends APIData
 
 	public function postData($data)
 	{
-		$this->apiUrl 					= '/purchase/update/status';
+		$this->apiUrl 					= '/purchase/store';
 		$this->apiData 					= array_merge($this->apiData, ["purchase" => $data]);
 
 		return $this->post();
