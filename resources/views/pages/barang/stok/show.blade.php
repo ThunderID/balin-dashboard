@@ -1,3 +1,6 @@
+<?php
+	$dt = $data['product']['data'];
+?>
 @extends('page_templates.layout')
 @section('content')
 <div class="container-fluid">
@@ -23,7 +26,7 @@
 							<h4>:</h4> 
 						</div>
 						<div class="col-md-5 col-sm-5 col-xs-5">
-							<h4>dummy</h4> 
+							<h4>{{$dt['sku']}}</h4> 
 						</div>
 					</div>
 					<div class="row">
@@ -34,18 +37,18 @@
 							<h4>:</h4> 
 						</div>
 						<div class="col-md-5 col-sm-5 col-xs-5">
-							<h4> dummy & varian</h4> 
+							<h4>{{$dt['product']['name']}}</h4> 
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-6 col-sm-6 col-xs-5">
-							<h4>Stok Saat Ini</h4> 
+							<h4>Stok Gudang</h4> 
 						</div>
 						<div class="col-md-1 col-sm-1 col-xs-2">
 							<h4>:</h4> 
 						</div>
 						<div class="col-md-5 col-sm-5 col-xs-5">
-							<h4> dummy </h4> 
+							<h4>{{$dt['inventory_stock']}}</h4> 
 						</div>
 					</div>
 					<div class="row">
@@ -56,7 +59,7 @@
 							<h4>:</h4> 
 						</div>
 						<div class="col-md-5 col-sm-5 col-xs-5">
-							<h4> dummy </h4> 
+							<h4>{{$dt['sold_item']}}</h4> 
 						</div>
 					</div>
 				</div>
@@ -75,23 +78,15 @@
 				<div class="col-md-12">
 					<h4>Kartu Stok</h4> 
 				</div>
-				<div class="col-md-12 m-t-sm m-b-lg">
-					@include('pageElements.dateRangeNavigation', [
-						'filterDataRoute' 	=> route('admin.stock.show', ['id' => $data['id']])
-					])	
-					@include('pageElements.filterResult', [
-						'closeSearchLink' 	=>  route('admin.stock.show', ['id' => $data['id']]) 
-					])
-				</div>			
 				<div class="col-md-12">
 					<div class="table-responsive">
 						<table class="table table-bordered table-hover table-striped">
 							<thead>
 								<tr>
-									<th class="text-left">
+									<th class="col-md-1 text-left">
 										No.
 									</th>
-									<th class="col-md-3 text-left">
+									<th class="col-md-4 text-left">
 										Tanggal
 									</th>
 									<th class="col-md-2 text-center">
@@ -100,66 +95,45 @@
 									<th class="col-md-2 text-center">
 										Stok Keluar 
 									</th>
-									<th class="col-md-2 text-center">
+									<th class="col-md-3 text-center">
 										Jumlah Stok
 									</th>
-									<th class="text-center">
-										Kontrol
-									</th>							
 								</tr>
 							</thead>
 							<tbody>
-								@if(count($data) == 0)
+								@if(count($dt['details']) == 0)
 									<tr>
-										<td colspan="6" class="text-center">
+										<td colspan="5" class="text-center">
 											Tidak ada data
 										</td>
 									</tr>
-								@else                                                                 
-									@foreach($data as $dt)
+								@else
+									<?php $stock =0;?>
+									@foreach($dt['details'] as $key => $detail)
+										<?php $stock = $stock + $detail['stock_in'] - $detail['stock_out'];?>
 										<tr>
 											<td class="text-left">
-												nomer
+												{{$key}}
 											</td>
 
 											<td class="text-left">
-												tanggal
+												@date_indo(new Carbon($detail['transact_at']))
 											</td>
 
-											<td class="text-center">
-												stok masuk
+											<td class="text-right">
+												{{$detail['stock_in']}}
 											</td>
 
-											<td class="text-center">
-												stok keluar
+											<td class="text-right">
+												{{$detail['stock_out']}}
 											</td>
 
-											<td class="text-center">
-												jumlah stok
+											<td class="text-right">
+												{{$stock}}
 											</td>
-
-
-											<td class="text-center">
-<!-- 	        									<a href="{{ route('admin.product.show', $dt['id']) }}"> Detail</a>,
-												<a href="{{ route('admin.product.edit', $dt['id']) }}"> Edit</a>, 
-												<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
-													data-target="#stock_del"
-													data-id="{{$dt['id']}}"
-													data-title="Hapus Data Produk {{$dt['name']}}"
-													data-action="{{ route('admin.stock.destroy', $dt['id']) }}">
-													Hapus
-												</a>  -->                                         
-											</td>    
 										</tr>       
 									@endforeach 
-									
-									@include('pageElements.modalDelete', [
-											'modal_id'      => 'stock_del', 
-											'modal_route'   => route('admin.stock.destroy')
-									])						
-
 								@endif
-								
 							</tbody>
 						</table>
 					</div>					

@@ -1,6 +1,8 @@
 <?php 
 namespace App\Http\Controllers\Barang;
 
+use App\API\connectors\APIStock;
+
 use App\Http\Controllers\AdminController;
 use Input, Session, DB, Redirect, Response, Auth;
 
@@ -23,7 +25,7 @@ class StockController extends AdminController
 
 		if(Input::has('q'))
 		{
-			$filters 								= ['name' => Input::get('q')];
+			$filters 								= ['ondate' => Input::get('q')];
 			$this->page_attributes->search 			= Input::get('q');
 		}
 		else
@@ -31,9 +33,36 @@ class StockController extends AdminController
 			$searchResult							= null;
 		}
 
-		// data here
-		$this->page_attributes->data				= [];
+		//get curent page
+		if(is_null(Input::get('page')))
+		{
+			$page 									= 1;
+		}
+		else
+		{
+			$page 									= Input::get('page');
+		}
 
+		// data here
+		$APIStock 									= new APIStock;
+
+		$product 									= $APIStock->getIndex([
+														'search' 	=> 	[
+																			'ondate' 	=> Input::get('q'),
+																		],
+														'sort' 		=> 	[
+																			'size'	=> 'asc',
+																		],																		
+														'take'		=> $this->take,
+														'skip'		=> ($page - 1) * $this->take,
+														]);
+
+		$this->page_attributes->data				= 	[
+															'product' => $product,
+														];
+
+		//paginate
+		$this->paginate(route('admin.stock.index'), $product['data']['count'], $page);
 
 		//breadcrumb
 		$breadcrumb 								= [];	
@@ -49,23 +78,33 @@ class StockController extends AdminController
 	public function show($id)
 	{
 		//initialize 
-		$this->page_attributes->subtitle 			= 'Product name';
+		$APIStock 									= new APIStock;
+		$product 									= $APIStock->getShow($id);
+
+		//result
+		if($product['status'] != 'success')
+		{
+			$this->errors 							= $product['message'];
+			
+			return $this->generateRedirectRoute('admin.stock.index');	
+		}
+
+		$this->page_attributes->subtitle 			= $product['data']['product']['name'];
 
 		// filters
-		if(Input::has('start') && Input::has('end'))
+		if(Input::has('q'))
 		{
-			$this->page_attributes->search 			= 'Periode ' . Input::get('start') . ' sampai ' . Input::get('end');
+			$this->page_attributes->search 			= Input::get('q');
 		}		
 
 		// data here
 		$this->page_attributes->data				= 	[
-															'id' => 1,
-
+															'product' => $product,
 														];
 
 		//breadcrumb
 		$breadcrumb 								=	[
-															'Produk Name' => route('admin.label.index')
+															$product['data']['product']['name'] => route('admin.stock.show', ['id' => $id])
 														];	
 
 		//generate View

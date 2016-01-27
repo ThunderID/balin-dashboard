@@ -1,5 +1,5 @@
 <?php 
-namespace App\API\connectors;
+namespace App\API\Connectors;
 
 use Exception, Session;
 
@@ -10,10 +10,22 @@ class APIStock extends APIData
 		parent::__construct();
 	}
 
-	public function getStockCard()
+	public function getIndex($parameter = null)
 	{
-		$this->apiUrl 					= '/product/stock/product/' . $id;
+		$this->apiUrl 					= '/products/stock/opname';
+		
+		if(!is_null($parameter))
+		{
+			$this->apiData 				= array_merge($this->apiData, $parameter);
+		}
 
 		return $this->get();
 	}
+
+	public function getShow($id)
+	{
+		$this->apiUrl 					= '/product/stock/card/' . $id;
+
+		return $this->get();
+	}	
 }

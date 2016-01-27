@@ -13,7 +13,8 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			@include('pageElements.indexNavigation', [
 				'newDataRoute' 		=> route('admin.stock.create'),
-				'filterDataRoute' 	=> route('admin.stock.index')
+				'filterDataRoute' 	=> route('admin.stock.index'),
+				'searchLabel' 		=> 'dd-mm-yyyy'
 			])
 			@include('pageElements.searchResult', [
 				'closeSearchLink' 	=> route('admin.stock.index') 
@@ -30,53 +31,48 @@
 				<table class="table table-bordered table-hover table-striped">
 					<thead>
 						<tr>
-							<th class="col-md-1">No.</th>							
-							<th class="col-md-2">SKU</th>
-							<th class="col-md-3">Nama Produk</th>
-							<th class="text-center">Varian</th>
-							<th class="text-center">Stok Saat Ini</th>
-							<th class="text-center">Stok Keluar Bulan Ini</th>
-							<th class="text-center col-md-2">Kontrol</th>
+							<th class="text-center col-md-1">No.</th>
+							<th class="text-center col-md-2">SKU</th>
+							<th class="text-center col-md-3">Nama Produk</th>
+							<th class="text-center col-md-2">Ukuran</th>
+							<th class="text-center col-md-1">Stok Gudang</th>
+							<th class="text-center col-md-1">Stok Keluar Bulan Ini</th>
 						</tr>
 					</thead> 
 					<tbody>
-						@if (count($data) == 0)
+						@if(count($data['product']['data']['data']) == 0)
 							<tr>
-								<td colspan="7" class="text-center">
+								<td colspan="6" class="text-center">
 									Tidak ada data
 								</td>
 							</tr>
-						@else 
-							<tr>
-								<td>
-									{{$dt['id'] + 1}}
-								</td>
-								<td>
-									<p>
-									</p>
-								</td>
-								<td>
-									<p>
-									</p>
-								</td>
-								<td>
-									<p>
-									</p>
-								</td>
-								<td>
-									<p>
-									</p>
-								</td>
-								<td>
-									<p>
-									</p>
-								</td>																																
-								<td class="text-center">
-									<a href="#"> Re-stock</a>                                                                              
-									<a href="{{ route('admin.stock.show',  $dt['id']) }}"> Detail</a>                                                                              
-								</td>    
-							</tr>
-						@endif         						
+						@else
+							@foreach($data['product']['data']['data'] as $key => $dt)
+								<tr>
+									<td class="text-center">
+										{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $key + 1}}
+									</td>
+									<td class="text-left">
+										{{ $dt['sku'] }}
+									</td>
+									<td class="text-left">
+										{{ $dt['product']['name'] }}
+									</td>
+									<td class="text-left">
+										{{ $dt['size'] }}
+									</td>
+									<td class="text-center">
+										{{ $dt['inventory_stock'] }}
+									</td>
+									<td class="text-center">
+										{{ ($dt['sold_item']) }}
+									</td>
+									<td class="text-center">
+										<a href="{{ route('admin.stock.show', $dt['id']) }}"> Detail</a>
+									</td>
+								</tr>
+							@endforeach 
+						@endif
 					</tbody>
 				</table>
 			</div>

@@ -26,11 +26,13 @@ class ProductController extends AdminController
 
 		if(Input::has('q'))
 		{
-			$filters 								= ['name' => Input::get('q')];
+			$ondate 								= Input::get('q');
+			$filters 								= ['ondate' => Input::get('q')];
 			$this->page_attributes->search 			= Input::get('q');
 		}
 		else
 		{
+			$ondate 								= 'now';
 			$searchResult							= null;
 		}
 
@@ -49,10 +51,10 @@ class ProductController extends AdminController
 
 		$product 									= $APIProduct->getIndex([
 														'search' 	=> 	[
-																			'name' 	=> Input::get('q'),
+																			'ondate' 		=> $ondate,
 																		],
 														'sort' 		=> 	[
-																			'name'	=> 'asc',
+																			'created_at' 	=> 'asc',
 																		],																		
 														'take'		=> $this->take,
 														'skip'		=> ($page - 1) * $this->take,
@@ -260,7 +262,6 @@ class ProductController extends AdminController
 		if($result['status'] != 'success')
 		{
 			$error 									= $result['message'];
-			dd($error);
 		}
 
 		//return view
