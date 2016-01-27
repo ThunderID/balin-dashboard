@@ -67,9 +67,9 @@
 								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu submenu-desktop">
-								<li><a href="{{ URL::route('admin.administrative.index') }}">Administrasi</a></li>
-								<li><a href="{{ URL::route('admin.website.index') }}">Website</a></li>
-								<li><a href="{{ URL::route('admin.policy.index') }}">Policy</a></li>
+								<li><a href="{{ URL::route('config.administrative.index') }}">Administrasi</a></li>
+								<li><a href="{{ URL::route('config.website.index') }}">Website</a></li>
+								<li><a href="{{ URL::route('config.policy.index') }}">Policy</a></li>
 							</ul>
 						</li>
 
@@ -505,21 +505,21 @@
 		<!-- submenu pengaturan -->
 							<div id="Pengaturan" class="mobile-submenu hidden">
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.dashboard') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('config.administrative.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Administrasi
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.website.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('config.website.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Website
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.policy.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('config.policy.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Policy
 										</h4>

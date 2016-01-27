@@ -18,10 +18,10 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			@include('page_elements.indexNavigation', [
-				'newDataRoute' 		=> route('admin.administrative.create'),
-				'filterDataRoute' 	=> route('admin.administrative.index'),
+				'newDataRoute' 		=> route('config.administrative.create'),
+				'filterDataRoute' 	=> route('config.administrative.index'),
 			])
-			@include('page_elements.searchResult', ['closeSearchLink' => route('admin.administrative.index') ])
+			@include('page_elements.searchResult', ['closeSearchLink' => route('config.administrative.index') ])
 		</div>
 	</div>
 	</br> 	
@@ -64,8 +64,8 @@
 										{{ str_replace('_', ' ', $dt['role']) }}
 									</td>
 									<td class="text-center">
-										<a href="{{ route('admin.administrative.show', $dt['id']) }}"> Detail</a>,
-										<a href="{{ route('admin.administrative.edit', $dt['id']) }}"> Edit</a>
+										<a href="{{ route('config.administrative.show', $dt['id']) }}"> Detail</a>,
+										<a href="{{ route('config.administrative.edit', $dt['id']) }}"> Edit</a>
 									</td>
 								</tr>
 							@endforeach 

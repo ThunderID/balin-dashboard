@@ -86,11 +86,20 @@ Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan\\'], function()
 	Route::get('penjualan/barang',								['uses' => 'ReportController@soldproduct', 'as' => 'report.product.sold']);
 });
 
+/**
+* Routes untuk menu konfigurasi
+*
+*/
 Route::group(['prefix' => 'konfigurasi', 'namespace' => 'Konfigurasi\\'], function()
 {
-	Route::resource('admin', 'AdministrativeController',	['names' => ['index' => 'admin.administrative.index', 'create' => 'admin.administrative.create', 'store' => 'admin.administrative.store', 'show' => 'admin.administrative.show', 'edit' => 'admin.administrative.edit', 'update' => 'admin.administrative.update', 'destroy' => 'admin.administrative.destroy']]);
-	Route::resource('website', 'WebsiteController',			['names' => ['index' => 'admin.website.index', 'create' => 'admin.website.create', 'store' => 'admin.website.store', 'show' => 'admin.website.show', 'edit' => 'admin.website.edit', 'update' => 'admin.website.update', 'destroy' => 'admin.website.destroy']]);
-	Route::resource('policy', 'PolicyController',			['names' => ['index' => 'admin.policy.index', 'create' => 'admin.policy.create', 'store' => 'admin.policy.store', 'show' => 'admin.policy.show', 'edit' => 'admin.policy.edit', 'update' => 'admin.policy.update', 'destroy' => 'admin.policy.destroy']]);
+	/**
+	* Routes untuk sub menu admin
+	*
+	*/
+	Route::resource('admin', 	'AdministrativeController',		['names' => ['index' => 'config.administrative.index', 'create' => 'config.administrative.create', 'store' => 'config.administrative.store', 'show' => 'config.administrative.show', 'edit' => 'config.administrative.edit', 'update' => 'config.administrative.update'], 'except' => ['destroy']]);
+	
+	Route::resource('website', 	'WebsiteController',			['names' => ['index' => 'config.website.index', 'create' => 'config.website.create', 'store' => 'config.website.store', 'show' => 'config.website.show', 'edit' => 'config.website.edit', 'update' => 'config.website.update', 'destroy' => 'config.website.destroy']]);
+	Route::resource('policy', 	'PolicyController',				['names' => ['index' => 'config.policy.index', 'create' => 'config.policy.create', 'store' => 'config.policy.store', 'show' => 'config.policy.show', 'edit' => 'config.policy.edit', 'update' => 'config.policy.update', 'destroy' => 'config.policy.destroy']]);
 });
 
 Route::group(['prefix' => 'customer', 'namespace' => 'Customer\\'], function()

@@ -5,6 +5,11 @@ use App\API\Connectors\APIAdmin;
 use App\Http\Controllers\AdminController;
 use Input, Session, DB, Redirect, Response, Auth, Validator;
 
+/**
+ * Handle admin resource
+ * 
+ * @author cmooy
+ */
 class AdministrativeController extends AdminController
 {
 	public function __construct()
@@ -13,13 +18,25 @@ class AdministrativeController extends AdminController
 		$this->page_attributes->title 				= 'Administrasi';
 		$this->page_attributes->source 				= 'pages.konfigurasi.administrasi.';
 		$this->page_attributes->breadcrumb			=	[
-															'Administrasi' 	=> route('admin.administrative.index'),
+															'Administrasi' 	=> route('config.administrative.index'),
 														];			
 	}
 
+	/**
+	 * Display all admin
+	 * 
+	 * 1. Check filter
+	 * 2. Check page
+	 * 3. Get data from API
+	 * 4. Generate paginator
+	 * 5. Generate breadcrumb
+	 * 6. Generate view
+	 * @param page, q
+	 * @return Object View
+	 */
 	public function index()
 	{
-		//initialize 
+		//1. Check filter 
 		$filters 									= null;
 
 		if(Input::has('q'))
@@ -32,7 +49,7 @@ class AdministrativeController extends AdminController
 			$searchResult							= null;
 		}
 
-		//get curent page
+		//2. Check page
 		if(is_null(Input::get('page')))
 		{
 			$page 									= 1;
@@ -42,7 +59,7 @@ class AdministrativeController extends AdminController
 			$page 									= Input::get('page');
 		}
 
-		// data here
+		//3. Get data from API
 		$APIAdmin 									= new APIAdmin;
 
 		$admin 										= $APIAdmin->getIndex([
@@ -60,60 +77,72 @@ class AdministrativeController extends AdminController
 															'admin' => $admin,
 														];
 
-		//paginate
-		$this->paginate(route('admin.administrative.index'), $admin['data']['count'], $page);
+		//4. Generate paginator
+		$this->paginate(route('config.administrative.index'), $admin['data']['count'], $page);
 
-		//breadcrumb
+		//5. Generate breadcrumb
 		$breadcrumb								=	[
 													];
 
-		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
-
+		
+		//6. Generate View
 		$this->page_attributes->source 				=  $this->page_attributes->source . '.index';
 
 		return $this->generateView();
 	}
 
+	/**
+	 * Display an admin
+	 * 
+	 * 1. Get data from API
+	 * 2. Generate breadcrumb
+	 * 3. Generate view
+	 * @param id
+	 * @return Object View
+	 */
 	public function show($id)
 	{
-		//initialize 
+		//1. Get data from API 
 		$APIAdmin 									= new APIAdmin;
 		$admin 										= $APIAdmin->getShow($id);
 
 		$this->page_attributes->subtitle 			= $admin['data']['name'];
 
-		// filters
-		if(Input::has('q'))
-		{
-			$this->page_attributes->search 			= Input::get('q');
-		}		
-
-		// data here
 		$this->page_attributes->data				= 	[
 															'admin' => $admin,
 														];
 
-		//breadcrumb
+		//2. Generate breadcrumb
 		$breadcrumb 								=	[
-															$admin['data']['name'] => route('admin.administrative.show', ['id' => $id])
+															$admin['data']['name'] => route('config.administrative.show', ['id' => $id])
 														];	
-
-		//generate View
+		
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
+		//3. Generate view
 		$this->page_attributes->source 				= $this->page_attributes->source . 'show';
 
 		return $this->generateView();
 	}	
 
+	/**
+	 * create form of an admin
+	 * 
+	 * 1. Get Previous data and page setting
+	 * 2. Initialize data
+	 * 3. Generate breadcrumb
+	 * 4. Generate view
+	 * @param id
+	 * @return Object View
+	 */
 	public function create($id = null)
 	{
-		//initialize
+		//1. Get Previous data and page setting
 		if (is_null($id))
 		{
 			$breadcrumb								=	[
-															'Data Baru' => route('admin.administrative.create'),
+															'Data Baru' => route('config.administrative.create'),
 														];
 
 			$data 									= null;														
@@ -126,33 +155,50 @@ class AdministrativeController extends AdminController
 			$data 									= ['data' => $APIAdmin->getShow($id)['data'] ];	
 
 			$breadcrumb								=	[
-															$data['data']['name']  =>  route('admin.administrative.show', ['id' => $data['data']['id']] ),
-															'Edit'  =>  route('admin.administrative.create', ['id' => $data['data']['id']] ),
+															$data['data']['name']  	=>  route('config.administrative.show', ['id' => $data['data']['id']] ),
+															'Edit'  				=>  route('config.administrative.create', ['id' => $data['data']['id']] ),
 														];
 
 			$this->page_attributes->subtitle 		= $data['data']['name'];
 		}
 
-		//generate View
+		//2. Initialize data
+		$this->page_attributes->data 				=  $data;
+		
+		//3. Generate breadcrumb
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
-		$this->page_attributes->data 				=  $data;
-
+		//4. Generate view
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'create';
 
 		return $this->generateView();
 	}
 
+	/**
+	 * Edit an admin
+	 * 
+	 * @param id
+	 * @return function
+	 */
 	public function edit($id)
 	{
 		return $this->create($id);
 	}
 
+	/**
+	 * Store an admin
+	 * 
+	 * 1. Check input
+	 * 2. Check data
+	 * 3. Save admin
+	 * 4. Check Response
+	 * 5. Return view
+	 * @param id
+	 * @return object view
+	 */
 	public function store($id = null)
 	{
-		$APIAdmin 									= new APIAdmin;
-		
-		//format input
+		//1. Check input
 		$inputName 									= Input::get('name');
 		$inputEmail 								= Input::get('email');
 		$inputRole 									= Input::get('role');
@@ -176,14 +222,15 @@ class AdministrativeController extends AdminController
 			{
 				$this->errors 						= $validator->errors();
 	
-				return $this->generateRedirectRoute('admin.administrative.show', ['id' => Input::get('admin')]);
+				return $this->generateRedirectRoute('config.administrative.show', ['id' => Input::get('admin')]);
 			}
-		}		
+		}
 
-		//is edit
+		$APIAdmin 									= new APIAdmin;
+
+		//2. Check data
 		if(!empty($id))
 		{
-			//get data
 			$data 									= $APIAdmin->getShow($id);
 
 			$admin['id']							= $data['data']['id'];
@@ -217,16 +264,16 @@ class AdministrativeController extends AdminController
 		}
 
 
-		//save
+		//3. Save admin
 		$result 									= $APIAdmin->postData($admin);
 
-		//response
+		//4. Check Response
 		if($result['status'] != 'success')
 		{
 			$this->errors 							= $result['message'];
 		}
 
-		//return view
+		//5. Return view
 		if(!empty($id))
 		{
 			$this->page_attributes->success 		= "Data Admin Telah Diedit";
@@ -236,16 +283,17 @@ class AdministrativeController extends AdminController
 			$this->page_attributes->success 		= "Data Admin Telah Ditambahkan";
 		}
 
-		return $this->generateRedirectRoute('admin.administrative.show', ['id' => Input::get('admin')]);
+		return $this->generateRedirectRoute('config.administrative.show', ['id' => Input::get('admin')]);
 	}
 
+	/**
+	 * Update an admin
+	 * 
+	 * @param id
+	 * @return function
+	 */
 	public function Update($id)
 	{
 		return $this->store($id);
 	}
-
-	public function destroy($id)
-	{
-
-	}		
 }

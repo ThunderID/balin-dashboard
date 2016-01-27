@@ -8,9 +8,9 @@
 
 <!-- body -->
 	@if(isset(  $data['data']['id'] ))
-    {!! Form::open(['url' => route('admin.administrative.update', $data['data']['id']), 'method' => 'PATCH']) !!}
+    {!! Form::open(['url' => route('config.administrative.update', $data['data']['id']), 'method' => 'PATCH']) !!}
     @else
-    {!! Form::open(['url' => route('admin.administrative.store'), 'method' => 'POST']) !!}
+    {!! Form::open(['url' => route('config.administrative.store'), 'method' => 'POST']) !!}
     @endif
 		<div class="row">
 			<div class="col-md-12">
@@ -79,8 +79,8 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group text-right">
-					<a href="{{ URL::route('admin.voucher.index') }}" class="btn btn-md btn-default" tabindex="13">Batal</a>
-					<button type="submit" class="btn btn-md btn-primary" tabindex="12">Simpan</button>
+					<a href="{{ URL::route('config.administrative.index') }}" class="btn btn-md btn-default" tabindex="8">Batal</a>
+					<button type="submit" class="btn btn-md btn-primary" tabindex="7">Simpan</button>
 				</div>        
 			</div>        
 		</div> 
