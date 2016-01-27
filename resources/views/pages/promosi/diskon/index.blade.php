@@ -12,10 +12,11 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			@include('page_elements.indexNavigation', [
-				'newDataRoute' 		=> route('admin.product.create'),
-				'filterDataRoute' 	=> route('admin.discount.index')
+				'disabled'			=> true,
+				'newDataRoute' 		=> route('goods.product.create'),
+				'filterDataRoute' 	=> route('promote.discount.index')
 			])
-			@include('page_elements.searchResult', ['closeSearchLink' => route('admin.discount.index') ])
+			@include('page_elements.searchResult', ['closeSearchLink' => route('promote.discount.index') ])
 		</div>
 	</div>
 	</br> 	
@@ -83,7 +84,7 @@
 										@money_indo($dt['price'] - $dt['promo_price'])
 									</td>
 									<td class="text-center">
-										<a href="{{ route('admin.product.show', $dt['id']) }}"> Detail</a>
+										<a href="{{ route('goods.product.show', $dt['id']) }}"> Detail</a>
 									</td>    
 								</tr>       
 							@endforeach 

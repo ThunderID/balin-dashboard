@@ -1,10 +1,17 @@
 <?php 
 namespace App\Http\Controllers\Promosi;
 
-use App\Http\Controllers\AdminController;
 use App\API\Connectors\APIVoucher;
+
+use App\Http\Controllers\AdminController;
+
 use Input, Session, DB, Redirect, Response, Auth;
 
+/**
+ * Handle voucher resource
+ * 
+ * @author cmooy
+ */
 class VoucherController extends AdminController
 {
 	public function __construct()
@@ -13,13 +20,25 @@ class VoucherController extends AdminController
 		$this->page_attributes->title 				= 'Voucher';
 		$this->page_attributes->source 				= 'pages.promosi.voucher.';
 		$this->page_attributes->breadcrumb			=	[
-															'Voucher' 	=> route('admin.voucher.index'),
+															'Voucher' 	=> route('promote.voucher.index'),
 														];			
 	}
 
+	/**
+	 * Display all voucher
+	 * 
+	 * 1. Check filter
+	 * 2. Check page
+	 * 3. Get data from API
+	 * 4. Generate paginator
+	 * 5. Generate breadcrumb
+	 * 6. Generate view
+	 * @param page, q
+	 * @return Object View
+	 */
 	public function index()
 	{
-		//initialize 
+		//1. Check filter 
 		$filters 									= null;
 
 		if(Input::has('q'))
@@ -32,7 +51,7 @@ class VoucherController extends AdminController
 			$searchResult							= null;
 		}
 
-		//get curent page
+		//2. Check page
 		if(is_null(Input::get('page')))
 		{
 			$page 									= 1;
@@ -42,7 +61,7 @@ class VoucherController extends AdminController
 			$page 									= Input::get('page');
 		}
 
-		// data here
+		//3. Get data from API
 		$APIVoucher 								= new APIVoucher;
 
 		$voucher 									= $APIVoucher->getIndex([
@@ -60,33 +79,37 @@ class VoucherController extends AdminController
 															'voucher' => $voucher,
 														];
 
-		//paginate
-		$this->paginate(route('admin.voucher.index'), $voucher['data']['count'], $page);
+		//4. Generate paginator
+		$this->paginate(route('promote.voucher.index'), $voucher['data']['count'], $page);
 
-		//breadcrumb
+		//5. Generate breadcrumb
 		$breadcrumb								=	[
 													];
-
-		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
+		//6. Generate view
 		$this->page_attributes->source 				=  $this->page_attributes->source . '.index';
 
 		return $this->generateView();
 	}
 
-	public function show($id)
-	{
-
-	}	
-
+	/**
+	 * create form of a voucher
+	 * 
+	 * 1. Get Previous data and page setting
+	 * 2. Initialize data
+	 * 3. Generate breadcrumb
+	 * 4. Generate view
+	 * @param id
+	 * @return Object View
+	 */
 	public function create($id = null)
 	{
-		//initialize
+		//1. Get Previous data and page setting
 		if (is_null($id))
 		{
 			$breadcrumb								=	[
-															'Data Baru' => route('admin.voucher.create'),
+															'Data Baru' => route('promote.voucher.create'),
 														];
 
 			$data 									= null;														
@@ -99,33 +122,50 @@ class VoucherController extends AdminController
 			$data 									= ['data' => $APIVoucher->getShow($id)['data'] ];	
 
 			$breadcrumb								=	[
-															$data['data']['code']  =>  route('admin.voucher.show', ['id' => $data['data']['id']] ),
-															'Edit'  =>  route('admin.voucher.create', ['id' => $data['data']['id']] ),
+															$data['data']['code']  =>  route('promote.voucher.index'),
+															'Edit'  =>  route('promote.voucher.create', ['id' => $data['data']['id']] ),
 														];
 
 			$this->page_attributes->subtitle 		= $data['data']['code'];
 		}
 
-		//generate View
-		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
-
+		//2. Initialize data
 		$this->page_attributes->data 				=  $data;
 
+		//3. Generate breadcrumb
+		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
+
+		//4. Generate view
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'create';
 
 		return $this->generateView();
 	}
 
+	/**
+	 * Edit a voucher
+	 * 
+	 * @param id
+	 * @return function
+	 */
 	public function edit($id)
 	{
 		return $this->create($id);
 	}
 
+	/**
+	 * Store a voucher
+	 * 
+	 * 1. Check input
+	 * 2. Check data
+	 * 3. Save voucher
+	 * 4. Check Response
+	 * 5. Return view
+	 * @param id
+	 * @return object view
+	 */
 	public function store($id = '')
 	{
-		$APIVoucher 								= new APIVoucher;
-		
-		//format input
+		//1. Check input
 		$inputCode 									= Input::get('code');
 		$inputType 									= Input::get('type');
 		$inputValue 								= str_replace('IDR ', '', str_replace('.', '', Input::get('value')));
@@ -133,7 +173,8 @@ class VoucherController extends AdminController
 		$inputStartDate 							= date('Y-m-d H:i:s', strtotime(Input::get('started_at')));
 		$inputExpireDate 							= date('Y-m-d H:i:s', strtotime(Input::get('expired_at')));
 
-		//is edit
+		//2. Check data
+		$APIVoucher 								= new APIVoucher;
 		if(!empty($id))
 		{
 			//get data
@@ -161,16 +202,16 @@ class VoucherController extends AdminController
 		}
 
 
-		//save
+		//3. Save voucher
 		$result 									= $APIVoucher->postData($voucher);
 
-		//response
+		//4. Check Response
 		if($result['status'] != 'success')
 		{
 			$this->errors 							= $result['message'];
 		}
 
-		//return view
+		//5. Return view
 		if(!empty($id))
 		{
 			$this->page_attributes->success 		= "Data Voucher Telah Diedit";
@@ -180,31 +221,43 @@ class VoucherController extends AdminController
 			$this->page_attributes->success 		= "Data Voucher Telah Ditambahkan";
 		}
 
-		return $this->generateRedirectRoute('admin.voucher.show', ['id' => Input::get('voucher')]);
+		return $this->generateRedirectRoute('promote.voucher.show', ['id' => Input::get('voucher')]);
 	}
 
+	/**
+	 * Update a voucher
+	 * 
+	 * @param id
+	 * @return function
+	 */
 	public function Update($id)
 	{
 		return $this->store($id);
 	}
 
+	/**
+	 * Delete a voucher
+	 * 
+	 * @param id
+	 * @return function
+	 */
 	public function destroy($id)
 	{
 		$APIVoucher 								= new APIVoucher;
 
-		//api
+		//Call API
 		$result 									= $APIVoucher->deleteData($id);
 
-		//response
+		//Check response
 		if($result['status'] != 'success')
 		{
 			$this->errors 							= $result['message'];
 		}
 
-		//return
-		$this->page_attributes->success 			= "Data telah dihapus";
+		//Return Message
+		$this->page_attributes->success 			= "Data voucher telah dihapus";
 		
-		return $this->generateRedirectRoute('admin.voucher.index');	
+		return $this->generateRedirectRoute('promote.voucher.index');	
 
 	}		
 }

@@ -120,11 +120,19 @@ Route::group(['prefix' => 'customer', 'namespace' => 'Customer\\'], function()
 	* Routes untuk select2 ajax
 	*
 	*/
-	Route::get('customer/ajax/findName',					['uses' => 'AjaxController@FindCustomerByName', 	'as' => 'ajax.customer.findName']);
+	Route::get('customer/ajax/findName',						['uses' => 'AjaxController@FindCustomerByName', 'as' => 'ajax.customer.findName']);
 });
 
+/**
+* Routes untuk menu promosi
+*
+*/
 Route::group(['prefix' => 'promosi', 'namespace' => 'Promosi\\'], function()
 {
-	Route::resource('voucher', 'VoucherController',		['names' => ['index' => 'admin.voucher.index', 'create' => 'admin.voucher.create', 'store' => 'admin.voucher.store', 'show' => 'admin.voucher.show', 'edit' => 'admin.voucher.edit', 'update' => 'admin.voucher.update', 'destroy' => 'admin.voucher.destroy']]);
-	Route::resource('diskon', 'DiscountController',		['names' => ['index' => 'admin.discount.index', 'create' => 'admin.discount.create', 'store' => 'admin.discount.store', 'show' => 'admin.discount.show', 'edit' => 'admin.discount.edit', 'update' => 'admin.discount.update', 'destroy' => 'admin.discount.destroy']]);
+	/**
+	* Routes untuk sub menu promosi
+	*
+	*/
+	Route::resource('voucher', 		'VoucherController',		['names' => ['index' => 'promote.voucher.index', 'create' => 'promote.voucher.create', 'store' => 'promote.voucher.store', 'edit' => 'promote.voucher.edit', 'update' => 'promote.voucher.update', 'destroy' => 'promote.voucher.destroy'], 'except' => ['show']]);
+	Route::resource('diskon',  		'DiscountController',		['names' => ['index' => 'promote.discount.index'], 'only' => ['index']]);
 });

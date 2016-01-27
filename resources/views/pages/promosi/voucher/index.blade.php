@@ -18,11 +18,11 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			@include('page_elements.indexNavigation', [
-				'newDataRoute' 		=> route('admin.voucher.create'),
-				'filterDataRoute' 	=> route('admin.voucher.index')
+				'newDataRoute' 		=> route('promote.voucher.create'),
+				'filterDataRoute' 	=> route('promote.voucher.index')
 			])
 			@include('page_elements.searchResult', [
-				'closeSearchLink' 	=> route('admin.voucher.index') 
+				'closeSearchLink' 	=> route('promote.voucher.index') 
 			])
 		</div>
 	</div>
@@ -75,13 +75,12 @@
 										{{ $dt['quota'] }}
 									</td>
 									<td class="text-center">
-										<!-- <a href="{{ route('admin.voucher.show', $dt['id']) }}"> Detail</a>, -->
-										<a href="{{ route('admin.voucher.edit', $dt['id']) }}"> Edit</a>, 
+										<a href="{{ route('promote.voucher.edit', $dt['id']) }}"> Edit</a>, 
 										<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
 											data-target="#voucher_del"
 											data-id="{{$dt['id']}}"
 											data-title="Hapus Data Voucher {{$dt['code']}}"
-											data-action="{{ route('admin.voucher.destroy', $dt['id']) }}">
+											data-action="{{ route('promote.voucher.destroy', $dt['id']) }}">
 											Hapus
 										</a>
 									</td>    
@@ -90,7 +89,7 @@
 
 							@include('page_elements.modaldelete', [
 									'modal_id'      => 'voucher_del', 
-									'modal_route'   => route('admin.voucher.destroy')
+									'modal_route'   => route('promote.voucher.destroy')
 							])						
 
 						@endif

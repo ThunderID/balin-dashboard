@@ -91,8 +91,8 @@
 								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu submenu-desktop">
-								<li><a href="{{ URL::route('admin.voucher.index') }}">Voucher</a></li>
-								<li><a href="{{ URL::route('admin.discount.index') }}">Diskon</a></li>
+								<li><a href="{{ URL::route('promote.voucher.index') }}">Voucher</a></li>
+								<li><a href="{{ URL::route('promote.discount.index') }}">Diskon</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -557,14 +557,14 @@
 		<!-- submenu promosi -->
 							<div id="Promosi" class="mobile-submenu hidden">
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.voucher.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('promote.voucher.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Voucher
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.discount.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('promote.discount.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Diskon
 										</h4>

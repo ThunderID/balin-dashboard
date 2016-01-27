@@ -4,8 +4,14 @@ namespace App\Http\Controllers\Promosi;
 use App\API\connectors\APIProduct;
 
 use App\Http\Controllers\AdminController;
+
 use Input, Session, DB, Redirect, Response, Auth;
 
+/**
+ * Handle customer discount information
+ * 
+ * @author cmooy
+ */
 class DiscountController extends AdminController
 {
 	public function __construct()
@@ -14,13 +20,25 @@ class DiscountController extends AdminController
 		$this->page_attributes->title 				= 'Diskon';
 		$this->page_attributes->source 				= 'pages.promosi.diskon.';
 		$this->page_attributes->breadcrumb			=	[
-															'Diskon' 	=> route('admin.discount.index'),
+															'Diskon' 	=> route('promote.discount.index'),
 														];			
 	}
 
+	/**
+	 * Display all discount
+	 * 
+	 * 1. Check filter
+	 * 2. Check page
+	 * 3. Get data from API
+	 * 4. Generate paginator
+	 * 5. Generate breadcrumb
+	 * 6. Generate view
+	 * @param page, q
+	 * @return Object View
+	 */
 	public function index()
 	{
-		//initialize 
+		//1. Check filter 
 		$filters 									= null;
 
 		if(Input::has('q'))
@@ -33,7 +51,7 @@ class DiscountController extends AdminController
 			$searchResult							= null;
 		}
 
-		//get curent page
+		//2. Check page
 		if(is_null(Input::get('page')))
 		{
 			$page 									= 1;
@@ -43,7 +61,7 @@ class DiscountController extends AdminController
 			$page 									= Input::get('page');
 		}
 
-		// data here
+		//3. Get data from API
 		$APIProduct 								= new APIProduct;
 
 		$product 									= $APIProduct->getIndex([
@@ -62,47 +80,16 @@ class DiscountController extends AdminController
 															'product' => $product,
 														];
 
-		//paginate
-		$this->paginate(route('admin.discount.index'), $product['data']['count'], $page);
+		//4. Generate paginator
+		$this->paginate(route('promote.discount.index'), $product['data']['count'], $page);
 
-		//breadcrumb
+		//5. Generate breadcrumb
 		$breadcrumb 								= [];	
-
-		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
+		//6. Generate View
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'index';
 
 		return $this->generateView();
 	}
-
-	public function show($id)
-	{
-
-	}	
-
-	public function create($id = null)
-	{
-	
-	}
-
-	public function edit($id)
-	{
-		return $this->create($id);
-	}
-
-	public function store($id = null)
-	{
-
-	}
-
-	public function Update($id)
-	{
-		return $this->store($id);
-	}
-
-	public function destroy($id)
-	{
-
-	}		
 }
