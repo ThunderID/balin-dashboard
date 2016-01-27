@@ -19,11 +19,12 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			@include('page_elements.indexNavigation', [
-				'newDataRoute' 		=> route('admin.report.voucherusage'),
-				'filterDataRoute' 	=> route('admin.report.voucherusage'),
+				'disabled'			=> true,
+				'newDataRoute' 		=> route('report.voucher.usage'),
+				'filterDataRoute' 	=> route('report.voucher.usage'),
 				'searchLabel' 		=> 'dd-mm-yyyy to dd-mm-yyyy'
 			])
-			@include('page_elements.searchResult', ['closeSearchLink' => route('admin.report.voucherusage') ])
+			@include('page_elements.searchResult', ['closeSearchLink' => route('report.voucher.usage') ])
 		</div>
 	</div>
 	</br> 	

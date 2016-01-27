@@ -61,8 +61,8 @@ Route::group(['prefix' => 'toko', 'namespace' => 'Toko\\'], function()
 	Route::resource('penerimaan',	'CompleteOrderController',	['names' => ['create' => 'shop.completeorder.create', 'store' => 'shop.completeorder.store'], 'only' => ['create', 'store']]);
 	Route::resource('pembatalan',	'CancelOrderController',	['names' => ['create' => 'shop.cancelorder.create', 'store' => 'shop.cancelorder.store'], 'only' => ['create', 'store']]);
 	
-	Route::resource('kurir', 'CourierController',				['names' => ['index' => 'shop.courier.index', 'create' => 'shop.courier.create', 'store' => 'shop.courier.store', 'show' => 'shop.courier.show', 'edit' => 'shop.courier.edit', 'update' => 'shop.courier.update', 'destroy' => 'shop.courier.destroy']]);
-	Route::resource('buy', 'BuyController',						['names' => ['index' => 'shop.buy.index', 'create' => 'shop.buy.create', 'store' => 'shop.buy.store', 'show' => 'shop.buy.show', 'edit' => 'shop.buy.edit', 'update' => 'shop.buy.update', 'destroy' => 'shop.buy.destroy']]);
+	Route::resource('kurir', 		'CourierController',		['names' => ['index' => 'shop.courier.index', 'create' => 'shop.courier.create', 'store' => 'shop.courier.store', 'show' => 'shop.courier.show', 'edit' => 'shop.courier.edit', 'update' => 'shop.courier.update', 'destroy' => 'shop.courier.destroy']]);
+	Route::resource('pembelian', 	'BuyController',			['names' => ['index' => 'shop.buy.index', 'create' => 'shop.buy.create', 'store' => 'shop.buy.store', 'show' => 'shop.buy.show', 'edit' => 'shop.buy.edit', 'update' => 'shop.buy.update', 'destroy' => 'shop.buy.destroy']]);
 
 	/**
 	* Routes untuk select2 ajax
@@ -72,10 +72,18 @@ Route::group(['prefix' => 'toko', 'namespace' => 'Toko\\'], function()
 	Route::get('sell/ajax/findRefNumber',						['uses' => 'AjaxController@FindTransactionByRefNumber', 	'as' => 'ajax.sell.findRefNumber']);
 });
 
+/**
+* Routes untuk menu laporan
+*
+*/
 Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan\\'], function()
 {
-	Route::get('penggunaan/voucher',						['uses' => 'ReportController@voucherusage', 'as' => 'admin.report.voucherusage']);
-	Route::get('penjualan/barang',							['uses' => 'ReportController@soldproduct', 'as' => 'admin.report.soldproduct']);
+	/**
+	* Routes untuk sub menu laporan
+	*
+	*/
+	Route::get('penggunaan/voucher',							['uses' => 'ReportController@voucherusage', 'as' => 'report.voucher.usage']);
+	Route::get('penjualan/barang',								['uses' => 'ReportController@soldproduct', 'as' => 'report.product.sold']);
 });
 
 Route::group(['prefix' => 'konfigurasi', 'namespace' => 'Konfigurasi\\'], function()

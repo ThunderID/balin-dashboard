@@ -56,8 +56,8 @@
 								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu submenu-desktop">
-								<li><a href="{{ URL::route('admin.report.soldproduct') }}">Penjualan Barang</a></li>
-								<li><a href="{{ URL::route('admin.report.voucherusage') }}">Penggunaan Voucher</a></li>
+								<li><a href="{{ URL::route('report.product.sold') }}">Penjualan Barang</a></li>
+								<li><a href="{{ URL::route('report.voucher.usage') }}">Penggunaan Voucher</a></li>
 							</ul>
 						</li>
 
@@ -486,47 +486,19 @@
 		<!-- submenu laporan -->
 							<div id="Laporan" class="mobile-submenu hidden">
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.dashboard') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('report.product.sold') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
-											Finance
+											Penjualan Barang
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.dashboard') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('report.voucher.usage') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
-											Inventory
+											Penggunaan Voucher
 										</h4>
 									</a>
 								</div>
-								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.dashboard') }}" class="btn btn-default btn-block btn-sm pull-left">
-										<h4>
-											Marketing
-										</h4>
-									</a>
-								</div>
-								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.dashboard') }}" class="btn btn-default btn-block btn-sm pull-left">
-										<h4>
-											Customer
-										</h4>
-									</a>
-								</div>
-								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.dashboard') }}" class="btn btn-default btn-block btn-sm pull-left">
-										<h4>
-											System
-										</h4>
-									</a>
-								</div>
-								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.dashboard') }}" class="btn btn-default btn-block btn-sm pull-left">
-										<h4>
-											Internal (HR)
-										</h4>
-									</a>
-								</div>																												
 							</div>
 		<!-- end of submenu laporan -->
 

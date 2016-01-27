@@ -19,11 +19,12 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			@include('page_elements.indexNavigation', [
-				'newDataRoute' 		=> route('admin.report.soldproduct'),
-				'filterDataRoute' 	=> route('admin.report.soldproduct'),
+				'disabled'			=> true,
+				'newDataRoute' 		=> route('report.product.sold'),
+				'filterDataRoute' 	=> route('report.product.sold'),
 				'searchLabel' 		=> 'dd-mm-yyyy to dd-mm-yyyy'
 			])
-			@include('page_elements.searchResult', ['closeSearchLink' => route('admin.report.soldproduct') ])
+			@include('page_elements.searchResult', ['closeSearchLink' => route('report.product.sold') ])
 		</div>
 	</div>
 	</br> 	

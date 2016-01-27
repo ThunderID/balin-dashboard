@@ -7,21 +7,36 @@ use App\Http\Controllers\AdminController;
 
 use Input, Session, DB, Redirect, Response, Auth;
 
+/**
+ * Handle report controller
+ * 
+ * @author cmooy
+ */
 class ReportController extends AdminController
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->page_attributes->title 				= 'Laporan';
-		$this->page_attributes->source 				= 'pages.laporan.';
-		$this->page_attributes->breadcrumb			=	[
-															
-														];		
+		$this->page_attributes->title 				= 	'Laporan';
+		$this->page_attributes->source 				= 	'pages.laporan.';
+		$this->page_attributes->breadcrumb			=	[];		
 	}
 
+	/**
+	 * Display all voucher usage
+	 * 
+	 * 1. Check filter
+	 * 2. Check page
+	 * 3. Get data from API
+	 * 4. Generate paginator
+	 * 5. Generate breadcrumb
+	 * 6. Generate view
+	 * @param page, q
+	 * @return Object View
+	 */
 	public function VoucherUsage()
 	{
-		//initialize 
+		//1. Check filter 
 		$filters 									= null;
 
 		if(Input::has('q'))
@@ -35,7 +50,7 @@ class ReportController extends AdminController
 			$searchResult							= null;
 		}
 
-		//get curent page
+		//2. Check page
 		if(is_null(Input::get('page')))
 		{
 			$page 									= 1;
@@ -45,7 +60,7 @@ class ReportController extends AdminController
 			$page 									= Input::get('page');
 		}
 
-		// data here
+		//3. Get data from API
 		$APIReport 									= new APIReport;
 
 		$report 									= $APIReport->getVoucherUsage([
@@ -63,26 +78,37 @@ class ReportController extends AdminController
 															'report' => $report,
 														];
 
-		//paginate
-		$this->paginate(route('admin.report.voucherusage'), $report['data']['count'], $page);
+		//4. Generate paginator
+		$this->paginate(route('report.voucher.usage'), $report['data']['count'], $page);
 
-		//breadcrumb
+		//5. Generate breadcrumb
 		$breadcrumb								=	[
-														'Laporan Penggunaan Voucher' => route('admin.report.voucherusage'),
+														'Laporan Penggunaan Voucher' => route('report.voucher.usage'),
 													];
 
-		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
+		//6. Generate view
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'voucher.index';
 
 		return $this->generateView();
 	}
 
-
+	/**
+	 * Display all sold varian
+	 * 
+	 * 1. Check filter
+	 * 2. Check page
+	 * 3. Get data from API
+	 * 4. Generate paginator
+	 * 5. Generate breadcrumb
+	 * 6. Generate view
+	 * @param page, q
+	 * @return Object View
+	 */
 	public function SoldProduct()
 	{
-		//initialize 
+		//1. Check filter 
 		$filters 									= null;
 
 		if(Input::has('q'))
@@ -96,7 +122,7 @@ class ReportController extends AdminController
 			$searchResult							= null;
 		}
 
-		//get curent page
+		//2. Check page
 		if(is_null(Input::get('page')))
 		{
 			$page 									= 1;
@@ -106,7 +132,7 @@ class ReportController extends AdminController
 			$page 									= Input::get('page');
 		}
 
-		// data here
+		//3. Get data from API
 		$APIReport 									= new APIReport;
 
 		$report 									= $APIReport->getSoldProduct([
@@ -123,17 +149,17 @@ class ReportController extends AdminController
 		$this->page_attributes->data				= 	[
 															'report' => $report,
 														];
-		//paginate
-		$this->paginate(route('admin.report.soldproduct'), $report['data']['count'], $page);
+		//4. Generate paginator
+		$this->paginate(route('report.product.sold'), $report['data']['count'], $page);
 
-		//breadcrumb
-		$breadcrumb								=	[
-														'Laporan Penjualan Barang' => route('admin.report.soldproduct'),
-													];
+		//5. Generate breadcrumb
+		$breadcrumb									=	[
+															'Laporan Penjualan Barang' => route('report.product.sold'),
+														];
 
-		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
+		//6. Generate view
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'product.index';
 
 		return $this->generateView();
