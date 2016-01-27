@@ -1,10 +1,17 @@
 <?php 
 namespace App\Http\Controllers\Toko;
 
-use App\Http\Controllers\AdminController;
 use App\API\Connectors\APISale;
+
+use App\Http\Controllers\AdminController;
+
 use Input, Session, DB, Redirect, Response, Auth;
 
+/**
+ * Handle sale information
+ * 
+ * @author cmooy
+ */
 class SellController extends AdminController
 {
 	public function __construct()
@@ -13,13 +20,25 @@ class SellController extends AdminController
 		$this->page_attributes->title 				= 'Data Penjualan';
 		$this->page_attributes->source 				= 'pages.toko.penjualan.';
 		$this->page_attributes->breadcrumb			=	[
-															'Data Penjualan' 	=> route('admin.sell.index'),
+															'Data Penjualan' 	=> route('shop.sell.index'),
 														];			
 	}
 
+	/**
+	 * Display all sale
+	 * 
+	 * 1. Check filter
+	 * 2. Check page
+	 * 3. Get data from API
+	 * 4. Generate paginator
+	 * 5. Generate breadcrumb
+	 * 6. Generate view
+	 * @param page, q
+	 * @return Object View
+	 */
 	public function index()
 	{
-		//initialize 
+		//1. Check filter
 		$filters 									= null;
 
 		if(Input::has('q'))
@@ -32,7 +51,7 @@ class SellController extends AdminController
 			$searchResult							= null;
 		}
 
-		//get curent page
+		//2. Check page
 		if(is_null(Input::get('page')))
 		{
 			$page 									= 1;
@@ -42,7 +61,7 @@ class SellController extends AdminController
 			$page 									= Input::get('page');
 		}
 
-		// data here
+		//3. Get data from API
 		$APISale 									= new APISale;
 
 		$sale 										= $APISale->getIndex([
@@ -60,76 +79,60 @@ class SellController extends AdminController
 															'sale' => $sale,
 														];
 
-		//paginate
-		$this->paginate(route('admin.sell.index'), $sale['data']['count'], $page);
+		//4. Generate paginator
+		$this->paginate(route('shop.sell.index'), $sale['data']['count'], $page);
 
-		//breadcrumb
+		//5. Generate breadcrumb
 		$breadcrumb								=	[
 													];
-
-		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
+		//6. Generate view
 		$this->page_attributes->source 				=  $this->page_attributes->source . '.index';
 
 		return $this->generateView();
 	}
 
+	/**
+	 * Display a sale detail
+	 * 
+	 * 1. Get data from API
+	 * 2. Check return status
+	 * 3. Generate breadcrumb
+	 * 4. Generate view
+	 * @param id
+	 * @return Object View
+	 */
 	public function show($id)
 	{
-		//initialize 
+		//1. Get data from API
 		$APISale 									= new APISale;
 		$sale 										= $APISale->getShow($id);
 
-		$this->page_attributes->subtitle 			= $sale['data']['ref_number'];
-
-		// filters
-		if(Input::has('q'))
+		//2. Check return status
+		if($sale['status'] != 'success')
 		{
-			$this->page_attributes->search 			= Input::get('q');
-		}		
+			$this->errors 							= $sale['message'];
+			
+			return $this->generateRedirectRoute('shop.sell.index');	
+		}
 
-		// data here
+		$this->page_attributes->subtitle 			= $sale['data']['ref_number'];
 		$this->page_attributes->data				= 	[
 															'sale' => $sale,
 														];
 
-		//breadcrumb
+		//3. Generate breadcrumb
 		$breadcrumb 								=	[
-															$sale['data']['ref_number'] => route('admin.sell.show', ['id' => $id])
+															$sale['data']['ref_number'] => route('shop.sell.show', ['id' => $id])
 														];	
-
-		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
+
+		//4. Generate view
 
 		$this->page_attributes->source 				= $this->page_attributes->source . 'show';
 
 		return $this->generateView();
 
 	}	
-
-	public function create($id = null)
-	{
-	
-	}
-
-	public function edit($id)
-	{
-		return $this->create($id);
-	}
-
-	public function store($id = null)
-	{
-
-	}
-
-	public function Update($id)
-	{
-		return $this->store($id);
-	}
-
-	public function destroy($id)
-	{
-
-	}		
 }

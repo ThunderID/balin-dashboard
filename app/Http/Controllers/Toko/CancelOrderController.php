@@ -4,62 +4,42 @@ namespace App\Http\Controllers\Toko;
 use App\API\Connectors\APISale;
 
 use App\Http\Controllers\AdminController;
+
 use Input, Session, DB, Redirect, Response, Auth;
 
+/**
+ * Handle update transaction canceled status
+ * 
+ * @author cmooy
+ */
 class CancelOrderController extends AdminController
 {
 	public function __construct()
 	{
 		parent::__construct();
 		$this->page_attributes->title 				= 'Transaksi Batal';
-		$this->page_attributes->source 				= 'pages.toko.transaksiBatal.';
+		$this->page_attributes->source 				= 'pages.toko.batal.';
 		$this->page_attributes->breadcrumb			=	[
-															'Transaksi Batal' 	=> route('admin.cancelorder.index'),
+															'Transaksi Batal' 	=> route('shop.cancelorder.create'),
 														];			
 	}
 
-	public function index()
-	{
-		//initialize 
-		$filters 									= null;
-
-		if(Input::has('q'))
-		{
-			$filters 								= ['name' => Input::get('q')];
-			$this->page_attributes->search 			= Input::get('q');
-		}
-		else
-		{
-			$searchResult							= null;
-		}
-
-		// data here
-		$this->page_attributes->data				= [];
-
-
-		//breadcrumb
-		$breadcrumb 								= [];	
-
-		//generate View
-		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
-
-		$this->page_attributes->source 				=  $this->page_attributes->source . 'index';
-
-		return $this->generateView();
-	}
-
-	public function show($id)
-	{
-
-	}	
-
+	/**
+	 * create form of a cancel transactions
+	 * 
+	 * 1. Get page setting
+	 * 2. Generate breadcrumb
+	 * 3. Generate view
+	 * @param id
+	 * @return Object View
+	 */
 	public function create($id = null)
 	{
-		//initialize
+		//1. Get page setting
 		if (is_null($id))
 		{
 			$breadcrumb								=	[
-															'Data Baru' => route('admin.cancelorder.create'),
+															'Data Baru' => route('shop.cancelorder.create'),
 														];
 
 			$data 									= null;														
@@ -68,20 +48,13 @@ class CancelOrderController extends AdminController
 		}
 		else
 		{
-			$APISale 								= new APISale;
-			$data 									= ['data' => $APISale->getShow($id)['data'] ];	
-
-			$breadcrumb								=	[
-															$data['data']['ref_number']  =>  route('admin.cancelorder.show', ['id' => $data['data']['id']] ),
-															'Edit'  =>  route('admin.cancelorder.create', ['id' => $data['data']['id']] ),
-														];
-
-			$this->page_attributes->subtitle 		= $data['data']['ref_number'];
+			\App::abort(404);
 		}
 
-		//generate View
+		//2. Generate breadcrumb
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
+		//3. Generate view
 		$this->page_attributes->data 				=  $data;
 
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'create';
@@ -89,34 +62,56 @@ class CancelOrderController extends AdminController
 		return $this->generateView();		
 	}
 
-	public function edit($id)
-	{
-		return $this->create($id);
-	}
-
+	/**
+	 * Store a canceled order
+	 * 
+	 * 1. Check transaction
+	 * 2. Check input
+	 * 3. Store transaction
+	 * 4. Check response
+	 * 5. Generate view
+	 * @param id
+	 * @return object view
+	 */
 	public function store($id = null)
 	{
-		$saleid 									= Input::get('transaction_id');
+		//1. Check transaction
+		if(Input::has('transaction_id'))
+		{
+			$saleid 								= Input::get('transaction_id');
+		}
+		else
+		{
+			\App::abort(404);
+		}
 
 		$APISale 									= new APISale;
 
-		$data 										= $APISale->getShow($saleid);
-		$sale 										= $data['data'];
+		$prev_sale 									= $APISale->getShow($saleid);
 
-		//format input
+		if($prev_sale['status'] != 'success')
+		{
+			$this->errors 							= $prev_sale['message'];
+			
+			return $this->generateRedirectRoute('shop.shipping.create');	
+		}
+
+		$sale 										= $prev_sale['data'];
+
+		//2. Check input
 		$sale['status']								= 'canceled';
 		$sale['notes']								= Input::get('notes');
 
-		//save
+		//3. Store transaction
 		$result 									= $APISale->postData($sale);
 
-		//response
+		//4. Check response
 		if($result['status'] != 'success')
 		{
 			$this->errors 							= $result['message'];
 		}
 
-		//return view
+		//5. Generate view
 		if(!empty($id))
 		{
 			$this->page_attributes->success 		= "Pesanan sudah di batalkan!";
@@ -126,16 +121,6 @@ class CancelOrderController extends AdminController
 			$this->page_attributes->success 		= "Pesanan sudah di batalkan!";
 		}
 
-		return $this->generateRedirectRoute('admin.sell.show', ['id' => $saleid]);
+		return $this->generateRedirectRoute('shop.sell.show', ['id' => $saleid]);
 	}
-
-	public function Update($id)
-	{
-		return $this->store($id);
-	}
-
-	public function destroy($id)
-	{
-
-	}		
 }

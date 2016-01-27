@@ -13,7 +13,7 @@ class BuyController extends AdminController
 		$this->page_attributes->title 				= 'Data Pembelian';
 		$this->page_attributes->source 				= 'pages.toko.pembelian.';
 		$this->page_attributes->breadcrumb			=	[
-															'Data Pembelian' 	=> route('admin.buy.index'),
+															'Data Pembelian' 	=> route('shop.buy.index'),
 														];			
 	}
 
@@ -61,7 +61,7 @@ class BuyController extends AdminController
 														];
 
 		//paginate
-		$this->paginate(route('admin.buy.index'), $purchase['data']['count'], $page);
+		$this->paginate(route('shop.buy.index'), $purchase['data']['count'], $page);
 
 		//breadcrumb
 		$breadcrumb								=	[
@@ -96,7 +96,7 @@ class BuyController extends AdminController
 
 		//breadcrumb
 		$breadcrumb 								=	[
-															$purchase['data']['ref_number'] => route('admin.sell.show', ['id' => $id])
+															$purchase['data']['ref_number'] => route('shop.sell.show', ['id' => $id])
 														];	
 
 		//generate View

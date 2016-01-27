@@ -3,14 +3,14 @@
 @section('content')
 <div class="container-fluid">
 <!-- head -->
-    @include('page_elements.createHeader', ['title' => 'Data Transaksi Terkirim ' . $data['data']['ref_number'] ])    
+    @include('page_elements.createHeader', ['title' => 'Data Transaksi Dibatalkan ' . $data['data']['ref_number'] ])    
 <!-- end of head -->
 
 <!-- body -->
 	@if(isset(  $data['data']['id'] ))
-    {!! Form::open(['url' => route('admin.finishedTransaction.update', $data['data']['id']), 'method' => 'PATCH']) !!}
+    {!! Form::open(['url' => route('shop.cancelorder.update', $data['data']['id']), 'method' => 'PATCH']) !!}
     @else
-    {!! Form::open(['url' => route('admin.finishedTransaction.store'), 'method' => 'POST']) !!}
+    {!! Form::open(['url' => route('shop.cancelorder.store'), 'method' => 'POST']) !!}
     @endif
 		<div class="row">
 			<div class="col-md-12">
@@ -26,11 +26,11 @@
 			</div> 
 			<div class="col-md-12">
 				<div class="form-group">
-					<label for="notes">Catatan Penerima</label>
+					<label for="notes">Catatan Pembatalan</label>
 					{!! Form::text('notes', $data['data']['notes'], [
 								'class'        		=> 'form-control', 
 								'tabindex'     		=> '2', 
-								'placeholder'  		=> 'Nama Penerima',
+								'placeholder'  		=> 'Alasan Pembatalan',
 					]) !!}
 				</div>  
 			</div>  
@@ -40,7 +40,6 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group text-right">
-					<a href="{{ URL::route('admin.finishedTransaction.index') }}" class="btn btn-md btn-default" tabindex="13">Batal</a>
 					<button type="submit" class="btn btn-md btn-primary" tabindex="12">Simpan</button>
 				</div>        
 			</div>        

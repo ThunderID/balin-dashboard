@@ -14,7 +14,7 @@ class CourierController extends AdminController
 		$this->page_attributes->title 				= 'Kurir';
 		$this->page_attributes->source 				= 'pages.toko.kurir.';
 		$this->page_attributes->breadcrumb			=	[
-															'Kurir' 	=> route('admin.courier.index'),
+															'Kurir' 	=> route('shop.courier.index'),
 														];			
 	}
 
@@ -61,7 +61,7 @@ class CourierController extends AdminController
 														];
 
 		//paginate
-		$this->paginate(route('admin.courier.index'), $courier['data']['count'], $page);
+		$this->paginate(route('shop.courier.index'), $courier['data']['count'], $page);
 
 		//breadcrumb
 		$breadcrumb 								= [];	
@@ -108,7 +108,7 @@ class CourierController extends AdminController
 														];															
 		//breadcrumb
 		$breadcrumb 								=	[
-															$courier['data']['name'] => route('admin.courier.show', ['id' => $courier['data']['name']])
+															$courier['data']['name'] => route('shop.courier.show', ['id' => $courier['data']['name']])
 														];	
 
 		//generate View
@@ -126,7 +126,7 @@ class CourierController extends AdminController
 		if (is_null($id))
 		{
 			$breadcrumb								=	[
-															'Data Baru' => route('admin.courier.create'),
+															'Data Baru' => route('shop.courier.create'),
 														];
 
 			$this->page_attributes->subtitle 		= 'Data Baru';
@@ -140,8 +140,8 @@ class CourierController extends AdminController
 			$this->page_attributes->data			= $courier;
 
 			$breadcrumb								=	[
-															$courier['name']  =>  route('admin.courier.show', ['id' => $id]),
-															'Edit'  =>  route('admin.courier.edit', ['id' => $id]),
+															$courier['name']  =>  route('shop.courier.show', ['id' => $id]),
+															'Edit'  =>  route('shop.courier.edit', ['id' => $id]),
 														];
 
 			$this->page_attributes->subtitle 		= $courier['name'];
@@ -211,7 +211,7 @@ class CourierController extends AdminController
 			$this->page_attributes->success 		= "Data Kurir Telah Ditambahkan";
 		}
 		
-		return $this->generateRedirectRoute('admin.courier.index');				
+		return $this->generateRedirectRoute('shop.courier.index');				
 	}
 
 	public function Update($id)
@@ -235,6 +235,6 @@ class CourierController extends AdminController
 		//return
 		$this->page_attributes->success 			= "Data telah dihapus";
 		
-		return $this->generateRedirectRoute('admin.courier.index');	
+		return $this->generateRedirectRoute('shop.courier.index');	
 	}		
 }

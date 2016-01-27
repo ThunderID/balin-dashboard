@@ -145,7 +145,7 @@ class ProductController extends AdminController
 	 * 2. Initialize data
 	 * 3. Generate breadcrumb
 	 * 4. Generate view
-	 * @param q
+	 * @param id
 	 * @return Object View
 	 */
 	public function create($id = null)

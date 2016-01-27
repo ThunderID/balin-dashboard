@@ -18,11 +18,11 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			@include('page_elements.indexNavigation', [
-				'newDataRoute' 		=> route('admin.courier.create'),
-				'filterDataRoute' 	=> route('admin.courier.index')
+				'newDataRoute' 		=> route('shop.courier.create'),
+				'filterDataRoute' 	=> route('shop.courier.index')
 			])
 			@include('page_elements.searchResult', [
-				'closeSearchLink' => route('admin.courier.index') 
+				'closeSearchLink' => route('shop.courier.index') 
 			])
 		</div>  
 	</div>
@@ -70,12 +70,12 @@
 										<i class="fa fa-phone"></i> {{ $dt['current_phone'] }}
 									</td>
 									<td class="text-center">
-										<a href="{{ route('admin.courier.show', $dt['id']) }}"> Detail</a>, 
-										<a href="{{ route('admin.courier.edit', $dt['id']) }}"> Edit</a>, 
+										<a href="{{ route('shop.courier.show', $dt['id']) }}"> Detail</a>, 
+										<a href="{{ route('shop.courier.edit', $dt['id']) }}"> Edit</a>, 
 										<a href="#" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#courier_del"
 											data-id="{{$dt['id']}}"
 											data-title="Hapus Data Kurir {{$dt['name']}}"
-											data-action="{{ route('admin.courier.destroy', $dt['id']) }}">
+											data-action="{{ route('shop.courier.destroy', $dt['id']) }}">
 											Hapus
 										</a>                                                                                      
 									</td>    
@@ -84,7 +84,7 @@
 							
 							@include('page_elements.modaldelete', [
 									'modal_id'      => 'courier_del', 
-									'modal_route'   => 'admin.courier.destroy'
+									'modal_route'   => 'shop.courier.destroy'
 							])
 						@endif
 					</tbody>					

@@ -18,8 +18,8 @@
 		<div class="col-md-6 m-b-md">
 			<h2 style="margin-top:0px;">BALIN Invoice</h2>
 		</div>
-		<div class="col-md-6 m-b-md">
-			<a class="btn btn-default pull-right"  href="{{ route('admin.sell.edit', ['id' => $dt['id']] ) }}"> Edit Data </a>
+		<div class="col-md-6 m-b-md text-right">
+			<h5>{{$dt['status']}}</h5>
 		</div>
 	</div>
 	<div class="row">

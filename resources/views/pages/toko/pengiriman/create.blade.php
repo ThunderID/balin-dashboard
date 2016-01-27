@@ -8,9 +8,9 @@
 
 <!-- body -->
 	@if(isset(  $data['data']['id'] ))
-    {!! Form::open(['url' => route('admin.shipp.update', $data['data']['id']), 'method' => 'PATCH']) !!}
+    {!! Form::open(['url' => route('shop.shipping.update', $data['data']['id']), 'method' => 'PATCH']) !!}
     @else
-    {!! Form::open(['url' => route('admin.shipp.store'), 'method' => 'POST']) !!}
+    {!! Form::open(['url' => route('shop.shipping.store'), 'method' => 'POST']) !!}
     @endif
 		<div class="row">
 			<div class="col-md-12">
@@ -40,7 +40,6 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group text-right">
-					<a href="{{ URL::route('admin.shipp.index') }}" class="btn btn-md btn-default" tabindex="4">Batal</a>
 					<button type="submit" class="btn btn-md btn-primary" tabindex="3">Simpan</button>
 				</div>        
 			</div>        

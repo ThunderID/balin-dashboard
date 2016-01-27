@@ -18,11 +18,11 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			@include('page_elements.indexNavigation', [
-				'newDataRoute' 		=> route('admin.buy.create'),
-				'filterDataRoute' 	=> route('admin.buy.index'),
+				'newDataRoute' 		=> route('shop.buy.create'),
+				'filterDataRoute' 	=> route('shop.buy.index'),
 				'searchLabel' 		=> 'cari status'
 			])
-			@include('page_elements.searchResult', ['closeSearchLink' => route('admin.buy.index') ])
+			@include('page_elements.searchResult', ['closeSearchLink' => route('shop.buy.index') ])
 		</div>
 	</div>
 	</br> 	
@@ -87,8 +87,8 @@
 										{{$dt['status']}}
 									</td>
 									<td class="text-center">
-										<a href="{{ route('admin.buy.show', $dt['id']) }}"> Detail</a>,
-										<a href="{{ route('admin.buy.edit', $dt['id']) }}"> Edit</a> 
+										<a href="{{ route('shop.buy.show', $dt['id']) }}"> Detail</a>,
+										<a href="{{ route('shop.buy.edit', $dt['id']) }}"> Edit</a> 
 									</td>    
 								</tr>       
 							@endforeach 

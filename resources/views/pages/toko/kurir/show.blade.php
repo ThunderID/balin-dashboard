@@ -26,7 +26,7 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			<div class="row">
 				<div class="col-md-12">
-					<a class="btn btn-default pull-right"  href="{{ route('admin.courier.edit', ['id' => $data['courier']['id']] ) }}"> Edit Data </a>
+					<a class="btn btn-default pull-right"  href="{{ route('shop.courier.edit', ['id' => $data['courier']['id']] ) }}"> Edit Data </a>
 				</div>
 			</div>			
 

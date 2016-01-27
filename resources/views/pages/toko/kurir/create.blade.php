@@ -8,9 +8,9 @@
 
 <!-- body -->
 	@if(!isset($data['id']))
-    {!! Form::open(['url' => route('admin.courier.store'), 'method' => 'POST']) !!}
+    {!! Form::open(['url' => route('shop.courier.store'), 'method' => 'POST']) !!}
     @else
-    {!! Form::open(['url' => route('admin.courier.update', $data['id']), 'method' => 'PATCH']) !!}
+    {!! Form::open(['url' => route('shop.courier.update', $data['id']), 'method' => 'PATCH']) !!}
     @endif
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
@@ -144,7 +144,7 @@
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="form-group text-right">
-					<a href="{{ URL::route('admin.courier.index') }}" class="btn btn-md btn-default" tabindex="10">Batal</a>
+					<a href="{{ URL::route('shop.courier.index') }}" class="btn btn-md btn-default" tabindex="10">Batal</a>
 					<button type="submit" class="btn btn-md btn-primary" tabindex="11">Simpan</button>
 				</div>
 			</div>                                     

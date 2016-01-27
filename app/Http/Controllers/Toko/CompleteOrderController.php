@@ -8,24 +8,24 @@ use App\Http\Controllers\AdminController;
 use Input, Session, DB, Redirect, Response, Auth;
 
 /**
- * Handle update transaction payment status
+ * Handle update transaction delivered status
  * 
  * @author cmooy
  */
-class PayController extends AdminController
+class CompleteOrderController extends AdminController
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->page_attributes->title 				= 'Validasi Bayar';
-		$this->page_attributes->source 				= 'pages.toko.pembayaran.';
+		$this->page_attributes->title 				= 'Transaksi Selesai';
+		$this->page_attributes->source 				= 'pages.toko.lengkap.';
 		$this->page_attributes->breadcrumb			=	[
-															'Validasi Bayar' 	=> route('shop.pay.create'),
+															'Transaksi Selesai' 	=> route('shop.completeorder.create'),
 														];			
 	}
 
 	/**
-	 * create form of a payment notes
+	 * create form of a complete transactions
 	 * 
 	 * 1. Get page setting
 	 * 2. Generate breadcrumb
@@ -39,12 +39,12 @@ class PayController extends AdminController
 		if (is_null($id))
 		{
 			$breadcrumb								=	[
-															'Data Pembayaran' => route('shop.pay.create'),
+															'Data Penerima Paket' => route('shop.completeorder.create'),
 														];
 
-			$data 									= null;														
+			$data 									= null;
 
-			$this->page_attributes->subtitle 		= 'Data Pembayaran';
+			$this->page_attributes->subtitle 		= 'Data Penerima Paket';
 		}
 		else
 		{
@@ -59,15 +59,15 @@ class PayController extends AdminController
 
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'create';
 
-		return $this->generateView();
+		return $this->generateView();		
 	}
 
 	/**
-	 * Store a payment notes
+	 * Store a delivered order
 	 * 
 	 * 1. Check transaction
 	 * 2. Check input
-	 * 3. Store Payment
+	 * 3. Store transaction
 	 * 4. Check response
 	 * 5. Generate view
 	 * @param id
@@ -93,21 +93,16 @@ class PayController extends AdminController
 		{
 			$this->errors 							= $prev_sale['message'];
 			
-			return $this->generateRedirectRoute('shop.pay.create');	
+			return $this->generateRedirectRoute('shop.shipping.create');	
 		}
 
 		$sale 										= $prev_sale['data'];
 
 		//2. Check input
-		$inputPayment 								= Input::only('method', 'destination', 'account_name', 'account_number');
-		$inputPayment['id'] 						= '';
-		$inputPayment['amount'] 					= $sale['bills'];
-		$inputPayment['ondate'] 					= date('Y-m-d H:i:s', strtotime(Input::get('ondate')));
+		$sale['status']								= 'delivered';
+		$sale['notes']								= Input::get('notes');
 
-		$sale['payment']							= $inputPayment;
-		$sale['status']								= 'paid';
-
-		//3. Store Payment
+		//3. Store Transction
 		$result 									= $APISale->postData($sale);
 
 		//4. Check response
@@ -119,11 +114,11 @@ class PayController extends AdminController
 		//5. Generate view
 		if(!empty($id))
 		{
-			$this->page_attributes->success 		= "Pesanan sudah di validasi";
+			$this->page_attributes->success 		= "Pesanan sudah di diterima pembeli";
 		}
 		else
 		{
-			$this->page_attributes->success 		= "Pesanan sudah di validasi";
+			$this->page_attributes->success 		= "Pesanan sudah di diterima pembeli";
 		}
 
 		return $this->generateRedirectRoute('shop.sell.show', ['id' => $saleid]);

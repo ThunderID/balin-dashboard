@@ -39,14 +39,14 @@
 								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu submenu-desktop">
-								<li><a href="{{ URL::route('admin.sell.index') }}">Data Penjualan</a></li>
-								<li><a href="{{ URL::route('admin.pay.create') }}">Validasi Bayar</a></li>
-								<li><a href="{{ URL::route('admin.packing.create') }}">Packing</a></li>
-								<li><a href="{{ URL::route('admin.shipp.create') }}">Kirim Barang</a></li>
-								<li><a href="{{ URL::route('admin.finishedTransaction.create') }}">Transaksi Selesai</a></li>
-								<li><a href="{{ URL::route('admin.cancelorder.create') }}">Transaksi Dibatalkan</a></li>
-								<li><a href="{{ URL::route('admin.courier.index') }}">Kurir</a></li>
-								<li><a href="{{ URL::route('admin.buy.index') }}">Data Pembelian</a></li>
+								<li><a href="{{ URL::route('shop.sell.index') }}">Data Penjualan</a></li>
+								<li><a href="{{ URL::route('shop.pay.create') }}">Validasi Bayar</a></li>
+								<li><a href="{{ URL::route('shop.packing.create') }}">Packing</a></li>
+								<li><a href="{{ URL::route('shop.shipping.create') }}">Kirim Barang</a></li>
+								<li><a href="{{ URL::route('shop.completeorder.create') }}">Transaksi Selesai</a></li>
+								<li><a href="{{ URL::route('shop.cancelorder.create') }}">Transaksi Dibatalkan</a></li>
+								<li><a href="{{ URL::route('shop.courier.index') }}">Kurir</a></li>
+								<li><a href="{{ URL::route('shop.buy.index') }}">Data Pembelian</a></li>
 							</ul>
 						</li>
 
@@ -425,49 +425,56 @@
 		<!-- submenu toko -->
 							<div id="Toko" class="mobile-submenu hidden">
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.sell.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('shop.sell.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Data Penjualan
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.pay.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('shop.pay.create') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Validasi Bayar
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.packing.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('shop.packing.create') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Packing
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.shipp.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('shop.shipping.create') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Kirim Barang
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.finishedTransaction.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('shop.completeorder.create') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Transaksi Selesai
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.courier.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('shop.cancelorder.create') }}" class="btn btn-default btn-block btn-sm pull-left">
+										<h4>
+											Transaksi Dibatalkan
+										</h4>
+									</a>
+								</div>
+								<div class="col-sm-12 col-xs-12 m-b-sm">
+									<a href="{{ URL::route('shop.courier.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Kurir
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.buy.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('shop.buy.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Data Pembelian
 										</h4>
