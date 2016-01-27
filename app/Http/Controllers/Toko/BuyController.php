@@ -77,7 +77,34 @@ class BuyController extends AdminController
 
 	public function show($id)
 	{
+		//initialize 
+		$APIPurchase 								= new APIPurchase;
+		$purchase 									= $APIPurchase->getShow($id);
 
+		$this->page_attributes->subtitle 			= $purchase['data']['ref_number'];
+
+		// filters
+		if(Input::has('q'))
+		{
+			$this->page_attributes->search 			= Input::get('q');
+		}		
+
+		// data here
+		$this->page_attributes->data				= 	[
+															'purchase' => $purchase,
+														];
+
+		//breadcrumb
+		$breadcrumb 								=	[
+															$purchase['data']['ref_number'] => route('admin.sell.show', ['id' => $id])
+														];	
+
+		//generate View
+		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
+
+		$this->page_attributes->source 				= $this->page_attributes->source . 'show';
+
+		return $this->generateView();
 	}	
 
 	public function create($id = null)
