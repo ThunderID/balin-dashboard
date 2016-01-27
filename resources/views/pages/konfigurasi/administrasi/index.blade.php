@@ -76,6 +76,11 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-12 hollow-pagination" style="text-align:right;">
+			{!! $paging->appends(Input::all())->render() !!}
+		</div>	
+	</div>	
 <!-- end of content -->
 
 </div>

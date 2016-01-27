@@ -12,11 +12,11 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			@include('page_elements.indexNavigation', [
-				'newDataRoute' 		=> route('admin.point.create'),
-				'filterDataRoute' 	=> route('admin.point.index')
+				'newDataRoute' 		=> route('customer.point.create'),
+				'filterDataRoute' 	=> route('customer.point.index')
 			])
 			@include('page_elements.searchResult', [
-				'closeSearchLink' 	=> route('admin.point.index') 
+				'closeSearchLink' 	=> route('customer.point.index') 
 			])
 		</div>
 	</div>

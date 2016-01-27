@@ -8,9 +8,9 @@
 
 <!-- body -->
 	@if(isset(  $data['data']['id'] ))
-    {!! Form::open(['url' => route('admin.point.update', $data['data']['id']), 'method' => 'PATCH']) !!}
+    {!! Form::open(['url' => route('customer.point.update', $data['data']['id']), 'method' => 'PATCH']) !!}
     @else
-    {!! Form::open(['url' => route('admin.point.store'), 'method' => 'POST']) !!}
+    {!! Form::open(['url' => route('customer.point.store'), 'method' => 'POST']) !!}
     @endif
 		<div class="row">
 			<div class="col-md-12">
@@ -64,7 +64,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group text-right">
-					<a href="{{ URL::route('admin.point.index') }}" class="btn btn-md btn-default" tabindex="13">Batal</a>
+					<a href="{{ URL::route('customer.point.index') }}" class="btn btn-md btn-default" tabindex="13">Batal</a>
 					<button type="submit" class="btn btn-md btn-primary" tabindex="12">Simpan</button>
 				</div>        
 			</div>        

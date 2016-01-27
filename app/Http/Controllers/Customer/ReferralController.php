@@ -4,23 +4,41 @@ namespace App\Http\Controllers\Customer;
 use App\API\Connectors\APICustomer;
 
 use App\Http\Controllers\AdminController;
+
 use Input, Session, DB, Redirect, Response, Auth;
 
+/**
+ * Handle customer referral information
+ * 
+ * @author cmooy
+ */
 class ReferralController extends AdminController
 {
 	public function __construct()
 	{
 		parent::__construct();
 		$this->page_attributes->title 				= 'Referral';
-		$this->page_attributes->source 				= 'pages.customer.referral.';
+		$this->page_attributes->source 				= 'pages.kostumer.referral.';
 		$this->page_attributes->breadcrumb			=	[
-															'Referral' 	=> route('admin.referral.index'),
+															'Referral' 	=> route('customer.referral.index'),
 														];			
 	}
 
+	/**
+	 * Display all referral
+	 * 
+	 * 1. Check filter
+	 * 2. Check page
+	 * 3. Get data from API
+	 * 4. Generate paginator
+	 * 5. Generate breadcrumb
+	 * 6. Generate view
+	 * @param page, q
+	 * @return Object View
+	 */
 	public function index()
 	{
-		//initialize 
+		//1. Check filter 
 		$filters 									= null;
 
 		if(Input::has('q'))
@@ -33,7 +51,7 @@ class ReferralController extends AdminController
 			$searchResult							= null;
 		}
 
-		//get curent page
+		//2. Check page
 		if(is_null(Input::get('page')))
 		{
 			$page 									= 1;
@@ -43,7 +61,7 @@ class ReferralController extends AdminController
 			$page 									= Input::get('page');
 		}
 
-		// data here
+		//3. Get data from API
 		$APICustomer 								= new APICustomer;
 
 		$customer 									= $APICustomer->getIndex([
@@ -61,48 +79,17 @@ class ReferralController extends AdminController
 															'customer' => $customer,
 														];
 
-		//paginate
-		$this->paginate(route('admin.referral.index'), $customer['data']['count'], $page);
+		//4. Generate paginator
+		$this->paginate(route('customer.referral.index'), $customer['data']['count'], $page);
 
-		//breadcrumb
-		$breadcrumb								=	[
-													];
-
-		//generate View
+		//5. Generate breadcrumb
+		$breadcrumb									=	[
+														];
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
-		$this->page_attributes->source 				=  $this->page_attributes->source . '.index';
+		//6. Generate View
+		$this->page_attributes->source 				=  $this->page_attributes->source . 'index';
 
 		return $this->generateView();
 	}
-
-	public function show($id)
-	{
-
-	}	
-
-	public function create($id = null)
-	{
-	
-	}
-
-	public function edit($id)
-	{
-		return $this->create($id);
-	}
-
-	public function store($id = null)
-	{
-
-	}
-
-	public function Update($id)
-	{
-		return $this->store($id);
-	}
-
-	public function destroy($id)
-	{
-
-	}		
 }

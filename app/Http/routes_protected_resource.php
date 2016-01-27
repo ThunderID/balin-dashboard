@@ -102,13 +102,24 @@ Route::group(['prefix' => 'konfigurasi', 'namespace' => 'Konfigurasi\\'], functi
 	Route::resource('policy', 	'PolicyController',				['names' => ['index' => 'config.policy.index', 'create' => 'config.policy.create', 'store' => 'config.policy.store', 'show' => 'config.policy.show', 'edit' => 'config.policy.edit', 'update' => 'config.policy.update', 'destroy' => 'config.policy.destroy']]);
 });
 
+/**
+* Routes untuk menu customer
+*
+*/
 Route::group(['prefix' => 'customer', 'namespace' => 'Customer\\'], function()
 {
-	Route::resource('customer', 'CustomerController',		['names' => ['index' => 'admin.customer.index', 'create' => 'admin.customer.create', 'store' => 'admin.customer.store', 'show' => 'admin.customer.show', 'edit' => 'admin.customer.edit', 'update' => 'admin.customer.update', 'destroy' => 'admin.customer.destroy']]);
-	Route::resource('point', 'PointController',				['names' => ['index' => 'admin.point.index', 'create' => 'admin.point.create', 'store' => 'admin.point.store', 'show' => 'admin.point.show', 'edit' => 'admin.point.edit', 'update' => 'admin.point.update', 'destroy' => 'admin.point.destroy']]);
-	Route::resource('referral', 'ReferralController',		['names' => ['index' => 'admin.referral.index', 'create' => 'admin.referral.create', 'store' => 'admin.referral.store', 'show' => 'admin.referral.show', 'edit' => 'admin.referral.edit', 'update' => 'admin.referral.update', 'destroy' => 'admin.referral.destroy']]);
+	/**
+	* Routes untuk sub menu customer
+	*
+	*/
+	Route::resource('kostumer',  	'CustomerController',		['names' => ['index' => 'customer.customer.index', 'show' => 'customer.customer.show'], 'only' => ['show', 'index']]);
+	Route::resource('point', 		'PointController',			['names' => ['index' => 'customer.point.index', 'create' => 'customer.point.create', 'store' => 'customer.point.store', 'edit' => 'customer.point.edit', 'update' => 'customer.point.update'], 'except' => ['show', 'destroy']]);
+	Route::resource('referral',  	'ReferralController',		['names' => ['index' => 'customer.referral.index'], 'only' => ['index']]);
 
-	//ajax
+	/**
+	* Routes untuk select2 ajax
+	*
+	*/
 	Route::get('customer/ajax/findName',					['uses' => 'AjaxController@FindCustomerByName', 	'as' => 'ajax.customer.findName']);
 });
 

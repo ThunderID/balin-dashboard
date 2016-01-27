@@ -12,11 +12,12 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			@include('page_elements.indexNavigation', [
-				'newDataRoute' 		=> route('admin.customer.create'),
-				'filterDataRoute' 	=> route('admin.customer.index')
+				'disabled' 			=> true,
+				'newDataRoute' 		=> '/',
+				'filterDataRoute' 	=> route('customer.referral.index')
 			])
 			@include('page_elements.searchResult', [
-				'closeSearchLink' 	=> route('admin.customer.index') 
+				'closeSearchLink' 	=> route('customer.referral.index') 
 			])
 		</div>
 	</div>
@@ -33,16 +34,15 @@
 							<th class="col-md-1 text-center">No.</th>
 							<th class="col-md-2 text-center">Nama</th>
 							<th class="col-md-2 text-center">Email</th>
-							<th class="col-md-2 text-center">Kode Referral</th>
-							<th class="col-md-1 text-center">Total Reference</th>
-							<th class="col-md-2 text-center">Total Poin</th>
+							<th class="col-md-2 text-center">Total Referral</th>
+							<th class="col-md-3 text-center">Referral</th>
 							<th class="text-center col-md-2">Kontrol</th>
 						</tr>
 					</thead>
 					<tbody>
 						@if(count($data['customer']['data']['data']) == 0)
 							<tr>
-								<td colspan="7" class="text-center">
+								<td colspan="11" class="text-center">
 									Tidak ada data
 								</td>
 							</tr>
@@ -58,17 +58,16 @@
 									<td class="text-left">
 										{{ $dt['email'] }}
 									</td>
-									<td class="text-left">
-										{{ $dt['code_referral'] }}
-									</td>
 									<td class="text-center">
 										{{ $dt['total_reference'] }}
 									</td>
-									<td class="text-right">
-										@money_indo($dt['total_point'])
+									<td class="text-center">
+										@foreach($dt['myreferrals'] as $key => $value)
+											<p>{{$value['user']['name']}}</p>
+										@endforeach
 									</td>
 									<td class="text-center">
-										<a href="{{ route('admin.customer.show', $dt['id']) }}"> Detail</a>
+										<a href="{{ route('customer.customer.show', $dt['id']) }}"> Detail</a>
 									</td>
 								</tr>
 							@endforeach 
@@ -79,7 +78,11 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-12 hollow-pagination" style="text-align:right;">
+			{!! $paging->appends(Input::all())->render() !!}
+		</div>	
+	</div>	
 <!-- end of content -->
-
 </div>
 @stop

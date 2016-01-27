@@ -79,9 +79,9 @@
 								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu submenu-desktop">
-								<li><a href="{{ URL::route('admin.customer.index') }}">Data Customer</a></li>
-								<li><a href="{{ URL::route('admin.point.index') }}">Poin</a></li>
-								<li><a href="{{ URL::route('admin.referral.index') }}">Referral</a></li>
+								<li><a href="{{ URL::route('customer.customer.index') }}">Data Customer</a></li>
+								<li><a href="{{ URL::route('customer.point.index') }}">Poin</a></li>
+								<li><a href="{{ URL::route('customer.referral.index') }}">Referral</a></li>
 							</ul>							
 						</li>
 
@@ -531,21 +531,21 @@
 		<!-- submenu customer -->
 							<div id="Customer" class="mobile-submenu hidden">
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.customer.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('customer.customer.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Data Customer
 										</h4>
 									</a>
 								</div>								
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.point.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('customer.point.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Poin
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.referral.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('customer.referral.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Referral
 										</h4>

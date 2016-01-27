@@ -118,6 +118,7 @@ class SellController extends AdminController
 		}
 
 		$this->page_attributes->subtitle 			= $sale['data']['ref_number'];
+		
 		$this->page_attributes->data				= 	[
 															'sale' => $sale,
 														];

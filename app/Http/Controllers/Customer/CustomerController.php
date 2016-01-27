@@ -2,24 +2,43 @@
 namespace App\Http\Controllers\Customer;
 
 use App\API\Connectors\APICustomer;
+
 use App\Http\Controllers\AdminController;
+
 use Input, Session, DB, Redirect, Response, Auth;
 
+/**
+ * Handle customer information
+ * 
+ * @author cmooy
+ */
 class CustomerController extends AdminController
 {
 	public function __construct()
 	{
 		parent::__construct();
 		$this->page_attributes->title 				= 'Data Kostumer';
-		$this->page_attributes->source 				= 'pages.customer.customer.';
+		$this->page_attributes->source 				= 'pages.kostumer.kostumer.';
 		$this->page_attributes->breadcrumb			=	[
-															'Data Kostumer' 	=> route('admin.customer.index'),
+															'Data Kostumer' 	=> route('customer.customer.index'),
 														];			
 	}
 
+	/**
+	 * Display all customer
+	 * 
+	 * 1. Check filter
+	 * 2. Check page
+	 * 3. Get data from API
+	 * 4. Generate paginator
+	 * 5. Generate breadcrumb
+	 * 6. Generate view
+	 * @param page, q
+	 * @return Object View
+	 */
 	public function index()
 	{
-		//initialize 
+		//1. Check filter 
 		$filters 									= null;
 
 		if(Input::has('q'))
@@ -32,7 +51,7 @@ class CustomerController extends AdminController
 			$searchResult							= null;
 		}
 
-		//get curent page
+		//2. Check page
 		if(is_null(Input::get('page')))
 		{
 			$page 									= 1;
@@ -42,7 +61,7 @@ class CustomerController extends AdminController
 			$page 									= Input::get('page');
 		}
 
-		// data here
+		//3. Get data from API
 		$APICustomer 								= new APICustomer;
 
 		$customer 									= $APICustomer->getIndex([
@@ -60,75 +79,61 @@ class CustomerController extends AdminController
 															'customer' => $customer,
 														];
 
-		//paginate
-		$this->paginate(route('admin.customer.index'), $customer['data']['count'], $page);
+		//4. Generate paginator
+		$this->paginate(route('customer.customer.index'), $customer['data']['count'], $page);
 
-		//breadcrumb
+		//5. Generate breadcrumb
 		$breadcrumb								=	[
 													];
 
-		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
+		//6. Generate view
 		$this->page_attributes->source 				=  $this->page_attributes->source . '.index';
 
 		return $this->generateView();
 	}
 
+	/**
+	 * Display a customer detail
+	 * 
+	 * 1. Get data from API
+	 * 2. Check return status
+	 * 3. Generate breadcrumb
+	 * 4. Generate view
+	 * @param id
+	 * @return Object View
+	 */
 	public function show($id)
 	{
-		//initialize 
+		//1. Get data from API 
 		$APICustomer 								= new APICustomer;
 		$customer 									= $APICustomer->getShow($id);
 
+		//2. Check return status
+		if($customer['status'] != 'success')
+		{
+			$this->errors 							= $customer['message'];
+			
+			return $this->generateRedirectRoute('customer.customer.index');	
+		}
+
 		$this->page_attributes->subtitle 			= $customer['data']['name'];
 
-		// filters
-		if(Input::has('q'))
-		{
-			$this->page_attributes->search 			= Input::get('q');
-		}		
-
-		// data here
 		$this->page_attributes->data				= 	[
 															'customer' => $customer,
 														];
 
-		//breadcrumb
+		//3. Generate breadcrumb
 		$breadcrumb 								=	[
-															$customer['data']['name'] => route('admin.customer.show', ['id' => $id])
+															$customer['data']['name'] => route('customer.customer.show', ['id' => $id])
 														];	
 
-		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
+		//4. Generate view
 		$this->page_attributes->source 				= $this->page_attributes->source . 'show';
 
 		return $this->generateView();
 	}	
-
-	public function create($id = null)
-	{
-	
-	}
-
-	public function edit($id)
-	{
-		return $this->create($id);
-	}
-
-	public function store($id = null)
-	{
-
-	}
-
-	public function Update($id)
-	{
-		return $this->store($id);
-	}
-
-	public function destroy($id)
-	{
-
-	}		
 }

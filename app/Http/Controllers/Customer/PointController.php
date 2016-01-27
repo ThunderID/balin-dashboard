@@ -2,24 +2,43 @@
 namespace App\Http\Controllers\Customer;
 
 use App\API\Connectors\APIPoint;
+
 use App\Http\Controllers\AdminController;
+
 use Input, Session, DB, Redirect, Response, Auth;
 
+/**
+ * Handle customer point information
+ * 
+ * @author cmooy
+ */
 class PointController extends AdminController
 {
 	public function __construct()
 	{
 		parent::__construct();
 		$this->page_attributes->title 				= 'Poin';
-		$this->page_attributes->source 				= 'pages.customer.poin.';
+		$this->page_attributes->source 				= 'pages.kostumer.poin.';
 		$this->page_attributes->breadcrumb			=	[
-															'Poin' 	=> route('admin.point.index'),
+															'Poin' 	=> route('customer.point.index'),
 														];			
 	}
 
+	/**
+	 * Display all point
+	 * 
+	 * 1. Check filter
+	 * 2. Check page
+	 * 3. Get data from API
+	 * 4. Generate paginator
+	 * 5. Generate breadcrumb
+	 * 6. Generate view
+	 * @param page, q
+	 * @return Object View
+	 */
 	public function index()
 	{
-		//initialize 
+		//1. Check filter 
 		$filters 									= null;
 
 		if(Input::has('q'))
@@ -32,7 +51,7 @@ class PointController extends AdminController
 			$searchResult							= null;
 		}
 
-		//get curent page
+		//2. Check page
 		if(is_null(Input::get('page')))
 		{
 			$page 									= 1;
@@ -42,7 +61,7 @@ class PointController extends AdminController
 			$page 									= Input::get('page');
 		}
 
-		// data here
+		//3. Get data from API
 		$APIPoint 									= new APIPoint;
 
 		$point 										= $APIPoint->getIndex([
@@ -60,33 +79,37 @@ class PointController extends AdminController
 															'point' => $point,
 														];
 
-		//paginate
-		$this->paginate(route('admin.point.index'), $point['data']['count'], $page);
+		//4. Generate paginator
+		$this->paginate(route('customer.point.index'), $point['data']['count'], $page);
 
-		//breadcrumb
+		//5. Generate breadcrumb
 		$breadcrumb								=	[
 													];
-
-		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
-		$this->page_attributes->source 				=  $this->page_attributes->source . '.index';
+		//6. Generate view
+		$this->page_attributes->source 				=  $this->page_attributes->source . 'index';
 
 		return $this->generateView();
 	}
 
-	public function show($id)
-	{
-
-	}	
-
+	/**
+	 * create form of a point
+	 * 
+	 * 1. Get Previous data and page setting
+	 * 2. Initialize data
+	 * 3. Generate breadcrumb
+	 * 4. Generate view
+	 * @param id
+	 * @return Object View
+	 */
 	public function create($id = null)
 	{
-		//initialize
+		//1. Get Previous data and page setting
 		if (is_null($id))
 		{
 			$breadcrumb								=	[
-															'Data Baru' => route('admin.point.create'),
+															'Data Baru' => route('customer.point.create'),
 														];
 
 			$data 									= null;														
@@ -99,40 +122,59 @@ class PointController extends AdminController
 			$data 									= ['data' => $APIPoint->getShow($id)['data'] ];	
 
 			$breadcrumb								=	[
-															$data['data']['name']  =>  route('admin.point.show', ['id' => $data['data']['id']] ),
-															'Edit'  =>  route('admin.point.create', ['id' => $data['data']['id']] ),
+															$data['data']['name']  =>  route('customer.point.show', ['id' => $data['data']['id']] ),
+															'Edit'  =>  route('customer.point.create', ['id' => $data['data']['id']] ),
 														];
 
 			$this->page_attributes->subtitle 		= $data['data']['name'];
 		}
 
-		//generate View
+		//2. Initialize data
+		$this->page_attributes->data 				=  $data;
+		
+		//3. Generate breadcrumb
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
-		$this->page_attributes->data 				=  $data;
-
+		//4. Generate view
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'create';
 
 		return $this->generateView();
 	}
 
+	/**
+	 * Edit a point
+	 * 
+	 * @param id
+	 * @return function
+	 */
 	public function edit($id)
 	{
 		return $this->create($id);
 	}
 
+	/**
+	 * Store an point
+	 * 
+	 * 1. Check input
+	 * 2. Check data
+	 * 3. Save point
+	 * 4. Check Response
+	 * 5. Return view
+	 * @param id
+	 * @return object view
+	 */
 	public function store($id = null)
 	{
-		//get data
-		$APIPoint 									= new APIPoint;
 
-		//format input
+		//1. Check input
 		$inputCustomer 								= Input::get('customer');
 		$inputNotes 								= Input::get('notes');
 		$inputAmount 								= str_replace('IDR ', '', str_replace('.', '', Input::get('amount')));
 		$inputExpireDate 							= date('Y-m-d H:i:s', strtotime(Input::get('expired_at')));
 
-		//is edit
+		//2. Check data
+		$APIPoint 									= new APIPoint;
+
 		if(!empty($id))
 		{
 			$point['id']							= '';
@@ -150,16 +192,16 @@ class PointController extends AdminController
 			$point['expired_at']					= $inputExpireDate;
 		}
 
-		//save
+		//3. Save point
 		$result 									= $APIPoint->postData($point);
 
-		//response
+		//4. Check Response
 		if($result['status'] != 'success')
 		{
 			$this->errors 							= $result['message'];
 		}
 
-		//return view
+		//5. Return view
 		if(!empty($id))
 		{
 			$this->page_attributes->success 		= "Data Point Telah Ditambahkan";
@@ -169,16 +211,17 @@ class PointController extends AdminController
 			$this->page_attributes->success 		= "Data Point Telah Ditambahkan";
 		}
 
-		return $this->generateRedirectRoute('admin.point.index');
+		return $this->generateRedirectRoute('customer.point.index');
 	}
 
+	/**
+	 * Update a customer
+	 * 
+	 * @param id
+	 * @return function
+	 */
 	public function Update($id)
 	{
 		return $this->store($id);
 	}
-
-	public function destroy($id)
-	{
-
-	}		
 }
