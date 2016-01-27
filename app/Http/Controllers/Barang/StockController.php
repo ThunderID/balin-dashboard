@@ -4,8 +4,14 @@ namespace App\Http\Controllers\Barang;
 use App\API\connectors\APIStock;
 
 use App\Http\Controllers\AdminController;
+
 use Input, Session, DB, Redirect, Response, Auth;
 
+/**
+ * Handle stock information
+ * 
+ * @author cmooy
+ */
 class StockController extends AdminController
 {
 	public function __construct()
@@ -14,13 +20,25 @@ class StockController extends AdminController
 		$this->page_attributes->title 				= 'Stok';
 		$this->page_attributes->source 				= 'pages.barang.stok.';
 		$this->page_attributes->breadcrumb			=	[
-															'Stok' 	=> route('admin.stock.index'),
+															'Stok' 	=> route('goods.stock.index'),
 														];			
 	}
 
+	/**
+	 * Display all varian stock on certain date
+	 * 
+	 * 1. Check filter
+	 * 2. Check page
+	 * 3. Get data from API
+	 * 4. Generate paginator
+	 * 5. Generate breadcrumb
+	 * 6. Generate view
+	 * @param page, q
+	 * @return Object View
+	 */
 	public function index()
 	{
-		//initialize 
+		//1. Check filter
 		$filters 									= null;
 
 		if(Input::has('q'))
@@ -33,7 +51,7 @@ class StockController extends AdminController
 			$searchResult							= null;
 		}
 
-		//get curent page
+		//2. Check page
 		if(is_null(Input::get('page')))
 		{
 			$page 									= 1;
@@ -43,7 +61,7 @@ class StockController extends AdminController
 			$page 									= Input::get('page');
 		}
 
-		// data here
+		//3. Get data from API
 		$APIStock 									= new APIStock;
 
 		$product 									= $APIStock->getIndex([
@@ -61,82 +79,61 @@ class StockController extends AdminController
 															'product' => $product,
 														];
 
-		//paginate
-		$this->paginate(route('admin.stock.index'), $product['data']['count'], $page);
+		//4. Generate paginator
+		$this->paginate(route('goods.stock.index'), $product['data']['count'], $page);
 
-		//breadcrumb
+		//5. Generate breadcrumb
 		$breadcrumb 								= [];	
 
-		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
+		//6. Generate view
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'index';
 
 		return $this->generateView();
 	}
 
+	/**
+	 * Display a varian stock card
+	 * 
+	 * 1. Get data from API
+	 * 2. Check return status
+	 * 3. Generate breadcrumb
+	 * 4. Generate view
+	 * @param id
+	 * @return Object View
+	 */
 	public function show($id)
 	{
-		//initialize 
+		//1. Get data from API
 		$APIStock 									= new APIStock;
 		$product 									= $APIStock->getShow($id);
 
-		//result
+		//2. Check return status
 		if($product['status'] != 'success')
 		{
 			$this->errors 							= $product['message'];
 			
-			return $this->generateRedirectRoute('admin.stock.index');	
+			return $this->generateRedirectRoute('goods.stock.index');	
 		}
 
 		$this->page_attributes->subtitle 			= $product['data']['product']['name'];
-
-		// filters
-		if(Input::has('q'))
-		{
-			$this->page_attributes->search 			= Input::get('q');
-		}		
 
 		// data here
 		$this->page_attributes->data				= 	[
 															'product' => $product,
 														];
 
-		//breadcrumb
+		//3. Generate breadcrumb
 		$breadcrumb 								=	[
-															$product['data']['product']['name'] => route('admin.stock.show', ['id' => $id])
+															$product['data']['product']['name'] => route('goods.stock.show', ['id' => $id])
 														];	
 
-		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
+		//4. Generate view
 		$this->page_attributes->source 				= $this->page_attributes->source . 'show';
 
 		return $this->generateView();
 	}	
-
-	public function create($id = null)
-	{
-	
-	}
-
-	public function edit($id)
-	{
-		return $this->create($id);
-	}
-
-	public function store($id = null)
-	{
-
-	}
-
-	public function Update($id)
-	{
-		return $this->store($id);
-	}
-
-	public function destroy($id)
-	{
-
-	}		
 }

@@ -8,8 +8,8 @@
 <!-- head -->
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md border-bottom">
-			@include('pageElements.pagetitle')
-			@include('pageElements.breadcrumb')
+			@include('page_elements.pagetitle')
+			@include('page_elements.breadcrumb')
 		</div>
 	</div>
 
@@ -18,7 +18,7 @@
 		<div class="col-md-12 m-b-md">
 			<h2 style="margin-top:0px;">Data Harga</h2>
 
-			@include('pageElements.alertbox')
+			@include('page_elements.alertbox')
 		</div>
 	</div>
 	<!-- end of title sub-page -->	
@@ -27,7 +27,7 @@
 <!-- content -->
 	<div class="row">
 		<div class="col-md-12">
-			<a class="btn btn-default pull-right"  href="{{ route('admin.price.detail.create', ['id' => $dt['id']] ) }}"> Harga Baru </a>
+			<a class="btn btn-default pull-right"  href="{{ route('goods.price.detail.create', ['id' => $dt['id']] ) }}"> Harga Baru </a>
 		</div>
 	</div>
 	<div class="row">
@@ -99,11 +99,11 @@
 					<h4>Riwayat Harga</h4> 
 				</div>
 				<div class="col-md-12 m-t-sm m-b-lg">
-					@include('pageElements.dateRangeNavigation', [
-						'filterDataRoute' 	=> route('admin.price.show', ['id' => $dt['id']])
+					@include('page_elements.dateRangeNavigation', [
+						'filterDataRoute' 	=> route('goods.price.show', ['id' => $dt['id']])
 					])	
-					@include('pageElements.filterResult', [
-						'closeSearchLink' 	=>  route('admin.price.show', ['id' => $dt['id']]) 
+					@include('page_elements.filterResult', [
+						'closeSearchLink' 	=>  route('goods.price.show', ['id' => $dt['id']]) 
 					])
 				</div>			
 				<div class="col-md-12">
@@ -156,24 +156,24 @@
 											</td>
 
 											<td class="text-center">
-												<a href="{{ route('admin.price.detail.edit', ['productId' => $dt['id'] ,'id' => $price['id']]) }}">Edit</a>, 
+												<a href="{{ route('goods.price.detail.edit', ['productId' => $dt['id'] ,'id' => $price['id']]) }}">Edit</a>, 
 												<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
 													data-target="#price_del"
 													data-id="{{$price['id']}}"
 													data-title="Hapus Data Harga Produk {{$dt['name']}}"
-													data-action="{{ route('admin.price.detail.destroy', ['productId' => $dt['id'] ,'id' => $price['id']]) }}">
+													data-action="{{ route('goods.price.detail.destroy', ['productId' => $dt['id'] ,'id' => $price['id']]) }}">
 													Hapus
 												</a>
 												<?php
-							        			// <a href="{{ route('admin.product.show', $dt['id']) }}"> Detail</a>,
+							        			// <a href="{{ route('goods.product.show', $dt['id']) }}"> Detail</a>,
 												?>                                          
 											</td>    
 										</tr>       
 									@endforeach 
 									
-									@include('pageElements.modalDelete', [
+									@include('page_elements.modaldelete', [
 											'modal_id'      => 'price_del', 
-											'modal_route'   => route('admin.stock.destroy')
+											'modal_route'   => route('goods.stock.destroy')
 									])						
 
 								@endif

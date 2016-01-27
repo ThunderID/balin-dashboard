@@ -16,7 +16,7 @@ class LabelController extends AdminController
 		$this->page_attributes->title 				= 'Label';
 		$this->page_attributes->source 				= 'pages.barang.label.';
 		$this->page_attributes->breadcrumb			=	[
-															'Label' 	=> route('admin.label.index'),
+															'Label' 	=> route('goods.label.index'),
 														];			
 	}
 
@@ -65,7 +65,7 @@ class LabelController extends AdminController
 		$breadcrumb 								= 	[];	
 
 		//paginate
-		$this->paginate(route('admin.label.index'), $labels['data']['count'], $page);
+		$this->paginate(route('goods.label.index'), $labels['data']['count'], $page);
 
 		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
@@ -117,11 +117,11 @@ class LabelController extends AdminController
 														];
 
 		//paginate
-		$this->paginate(route('admin.label.show', ['id' => $id]), $product['data']['count'], $page);
+		$this->paginate(route('goods.label.show', ['id' => $id]), $product['data']['count'], $page);
 
 		//breadcrumb
 		$breadcrumb 								=	[
-															ucwords(str_replace('_', ' ', $id)) => route('admin.label.show', $id)
+															ucwords(str_replace('_', ' ', $id)) => route('goods.label.show', $id)
 														];	
 
 		//generate View

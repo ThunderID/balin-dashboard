@@ -4,8 +4,8 @@
 <!-- head -->
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md border-bottom">
-			@include('pageElements.pagetitle')
-			@include('pageElements.breadcrumb')
+			@include('page_elements.pagetitle')
+			@include('page_elements.breadcrumb')
 		</div>
 	</div>
 
@@ -14,7 +14,7 @@
 		<div class="col-md-12 m-b-md">
 			<h2 style="margin-top:0px;">Detail Label</h2>
 
-			@include('pageElements.alertbox')
+			@include('page_elements.alertbox')
 		</div>
 	</div>
 	<!-- end of title sub-page -->	
@@ -25,7 +25,7 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			<div class="row">
 				<div class="col-md-12">
-					<a class="btn btn-default pull-right disabled"  href="{{ route('admin.label.edit', ['id' => $data['id']] ) }}"> Edit Data </a>
+					<a class="btn btn-default pull-right disabled"  href="{{ route('goods.label.edit', ['id' => $data['id']] ) }}"> Edit Data </a>
 				</div>
 			</div>			
 			<div class="row">
@@ -65,12 +65,12 @@
 					<h4>Daftar Produk Dalam Label Ini</h4> 
 				</div>
 				<div class="col-md-12 m-t-sm m-b-lg">
-					@include('pageElements.indexNavigation', [
-						'newDataRoute' 		=> route('admin.product.create', ['label_id' => $data['id'], 'label' => $data['name']]),
-						'filterDataRoute' 	=> route('admin.label.show', ['id' => $data['id']])
+					@include('page_elements.indexNavigation', [
+						'newDataRoute' 		=> route('goods.product.create', ['label_id' => $data['id'], 'label' => $data['name']]),
+						'filterDataRoute' 	=> route('goods.label.show', ['id' => $data['id']])
 					])	
-					@include('pageElements.searchResult', [
-						'closeSearchLink' 	=>  route('admin.label.show', ['id' => $data['id']]) 
+					@include('page_elements.searchResult', [
+						'closeSearchLink' 	=>  route('goods.label.show', ['id' => $data['id']]) 
 					])
 				</div>			
 				<div class="col-md-12">
@@ -125,22 +125,22 @@
 												{{$dt['current_stock']}}
 											</td>
 											<td class="text-center">
-	        									<a href="{{ route('admin.product.show', $dt['id']) }}"> Detail</a>,
-												<a href="{{ route('admin.product.edit', $dt['id']) }}"> Edit</a>, 
+	        									<a href="{{ route('goods.product.show', $dt['id']) }}"> Detail</a>,
+												<a href="{{ route('goods.product.edit', $dt['id']) }}"> Edit</a>, 
 												<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
 													data-target="#product_del"
 													data-id="{{$dt['id']}}"
 													data-title="Hapus Data Produk {{$dt['name']}}"
-													data-action="{{ route('admin.product.destroy', $dt['id']) }}">
+													data-action="{{ route('goods.product.destroy', $dt['id']) }}">
 													Hapus
 												</a>                                          
 											</td>    
 										</tr>       
 									@endforeach 
 									
-									@include('pageElements.modalDelete', [
+									@include('page_elements.modaldelete', [
 											'modal_id'      => 'product_del', 
-											'modal_route'   => route('admin.product.destroy')
+											'modal_route'   => route('goods.product.destroy')
 									])						
 
 								@endif

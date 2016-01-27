@@ -14,7 +14,7 @@ class CategoryController extends AdminController
 		$this->page_attributes->title 				= 'Kategori';
 		$this->page_attributes->source 				= 'pages.barang.kategori.';
 		$this->page_attributes->breadcrumb			=	[
-															'Kategori' 	=> route('admin.category.index'),
+															'Kategori' 	=> route('goods.category.index'),
 														];			
 	}
 
@@ -62,7 +62,7 @@ class CategoryController extends AdminController
 														];
 
 		//paginate
-		$this->paginate(route('admin.category.index'), $category['data']['count'], $page);
+		$this->paginate(route('goods.category.index'), $category['data']['count'], $page);
 
 		//breadcrumb
 		$breadcrumb 								= [];	
@@ -108,7 +108,7 @@ class CategoryController extends AdminController
 
 		//breadcrumb
 		$breadcrumb 								=	[
-															$category['data']['name'] => route('admin.category.show', ['id' => $category['data']['name']])
+															$category['data']['name'] => route('goods.category.show', ['id' => $category['data']['name']])
 														];	
 
 		//generate View
@@ -125,7 +125,7 @@ class CategoryController extends AdminController
 		if (is_null($id))
 		{
 			$breadcrumb								=	[
-															'Data Baru' => route('admin.category.create'),
+															'Data Baru' => route('goods.category.create'),
 														];
 
 			$this->page_attributes->subtitle 		= 'Data Baru';
@@ -139,8 +139,8 @@ class CategoryController extends AdminController
 			$this->page_attributes->data			= $category;
 
 			$breadcrumb								=	[
-															$category['name'] =>  route('admin.category.show', ['id' => $id]),
-															'Edit' =>  route('admin.category.edit', ['id' => $id]),
+															$category['name'] =>  route('goods.category.show', ['id' => $id]),
+															'Edit' =>  route('goods.category.edit', ['id' => $id]),
 														];
 
 			$this->page_attributes->subtitle 		= $category['name'];
@@ -181,7 +181,7 @@ class CategoryController extends AdminController
 
 		//return
 		$this->page_attributes->success 			= "Data telah ditambahkan";
-		return $this->generateRedirectRoute('admin.category.index');	
+		return $this->generateRedirectRoute('goods.category.index');	
 	}
 
 	public function Update($id)
@@ -212,7 +212,7 @@ class CategoryController extends AdminController
 			$this->page_attributes->success 		= "Data Produk Telah Ditambahkan";
 		}
 		
-		return $this->generateRedirectRoute('admin.category.index');	
+		return $this->generateRedirectRoute('goods.category.index');	
 	}		
 
 	//AJAX

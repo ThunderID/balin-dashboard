@@ -3,14 +3,14 @@
 @section('content')
 <div class="container-fluid">
 <!-- head -->
-    @include('pageElements.createHeader', ['title' => 'Data Harga ' . $data['name'] ])    
+    @include('page_elements.createHeader', ['title' => 'Data Harga ' . $data['name'] ])    
 <!-- end of head -->
 
 <!-- body -->
 	@if(isset($data['price']['data']['id']))
-    {!! Form::open(['url' => route('admin.price.detail.update', ['productID' => $data['productId'], 'id' => $data['price']['data']['id']]), 'method' => 'PATCH']) !!}
+    {!! Form::open(['url' => route('goods.price.detail.update', ['productID' => $data['productId'], 'id' => $data['price']['data']['id']]), 'method' => 'PATCH']) !!}
     @else
-    {!! Form::open(['url' => route('admin.price.store'), 'method' => 'POST']) !!}
+    {!! Form::open(['url' => route('goods.price.store'), 'method' => 'POST']) !!}
     @endif
 	<div class="row">
 
@@ -66,9 +66,9 @@
 			</br>
 			<div class="form-group text-right">
 				@if(is_null($data['productId']))
-					<a href="{{ route('admin.price.index') }}" class="btn btn-md btn-default" tabindex="4">Batal</a>
+					<a href="{{ route('goods.price.index') }}" class="btn btn-md btn-default" tabindex="4">Batal</a>
 				@else
-					<a href="{{ route('admin.price.show', ['productId' => $data['productId']]) }}" class="btn btn-md btn-default" tabindex="4">Batal</a>
+					<a href="{{ route('goods.price.show', ['productId' => $data['productId']]) }}" class="btn btn-md btn-default" tabindex="4">Batal</a>
 				@endif
 				<button type="submit" class="btn btn-md btn-primary" tabindex="5">Simpan</button>
 			</div>

@@ -17,7 +17,7 @@
 
 	<body>
 		<div class="wrapper white-bg border-bottom">
-			@include('pageElements.topbar')
+			@include('page_elements.topbar')
 		</div>
 
 

@@ -4,25 +4,25 @@
 <!-- head -->
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md border-bottom">
-			@include('pageElements.pagetitle')
-			@include('pageElements.breadcrumb')
+			@include('page_elements.pagetitle')
+			@include('page_elements.breadcrumb')
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
-			@include('pageElements.alertbox')
+			@include('page_elements.alertbox')
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
-			@include('pageElements.indexNavigation', [
-				'newDataRoute' 		=> route('admin.tag.create'),
-				'filterDataRoute' 	=> route('admin.tag.index')
+			@include('page_elements.indexNavigation', [
+				'newDataRoute' 		=> route('goods.tag.create'),
+				'filterDataRoute' 	=> route('goods.tag.index')
 			])
-			@include('pageElements.searchResult', [
-				'closeSearchLink' 	=> route('admin.tag.index') 
+			@include('page_elements.searchResult', [
+				'closeSearchLink' 	=> route('goods.tag.index') 
 			])
 		</div>
 	</div>
@@ -64,22 +64,22 @@
 										</p>
 									</td>
 									<td class="text-center">
-										<a href="{{ route('admin.tag.show',  $dt['id']) }}"> Detail</a>,
-										<a href="{{ route('admin.tag.edit', ['id' => $dt['id']]) }}"> Edit</a>, 
+										<a href="{{ route('goods.tag.show',  $dt['id']) }}"> Detail</a>,
+										<a href="{{ route('goods.tag.edit', ['id' => $dt['id']]) }}"> Edit</a>, 
 										<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
 											data-target="#tag_del"
 											data-id="{{$dt['id']}}"
 											data-title="Hapus Data Tag {{$dt['name']}}"
-											data-action="{{ route('admin.tag.destroy', $dt['id']) }}">
+											data-action="{{ route('goods.tag.destroy', $dt['id']) }}">
 											Hapus
 										</a>                                                                                
 									</td>    
 								</tr>
 							@endforeach 
 
-							@include('pageElements.modaldelete', [
+							@include('page_elements.modaldelete', [
 								'modal_id'      => 'tag_del', 
-								'modal_route'   => route('admin.tag.destroy', 0),
+								'modal_route'   => route('goods.tag.destroy', 0),
 							])                                    
 						@endif
 					</tbody>

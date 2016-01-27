@@ -5,8 +5,8 @@
 <!-- head -->
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md border-bottom">
-			@include('pageElements.pagetitle')
-			@include('pageElements.breadcrumb')
+			@include('page_elements.pagetitle')
+			@include('page_elements.breadcrumb')
 		</div>
 	</div>
 
@@ -15,7 +15,7 @@
 		<div class="col-md-12 m-b-md">
 			<h2 style="margin-top:0px;">Detail Ukuran</h2>
 
-			@include('pageElements.alertbox')
+			@include('page_elements.alertbox')
 		</div>
 	</div>
 	<!-- end of title sub-page -->	
@@ -27,7 +27,7 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			<div class="row">
 				<div class="col-md-12">
-					<a class="btn btn-default pull-right"  href="{{ route('admin.varian.edit', ['pid' => $data['data']['product_id'], 'id' => $data['data']['id']]) }}"> Edit Data </a>
+					<a class="btn btn-default pull-right"  href="{{ route('goods.varian.edit', ['pid' => $data['data']['product_id'], 'id' => $data['data']['id']]) }}"> Edit Data </a>
 				</div>
 			</div>	
 

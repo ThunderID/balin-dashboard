@@ -4,27 +4,27 @@
 <!-- head -->
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md border-bottom">
-			@include('pageElements.pagetitle')
-			@include('pageElements.breadcrumb')
+			@include('page_elements.pagetitle')
+			@include('page_elements.breadcrumb')
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			@include('pageElements.alertbox')
+			@include('page_elements.alertbox')
 		</div>
 	</div>	
 
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
-			@include('pageElements.indexNavigation', [
-				'newDataRoute' 		=> route('admin.price.create'),
+			@include('page_elements.indexNavigation', [
+				'newDataRoute' 		=> route('goods.price.create'),
 				'newDataLabel'		=> 'Harga Baru',
-				'filterDataRoute' 	=> route('admin.price.index'),
+				'filterDataRoute' 	=> route('goods.price.index'),
 				'searchLabel'		=> 'Cari Nama Produk'
 			])
-			@include('pageElements.searchResult', [
-				'closeSearchLink' 	=> route('admin.price.index') 
+			@include('page_elements.searchResult', [
+				'closeSearchLink' 	=> route('goods.price.index') 
 			])
 		</div>
 	</div>
@@ -100,7 +100,7 @@
 								</td>
 
 								<td class="text-center">
-									<a href="{{ route('admin.price.show', ['productId' => $dt['id']]) }}"> Detail</a>
+									<a href="{{ route('goods.price.show', ['productId' => $dt['id']]) }}"> Detail</a>
 								</td>																		
 							</tr>
 							@endforeach

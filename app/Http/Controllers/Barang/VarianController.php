@@ -1,11 +1,17 @@
 <?php 
 namespace App\Http\Controllers\Barang;
 
-use App\API\connectors\APIProduct;
+use App\API\Connectors\APIProduct;
+
 use App\Http\Controllers\AdminController;
 
 use Input, Session, DB, Redirect, Response, Auth;
 
+/**
+ * Handle Varian resource
+ * 
+ * @author budi
+ */
 class VarianController extends AdminController
 {
 	public function __construct()
@@ -14,49 +20,70 @@ class VarianController extends AdminController
 		$this->page_attributes->title 				= 'Varian';
 		$this->page_attributes->source 				= 'pages.barang.produk.varian.';
 		$this->page_attributes->breadcrumb			=	[
-															'Produk' 	=> route('admin.product.index'),
+															'Produk' 	=> route('goods.product.index'),
 														];			
 	}
 
+	/**
+	 * Display all varian
+	 * 
+	 * @return redirected url
+	 */
 	public function index()
 	{
-		// ga ada
 		return Redirect::back();
 	}
 
+	/**
+	 * Display a varian
+	 * 
+	 * 1. Get data from API
+	 * 2. Generate breadcrumb
+	 * 3. Generate view
+	 * @param id, pid
+	 * @return Object View
+	 */
 	public function show($pid = null, $id = null)
 	{
-		//get data 
+		//1. Get data from API
 		$APIProduct	 								= new APIProduct;
 		$product									= $APIProduct->getShow($pid);
 
 		$this->page_attributes->subtitle 			= $product['data']['name'];
 
-		// data here
 		$this->page_attributes->data['data']		= $this->VarianFindData($product['data']['varians'], $id)['data'];
 		$this->page_attributes->data['name']		= $product['data']['name'];
 
-		//breadcrumb
+		//2. Generate breadcrumb
 		$breadcrumb 								=	[
-															$product['data']['name'] => route('admin.product.show', ['id' => $pid]),
-															'Ukuran ' . $this->page_attributes->data['data']['size'] => route('admin.varian.show', ['pid' => $pid, 'id' => $id])
+															$product['data']['name'] => route('goods.product.show', ['id' => $pid]),
+															'Ukuran ' . $this->page_attributes->data['data']['size'] => route('goods.varian.show', ['pid' => $pid, 'id' => $id])
 														];	
-
-		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
-
+	
+		//3. Generate view
 		$this->page_attributes->source 				= $this->page_attributes->source . 'show';
 
 		return $this->generateView();
 	}	
 
+	/**
+	 * create form of a varian
+	 * 
+	 * 1. Get Previous data and page setting
+	 * 2. Initialize data
+	 * 3. Generate breadcrumb
+	 * 4. Generate view
+	 * @param q
+	 * @return Object View
+	 */
 	public function create($pid = null, $id = null)
 	{
-		//initialize
+		//1. Get Previous data and page setting
 		$APIProduct 								= new APIProduct;
 		$tmpData 									= $APIProduct->getShow($pid);
 
-		//formating data
+		//2. Initialize data
 		$data['pid']								= $tmpData['data']['id'];
 		$data['name']								= $tmpData['data']['name'];
 		$data['upc']								= $tmpData['data']['upc'];
@@ -68,26 +95,25 @@ class VarianController extends AdminController
 			$data['data']							= $this->VarianFindData($tmpData['data']['varians'],$id)['data'];
 		}
 
-
+		//3. Generate breadcrumb
 		if(is_null($id))
 		{
 			$breadcrumb								=	[
-															$data['name']  =>  route('admin.product.show', ['id' => $data['pid']] ),
-															'Ukuran Baru'  =>  route('admin.varian.create', ['pid' => $pid ] ),
+															$data['name']  =>  route('goods.product.show', ['id' => $data['pid']] ),
+															'Ukuran Baru'  =>  route('goods.varian.create', ['pid' => $pid ] ),
 														];
 		}
 		else
 		{
 			$breadcrumb								=	[
-															$data['name']  =>  route('admin.product.show', ['id' => $data['pid']] ),
-															'Edit Ukuran ' . $data['data']['size']  =>  route('admin.varian.edit', ['pid' => $pid,'id' => $id] ),
+															$data['name']  =>  route('goods.product.show', ['id' => $data['pid']] ),
+															'Edit Ukuran ' . $data['data']['size']  =>  route('goods.varian.edit', ['pid' => $pid,'id' => $id] ),
 														];
 		}
-
-		//generate View
-		$this->page_attributes->subtitle 			= $data['name'];
-
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
+
+		//4. Generate view
+		$this->page_attributes->subtitle 			= $data['name'];
 
 		$this->page_attributes->data 				= array_merge($data, ['pid' => $pid]);
 
@@ -96,19 +122,35 @@ class VarianController extends AdminController
 		return $this->generateView();
 	}
 
+	/**
+	 * Edit a varian
+	 * 
+	 * @param id
+	 * @return function
+	 */
 	public function edit($pid = null, $id = null)
 	{
 		return $this->create($pid, $id);
 	}
 
+	/**
+	 * Store a varian
+	 * 
+	 * 1. Get data product
+	 * 2. Init Variable
+	 * 3. Embeed Varian to Products
+	 * 4. Store product
+	 * 5. Generate redirect
+	 * @param id
+	 * @return object view
+	 */
 	public function store($pid = null, $id = null)
 	{
-		//get data product
-
+		//1. Get data product
 		$APIProduct 								= new APIProduct;
 		$product 									= $APIProduct->getShow($pid);
 
-		//is edit
+		//2. Init Variable
 		if(!is_null($id))
 		{
 			$tmpVarian 								= $this->VarianFindData($product['data']['varians'],$id);
@@ -136,19 +178,18 @@ class VarianController extends AdminController
 		    $varian['packed_stock'] 				= 0;			
 		}
 
-		//embedd new data varian into product
+		//3. Embeed Varian to Product
 		$product['data']['varians'][$key]			= $varian;	
 
-		//save
+		// 4. Store product
 		$result 									= $APIProduct->postData($product['data']);
 
-		//response
+		//5. Generate redirect
 		if($result['status'] != 'success')
 		{
 			$this->errors 							= $result['message'];
 		}
 
-		//return view
 		if(!is_null($id))
 		{
 			$this->page_attributes->success 		= "Data Varian Telah Diedit";
@@ -158,14 +199,26 @@ class VarianController extends AdminController
 			$this->page_attributes->success 		= "Data Varian Telah Ditambahkan";
 		}
 
-		return $this->generateRedirectRoute('admin.product.show', ['id' => $pid]);
+		return $this->generateRedirectRoute('goods.product.show', ['id' => $pid]);
 	}
 
+	/**
+	 * Update a varian
+	 * 
+	 * @param pid, id
+	 * @return function
+	 */
 	public function Update($pid = null, $id = null)
 	{
 		return $this->store($pid, $id);
 	}
 
+	/**
+	 * Delete a varian
+	 * 
+	 * @param pid, id
+	 * @return function
+	 */
 	public function destroy($pid = null, $id = null)
 	{
 		//cek auth
@@ -191,22 +244,17 @@ class VarianController extends AdminController
 		//return view
 		$this->page_attributes->success 			= "Data Varian Telah Dihapus";
 
-		return $this->generateRedirectRoute('admin.product.show', ['id' => $pid]);		
+		return $this->generateRedirectRoute('goods.product.show', ['id' => $pid]);		
 	}		
 
-	//FUNCTIONS
+	/**
+	 * find a varian in product varians
+	 * 
+	 * @param arraySource (array of varian), id (varian id)
+	 * @return function
+	 */
 	private function VarianFindData($arraySource, $id)
 	{
-		//select data from arraySource based on id and return it
-		//if data not found, it will return error
-
-		//return
-		//array['key','data']
-
-		//parameter
-		//arraysource 	= array varian
-		//id 			= varian id
-
 		foreach ($arraySource as $key =>  $varian) 
 		{
 			if($varian['id'] == $id)

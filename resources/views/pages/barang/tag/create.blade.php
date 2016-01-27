@@ -3,14 +3,14 @@
 @section('content')
 <div class="container-fluid">
 <!-- head -->
-    @include('pageElements.createHeader', ['title' => 'Data Tag ' . $data['name'] ])    
+    @include('page_elements.createHeader', ['title' => 'Data Tag ' . $data['name'] ])    
 <!-- end of head -->
 
 <!-- body -->
 	@if(!isset($data['id']))
-    {!! Form::open(['url' => route('admin.tag.store'), 'method' => 'POST']) !!}
+    {!! Form::open(['url' => route('goods.tag.store'), 'method' => 'POST']) !!}
     @else
-    {!! Form::open(['url' => route('admin.tag.update', $data['id']), 'method' => 'PATCH']) !!}
+    {!! Form::open(['url' => route('goods.tag.update', $data['id']), 'method' => 'PATCH']) !!}
     @endif
         <div class="row">
             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -37,7 +37,7 @@
                 </div>   
                 </br>
                 <div class="form-group text-right">
-                    <a href="{{ URL::route('admin.tag.index') }}" class="btn btn-md btn-default" tabindex="3">Batal</a>
+                    <a href="{{ URL::route('goods.tag.index') }}" class="btn btn-md btn-default" tabindex="3">Batal</a>
                     <button type="submit" class="btn btn-md btn-primary" tabindex="4">Simpan</button>
                 </div>
             </div>                                          

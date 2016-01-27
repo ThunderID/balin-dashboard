@@ -14,7 +14,7 @@ class PriceController extends AdminController
 		$this->page_attributes->title 				= 'Harga';
 		$this->page_attributes->source 				= 'pages.barang.harga.';
 		$this->page_attributes->breadcrumb			=	[
-															'Harga' 	=> route('admin.price.index'),
+															'Harga' 	=> route('goods.price.index'),
 														];			
 	}
 
@@ -62,7 +62,7 @@ class PriceController extends AdminController
 														];
 
 		//paginate
-		$this->paginate(route('admin.price.index'), $product['data']['count'], $page);
+		$this->paginate(route('goods.price.index'), $product['data']['count'], $page);
 
 		//breadcrumb
 		$breadcrumb 								= [];	
@@ -113,7 +113,7 @@ class PriceController extends AdminController
 		}
 
 		//paginate
-		$this->paginate(route('admin.price.show', ['id' => $id]), count($product['data']['prices']), $page);
+		$this->paginate(route('goods.price.show', ['id' => $id]), count($product['data']['prices']), $page);
 
 
 		// set data
@@ -124,7 +124,7 @@ class PriceController extends AdminController
 
 		//breadcrumb
 		$breadcrumb 								=	[
-															$product['data']['name'] => route('admin.price.show', ['id' => $id])
+															$product['data']['name'] => route('goods.price.show', ['id' => $id])
 														];	
 
 		//generate View
@@ -154,8 +154,8 @@ class PriceController extends AdminController
 														];
 
 				$breadcrumb							=	[
-															$product['data']['name'] => route('admin.price.show', ['productId' => $productId]),
-															'Harga Baru' => route('admin.price.detail.create', ['productId' => $productId]),
+															$product['data']['name'] => route('goods.price.show', ['productId' => $productId]),
+															'Harga Baru' => route('goods.price.detail.create', ['productId' => $productId]),
 														];
 
 				$this->page_attributes->subtitle 	= $product['data']['name'];
@@ -176,8 +176,8 @@ class PriceController extends AdminController
 														];
 
 				$breadcrumb							=	[
-															$product['data']['name'] => route('admin.price.show', ['productId' => $productId]),
-															'Edit Harga'   =>  route('admin.price.detail.edit', ['productId' => $productId, 'id' => $id]),
+															$product['data']['name'] => route('goods.price.show', ['productId' => $productId]),
+															'Edit Harga'   =>  route('goods.price.detail.edit', ['productId' => $productId, 'id' => $id]),
 														];
 			}
 		}
@@ -190,7 +190,7 @@ class PriceController extends AdminController
 														];
 
 			$breadcrumb								=	[
-															'Data Baru' => route('admin.price.create'),
+															'Data Baru' => route('goods.price.create'),
 														];
 
 			$this->page_attributes->subtitle 		= 'Data Baru';
@@ -267,7 +267,7 @@ class PriceController extends AdminController
 			$this->page_attributes->success 		= "Data Harga Telah Ditambahkan";
 		}
 
-		return $this->generateRedirectRoute('admin.price.show', ['id' => Input::get('produk')]);		
+		return $this->generateRedirectRoute('goods.price.show', ['id' => Input::get('produk')]);		
 	}
 
 	public function Update($productId = null, $id = "")
@@ -300,7 +300,7 @@ class PriceController extends AdminController
 		//return view
 		$this->page_attributes->success 			= "Data Harga Produk Telah Dihapus";
 
-		return $this->generateRedirectRoute('admin.price.show', ['id' => $productId]);				
+		return $this->generateRedirectRoute('goods.price.show', ['id' => $productId]);				
 	}		
 
 

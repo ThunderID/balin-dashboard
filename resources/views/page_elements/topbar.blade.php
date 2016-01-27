@@ -24,12 +24,12 @@
 								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu submenu-desktop">
-								<li><a href="{{ URL::route('admin.product.index') }}">Produk</a></li>
-								<li><a href="{{ URL::route('admin.price.index') }}">Harga</a></li>
-								<li><a href="{{ URL::route('admin.stock.index') }}">Stok</a></li>
-								<li><a href="{{ URL::route('admin.category.index') }}">Kategori</a></li>
-								<li><a href="{{ URL::route('admin.tag.index') }}">Tag</a></li>
-								<li><a href="{{ URL::route('admin.label.index') }}">Label</a></li>
+								<li><a href="{{ URL::route('goods.product.index') }}">Produk</a></li>
+								<li><a href="{{ URL::route('goods.price.index') }}">Harga</a></li>
+								<li><a href="{{ URL::route('goods.stock.index') }}">Stok</a></li>
+								<li><a href="{{ URL::route('goods.category.index') }}">Kategori</a></li>
+								<li><a href="{{ URL::route('goods.tag.index') }}">Tag</a></li>
+								<li><a href="{{ URL::route('goods.label.index') }}">Label</a></li>
 							</ul>
 						</li>
 
@@ -378,42 +378,42 @@
 		<!-- submenu product -->
 							<div id="Barang" class="mobile-submenu hidden">
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.product.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('goods.product.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Produk
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.price.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('goods.price.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Harga
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.stock.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('goods.stock.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Stok
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.category.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('goods.category.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Kategori
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.tag.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('goods.tag.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Tag
 										</h4>
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('admin.label.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('goods.label.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Label
 										</h4>

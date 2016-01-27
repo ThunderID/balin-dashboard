@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
 <!-- head -->
-    @include('pageElements.createHeader', ['title' => 'Data Produk ' . $data['data']['name'] ])    
+    @include('page_elements.createHeader', ['title' => 'Data Produk ' . $data['data']['name'] ])    
 <!-- end of head -->
 
 <!-- micro template section	-->
@@ -93,9 +93,9 @@
 
 <!-- body -->
 	@if(isset(  $data['data']['id'] ))
-    {!! Form::open(['url' => route('admin.product.update', $data['data']['id']), 'method' => 'PATCH']) !!}
+    {!! Form::open(['url' => route('goods.product.update', $data['data']['id']), 'method' => 'PATCH']) !!}
     @else
-    {!! Form::open(['url' => route('admin.product.store'), 'method' => 'POST']) !!}
+    {!! Form::open(['url' => route('goods.product.store'), 'method' => 'POST']) !!}
     @endif
 		<div class="row">
 			<div class="col-md-6">
@@ -244,7 +244,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group text-right">
-					<a href="{{ URL::route('admin.product.index') }}" class="btn btn-md btn-default" tabindex="13">Batal</a>
+					<a href="{{ URL::route('goods.product.index') }}" class="btn btn-md btn-default" tabindex="13">Batal</a>
 					<button type="submit" class="btn btn-md btn-primary" tabindex="12">Simpan</button>
 				</div>        
 			</div>        

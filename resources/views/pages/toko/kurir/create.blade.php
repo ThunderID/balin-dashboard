@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
 <!-- head -->
-    @include('pageElements.createHeader', ['title' => 'Data Kurir ' . $data['name'] ])    
+    @include('page_elements.createHeader', ['title' => 'Data Kurir ' . $data['name'] ])    
 <!-- end of head -->
 
 <!-- body -->

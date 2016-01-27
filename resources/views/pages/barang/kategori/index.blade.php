@@ -4,25 +4,25 @@
 <!-- head -->
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md border-bottom">
-			@include('pageElements.pagetitle')
-			@include('pageElements.breadcrumb')
+			@include('page_elements.pagetitle')
+			@include('page_elements.breadcrumb')
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
-			@include('pageElements.alertbox')
+			@include('page_elements.alertbox')
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
-			@include('pageElements.indexNavigation', [
-				'newDataRoute' 		=> route('admin.category.create'),
-				'filterDataRoute' 	=> route('admin.category.index')
+			@include('page_elements.indexNavigation', [
+				'newDataRoute' 		=> route('goods.category.create'),
+				'filterDataRoute' 	=> route('goods.category.index')
 			])
-			@include('pageElements.searchResult', [
-				'closeSearchLink' 	=> route('admin.category.index') 
+			@include('page_elements.searchResult', [
+				'closeSearchLink' 	=> route('goods.category.index') 
 			])
 		</div>
 	</div>
@@ -65,20 +65,20 @@
 										</p>
 									</td>
 									<td class="text-center">
-										<a href="{{ route('admin.category.show',  $dt['id']) }}"> Detail</a>,
-										<a href="{{ route('admin.category.edit', ['id' => $dt['id']]) }}"> Edit</a>, 
+										<a href="{{ route('goods.category.show',  $dt['id']) }}"> Detail</a>,
+										<a href="{{ route('goods.category.edit', ['id' => $dt['id']]) }}"> Edit</a>, 
 										<a href="#" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#category_del"
 											data-id="{{$dt['id']}}"
 											data-title="Hapus Data category {{$dt['name']}}"
-											data-action="{{ route('admin.category.destroy', $dt['id']) }}">
+											data-action="{{ route('goods.category.destroy', $dt['id']) }}">
 											Hapus
 										</a>                                                                                 
 									</td>    
 								</tr>
 							@endforeach 
-							@include('pageElements.modaldelete', [
+							@include('page_elements.modaldelete', [
 								'modal_id'      => 'category_del', 
-								'modal_route'   => 'pageElements.modalDelete'
+								'modal_route'   => 'page_elements.modalDelete'
 							])                                    
 						@endif
 					</tbody>

@@ -4,19 +4,19 @@
 <!-- head -->
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md border-bottom">
-			@include('pageElements.pagetitle')
-			@include('pageElements.breadcrumb')
+			@include('page_elements.pagetitle')
+			@include('page_elements.breadcrumb')
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
-			@include('pageElements.indexNavigation', [
+			@include('page_elements.indexNavigation', [
 				'disabled'			=> 'false',
-				'newDataRoute' 		=> route('admin.label.create'),
-				'filterDataRoute' 	=> route('admin.label.index'),
+				'newDataRoute' 		=> route('goods.label.create'),
+				'filterDataRoute' 	=> route('goods.label.index'),
 			])			
-			@include('pageElements.searchResult', ['closeSearchLink' => route('admin.label.index') ])
+			@include('page_elements.searchResult', ['closeSearchLink' => route('goods.label.index') ])
 		</div>  
 	</div>
 	</br> 	
@@ -53,7 +53,7 @@
 										</p>
 									</td>
 									<td class="text-center">
-										<a href="{{ route('admin.label.show',  $dt['id']) }}"> Detail</a>                                                                              
+										<a href="{{ route('goods.label.show',  $dt['id']) }}"> Detail</a>                                                                              
 									</td>    
 								</tr>
 							@endforeach                                   

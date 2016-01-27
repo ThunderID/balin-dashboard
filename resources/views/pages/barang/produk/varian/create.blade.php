@@ -5,8 +5,8 @@
 <!-- head -->
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md border-bottom">
-			@include('pageElements.pagetitle')
-			@include('pageElements.breadcrumb')
+			@include('page_elements.pagetitle')
+			@include('page_elements.breadcrumb')
 		</div>
 	</div>
 
@@ -17,7 +17,7 @@
 				Data Ukuran {{ $data['data']['size'] }}
 			</h4> 				
 
-			@include('pageElements.alertbox')
+			@include('page_elements.alertbox')
 		</div>
 	</div>
 	<!-- end of title sub-page -->
@@ -26,9 +26,9 @@
 
 <!-- body -->
 	@if(isset(  $data['data']['id'] ))
-		{!! Form::open(['url' => route('admin.varian.update', ['pid' => $data['pid'], 'id' => $data['data']['id']] ), 'method' => 'PATCH']) !!}
+		{!! Form::open(['url' => route('goods.varian.update', ['pid' => $data['pid'], 'id' => $data['data']['id']] ), 'method' => 'PATCH']) !!}
 	@else
-		{!! Form::open(['url' => route('admin.varian.store', ['pid' => $data['pid']] ), 'method' => 'POST', 'id' => 'my-awesome-dropzone', 'class' => 'dropzone']) !!}
+		{!! Form::open(['url' => route('goods.varian.store', ['pid' => $data['pid']] ), 'method' => 'POST', 'id' => 'my-awesome-dropzone', 'class' => 'dropzone']) !!}
 	@endif
 		<div class="row">
 			<div class="col-md-6">
@@ -57,7 +57,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group text-right">
-					<a href="{{ URL::route('admin.product.show', ['id' => $data['pid']]) }}" class="btn btn-md btn-default" tabindex="3">Batal</a>
+					<a href="{{ URL::route('goods.product.show', ['id' => $data['pid']]) }}" class="btn btn-md btn-default" tabindex="3">Batal</a>
 					<button type="submit" class="btn btn-md btn-primary" tabindex="4">Simpan</button>
 				</div>        
 			</div>        

@@ -1,42 +1,60 @@
 <?php 
 namespace App\Http\Controllers\Barang;
 
-use App\API\connectors\APIProduct;
+use App\API\Connectors\APIProduct;
 
 use App\Http\Controllers\AdminController;
 
 use Input, Session, DB, Redirect, Response, Auth;
 
+/**
+ * Handle Product resource
+ * 
+ * @author budi
+ */
 class ProductController extends AdminController
 {
 	public function __construct()
 	{
 		parent::__construct();
+
 		$this->page_attributes->title 				= 'Produk';
 		$this->page_attributes->source 				= 'pages.barang.produk.';
 		$this->page_attributes->breadcrumb			=	[
-															'Produk' 	=> route('admin.product.index'),
+															'Produk' 	=> route('goods.product.index'),
 														];		
 	}
 
+	/**
+	 * Display all product
+	 * 
+	 * 1. Check filter
+	 * 2. Check page
+	 * 3. Get data from API
+	 * 4. Generate paginator
+	 * 5. Generate breadcrumb
+	 * 6. Generate view
+	 * @param page, q
+	 * @return Object View
+	 */
 	public function index()
 	{
-		//initialize 
+		//1. Check filter
 		$filters 									= null;
 
 		if(Input::has('q'))
 		{
-			$ondate 								= Input::get('q');
-			$filters 								= ['ondate' => Input::get('q')];
+			$filters 								= 	[
+															'name' 	=> 	Input::get('q')
+														];
 			$this->page_attributes->search 			= Input::get('q');
 		}
 		else
 		{
-			$ondate 								= 'now';
 			$searchResult							= null;
 		}
 
-		//get curent page
+		//2. Check page
 		if(is_null(Input::get('page')))
 		{
 			$page 									= 1;
@@ -46,80 +64,101 @@ class ProductController extends AdminController
 			$page 									= Input::get('page');
 		}
 
-		// data here
+		//3. Get data from API
 		$APIProduct 								= new APIProduct;
 
 		$product 									= $APIProduct->getIndex([
-														'search' 	=> 	[
-																			'ondate' 		=> $ondate,
-																		],
-														'sort' 		=> 	[
-																			'created_at' 	=> 'asc',
-																		],																		
-														'take'		=> $this->take,
-														'skip'		=> ($page - 1) * $this->take,
+															'search' 	=> 	[
+																				'name' 			=> Input::get('q'),
+																			],
+															'sort' 		=> 	[
+																				'created_at' 	=> 'asc',
+																			],																		
+															'take'		=> $this->take,
+															'skip'		=> ($page - 1) * $this->take,
 														]);
 
 		$this->page_attributes->data				= 	[
 															'product' => $product,
 														];
 
-		//paginate
-		$this->paginate(route('admin.product.index'), $product['data']['count'], $page);
+		//4. Generate paginator
+		$this->paginate(route('goods.product.index'), $product['data']['count'], $page);
 
-		//breadcrumb
+		//5. Generate breadcrumb
 		$breadcrumb 								= [];	
 
-		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
+		//6. Generate view
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'index';
 
 		return $this->generateView();
 	}
 
+	/**
+	 * Display a product
+	 * 
+	 * 1. Get data from API
+	 * 2. Get collection search
+	 * 3. Generate breadcrumb
+	 * 4. Generate view
+	 * @param q
+	 * @return Object View
+	 */
 	public function show($id)
 	{
-		//initialize 
+		//1. Get data from API
 		$APIProduct 								= new APIProduct;
 		$product 									= $APIProduct->getShow($id);
 
-		$this->page_attributes->subtitle 			= $product['data']['name'];
+		$this->page_attributes->data				= 	[
+															'product' => $product,
+														];
 
-		// filters
+
+		//2. Get collection search
 		if(Input::has('q'))
 		{
 			$this->page_attributes->search 			= Input::get('q');
 		}		
 
-		// data here
-		$this->page_attributes->data				= 	[
-															'product' => $product,
-														];
-
-		//breadcrumb
+		//3. Generate breadcrumb
 		$breadcrumb 								=	[
-															$product['data']['name'] => route('admin.product.show', ['id' => $id])
+															$product['data']['name'] => route('goods.product.show', ['id' => $id])
 														];	
 
-		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
+
+		//4. Generate view
+		$this->page_attributes->subtitle 			= $product['data']['name'];
 
 		$this->page_attributes->source 				= $this->page_attributes->source . 'show';
 
 		return $this->generateView();
 	}	
 
+	/**
+	 * create form of a product
+	 * 
+	 * 1. Get Previous data and page setting
+	 * 2. Initialize data
+	 * 3. Generate breadcrumb
+	 * 4. Generate view
+	 * @param q
+	 * @return Object View
+	 */
 	public function create($id = null)
 	{
-		//initialize
+		//1. Get Previous data and page setting
 		if (is_null($id))
 		{
+			$data 									= null;
+
 			$breadcrumb								=	[
-															'Data Baru' => route('admin.product.create'),
+															'Data Baru' => route('goods.product.create'),
 														];
 
-			$data 									= null;														
 
 			$this->page_attributes->subtitle 		= 'Data Baru';
 		}
@@ -128,36 +167,57 @@ class ProductController extends AdminController
 			$APIProduct 							= new APIProduct;
 			$data 									= ['data' => $APIProduct->getShow($id)['data'] ];	
 
+			//explode description saved in json
 			$tmp									= json_decode($data['data']['description'], true);
 			$data['data']['description']			= $tmp['description'];			
 			$data['data']['fit']					= $tmp['fit'];		
 
 			$breadcrumb								=	[
-															$data['data']['name']  =>  route('admin.product.show', ['id' => $data['data']['id']] ),
-															'Edit'  =>  route('admin.product.create', ['id' => $data['data']['id']] ),
+															$data['data']['name']  =>  route('goods.product.show', ['id' => $data['data']['id']] ),
+															'Edit'  =>  route('goods.product.create', ['id' => $data['data']['id']] ),
 														];
 
 			$this->page_attributes->subtitle 		= $data['data']['name'];
 		}
 
-		//generate View
-		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
-
+		//2. Initialize data
 		$this->page_attributes->data 				=  $data;
 
+		//3. Generate breadcrumb
+		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
+
+
+		//4. Generate view
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'create';
 
 		return $this->generateView();
 	}
 
+	/**
+	 * Edit a product
+	 * 
+	 * @param id
+	 * @return function
+	 */
 	public function edit($id)
 	{
 		return $this->create($id);
 	}
 
+	/**
+	 * Store a product
+	 * 
+	 * 1. Store Price
+	 * 2. Store Image
+	 * 3. Store Label
+	 * 4. Store Tag
+	 * 5. Store Category
+	 * @param id
+	 * @return object view
+	 */
 	public function store($id = "")
 	{
-		//price
+		//1. Store Price
 		$prices 									= [];
 
 		$tmpPrice 									= 	[
@@ -169,7 +229,7 @@ class ProductController extends AdminController
 		array_push($prices,$tmpPrice);
 
 
-		//image
+		//2. Store Image
 		$images 									= [];
 		foreach (Input::get('thumbnail') as $key => $image)
 		{
@@ -188,8 +248,7 @@ class ProductController extends AdminController
 			}														
 		}
 
-
-		//label
+		//3. Store Label
 		$labels										= [];
 		$tmpLabel 									= explode( ',', trim(Input::get('label'), ' '));
 
@@ -204,19 +263,7 @@ class ProductController extends AdminController
 														];
 		}
 
-		//category
-		$categories									= [];
-		$tmpCategory								= explode( ',', trim(Input::get('category'), ' '));
-
-		foreach ($tmpCategory as $key => $tmp)
-		{
-			$categories[$key] 						= 	[
-															'id' 			=> $tmp,
-															'slug' 			=> "",
-														];
-		}
-
-		//tag
+		//4. Store Tag
 		$tags										= [];
 		$tmpTag										= explode( ',', trim(Input::get('tag'), ' '));
 
@@ -228,7 +275,19 @@ class ProductController extends AdminController
 														];
 		}	
 
-		//get data
+		//5. Store Category
+		$categories									= [];
+		$tmpCategory								= explode( ',', trim(Input::get('category'), ' '));
+
+		foreach ($tmpCategory as $key => $tmp)
+		{
+			$categories[$key] 						= 	[
+															'id' 			=> $tmp,
+															'slug' 			=> "",
+														];
+		}
+
+		//6. Store Product
 		$data 										= 	[
 															'id' 			=> $id,
 															'name'			=> Input::get('name'),
@@ -274,30 +333,42 @@ class ProductController extends AdminController
 			$this->page_attributes->success 		= "Data Produk Telah Ditambahkan";
 		}
 
-		return $this->generateRedirectRoute('admin.product.index');
+		return $this->generateRedirectRoute('goods.product.index');
 	}
 
+	/**
+	 * Update a product
+	 * 
+	 * @param id
+	 * @return function
+	 */
 	public function Update($id)
 	{
 		return $this->store($id);
 	}
 
+	/**
+	 * Delete a product
+	 * 
+	 * @param id
+	 * @return function
+	 */
 	public function destroy($id)
 	{
+		//Call API
 		$APIProduct 								= new APIProduct;
 
-		//api
 		$result 									= $APIProduct->deleteData($id);
 
-		//response
+		//Check response
 		if($result['status'] != 'success')
 		{
 			$this->errors 							= $result['message'];
 		}
 
-		//return
-		$this->page_attributes->success 			= "Data telah dihapus";
+		//Return Message
+		$this->page_attributes->success 			= "Data Produk telah dihapus";
 		
-		return $this->generateRedirectRoute('admin.product.index');	
+		return $this->generateRedirectRoute('goods.product.index');	
 	}		
 }

@@ -7,8 +7,8 @@
 <!-- head -->
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md border-bottom">
-			@include('pageElements.pagetitle')
-			@include('pageElements.breadcrumb')
+			@include('page_elements.pagetitle')
+			@include('page_elements.breadcrumb')
 		</div>
 	</div>
 <!-- end of head -->
@@ -63,7 +63,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-7 col-sm-6 col-xs-12">
+				<!-- <div class="col-md-7 col-sm-6 col-xs-12">
 					<div class="row">
 						<div class="col-md-9 col-sm-8 hidden-xs">
 						</div>
@@ -71,7 +71,7 @@
 							<a class="btn btn-default btn-block" href="#"> Re-stok Produk </a>
 						</div>
 					</div>
-				</div>				
+				</div>-->
 			</div>						
 			<div class="row clearfix m-b-md">&nbsp;</div>
 			<div class="row">

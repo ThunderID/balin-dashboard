@@ -8,8 +8,8 @@
 <!-- head -->
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md border-bottom">
-			@include('pageElements.pagetitle')
-			@include('pageElements.breadcrumb')
+			@include('page_elements.pagetitle')
+			@include('page_elements.breadcrumb')
 		</div>
 	</div>
 
@@ -18,7 +18,7 @@
 		<div class="col-md-12 m-b-md">
 			<h2 style="margin-top:0px;">Data Produk</h2>
 
-			@include('pageElements.alertbox')
+			@include('page_elements.alertbox')
 		</div>
 	</div>
 	<!-- end of title sub-page -->
@@ -30,15 +30,13 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			<div class="row">
 				<div class="col-md-12">
-					<a class="btn btn-default pull-right"  href="{{ route('admin.product.edit', ['id' => $dt['id']] ) }}"> Edit Data </a>
+					<a class="btn btn-default pull-right"  href="{{ route('goods.product.edit', ['id' => $dt['id']] ) }}"> Edit Data </a>
 				</div>
 			</div>			
 			<div class="row">
 				<div class="col-md-6">
 					<div class="row">
-						<div class="col-md-10">
-						</div>
-						<div class="col-md-2">
+						<div class="col-md-offset-10 col-md-2">
 							<a href="javascript:clickNext();"><i class="fa fa-angle-right fa-lg pull-right"></i></a>
 							&nbsp;
 							<a href="javascript:clickPrev();"><i class="fa fa-angle-left fa-lg pull-right"></i></a>
@@ -90,7 +88,7 @@
 								<div class="col-md-8 col-sm-3 col-xs-5">
 									<h4>
 										@money_indo($dt['price']) &nbsp;
-										<span><a href="{{ route('admin.price.show', ['pid' => $dt['id']]) }}">[ Histori Harga ]</a></span>
+										<span><a href="{{ route('goods.price.show', ['pid' => $dt['id']]) }}">[ Histori Harga ]</a></span>
 									</h4>
 								</div>
 							</div>
@@ -181,7 +179,7 @@
 
 			<div class="row">
 				<div class="col-md-12">
-					<a class="btn btn-default" href="{{ route('admin.varian.create', ['pid' => $dt['id']] ) }}">Ukuran Baru</a>
+					<a class="btn btn-default" href="{{ route('goods.varian.create', ['pid' => $dt['id']] ) }}">Ukuran Baru</a>
 					<div class="table-responsive">
 						</br>
 						<table class="table table-bordered table-hover table-striped">
@@ -216,20 +214,20 @@
 											<td class="text-center">{{ $product['reserved_stock'] }}</td>
 											<td class="text-center">{{ $product['on_hold_stock'] }}</td>
 											<td class="text-center"> 
-												<a href="{{ route( 'admin.varian.show', ['pid' => $dt['id'] , 'id' => $product['id']] ) }}"> Detail</a>,
-												<a href="{{ route( 'admin.varian.edit', ['pid' => $dt['id'] , 'id' => $product['id']] ) }}"> Edit</a>,
+												<a href="{{ route( 'goods.varian.show', ['pid' => $dt['id'] , 'id' => $product['id']] ) }}"> Detail</a>,
+												<a href="{{ route( 'goods.varian.edit', ['pid' => $dt['id'] , 'id' => $product['id']] ) }}"> Edit</a>,
 												<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#var_del"
 													data-id="{{$product['id']}}"
 													data-title="Hapus Varian Ukuran {{$product['size']}}"
-													data-action="{{ route('admin.varian.destroy', ['pid' => $dt['id'], 'id' => $product['id']]) }}">
+													data-action="{{ route('goods.varian.destroy', ['pid' => $dt['id'], 'id' => $product['id']]) }}">
 													Hapus
 												</a> 												
 											</td>
 										</tr>
 									@endforeach
-									@include('pageElements.modaldelete', [
+									@include('page_elements.modaldelete', [
 											'modal_id'      => 'var_del', 
-											'modal_route'   => route('admin.varian.destroy', 0)
+											'modal_route'   => route('goods.varian.destroy', 0)
 									])									
 								@endif
 							</tbody>
@@ -237,31 +235,6 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="row clearfix">&nbsp;</div>
-
-			<div class="row">
-				<div class="col-md-12">
-					<h3>Data Supplier</h3>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-12">
-					@if(!isset($suppliers[0]))
-						<p class="m-l-sm m-t-sm text-left">Tidak ada supplier</p>
-					@else
-						<ul>
-						@foreach($suppliers as $key => $value)
-							<li>
-								{!! $value['supplier_name'] !!} <a href="{{route('backend.data.supplier.show', $value['supplier_id'])}}"> detail </a>
-							</li>
-						@endforeach
-						</ul>
-					@endif
-				</div>
-			</div>
-
 		</div>
 	</div>
 <!-- end of content -->

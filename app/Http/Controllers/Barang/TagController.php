@@ -14,7 +14,7 @@ class TagController extends AdminController
 		$this->page_attributes->title 				= 'Tag';
 		$this->page_attributes->source 				= 'pages.barang.tag.';
 		$this->page_attributes->breadcrumb			=	[
-															'Tag' 	=> route('admin.tag.index'),
+															'Tag' 	=> route('goods.tag.index'),
 														];			
 	}
 
@@ -62,7 +62,7 @@ class TagController extends AdminController
 														];
 
 		//paginate
-		$this->paginate(route('admin.tag.index'), $tag['data']['count'], $page);
+		$this->paginate(route('goods.tag.index'), $tag['data']['count'], $page);
 
 
 		//breadcrumb
@@ -110,7 +110,7 @@ class TagController extends AdminController
 
 		//breadcrumb
 		$breadcrumb 								=	[
-															$tag['data']['name'] => route('admin.tag.show', ['id' => $tag['data']['name']])
+															$tag['data']['name'] => route('goods.tag.show', ['id' => $tag['data']['name']])
 														];	
 
 		//generate View
@@ -127,7 +127,7 @@ class TagController extends AdminController
 		if (is_null($id))
 		{
 			$breadcrumb								=	[
-															'Data Baru' => route('admin.tag.create'),
+															'Data Baru' => route('goods.tag.create'),
 														];
 
 			$this->page_attributes->subtitle 		= 'Data Baru';
@@ -141,8 +141,8 @@ class TagController extends AdminController
 			$this->page_attributes->data			= $tag;
 
 			$breadcrumb								=	[
-															$tag['name']  =>  route('admin.tag.show', ['id' => $id]),
-															'Edit'  =>  route('admin.tag.edit', ['id' => $id]),
+															$tag['name']  =>  route('goods.tag.show', ['id' => $id]),
+															'Edit'  =>  route('goods.tag.edit', ['id' => $id]),
 														];
 
 			$this->page_attributes->subtitle 		= $tag['name'];
@@ -191,7 +191,7 @@ class TagController extends AdminController
 			$this->page_attributes->success 		= "Data Tag Telah Ditambahkan";
 		}
 		
-		return $this->generateRedirectRoute('admin.tag.index');														
+		return $this->generateRedirectRoute('goods.tag.index');														
 	}
 
 	public function Update($id)
@@ -215,7 +215,7 @@ class TagController extends AdminController
 		//return
 		$this->page_attributes->success 			= "Data telah dihapus";
 		
-		return $this->generateRedirectRoute('admin.tag.index');	
+		return $this->generateRedirectRoute('goods.tag.index');	
 	}	
 
 
