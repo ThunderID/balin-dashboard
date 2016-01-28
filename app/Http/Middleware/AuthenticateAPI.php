@@ -2,10 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use Session;
+use Redirect;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class RedirectIfAuthenticated
+class AuthenticateAPI
 {
 	/**
 	 * The Guard implementation.
@@ -34,8 +36,9 @@ class RedirectIfAuthenticated
 	 */
 	public function handle($request, Closure $next)
 	{
-		if ($this->auth->check()) {
-			return redirect('/home');
+		if(!Session::has('APIToken'))
+		{
+			Redirect::route('auth.login')->send();
 		}
 
 		return $next($request);

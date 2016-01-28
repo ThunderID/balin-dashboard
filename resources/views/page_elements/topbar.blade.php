@@ -109,7 +109,7 @@
 							</a>
 							<ul class="dropdown-menu">
 								<li><a href="#">Ganti Password</a></li>
-								<li><a href="#">Log Out</a></li>
+								<li><a href="{{route('auth.logout')}}">Log Out</a></li>
 							</ul>
 						</li>
 					</ul>				

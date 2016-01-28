@@ -15,7 +15,7 @@ abstract class APIData
 		
 		if(is_null(Session::get('APIToken')))
 		{
-			Redirect::route('backend.login')->send();
+			Redirect::route('auth.login')->send();
 		}
 	}
 

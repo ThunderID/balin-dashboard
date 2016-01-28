@@ -4,7 +4,7 @@
 * Routes untuk menu barang
 *
 */
-Route::group(['prefix' => 'barang', 'namespace' => 'Barang\\'], function()
+Route::group(['prefix' => 'barang', 'namespace' => 'Barang\\', 'middleware' => 'auth.api'], function()
 {
 	/**
 	* Routes untuk sub menu produk dan varian

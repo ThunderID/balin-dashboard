@@ -1,7 +1,7 @@
 @extends('page_templates.layout_auth') 
 
 @section('content')
-	{!! Form::open(['url' => route('backend.dologin'), 'class' => 'm-t']) !!}	
+	{!! Form::open(['url' => route('auth.dologin'), 'class' => 'm-t']) !!}	
 		<div class="form-group">
 			{!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'Email', 'required' => 'required', 'autofocus' => 'autofocus']) !!}
 		</div>

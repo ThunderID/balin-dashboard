@@ -43,8 +43,14 @@ class AuthController extends AdminController
 		}
 		else
 		{
-			// dd($result);
-			dd('gagal login');
+			return Redirect::route('auth.login');
 		}
 	}	
+
+	public function logout()
+	{
+		Session::flush();
+
+		return Redirect::route('auth.login');
+	}
 }
