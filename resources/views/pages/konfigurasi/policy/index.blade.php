@@ -17,12 +17,12 @@
 
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
-			@include('page_elements.indexNavigation', [
+			<!-- @include('page_elements.indexNavigation', [
 				'disabled'			=> true,
 				'newDataRoute' 		=> route('config.policy.create'),
 				'filterDataRoute' 	=> route('config.policy.index'),
 			])
-			@include('page_elements.searchResult', ['closeSearchLink' => route('config.policy.index') ])
+			@include('page_elements.searchResult', ['closeSearchLink' => route('config.policy.index') ]) -->
 		</div>
 	</div>
 	</br> 	
