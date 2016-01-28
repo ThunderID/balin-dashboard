@@ -43,9 +43,11 @@ class ProductController extends AdminController
 	{
 		//1. Check filter
 		$filters 									= null;
+		$search 									= [];
 
 		if(Input::has('q'))
 		{
+			$search 								= ['name' 			=> Input::get('q')];
 			$filters 								= 	[
 															'name' 	=> 	Input::get('q')
 														];
@@ -56,6 +58,20 @@ class ProductController extends AdminController
 			$searchResult							= null;
 		}
 
+		if(Input::has('category'))
+		{
+			$search['categories']					= Input::get('category');
+		}
+
+		if(Input::has('tag'))
+		{
+			$search['tag']							= Input::get('tag');
+		}
+
+		if(Input::has('label'))
+		{
+			$search['labelname']					= Input::get('label');
+		}
 
 		//2. Check page
 		if(is_null(Input::get('page')))
@@ -71,9 +87,7 @@ class ProductController extends AdminController
 		$APIProduct 								= new APIProduct;
 
 		$product 									= $APIProduct->getIndex([
-															'search' 	=> 	[
-																				'name' 			=> Input::get('q'),
-																			],
+															'search' 	=> 	$search,
 															'sort' 		=> 	[
 																				'created_at' 	=> 'asc',
 																			],																		
