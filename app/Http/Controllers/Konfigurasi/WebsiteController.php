@@ -10,7 +10,7 @@ use App\Http\Controllers\AdminController;
 use Input, Session, DB, Redirect, Response, Auth;
 
 /**
- * Handle policy resource
+ * Handle website resource
  * 
  * @author cmooy
  */
@@ -27,7 +27,7 @@ class WebsiteController extends AdminController
 	}
 
 	/**
-	 * Display all policy
+	 * Display all website
 	 * 
 	 * 1. Check filter
 	 * 2. Check page
@@ -116,21 +116,17 @@ class WebsiteController extends AdminController
 		return $this->generateView();
 	}
 
-	public function show($id)
-	{
-
-	}	
-
-	public function create($id = null)
-	{
-	
-	}
-
-	public function edit($id)
-	{
-		return $this->create($id);
-	}
-
+	/**
+	 * Store a website
+	 * 
+	 * 1. Check input
+	 * 2. Check data
+	 * 3. Save website
+	 * 4. Check Response
+	 * 5. Return view
+	 * @param id
+	 * @return object view
+	 */
 	public function store($id = null)
 	{
 		//1. Check input
@@ -213,13 +209,14 @@ class WebsiteController extends AdminController
 		return $this->generateRedirectRoute('config.website.index', ['id' => Input::get('website')]);
 	}
 
+	/**
+	 * Update a website
+	 * 
+	 * @param id
+	 * @return function
+	 */
 	public function Update($id)
 	{
 		return $this->store($id);
 	}
-
-	public function destroy($id)
-	{
-
-	}		
 }

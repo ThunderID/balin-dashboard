@@ -98,7 +98,7 @@ Route::group(['prefix' => 'konfigurasi', 'namespace' => 'Konfigurasi\\'], functi
 	*/
 	Route::resource('admin', 	'AdministrativeController',		['names' => ['index' => 'config.administrative.index', 'create' => 'config.administrative.create', 'store' => 'config.administrative.store', 'show' => 'config.administrative.show', 'edit' => 'config.administrative.edit', 'update' => 'config.administrative.update'], 'except' => ['destroy']]);
 	
-	Route::resource('website', 	'WebsiteController',			['names' => ['index' => 'config.website.index', 'create' => 'config.website.create', 'store' => 'config.website.store', 'show' => 'config.website.show', 'edit' => 'config.website.edit', 'update' => 'config.website.update', 'destroy' => 'config.website.destroy']]);
+	Route::resource('website', 	'WebsiteController',			['names' => ['index' => 'config.website.index', 'store' => 'config.website.store', 'update' => 'config.website.update'], 'only' => ['index', 'store', 'update']]);
 	Route::resource('policy', 	'PolicyController',				['names' => ['index' => 'config.policy.index', 'create' => 'config.policy.create', 'store' => 'config.policy.store', 'edit' => 'config.policy.edit', 'update' => 'config.policy.update'], 'except' => ['show', 'destroy']]);
 });
 
