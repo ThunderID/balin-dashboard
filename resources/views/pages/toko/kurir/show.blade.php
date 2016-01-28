@@ -103,23 +103,28 @@
 									<th class="text-center">Nomor Resi</th>
 									<th class="text-center">Nota Transaksi</th>
 									<th class="text-center">Tanggal Kirim</th>
-									<th class="text-center col-md-2">Kontrol</th>
+									<th class="text-center">Alamat Pengiriman</th>
 								</tr>
 							</thead>	
 							<tbody>
-								@if (count($data['recents']) == 0)
+								@if (count($data['courier']['shippings']) == 0)
 									<tr>
 										<td colspan="5">
 											<p class="text-center">Tidak ada data</p>
 										</td>
 									</tr>
 								@else
-									@foreach($data['recents'] as $ctr => $recent)
+									@foreach($data['courier']['shippings'] as $ctr => $recent)
 										<td class="text-center">{{ $ctr+1 }}</td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
+										<td class="text-center">{{$recent['receipt_number']}}</td>
+										<td class="text-center">{{$recent['sale']['ref_number']}}</td>
+										<td class="text-center">@date_indo(new Carbon($data['courier']['updated_at']))</td>
+										<td class="text-center">
+											<h5>a.n. {{$recent['receiver_name']}}</h5>
+											<p>{{$recent['address']['address']}}</p>
+											<p>{{$recent['address']['zipcode']}}</p>
+											<p>Telp : {{$recent['address']['phone']}}</p>
+										</td>
 									@endforeach
 								@endif	
 							</tbody>
