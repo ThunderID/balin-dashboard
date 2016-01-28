@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
 <!-- head -->
-    @include('page_elements.createHeader', ['title' => 'Data Pembelian ' . $data['data']['name'] ])    
+    @include('page_elements.createHeader', ['title' => 'Data Pembelian ' . $data['data']['ref_number'] ])    
 <!-- end of head -->
 
 <!-- micro template section	-->
@@ -90,16 +90,6 @@
 					]) !!}
 				</div>  
 			</div> 
-			<!-- <div class="col-md-6">
-				<div class="form-group">
-					<label for="upc">UPC</label>
-					{!! Form::text('upc', $data['data']['upc'], [
-								'class'         => 'form-control', 
-								'placeholder'   => 'Masukkan kode UPC',
-								'tabindex'      => '2', 
-					]) !!}
-				</div>
-			</div>  -->
 		</div>
 
 		<div class="clearfix">&nbsp;</div>
