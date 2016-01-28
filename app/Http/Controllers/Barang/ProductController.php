@@ -56,6 +56,7 @@ class ProductController extends AdminController
 			$searchResult							= null;
 		}
 
+
 		//2. Check page
 		if(is_null(Input::get('page')))
 		{

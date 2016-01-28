@@ -45,11 +45,12 @@
 		@endif			
 	</div>
     <div class="col-md-5 col-sm-8 col-xs-12">
-		<form method="GET" action="{{ $filterDataRoute }}" accept-charset="UTF-8">
+		<form onSubmit="ajaxSearch(this);">
 			<div class="row">
 				<div class="col-md-7 col-sm-7 col-xs-4" style="padding-right:2px;">
 					{!! Form::input('text', 'q', Null ,
 							[
+								'id'			=> 'data-search',
 								'class'         => 'form-control',
 								'placeholder'   => $searchLabel,
 								'required'      => 'required',
@@ -89,9 +90,13 @@
 								<div id="menu{{$key}}" class="tab-pane m-t-md fade">							
 							@endif
 								@foreach($filters[$title] as $data)
-									<a class="btn btn-default " href="#">
-									@if(Input::get($title) == $data)
-										<i class="fa fa-check-circle"></i>
+									<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-filter="{{ $data }}" data-type="{{$title}}" href="javascript:void(0)">
+									@if(Input::get(strtolower($title)))	
+										@if(in_array($data, Input::get(strtolower($title))))
+											<i class="fa fa-check-circle"></i>
+										@else
+											<i class="fa fa-circle-thin"></i> 
+										@endif
 									@else
 										<i class="fa fa-circle-thin"></i> 
 									@endif
@@ -119,3 +124,17 @@
     </div>
 </div>
 @endif
+
+@section('scripts')
+function filterData() {
+	$("#contentData").hide(1000);
+	$.ajax({
+	   url:'{{ route('goods.product.index', ['page' => '2']) }}',
+	   type:'GET',
+	   success: function(data){
+	       $('#contentData').html($(data).find('#contentData').html());
+			$("#contentData").show(1000);
+	   }
+	});
+};
+@append
