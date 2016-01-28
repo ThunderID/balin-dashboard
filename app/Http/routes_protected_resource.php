@@ -32,7 +32,7 @@ Route::group(['prefix' => 'barang', 'namespace' => 'Barang\\', 'middleware' => '
 	*/
 	Route::resource('kategori', 'CategoryController',		['names' => ['index' => 'goods.category.index', 'create' => 'goods.category.create', 'store' => 'goods.category.store', 'show' => 'goods.category.show', 'edit' => 'goods.category.edit', 'update' => 'goods.category.update', 'destroy' => 'goods.category.destroy']]);
 	Route::resource('tag', 		'TagController',			['names' => ['index' => 'goods.tag.index', 'create' => 'goods.tag.create', 'store' => 'goods.tag.store', 'show' => 'goods.tag.show', 'edit' => 'goods.tag.edit', 'update' => 'goods.tag.update', 'destroy' => 'goods.tag.destroy']]);
-	Route::resource('label', 	'LabelController',			['names' => ['index' => 'goods.label.index', 'create' => 'goods.label.create', 'store' => 'goods.label.store', 'show' => 'goods.label.show', 'edit' => 'goods.label.edit', 'update' => 'goods.label.update', 'destroy' => 'goods.label.destroy']]);
+	Route::resource('label', 	'LabelController',			['names' => ['index' => 'goods.label.index', 'show' => 'goods.label.show'], 'only' => ['index', 'show']]);
 
 	/**
 	* Routes untuk select2 ajax

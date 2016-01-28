@@ -38,6 +38,8 @@ class AuthController extends AdminController
 		if($result['status'] == "success")
 		{
 			Session::set('APIToken', $result['data']['token']['access_token']);
+			Session::set('userID', $result['data']['me']['id']);
+			Session::set('userName', $result['data']['me']['name']);
 
 			return Redirect::route('admin.dashboard');
 		}

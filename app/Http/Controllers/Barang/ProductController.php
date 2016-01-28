@@ -22,7 +22,9 @@ class ProductController extends AdminController
 		$this->page_attributes->source 				= 'pages.barang.produk.';
 		$this->page_attributes->breadcrumb			=	[
 															'Produk' 	=> route('goods.product.index'),
-														];		
+														];
+
+        $this->middleware('password.needed', ['only' => ['destroy']]);
 	}
 
 	/**

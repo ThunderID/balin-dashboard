@@ -131,36 +131,4 @@ class LabelController extends AdminController
 
 		return $this->generateView();
 	}	
-
-	public function create($id = null)
-	{
-	
-	}
-
-	public function edit($id)
-	{
-		return $this->create($id);
-	}
-
-	public function store($id = null)
-	{
-
-	}
-
-	public function Update($id)
-	{
-		return $this->store($id);
-	}
-
-	public function destroy($id)
-	{
-
-	}		
-
-
-	//AJAX
-	public function AjaxFindName()
-	{
-		return json_encode('test');
-	}	
 }

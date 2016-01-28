@@ -16,6 +16,8 @@ class PriceController extends AdminController
 		$this->page_attributes->breadcrumb			=	[
 															'Harga' 	=> route('goods.price.index'),
 														];			
+														
+        $this->middleware('password.needed', ['only' => ['destroy']]);
 	}
 
 	public function index()

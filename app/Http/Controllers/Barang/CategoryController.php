@@ -15,7 +15,9 @@ class CategoryController extends AdminController
 		$this->page_attributes->source 				= 'pages.barang.kategori.';
 		$this->page_attributes->breadcrumb			=	[
 															'Kategori' 	=> route('goods.category.index'),
-														];			
+														];	
+																
+        $this->middleware('password.needed', ['only' => ['destroy']]);
 	}
 
 	public function index()

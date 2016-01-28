@@ -22,6 +22,7 @@ class VoucherController extends AdminController
 		$this->page_attributes->breadcrumb			=	[
 															'Voucher' 	=> route('promote.voucher.index'),
 														];			
+        $this->middleware('password.needed', ['only' => ['destroy']]);
 	}
 
 	/**

@@ -104,11 +104,11 @@
 					<ul class="nav navbar-top-links navbar-right">
 						<li class="dropdown userme" style="margin-right:5px !important;">
 							<a href="#" class="dropdown-toggle link-gray text-right" data-toggle="dropdown" aria-expanded="true">
-								<i class="fa fa-user"></i>User
+								<i class="fa fa-user"></i>{{Session::get('userName')}}
 								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="#">Ganti Password</a></li>
+								<li><a href="{{route('password.change.edit')}}">Ganti Password</a></li>
 								<li><a href="{{route('auth.logout')}}">Log Out</a></li>
 							</ul>
 						</li>
@@ -151,7 +151,7 @@
 	<!-- button user tablet -->
 				<div class="col-sm-1 hidden-xs">
 					<a href="#" class="btn btn-default btn-sm pull-right" data-toggle="modal" data-target="#myModal">
-						<i class="fa fa-user"></i> &nbsp; User
+						<i class="fa fa-user"></i> &nbsp; {{Session::get('userName')}}
 					</a>
 				</div>
 	<!-- end of button user tablet -->
@@ -186,14 +186,14 @@
 				</div>
 				<div class="modal-footer">
 					<div class="col-sm-12 col-xs-12 m-b-sm">
-						<a href="{{ URL::route('admin.dashboard') }}" class="btn btn-default btn-block btn-sm pull-left">
+						<a href="{{ URL::route('password.change.edit') }}" class="btn btn-default btn-block btn-sm pull-left">
 							<h4>
 								Ganti Password
 							</h4>
 						</a>
 					</div>
 					<div class="col-sm-12 col-xs-12 m-b-sm">
-						<a href="{{ URL::route('admin.dashboard') }}" class="btn btn-default btn-block btn-sm pull-left">
+						<a href="{{ URL::route('auth.logout') }}" class="btn btn-default btn-block btn-sm pull-left">
 							<h4>
 								Log Out
 							</h4>

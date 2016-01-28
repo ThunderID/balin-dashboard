@@ -15,7 +15,9 @@ class TagController extends AdminController
 		$this->page_attributes->source 				= 'pages.barang.tag.';
 		$this->page_attributes->breadcrumb			=	[
 															'Tag' 	=> route('goods.tag.index'),
-														];			
+														];	
+															
+        $this->middleware('password.needed', ['only' => ['destroy']]);
 	}
 
 	public function index()
