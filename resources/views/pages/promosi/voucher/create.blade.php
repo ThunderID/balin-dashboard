@@ -56,7 +56,7 @@
 		<div class="row">
 			<div class="col-md-6">
 				<div class="form-group">
-					<label for="expired">Berlaku Mulai</label>
+					<label for="started_at">Berlaku Mulai</label>
 					{!! Form::text('started_at', $data['data']['started_at'], [
 								'class'         => 'form-control date-time-format',
 								'tabindex'      => '5', 
@@ -66,7 +66,7 @@
 			</div>  
 			<div class="col-md-6">
 				<div class="form-group">
-					<label for="expired">Hingga</label>
+					<label for="expired_at">Hingga</label>
 					{!! Form::text('expired_at', $data['data']['expired_at'], [
 								'class'         => 'form-control date-time-format',
 								'tabindex'      => '6', 

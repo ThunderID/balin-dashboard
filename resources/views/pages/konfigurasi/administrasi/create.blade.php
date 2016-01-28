@@ -25,7 +25,7 @@
 			</div>
 			<div class="col-md-12">
 				<div class="form-group">
-					<label for="name">Email</label>
+					<label for="email">Email</label>
 					{!! Form::text('email', $data['data']['email'], [
 								'class'         => 'form-control', 
 								'placeholder'   => 'Masukkan email',

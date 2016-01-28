@@ -12,7 +12,7 @@ class WebsiteController extends AdminController
 		$this->page_attributes->title 				= 'Website';
 		$this->page_attributes->source 				= 'pages.konfigurasi.website.';
 		$this->page_attributes->breadcrumb			=	[
-															'Website' 	=> route('admin.website.index'),
+															'Website' 	=> route('config.website.index'),
 														];			
 	}
 
