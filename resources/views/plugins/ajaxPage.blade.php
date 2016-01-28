@@ -51,8 +51,20 @@ function ajaxClearSearch() {
 
 {{-- Filter --}}
 function ajaxFilter(e) {
-	var type = $(e).attr("data-type");
-	var filter = $(e).attr("data-filter");
+	var type = $(e).attr("data-type").toLowerCase();
+	var filter = $(e).attr("data-filter").toLowerCase();
+
+	var url     = window.location.href;
+	var toUrl;
+
+	if(url.indexOf("?") == -1) {
+		toUrl = url + "?" + type + "[]=" + filter;
+	}else{
+		toUrl = url + "&" + type + "[]=" + filter;
+	}
+
+	ajaxPage(toUrl);
+	window.history.pushState("", "", toUrl);
  }
 {{-- End of Filter --}}
 
