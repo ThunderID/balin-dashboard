@@ -170,12 +170,6 @@
 											</td>    
 										</tr>       
 									@endforeach 
-									
-									@include('page_elements.modaldelete', [
-											'modal_id'      => 'price_del', 
-											'modal_route'   => route('goods.stock.destroy')
-									])						
-
 								@endif
 								
 							</tbody>
