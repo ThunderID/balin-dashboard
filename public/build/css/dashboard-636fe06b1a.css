@@ -6316,7 +6316,8 @@ body.fixed-sidebar.mini-navbar .navbar-default .nav li a span {
   color: black; }
 
 .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
-  background-image: none; }
+  background-color: #eee;
+  box-shadow: none; }
 
 .btn-default.disabled, .btn-default.disabled:hover, .btn-default.disabled:focus, .btn-default.disabled:active, .btn-default.disabled.active, .btn-default[disabled], .btn-default[disabled]:hover, .btn-default[disabled]:focus, .btn-default[disabled]:active, .btn-default.active[disabled], fieldset[disabled] .btn-default, fieldset[disabled] .btn-default:hover, fieldset[disabled] .btn-default:focus, fieldset[disabled] .btn-default:active, fieldset[disabled] .btn-default.active {
   background-color: #cccccc;
