@@ -93,6 +93,8 @@ function ajaxAddFilter(e){
 function ajaxRemoveFilter(e) {
 	var type 	= $(e).attr("data-type").toLowerCase();
 	var filter 	= $(e).attr("data-filter").toLowerCase();
+	filter 		= filter.replace(" ","%20"); 
+
 	var url     = window.location.href;
 
 	var toRemove = "&" + type + "[]=" + filter;
