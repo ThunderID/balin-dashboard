@@ -18,14 +18,11 @@
 
 	if(!isset($filterDataRoute)){
 		array_push($errors, "Link untuk cari data tidak ada ( var : filterDataRoute )");
-	}	
+	}
 
-	$filters = 	[
-					'titles' => ['Tag', 'Kategori', 'Label'],
-					'Tag' 	=> ['abc','cde'],
-					'Kategori' 	=> ['1abc','1cde'],
-					'Label' 	=> ['2abc','2cde'],
-				];
+	if(!isset($filters['titles'])){
+		array_push($errors, "Data filter tidak ada ( var : filters['titles' => ['a','n'], 'a' => ['a.1', 'a.n'],'n' => []] )");
+	}
 ?>
 
 <div id="filters">
@@ -88,9 +85,9 @@
 					@if(isset($filters['titles']))
 						@foreach($filters['titles'] as $key => $title)
 							@if($key == 0)
-								<li class="active"><a data-toggle="tab" href="#menu{{$key}}">{{$title}}</a></li>
+								<li class="active"><a data-toggle="tab" href="#menu{{$key}}">{{ ucwords($title) }}</a></li>
 							@else
-								<li><a data-toggle="tab" href="#menu{{$key}}">{{$title}}</a></li>
+								<li><a data-toggle="tab" href="#menu{{$key}}">{{ ucwords($title) }}</a></li>
 							@endif
 						@endforeach
 					@endif
@@ -117,7 +114,7 @@
 									<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-togle="off" data-filter="{{ $data }}" data-type="{{$title}}" href="javascript:void(0)">
 									<i class="fa fa-circle-thin"></i> 
 								@endif
-									&nbsp; {{$data}} 
+									&nbsp; {{ ucwords(str_replace("-", " ", $data)) }} 
 								</a>
 							@endforeach
 							</div>	

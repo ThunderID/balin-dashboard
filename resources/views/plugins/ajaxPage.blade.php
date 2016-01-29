@@ -82,6 +82,8 @@ function ajaxAddFilter(e){
 	$(e).find(".fa").removeClass("fa-circle-thin");
 	$(e).find(".fa").addClass("fa-check-circle");
 
+	toUrl		= toUrl.replace('?&', '?');
+
 	ajaxPage(toUrl);
 
 	window.history.pushState("", "", toUrl);
@@ -97,11 +99,8 @@ function ajaxRemoveFilter(e) {
 
 	var url     = window.location.href;
 
-	var toRemove = "&" + type + "[]=" + filter;
-	var toUrl	= url.replace(toRemove, '');
-
-	toRemove 	= type + "[]=" + filter;
-	toUrl		= toUrl.replace(toRemove, '');
+	var toRemove= type + "[]=" + filter;
+	var toUrl	= url.replace(toRemove, '');	
 
 	toUrl		= toUrl.replace('?&', '?');
 
