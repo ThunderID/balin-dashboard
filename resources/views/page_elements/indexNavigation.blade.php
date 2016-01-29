@@ -103,7 +103,7 @@
 							@endif
 							@foreach($filters[$title] as $data)
 								@if(Input::get(strtolower($title)))	
-									@if(in_array($data, Input::get(strtolower($title))))
+									@if(in_array(strtolower($data), Input::get(strtolower($title))))
 										<a class="btn btn-default active ajaxDataFilter" onClick="ajaxFilter(this)" data-togle="on" data-filter="{{ $data }}" data-type="{{$title}}" href="javascript:void(0)">
 										<i class="fa fa-check-circle"></i>
 									@else
@@ -114,7 +114,7 @@
 									<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-togle="off" data-filter="{{ $data }}" data-type="{{$title}}" href="javascript:void(0)">
 									<i class="fa fa-circle-thin"></i> 
 								@endif
-									&nbsp; {{ ucwords(str_replace("-", " ", $data)) }} 
+									&nbsp; {{ $data }} 
 								</a>
 							@endforeach
 							</div>	

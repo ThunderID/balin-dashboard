@@ -20,7 +20,8 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			@include('page_elements.indexNavigation', [
 				'newDataRoute' 		=> route('goods.product.create'),
-				'filterDataRoute' 	=> route('goods.product.index')
+				'filterDataRoute' 	=> route('goods.product.index'),
+				'filters'			=> $filters,
 			])
 		</div>
 	</div>
@@ -121,6 +122,7 @@
 				<?php
 					$tmpPaging = $paging->appends(Input::all())->render();
 					$paging = str_replace("href=", "onClick='ajaxPaging(this)' data-url=", $tmpPaging);
+					$paging = preg_replace("/\[[^)]+\]/","[]",$paging);
 					// dd($paging);
 				?>
 				{!! $paging !!}
