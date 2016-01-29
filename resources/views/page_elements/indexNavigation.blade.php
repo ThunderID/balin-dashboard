@@ -28,6 +28,7 @@
 				];
 ?>
 
+<div id="filters">
 @if(count($errors) == 0)
 <div class="row">		
 	<div class="col-md-7 col-sm-4 hidden-xs">
@@ -61,7 +62,11 @@
 					<button type="submit" class="btn btn-default pull-right btn-block"><i class="fa fa-search"></i></button>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-5" style="padding-left:2px;">
+					@if(Input::has('tag') || Input::has('kategori') || Input::has('label'))
+					<a class="btn btn-default active pull-right btn-block" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
+					@else
 					<a class="btn btn-default pull-right btn-block" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
+					@endif
 				</div>				
 			</div>
 		</form>
@@ -70,7 +75,7 @@
 				<div class="col-md-12 panel-body">
 					<h2 class="m-t-sm">Pilih Filter</h2>
 					<ul class="nav nav-tabs">
-					@if(isset($filters))
+					@if(isset($filters['titles']))
 						@foreach($filters['titles'] as $key => $title)
 							@if($key == 0)
 								<li class="active"><a data-toggle="tab" href="#menu{{$key}}">{{$title}}</a></li>
@@ -85,25 +90,27 @@
 						@if(isset($filters['titles']))
 							@foreach($filters['titles'] as $key => $title)
 							@if($key == 0)
-								<div id="menu{{$key}}" class="tab-pane m-t-md fade in active">
+							<div id="menu{{$key}}" class="tab-pane m-t-md fade in active">
 							@else
-								<div id="menu{{$key}}" class="tab-pane m-t-md fade">							
+							<div id="menu{{$key}}" class="tab-pane m-t-md fade">							
 							@endif
-								@foreach($filters[$title] as $data)
-									<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-filter="{{ $data }}" data-type="{{$title}}" href="javascript:void(0)">
-									@if(Input::get(strtolower($title)))	
-										@if(in_array($data, Input::get(strtolower($title))))
-											<i class="fa fa-check-circle"></i>
-										@else
-											<i class="fa fa-circle-thin"></i> 
-										@endif
+							@foreach($filters[$title] as $data)
+								@if(Input::get(strtolower($title)))	
+									@if(in_array($data, Input::get(strtolower($title))))
+										<a class="btn btn-default active ajaxDataFilter" onClick="ajaxFilter(this)" data-togle="on" data-filter="{{ $data }}" data-type="{{$title}}" href="javascript:void(0)">
+										<i class="fa fa-check-circle"></i>
 									@else
+										<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-togle="off" data-filter="{{ $data }}" data-type="{{$title}}" href="javascript:void(0)">
 										<i class="fa fa-circle-thin"></i> 
 									@endif
-										&nbsp; {{$data}} 
-									</a>
-								@endforeach
-								</div>	
+								@else
+									<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-togle="off" data-filter="{{ $data }}" data-type="{{$title}}" href="javascript:void(0)">
+									<i class="fa fa-circle-thin"></i> 
+								@endif
+									&nbsp; {{$data}} 
+								</a>
+							@endforeach
+							</div>	
 							@endforeach
 						@endif
 					</div>
@@ -124,17 +131,4 @@
     </div>
 </div>
 @endif
-
-@section('scripts')
-function filterData() {
-	$("#contentData").hide(1000);
-	$.ajax({
-	   url:'{{ route('goods.product.index', ['page' => '2']) }}',
-	   type:'GET',
-	   success: function(data){
-	       $('#contentData').html($(data).find('#contentData').html());
-			$("#contentData").show(1000);
-	   }
-	});
-};
-@append
+</div>
