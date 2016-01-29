@@ -62,10 +62,20 @@
 					<button type="submit" class="btn btn-default pull-right btn-block"><i class="fa fa-search"></i></button>
 				</div>
 				<div class="col-md-3 col-sm-3 col-xs-5" style="padding-left:2px;">
-					@if(Input::has('tag') || Input::has('kategori') || Input::has('label'))
-					<a class="btn btn-default active pull-right btn-block" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
+					@if(isset($filters['titles']))
+						@foreach($filters['titles'] as $key => $title)
+							@if(Input::get(strtolower($title)))
+								<?php $filterActivated = true ?>
+							@endif
+						@endforeach
+
+						@if(isset($filterActivated))
+						<a class="btn btn-default active pull-right btn-block" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
+						@else
+						<a class="btn btn-default pull-right btn-block" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
+						@endif
 					@else
-					<a class="btn btn-default pull-right btn-block" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
+						<a class="btn btn-default pull-right btn-block" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
 					@endif
 				</div>				
 			</div>
