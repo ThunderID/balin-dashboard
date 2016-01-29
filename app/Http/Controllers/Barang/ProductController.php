@@ -65,7 +65,7 @@ class ProductController extends AdminController
 
 		if(Input::has('tag'))
 		{
-			$search['tag']							= Input::get('tag');
+			$search['tags']							= Input::get('tag');
 		}
 
 		if(Input::has('label'))
