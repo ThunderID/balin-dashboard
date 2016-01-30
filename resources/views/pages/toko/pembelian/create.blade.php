@@ -12,7 +12,7 @@
 			<div class="row">
 				<div class="col-md-3">
 					<div class="form-group">
-						<label for="varian_id" class="text-capitalize">Produk (Ukuran)</label>
+						<label for="varian_id" class="text-capitalize">Nama Produk</label>
 						{!! Form::text('varian_id[]', null, [
 									'class'         => 'form-control input-details-varian_id', 
 									'tabindex'      => '1',
@@ -146,6 +146,6 @@
 
 
 @section('script_plugin')
+	@include('plugins.microTemplate', ['section' => 'buy'])
 	@include('plugins.inputMask')
-	@include('plugins.microTemplate')
 @stop
