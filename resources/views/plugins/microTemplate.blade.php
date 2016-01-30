@@ -1,16 +1,18 @@
 <script>
-	function change_button_add(e)
-	{
-		var btn 			= '';
-		var btn_template 	= $(e).parent();
 
-		e.remove();
-		btn 				+= '<a href="javascript:;" class="btn btn-sm btn-default m-t-mds btn-del"><i class="fa fa-minus"></i></a>';
+function change_button_add(e)
+{
+	var btn 			= '';
+	var btn_template 	= $(e).parent();
 
-		btn_template.html(btn);
-		$('.btn-del').click(function() {template_del_product($(this))});
-	}
+	e.remove();
+	btn 				+= '<a href="javascript:;" class="btn btn-sm btn-default m-t-mds btn-del"><i class="fa fa-minus"></i></a>';
 
+	btn_template.html(btn);
+	$('.btn-del').click(function() {template_del_product($(this))});
+}
+
+@if($section == "product")
 	$('.btn-del').click(function() {template_del_product($(this))});
 	function template_del_product(e)
 	{
@@ -34,9 +36,19 @@
 
 		$('#default select').val($('.fieldsetwrapper select').val());
 		$('.btn-add-image').click(function() {template_add_image($(this));});
-		$('.wizard .content').animate({ height: $('.body.current').outerHeight() }, "slow");
 	}
 	// end of section product create
+@endif
+
+@if($section == "buy")
+	$('.btn-del').click(function() {template_del_product($(this))});
+	function template_del_product(e)
+	{
+		e.parent().parent().parent().parent().remove();
+		$('.wizard .content').animate({ height: $('.body.current').outerHeight() }, "slow");
+		$('.btn-del').click(function() {template_del_product($(this))});
+		// calculate_total_transaction();
+	}
 
 	// section detail create
 	$('.btn-add-details').click(function() {template_add_details($(this));});
@@ -51,8 +63,12 @@
 		change_button_add(e);
 
 		$('#default select').val($('.fieldsetwrapper select').val());
+
+		$(".money").inputmask({ rightAlign: false, alias: "numeric", prefix: 'IDR ', radixPoint: '', placeholder: "", autoGroup: !0, digitsOptional: !1, groupSeparator: '.', groupSize: 3, repeat: 15 });              
 		$('.btn-add-details').click(function() {template_add_details($(this));});
-		$('.wizard .content').animate({ height: $('.body.current').outerHeight() }, "slow");
 	}
-	// end of section detail create
+	// end of section detail create	
+@endif
+
+
 </script>
