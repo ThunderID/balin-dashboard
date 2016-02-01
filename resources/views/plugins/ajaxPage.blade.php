@@ -35,6 +35,29 @@ function ajaxSearch(e) {
 {{-- End of Search--}}
 
 
+{{-- month year range search--}}
+function ajaxMonthYearRange(e) {
+	var q 		= $(e).find('#monthyear').val();
+
+	if(q == ""){
+		return false;
+	}
+
+	var toUrl	= window.location.href;
+
+	if(toUrl.indexOf("?") != -1) {
+		toUrl	= toUrl.substring(0, toUrl.indexOf('?'));
+	}
+
+	toUrl 		= toUrl + "?periode=" + q;
+
+	ajaxPage(toUrl);
+	window.history.pushState("", "", toUrl);
+}
+{{-- End of month year range search--}}
+
+
+
 {{-- Clear Search--}}
 function ajaxClearSearch() {
 	var toUrl	= window.location.href;
