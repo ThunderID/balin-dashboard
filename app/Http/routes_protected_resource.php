@@ -42,6 +42,7 @@ Route::group(['prefix' => 'barang', 'namespace' => 'Barang\\', 'middleware' => '
 	Route::get('category/ajax/findName',					['uses' => 'AjaxController@FindCategoryByName', 	'as' => 'ajax.category.findName']);
 	Route::get('label/ajax/findName',						['uses' => 'AjaxController@FindLabelByName', 	'as' => 'ajax.label.findName']);
 	Route::get('product/ajax/findName',						['uses' => 'AjaxController@FindProductByName', 	'as' => 'ajax.product.findName']);
+	Route::get('productVarian/ajax/findName',				['uses' => 'AjaxController@FindProductVarianByName', 	'as' => 'ajax.product.varian.findName']);
 });
 
 /**

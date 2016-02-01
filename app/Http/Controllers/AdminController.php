@@ -29,6 +29,7 @@ abstract class AdminController extends Controller
   		if(!isset($this->page_attributes->subtitle)){$this->page_attributes->subtitle = null;}
   		if(!isset($this->page_attributes->data)){$this->page_attributes->data = null;}
   		if(!isset($this->page_attributes->paginator)){$this->page_attributes->paginator = null;}
+  		if(!isset($this->page_attributes->filters)){$this->page_attributes->filters = null;}
 
   		$paging				= $this->page_attributes->paginator;
 
@@ -38,6 +39,7 @@ abstract class AdminController extends Controller
 									->with('pagetitle', $this->page_attributes->title)
 									->with('pagesubtitle', $this->page_attributes->subtitle)
 									->with('data', $this->page_attributes->data)
+									->with('filters', $this->page_attributes->filters)
 									;
 
   		//optional data

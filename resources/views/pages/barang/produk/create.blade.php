@@ -349,5 +349,5 @@
     @include('plugins.select2', ['section' => 'tag'])
 	@include('plugins.summerNote')
 	@include('plugins.inputMask')
-	@include('plugins.microTemplate')
+	@include('plugins.microTemplate', ['section' => 'product'])
 @stop

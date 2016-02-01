@@ -2,6 +2,9 @@
 namespace App\Http\Controllers\Barang;
 
 use App\API\Connectors\APIProduct;
+use App\API\Connectors\APITag;
+use App\API\Connectors\APICategory;
+use App\API\Connectors\APILabel;
 
 use App\Http\Controllers\AdminController;
 
@@ -35,7 +38,8 @@ class ProductController extends AdminController
 	 * 3. Get data from API
 	 * 4. Generate paginator
 	 * 5. Generate breadcrumb
-	 * 6. Generate view
+	 * 6. Generate filters param
+	 * 7. Generate view
 	 * @param page, q
 	 * @return Object View
 	 */
@@ -60,17 +64,17 @@ class ProductController extends AdminController
 
 		if(Input::has('category'))
 		{
-			$search['categories']					= Input::get('category');
+			$search['categories']					= str_replace(" ", "-", Input::get('category'));
 		}
 
 		if(Input::has('tag'))
 		{
-			$search['tag']							= Input::get('tag');
+			$search['tags']							= str_replace(" ", "-", Input::get('tag'));
 		}
 
 		if(Input::has('label'))
 		{
-			$search['labelname']					= Input::get('label');
+			$search['labelname']					= str_replace(" ", "_", Input::get('label'));
 		}
 
 		if (Input::has('sort'))
@@ -116,6 +120,55 @@ class ProductController extends AdminController
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
 		//6. Generate view
+		$filterTitles								= ['tag','kategori','label'];
+
+
+		$APITag 									= new APITag;
+		$tmpTag 	 								= $APITag->getIndex()['data']['data'];
+
+		$key 										= 0;
+		foreach ($tmpTag as $value) 
+		{
+			if($value['category_id'] != 0)
+			{
+				$filterTags[$key]					= ucwords(str_replace("-", " ",$value['slug']));
+				$key++;
+			}
+		}
+
+
+		$APICategory 								= new APICategory;
+		$tmpCategory 	 							= $APICategory->getIndex()['data']['data'];
+
+		$key 										= 0;
+		foreach ($tmpCategory as $value) 
+		{
+			if($value['category_id'] != 0)
+			{
+				$filterCategories[$key]				= ucwords(str_replace("-", " ",$value['name']));
+				$key++;
+			}
+		}
+
+
+		$APILabel 									= new APILabel;
+		$tmpLabel 	 								= $APILabel->getIndex()['data']['data'];
+
+
+		foreach ($tmpLabel as $value) 
+		{
+			$filterLabels[$key]						= ucwords(str_replace("_", " ",$value['label']));
+		}		
+
+
+		$this->page_attributes->filters 			= 	[
+															'titles' 	=> $filterTitles,
+															'tag'		=> $filterTags,
+															'kategori'	=> $filterCategories,
+															'label'		=> $filterLabels,
+														];
+
+		//7. Generate view
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'index';
 
 		return $this->generateView();

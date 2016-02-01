@@ -20,7 +20,8 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			@include('page_elements.indexNavigation', [
 				'newDataRoute' 		=> route('goods.product.create'),
-				'filterDataRoute' 	=> route('goods.product.index')
+				'filterDataRoute' 	=> route('goods.product.index'),
+				'filters'			=> $filters,
 			])
 		</div>
 	</div>
@@ -47,15 +48,18 @@
 								<th class="col-md-2 text-center">
 									Thumbnail
 								</th>
-								<th class="col-md-3 text-center">
+								<th class="col-md-2 text-center">
 									Nama Produk
 								</th>
-								<th class="col-md-2 text-center">
+								<th class="col-md-1 text-center">
 									UPC
 								</th>
 								<th class="col-md-2 text-center">
 									Stok
 								</th>
+								<th class="col-md-2 text-center">
+									Harga
+								</th>								
 								<th class="col-md-2 text-center">
 									Kontrol
 								</th>							
@@ -90,6 +94,9 @@
 										<td class="text-center">
 											{{$dt['current_stock']}}
 										</td>
+										<td class="text-right">
+											 @money_indo($dt['price'])
+										</td>									
 										<td class="text-center">
 											<a href="{{ route('goods.product.show', $dt['id']) }}"> Detail</a>,
 											<a href="{{ route('goods.product.edit', $dt['id']) }}"> Edit</a>, 
@@ -117,14 +124,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12 hollow-pagination" style="text-align:right;">
-				<?php
-					$tmpPaging = $paging->appends(Input::all())->render();
-					$paging = str_replace("href=", "onClick='ajaxPaging(this)' data-url=", $tmpPaging);
-					// dd($paging);
-				?>
-				{!! $paging !!}
-			</div>	
+			@include('page_elements.ajaxPaging')
 		</div>	
 	</div>	
 <!-- end of content -->

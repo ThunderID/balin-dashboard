@@ -1,7 +1,10 @@
 <?php 
 namespace App\Http\Controllers\Barang;
 
-use App\API\connectors\APIProduct;
+use App\API\Connectors\APIProduct;
+use App\API\Connectors\APITag;
+use App\API\Connectors\APICategory;
+use App\API\Connectors\APILabel;
 
 use App\Http\Controllers\AdminController;
 use Input, Session, DB, Redirect, Response, Auth, Carbon, Collection;
@@ -23,17 +26,43 @@ class PriceController extends AdminController
 	public function index()
 	{
 		//initialize 
-		$filters 									= null;
+		$search 									= [];
 
 		if(Input::has('q'))
 		{
-			$filters 								= ['name' => Input::get('q')];
+			$search['name']							= Input::get('q');
 			$this->page_attributes->search 			= Input::get('q');
 		}
 		else
 		{
 			$searchResult							= null;
 		}
+
+		if(Input::has('category'))
+		{
+			$search['categories']					= str_replace(" ", "-", Input::get('category'));
+		}
+
+		if(Input::has('tag'))
+		{
+			$search['tags']							= str_replace(" ", "-", Input::get('tag'));
+		}
+
+		if(Input::has('label'))
+		{
+			$search['labelname']					= str_replace(" ", "_", Input::get('label'));
+		}
+
+		if (Input::has('sort'))
+		{
+			$sort_item 							= explode('-', Input::get('sort'));
+			$sort 								= [$sort_item[0] => $sort_item[1]];
+		}
+		else
+		{
+			$sort								= ['name' => 'asc'];
+		}		
+
 
 		//get curent page
 		if(is_null(Input::get('page')))
@@ -49,14 +78,10 @@ class PriceController extends AdminController
 		$APIProduct 								= new APIProduct;
 
 		$product 									= $APIProduct->getIndex([
-														'search' 	=> 	[
-																			'name' 	=> Input::get('q'),
-																		],
-														'sort' 		=> 	[
-																			'name'	=> 'asc',
-																		],																		
-														'take'		=> $this->take,
-														'skip'		=> ($page - 1) * $this->take,
+															'search' 	=> 	$search,
+															'sort' 		=> 	$sort,																		
+															'take'		=> $this->take,
+															'skip'		=> ($page - 1) * $this->take,
 														]);
 
 		$this->page_attributes->data				= 	[
@@ -68,6 +93,55 @@ class PriceController extends AdminController
 
 		//breadcrumb
 		$breadcrumb 								= [];	
+
+
+		//filters
+		$filterTitles								= ['tag','kategori','label'];
+
+		$APITag 									= new APITag;
+		$tmpTag 	 								= $APITag->getIndex()['data']['data'];
+
+		$key 										= 0;
+		foreach ($tmpTag as $value) 
+		{
+			if($value['category_id'] != 0)
+			{
+				$filterTags[$key]					= ucwords(str_replace("-", " ",$value['slug']));
+				$key++;
+			}
+		}
+
+
+		$APICategory 								= new APICategory;
+		$tmpCategory 	 							= $APICategory->getIndex()['data']['data'];
+
+		$key 										= 0;
+		foreach ($tmpCategory as $value) 
+		{
+			if($value['category_id'] != 0)
+			{
+				$filterCategories[$key]				= ucwords(str_replace("-", " ",$value['name']));
+				$key++;
+			}
+		}
+
+
+		$APILabel 									= new APILabel;
+		$tmpLabel 	 								= $APILabel->getIndex()['data']['data'];
+
+
+		foreach ($tmpLabel as $value) 
+		{
+			$filterLabels[$key]						= ucwords(str_replace("_", " ",$value['label']));
+		}		
+
+
+		$this->page_attributes->filters 			= 	[
+															'titles' 	=> $filterTitles,
+															'tag'		=> $filterTags,
+															'kategori'	=> $filterCategories,
+															'label'		=> $filterLabels,
+														];
 
 		//generate View
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);

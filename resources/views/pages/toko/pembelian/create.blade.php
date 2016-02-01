@@ -12,10 +12,10 @@
 			<div class="row">
 				<div class="col-md-3">
 					<div class="form-group">
-						<label for="varian_id" class="text-capitalize">Produk (Ukuran)</label>
+						<label for="varian_id" class="text-capitalize">Nama Produk <a href="{{ route('goods.product.create') }}" target="blank">[ Produk Baru ]</a></label>
 						{!! Form::text('varian_id[]', null, [
-									'class'         => 'form-control input-details-varian_id', 
-									'tabindex'      => '1',
+									'class'         => 'form-control list-generate', 
+									'tabindex'      => '2',
 									'placeholder'   => 'Masukkan varian',
 						]) !!}
 					</div>
@@ -35,7 +35,7 @@
 						<label for="price" class="text-capitalize">Harga</label>
 						{!! Form::text('price[]', null, [
 									'class'         => 'form-control input-price money', 
-									'tabindex'      => '3',
+									'tabindex'      => '2',
 									'placeholder'   => 'harga produk',
 						]) !!}
 					</div>
@@ -45,7 +45,7 @@
 						<label for="promo_price" class="text-capitalize">Diskon</label>
 						{!! Form::text('promo_price[]', null, [
 									'class'         => 'form-control input-promo_price money', 
-									'tabindex'      => '4',
+									'tabindex'      => '2',
 									'placeholder'   => 'harga promo',
 						]) !!}
 					</div>
@@ -54,14 +54,15 @@
 					<div class="form-group">
 						<label for="subtotal" class="text-capitalize">Subtotal</label>
 						{!! Form::text('subtotal[]', null, [
-									'class'         => 'form-control input-subtotal', 
-									'tabindex'      => '5',
+									'class'         => 'form-control input-subtotal money', 
+									'tabindex'      => '2',
+									'disabled'		=> 'disabled'
 						]) !!}							
 					</div>
 				</div>
 				<div class="col-md-1">
 					<div class="form-group">
-						<a href="javascript:;" class="btn btn-sm btn-default m-t-mds btn-add-details pull-left">
+						<a href="javascript:;" class="btn btn-sm btn-default m-t-mds btn-add-details pull-left", tabindex='3'>
 							<i class="fa fa-plus"></i>
 						</a>
 					</div>
@@ -112,8 +113,8 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group text-right">
-					<a href="{{ URL::route('shop.buy.index') }}" class="btn btn-md btn-default" tabindex="13">Batal</a>
-					<button type="submit" class="btn btn-md btn-primary" tabindex="12">Simpan</button>
+					<a href="{{ URL::route('shop.buy.index') }}" class="btn btn-md btn-default" tabindex="5">Batal</a>
+					<button type="submit" class="btn btn-md btn-primary" tabindex="4">Simpan</button>
 				</div>        
 			</div>        
 		</div> 
@@ -125,15 +126,25 @@
 
 @section('scripts')
 	$( document ).ready(function() {
-	<!-- init microtemplate -->
-	<!-- preload details -->
-	@if(count($data['data']['transactiondetails']))
-		template_add_details($('.base'));
-	@else
-		template_add_details($('.base'));
-	@endif	
-	<!-- end of preload detailss -->
-	<!-- endof init microtemplate -->
+		<!-- init microtemplate -->
+		<!-- preload details -->
+		@if(count($data['data']['transactiondetails']))
+			@foreach($data['data']['transactiondetails'] as $key => $valueDetail)
+				$('#tmplt').find('.input-quantity').val({{$valueDetail['quantity']}});
+				$('#tmplt').find('.input-price').val({{$valueDetail['price']}});
+				$('#tmplt').find('.input-promo_price').val({{$valueDetail['discount']}});
+				$('#tmplt').find('.input-subtotal').val( {{$valueDetail['quantity'] * ($valueDetail['price'] - $valueDetail['discount']) }} );
+				
+		        var id   = '{!! $valueDetail['varian_id'] !!}';
+		        var text = '{!! $valueDetail['varian']['product']['name'] . " - " . $valueDetail['varian']['size'] !!}';
+
+				template_add_details($('.base'),id,text);
+			@endforeach
+		@else
+			template_add_details($('.base'));
+		@endif	
+		<!-- end of preload detailss -->
+		<!-- endof init microtemplate -->	
 	});
 
 	<!-- details default validator -->
@@ -142,10 +153,38 @@
 		$(e).val(1);		
 	}
 	<!-- end of details default validator -->
+
+	function calculatePrice(e) {
+		var total = 0;
+
+		var qty = parseInt(e.parent().parent().parent().find('.input-quantity').val());
+		if(isNaN(qty)){
+			qty = 0;
+		}
+
+		var price = e.parent().parent().parent().find('.input-price').val();
+		price = price.replace('IDR ', '');
+		price = price.replace('.', '');
+		if(isNaN(price)){
+			price = 0;
+		}
+
+		var promo = e.parent().parent().parent().find('.input-promo_price').val();
+		promo = promo.replace('IDR ', '');
+		promo = promo.replace('.', '');		
+		if(isNaN(promo)){
+			promo = 0;
+		}
+
+		total = qty * (price - promo);
+
+		e.parent().parent().parent().find('.input-subtotal').val(total);
+	}
 @stop
 
 
 @section('script_plugin')
+	@include('plugins.microTemplate', ['section' => 'buy'])
 	@include('plugins.inputMask')
-	@include('plugins.microTemplate')
+	@include('plugins.select2', ['section' => null])
 @stop
