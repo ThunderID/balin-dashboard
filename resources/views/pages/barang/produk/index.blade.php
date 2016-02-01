@@ -126,8 +126,8 @@
 		<div class="row">
 			@include('page_elements.ajaxPaging')
 		</div>	
-	</div>	
 <!-- end of content -->
 
+	</div>	
 </div>
 @stop
