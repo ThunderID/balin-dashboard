@@ -41,6 +41,8 @@ function change_button_add(e)
 @endif
 
 @if($section == "buy")
+	var ptr = 0;
+
 	$('.btn-del').click(function() {template_del_product($(this))});
 	function template_del_product(e)
 	{
@@ -52,12 +54,16 @@ function change_button_add(e)
 
 	// section detail create
 	$('.btn-add-details').click(function() {template_add_details($(this));});
-	function template_add_details(e)
+	function template_add_details(e, id, text)
 	{
 		var default_val 	= $('#tmplt').find('.default').val();
 		var tmp 			= $('#tmplt').clone();
 
 		tmp.find('.default').val(default_val);
+
+		var className =	"list-" + ptr;
+
+		tmp.find('.list-generate').addClass(className);
 
 		$('#template-details').append(tmp);
 		change_button_add(e);
@@ -66,6 +72,67 @@ function change_button_add(e)
 
 		$(".money").inputmask({ rightAlign: false, alias: "numeric", prefix: 'IDR ', radixPoint: '', placeholder: "", autoGroup: !0, digitsOptional: !1, groupSeparator: '.', groupSize: 3, repeat: 15 });              
 		$('.btn-add-details').click(function() {template_add_details($(this));});
+
+		$('.input-price').change(function(){
+			calculatePrice($(this));
+		});
+
+		$('.input-promo_price').change(function(){
+			calculatePrice($(this));
+		});
+
+		$('.input-quantity').change(function(){
+			calculatePrice($(this));
+		});	
+
+	    var preload_data_product		= [];
+
+		if(id != null && text != null){
+	        preload_data_product.push({ id: id, text: text});
+		}
+
+		$('.' + className).select2({
+			placeholder: 'Masukkan nama product',
+			minimumInputLength: 3,
+			maximumSelectionSize: 1,
+			tags: false,
+			ajax: {
+				url: "{{ route('ajax.product.varian.findName') }}",
+				dataType: 'json',
+				data: function (term, path) {
+					return {
+						name: term,
+						path : '{{ isset($value['varian_id']) ? $value['varian_id'] : '' }}'
+					};
+				},
+			   results: function (data) {
+					return {
+						results: $.map(data, function (item) {
+							return {
+								text: item.name,
+								id: item.id,
+								path: item.path
+							}
+						})
+					};
+				},
+				query: function (query){
+					var data = {results: []};
+					 
+					$.each(preload_data_product, function(){
+						if(query.term.length == 0 || this.text.toUpperCase().indexOf(query.term.toUpperCase()) >= 0 ){
+							data.results.push({id: this.id, text: this.text });
+						}
+					});
+		
+					query.callback(data);
+				}
+			}			
+		});
+		$('.' + className).select2('data', preload_data_product );
+
+
+		ptr++;
 	}
 	// end of section detail create	
 @endif
