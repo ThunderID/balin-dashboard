@@ -13,4 +13,9 @@
         placeholder: "dd-mm-yyyy",
         alias: "date",
     }); 
+    $(".month-year-format").inputmask({
+        mask: "m-y",
+        placeholder: "mm-yyyy",
+        alias: "date",
+    });     
 </script>
