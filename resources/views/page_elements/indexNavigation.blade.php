@@ -67,18 +67,18 @@
 						@endforeach
 
 						@if(isset($filterActivated))
-						<a class="btn btn-default active pull-right btn-block" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
+						<a class="btn btn-default active pull-right btn-block btn-filter" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
 						@else
-						<a class="btn btn-default pull-right btn-block" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
+						<a class="btn btn-default pull-right btn-block btn-filter" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
 						@endif
 					@else
-						<a class="btn btn-default pull-right btn-block" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
+						<a class="btn btn-default pull-right btn-block btn-filter" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
 					@endif
 				</div>				
 			</div>
 		</form>
 		<div class="row">
-			<div id="demo" class="collapse">
+			<div id="demo" class="collapse filter-panel">
 				<div class="col-md-12 panel-body">
 					<h2 class="m-t-sm">Pilih Filter</h2>
 					<ul class="nav nav-tabs">
@@ -139,3 +139,15 @@
 </div>
 @endif
 </div>
+
+@section('scripts')
+	$('.filter-panel').on('show.bs.collapse', function(e){
+		$('.btn-filter').find('.fa').removeClass('fa-caret-down')
+		$('.btn-filter').find('.fa').addClass('fa-caret-up')
+	});
+
+	$('.filter-panel').on('hide.bs.collapse', function(e){
+		$('.btn-filter').find('.fa').removeClass('fa-caret-up')
+		$('.btn-filter').find('.fa').addClass('fa-caret-down')
+	});	
+@append
