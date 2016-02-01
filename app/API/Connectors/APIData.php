@@ -35,7 +35,7 @@ abstract class APIData
 							foreach ($subData as $subTitle2 => $subData2) {
 								if(!is_null($subData2) || !empty($subData2))
 								{
-									$queryString = $queryString . $title . "[" .  $subTitle . "] . [" .  $subTitle2 . "]=" . $subData2 . "&";				
+									$queryString = $queryString . $title . "[" .  $subTitle . "][" .  $subTitle2 . "]=" . $subData2 . "&";				
 								}
 							}
 						}
