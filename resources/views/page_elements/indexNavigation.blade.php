@@ -43,7 +43,7 @@
 		@endif			
 	</div>
     <div class="col-md-5 col-sm-8 col-xs-12">
-		<form onSubmit="ajaxSearch(this);">
+		<form action='javascript:void(0)' onSubmit="ajaxSearch(this);">
 			<div class="row">
 				@if(!isset($filters['titles']))
 				<div class="col-md-3 col-sm-3 col-xs-5">
