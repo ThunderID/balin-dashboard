@@ -119,4 +119,36 @@ class AjaxController extends Controller
 		//return
 		return $datas;
 	}
+
+	public function FindProductVarianByName()
+	{
+		//get input 
+		$input 										= Input::get('name');
+
+		//get data 
+		$APIAjax	 								= new APIAjax;
+		$product									= $APIAjax->getProduct(['name' => $input]);		
+
+		//check if success
+		if($product['status'] != 'success')
+		{
+			dd($product);
+			return abort(404);
+		}
+
+		//formating data
+		$datas 										= [];
+		$key 										= 0;
+		foreach ($product['data']['data'] as $data) 
+		{
+			foreach ($data['varians'] as $varian) {
+				$datas[$key]['id']					= $varian['id'];
+				$datas[$key]['name']				= $data['name'] . " - " . $varian['size'];
+				$key++;
+			}
+		}										
+
+		//return
+		return $datas;
+	}	
 }
