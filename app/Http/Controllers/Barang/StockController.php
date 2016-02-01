@@ -39,15 +39,16 @@ class StockController extends AdminController
 	public function index()
 	{
 		//1. Check filter
-		$filters 									= null;
+		$search 									= [];
 
-		if(Input::has('q'))
+		if(Input::has('periode'))
 		{
-			$filters 								= ['ondate' => Input::get('q')];
-			$this->page_attributes->search 			= Input::get('q');
+			$search['ondate']						= "15-" . Input::get('periode');
+			// $this->page_attributes->search 			= Input::get('periode');
 		}
 		else
 		{
+			$search['ondate']						= strtotime('now');
 			$searchResult							= null;
 		}
 
@@ -65,11 +66,9 @@ class StockController extends AdminController
 		$APIStock 									= new APIStock;
 
 		$product 									= $APIStock->getIndex([
-														'search' 	=> 	[
-																			'ondate' 	=> Input::get('q'),
-																		],
+														'search' 	=> 	$search,
 														'sort' 		=> 	[
-																			'size'	=> 'asc',
+																			'ondate'	=> 'asc',
 																		],																		
 														'take'		=> $this->take,
 														'skip'		=> ($page - 1) * $this->take,
