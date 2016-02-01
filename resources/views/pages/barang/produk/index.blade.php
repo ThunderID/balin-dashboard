@@ -131,7 +131,3 @@
 
 </div>
 @stop
-
-@section('script_plugin')
-	@include('plugins.ajaxPage')
-@stop

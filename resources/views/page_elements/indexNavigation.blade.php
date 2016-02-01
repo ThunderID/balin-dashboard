@@ -20,7 +20,7 @@
 		array_push($errors, "Link untuk cari data tidak ada ( var : filterDataRoute )");
 	}
 
-	if(!isset($filters['titles'])){
+	if(!isset($filters)){
 		array_push($errors, "Data filter tidak ada ( var : filters['titles' => ['a','n'], 'a' => ['a.1', 'a.n'],'n' => []] )");
 	}
 ?>
@@ -45,6 +45,10 @@
     <div class="col-md-5 col-sm-8 col-xs-12">
 		<form onSubmit="ajaxSearch(this);">
 			<div class="row">
+				@if(!isset($filters['title']))
+				<div class="col-md-3 col-sm-3 col-xs-5">
+				</div>
+				@endif
 				<div class="col-md-7 col-sm-7 col-xs-4" style="padding-right:2px;">
 					{!! Form::input('text', 'q', Null ,
 							[
@@ -58,23 +62,21 @@
 				<div class="col-md-2 col-sm-2 col-xs-3" style="padding-left:2px;">
 					<button type="submit" class="btn btn-default pull-right btn-block"><i class="fa fa-search"></i></button>
 				</div>
+				@if(isset($filters['titles']))
 				<div class="col-md-3 col-sm-3 col-xs-5" style="padding-left:2px;">
-					@if(isset($filters['titles']))
-						@foreach($filters['titles'] as $key => $title)
-							@if(Input::get(strtolower($title)))
-								<?php $filterActivated = true ?>
-							@endif
-						@endforeach
-
-						@if(isset($filterActivated))
-						<a class="btn btn-default active pull-right btn-block btn-filter" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
-						@else
-						<a class="btn btn-default pull-right btn-block btn-filter" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
+					@foreach($filters['titles'] as $key => $title)
+						@if(Input::get(strtolower($title)))
+							<?php $filterActivated = true ?>
 						@endif
+					@endforeach
+
+					@if(isset($filterActivated))
+					<a class="btn btn-default active pull-right btn-block btn-filter" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
 					@else
-						<a class="btn btn-default pull-right btn-block btn-filter" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
+					<a class="btn btn-default pull-right btn-block btn-filter" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
 					@endif
 				</div>				
+				@endif
 			</div>
 		</form>
 		<div class="row">
@@ -150,4 +152,8 @@
 		$('.btn-filter').find('.fa').removeClass('fa-caret-up')
 		$('.btn-filter').find('.fa').addClass('fa-caret-down')
 	});	
+@append
+
+@section('script_plugin')
+	@include('plugins.ajaxPage')
 @append
