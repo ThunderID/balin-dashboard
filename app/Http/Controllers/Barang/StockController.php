@@ -64,6 +64,14 @@ class StockController extends AdminController
 			$searchResult							= null;
 		}
 
+
+		if(Input::has('q'))
+		{
+			$search['name']							= Input::get('q');
+			$this->page_attributes->search 			= Input::get('q');
+		}
+
+
 		//2. Check page
 		if(is_null(Input::get('page')))
 		{
@@ -78,12 +86,12 @@ class StockController extends AdminController
 		$APIStock 									= new APIStock;
 
 		$product 									= $APIStock->getIndex([
-														'search' 	=> 	$search,
-														'sort' 		=> 	[
-																			'ondate'	=> 'asc',
-																		],																		
-														'take'		=> $this->take,
-														'skip'		=> ($page - 1) * $this->take,
+															'search' 	=> 	$search,
+															'sort' 		=> 	[
+																				'name'	=> 'asc',
+																			],																		
+															'take'		=> $this->take,
+															'skip'		=> ($page - 1) * $this->take,
 														]);
 
 		$this->page_attributes->data				= 	[

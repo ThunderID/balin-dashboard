@@ -55,7 +55,6 @@ abstract class APIData
 
 		$queryString 				= str_replace(' ', '%20', $queryString);
 
-
 		$this->apiUrl				= $this->apiUrl . '?' . $queryString;
 
 		$result 					= json_decode($api->get($this->apiUrl), true);
