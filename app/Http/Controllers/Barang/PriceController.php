@@ -33,10 +33,6 @@ class PriceController extends AdminController
 			$search['name']							= Input::get('q');
 			$this->page_attributes->search 			= Input::get('q');
 		}
-		else
-		{
-			$searchResult							= null;
-		}
 
 		if(Input::has('category'))
 		{

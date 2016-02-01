@@ -35,6 +35,33 @@ function ajaxSearch(e) {
 {{-- End of Search--}}
 
 
+{{-- Search--}}
+function ajaxFilterSearch(e) {
+	var q 		= $(e).find('#data-search').val();
+
+	if(q == ""){
+		return false;
+	}
+
+	var url     = window.location.href;
+	var toUrl;
+
+	var url		= url.replace(/(q=)[^\&]+/, '');
+
+	if(url.indexOf("?") == -1) {
+		toUrl 	= url + "?q=" + q;
+	}else{
+		toUrl 	= url + "&q=" + q;
+	}
+
+	toUrl		= toUrl.replace('&&', '&');
+
+	ajaxPage(toUrl);
+	window.history.pushState("", "", toUrl);
+}
+{{-- End of Search--}}
+
+
 {{-- month year range search--}}
 function ajaxMonthYearRange(e) {
 	var q 		= $(e).find('#monthyear').val();
@@ -57,13 +84,18 @@ function ajaxMonthYearRange(e) {
 {{-- End of month year range search--}}
 
 
-
 {{-- Clear Search--}}
 function ajaxClearSearch() {
 	var toUrl	= window.location.href;
 
-	if(toUrl.indexOf("?") != -1) {
-		toUrl	= toUrl.substring(0, toUrl.indexOf('?'));
+	if(toUrl.indexOf("periode=") == -1){
+		if(toUrl.indexOf("?") != -1) {
+			toUrl	= toUrl.substring(0, toUrl.indexOf('?'));
+		}
+	}else{
+		if(toUrl.indexOf("?") != -1) {
+			toUrl	= toUrl.replace(/(q=)[^\&]+/, '');
+		}
 	}
 
 	ajaxPage(toUrl);
