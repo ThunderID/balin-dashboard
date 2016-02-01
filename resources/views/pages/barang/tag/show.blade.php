@@ -85,9 +85,15 @@
 				</div>
 				<div class="col-md-12 m-t-sm m-b-lg">
 					@include('page_elements.indexNavigation', [
-						'newDataRoute' 		=> route('goods.product.create', ['tag_id' => $data['id'], 'tag' => $data['name']]),
-						'filterDataRoute' 	=> route('goods.tag.show', ['id' => $data['id']])
-					])	
+						'newDataRoute' 		=> route('goods.product.create',  ['tag_id' => $data['id'], 'tag' => $data['name']]),
+						'filterDataRoute' 	=> route('goods.tag.show', ['id' => $data['id']]),
+						'filters'			=> []
+					])						
+				</div>
+			</div>
+
+			<div id="contentData">
+				<div class="row">
 					@include('page_elements.searchResult', [
 						'closeSearchLink' 	=>  route('goods.tag.show', ['id' => $data['id']]) 
 					])
