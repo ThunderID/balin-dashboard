@@ -5,7 +5,7 @@ use App\API\connectors\APIStock;
 
 use App\Http\Controllers\AdminController;
 
-use Input, Session, DB, Redirect, Response, Auth;
+use Input, Session, DB, Redirect, Response, Auth, Carbon;
 
 /**
  * Handle stock information
@@ -43,12 +43,24 @@ class StockController extends AdminController
 
 		if(Input::has('periode'))
 		{
-			$search['ondate']						= "15-" . Input::get('periode');
-			// $this->page_attributes->search 			= Input::get('periode');
-		}
+			$tmpdate 								= "01-" . Input::get('periode') . " 00:00:00";
+
+			$search['ondate'] 						= 	[
+															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->format('Y-m-d H:i:s'),
+															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->addMonths(1)->format('Y-m-d H:i:s'),
+														];
+
+		}												
 		else
 		{
-			$search['ondate']						= strtotime('now');
+			$tmpdate 								= "01-" . date('m-Y') . " 00:00:00";
+
+
+			$search['ondate'] 						= 	[
+															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->format('Y-m-d H:i:s'),
+															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->addMonths(1)->format('Y-m-d H:i:s'),
+														];
+
 			$searchResult							= null;
 		}
 
