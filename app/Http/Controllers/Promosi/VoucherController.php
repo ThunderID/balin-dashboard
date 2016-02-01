@@ -222,7 +222,7 @@ class VoucherController extends AdminController
 			$this->page_attributes->success 		= "Data Voucher Telah Ditambahkan";
 		}
 
-		return $this->generateRedirectRoute('promote.voucher.show', ['id' => Input::get('voucher')]);
+		return $this->generateRedirectRoute('promote.voucher.index');
 	}
 
 	/**
