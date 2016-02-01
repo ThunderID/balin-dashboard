@@ -13,7 +13,7 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			@include('page_elements.indexNavigation', [
 				'disabled'			=> 'false',
-				'newDataRoute' 		=> route('goods.label.create'),
+				'newDataRoute' 		=> '/',
 				'filterDataRoute' 	=> route('goods.label.index'),
 			])			
 			@include('page_elements.searchResult', ['closeSearchLink' => route('goods.label.index') ])
