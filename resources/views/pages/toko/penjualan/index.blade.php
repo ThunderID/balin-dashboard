@@ -48,7 +48,7 @@
 									Tanggal
 								</th>
 								<th class="col-md-2 text-left">
-									#
+									No Nota
 								</th>
 								<th class="col-md-2">
 									Nama Customer
