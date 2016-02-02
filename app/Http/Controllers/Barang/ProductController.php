@@ -130,6 +130,7 @@ class ProductController extends AdminController
 		$filterTags 								= [];
 		$filterCategories 							= [];
 		$filterLabels 								= [];
+
 		foreach ($tmpTag as $value) 
 		{
 			if($value['category_id'] != 0)
@@ -157,10 +158,11 @@ class ProductController extends AdminController
 		$APILabel 									= new APILabel;
 		$tmpLabel 	 								= $APILabel->getIndex()['data']['data'];
 
-
+		$key 										= 0;
 		foreach ($tmpLabel as $value) 
 		{
 			$filterLabels[$key]						= ucwords(str_replace("_", " ",$value['label']));
+			$key++;
 		}		
 
 
