@@ -10,7 +10,7 @@
 	</div>
 
 	<div class="row">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			@include('page_elements.indexNavigation', [
 				'disabled' 			=> true,
 				'newDataRoute' 		=> '/',
@@ -22,7 +22,7 @@
 
 	<div id="contentData">
 		<div class="row">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">			
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">			
 				@include('page_elements.searchResult', [
 					'closeSearchLink' 	=> route('customer.referral.index') 
 				])
