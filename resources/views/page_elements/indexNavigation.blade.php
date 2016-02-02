@@ -1,3 +1,11 @@
+{{-- 
+	Readme
+	------
+	Utk filter non periode : filters['titles' => ['a','n'], 'a' => ['a.1', 'a.n'],'n' => []] )
+	utk filter periode : filters['titles' => ['periode']];
+--}}
+
+
 <?php
 	$errors = [];
 	if(!isset($disabled)){
@@ -25,7 +33,6 @@
 	}
 ?>
 
-<div id="filters">
 @if(count($errors) == 0)
 <div class="row">		
 	<div class="col-md-7 col-sm-4 hidden-xs">
@@ -44,7 +51,7 @@
 	</div>
     <div class="col-md-5 col-sm-8 col-xs-12">
 		<form action='javascript:void(0)' onSubmit="ajaxSearch(this);">
-			<div class="row">
+			<div class="row" id="filters">
 				@if(!isset($filters['titles']))
 				<div class="col-md-3 col-sm-3 col-xs-5">
 				</div>
@@ -60,7 +67,7 @@
 					) !!} 
 				</div>
 				<div class="col-md-2 col-sm-2 col-xs-3" style="padding-left:2px;">
-					<button type="submit" class="btn btn-default pull-right btn-block"><i class="fa fa-search"></i></button>
+					<button type="submit" class="btn btn-default pull-right btn-block" onClick="clearMonthYear()"><i class="fa fa-search"></i></button>
 				</div>
 				@if(isset($filters['titles']))
 				<div class="col-md-3 col-sm-3 col-xs-5" style="padding-left:2px;">
@@ -81,28 +88,28 @@
 		</form>
 		<div class="row">
 			<div id="demo" class="collapse filter-panel">
-				<div class="col-md-12 panel-body">
-					<h2 class="m-t-sm">Pilih Filter</h2>
+				@if($title != 'periode')
+				<div class="col-md-12 panel-body" id="filter-contents">
+					<h2 class="m-t-sm">Pilih Filterasi</h2>
+
 					<ul class="nav nav-tabs">
-					@if(isset($filters['titles']))
-						@foreach($filters['titles'] as $key => $title)
-							@if($key == 0)
-								<li class="active"><a data-toggle="tab" href="#menu{{$key}}">{{ ucwords($title) }}</a></li>
-							@else
-								<li><a data-toggle="tab" href="#menu{{$key}}">{{ ucwords($title) }}</a></li>
-							@endif
-						@endforeach
-					@endif
+					@foreach($filters['titles'] as $key => $title)
+						@if($key == 0)
+							<li class="active"><a data-toggle="tab" href="#menu{{$key}}">{{ ucwords($title) }}</a></li>
+						@else
+							<li><a data-toggle="tab" href="#menu{{$key}}">{{ ucwords($title) }}</a></li>
+						@endif
+					@endforeach
 					</ul>
 
 					<div class="tab-content col-md-12">
-						@if(isset($filters['titles']))
-							@foreach($filters['titles'] as $key => $title)
+						@foreach($filters['titles'] as $key => $title)
 							@if($key == 0)
 							<div id="menu{{$key}}" class="tab-pane m-t-md fade in active">
 							@else
 							<div id="menu{{$key}}" class="tab-pane m-t-md fade">							
 							@endif
+
 							@foreach($filters[$title] as $data)
 								@if(Input::get(strtolower($title)))	
 									@if(in_array(strtolower($data), Input::get(strtolower($title))))
@@ -120,10 +127,45 @@
 								</a>
 							@endforeach
 							</div>	
-							@endforeach
-						@endif
+						@endforeach
 					</div>
 				</div>
+				@else
+				<div class="col-md-12 panel-body">
+					<h2 class="m-t-sm">Periode</h2>
+
+					<div class="row">
+						<form action='javascript:void(0)' onSubmit="filterPeriode(this);">
+							<div class="col-sm-8 col-xs-7">
+								<?php
+									$tmp = Input::get('periode');
+									if(count($tmp) > 0)
+									{
+										$dt = $tmp[0];
+									}
+									else
+									{
+										$dt = null;
+									}
+								?>
+								{!! Form::input('text', 'periode', $dt,  [
+									'class'         => 'form-control month-year-format',
+									'placeholder'   => 'mm-yyyy',
+									'id'			=> 'monthyear'
+								]) !!}
+							</div>
+							<div class="col-sm-2 col-xs-3">
+								<button type="submit" class="btn btn-default pull-right btn-block">Go</button>
+							</div>
+							<div class="col-sm-2 col-xs-2">
+								<a class="btn btn-default" onClick="ajaxClearPeriode(this)" href="javascript:void(0)">
+									<i class="fa fa-times"></i>
+								</a>
+							</div>								
+						</form>
+					</div>
+				</div>
+				@endif
 			</div>
 		</div>
 	</div>
@@ -140,7 +182,6 @@
     </div>
 </div>
 @endif
-</div>
 
 @section('scripts')
 	$('.filter-panel').on('show.bs.collapse', function(e){
@@ -156,4 +197,5 @@
 
 @section('script_plugin')
 	@include('plugins.ajaxPage')
+	@include('plugins.inputmask')
 @append

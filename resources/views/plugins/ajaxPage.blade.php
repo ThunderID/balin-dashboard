@@ -27,6 +27,8 @@ function ajaxSearch(e) {
 		toUrl	= toUrl.substring(0, toUrl.indexOf('?'));
 	}
 
+	$("#demo").collapse('hide');
+
 	toUrl 		= toUrl + "?q=" + q;
 
 	ajaxPage(toUrl);
@@ -98,6 +100,8 @@ function ajaxClearSearch() {
 		}
 	}
 
+	$("#demo").collapse('hide');
+
 	ajaxPage(toUrl);
 	window.history.pushState("", "", toUrl);	
 }
@@ -146,6 +150,54 @@ function ajaxAddFilter(e){
 {{-- End of Add Filter --}}
 
 
+{{-- Add Filter Periode --}}
+function filterPeriode(e){
+	var q 		= $(e).find('#monthyear').val();
+
+	if(q == ""){
+		return false;
+	}
+
+	var url		= window.location.href;
+
+	var toUrl	= url.replace(/(periode)[^\&]+/, '');
+
+	if(url.indexOf("?") == -1) {
+		toUrl 		= toUrl + "?periode[]=" + q;
+	}else{
+		toUrl 		= toUrl + "&periode[]=" + q;
+	}
+
+	toUrl		= toUrl.replace('?&', '?');
+	toUrl		= toUrl.replace('&&', '&');
+
+
+	ajaxPage(toUrl);
+	window.history.pushState("", "", toUrl);	
+}
+{{-- End of Filter Periode --}}
+
+
+{{-- Clear Filter Periode--}}
+function ajaxClearPeriode() {
+	var url		= window.location.href;
+
+	if(url.indexOf("&periode") != -1) {
+		var toUrl		= url.replace(/(&periode)[^\&]+/, '');
+	} else if(url.indexOf("periode") != -1){
+		var toUrl		= url.replace(/(periode)[^\&]+/, '');
+	} else {
+		return false;
+	}
+
+	clearMonthYear();
+
+	ajaxPage(toUrl);
+	window.history.pushState("", "", toUrl);	
+}
+{{-- End of Clear Filter Periode--}}
+
+
 {{-- Remove Filter --}}
 function ajaxRemoveFilter(e) {
 	var type 	= $(e).attr("data-type").toLowerCase();
@@ -178,12 +230,20 @@ function ajaxPage(toUrl) {
 	   	success: function(data){
 	    	$('#contentData').html($(data).find('#contentData').html());
 	    	$('#filters').html($(data).find('#filters').html());
+	    	$('#filter-contents').html($(data).find('#filter-contents').html());
 			$("#contentData").show(400);
 			$("#filters").show(400);
+			$("#filter-contents").show(400);
 			tmpData = data;
 	   	}
-	});
+	});	
 };
 {{-- End of Ajax Paging--}}
+
+{{-- UI--}}
+	function clearMonthYear(){
+		$('#monthyear').val("");
+	}
+{{-- End of UI--}}
 
 </script>
