@@ -189,7 +189,7 @@
 							<thead>
 								<tr>
 									<th class="text-center">No</th>
-									<th class="text-center">#</th>
+									<th class="text-center">No Nota</th>
 									<th class="text-center">Tanggal</th>
 									<th class="text-center">Status</th>
 									<th class="text-center">Total Tagihan</th>
