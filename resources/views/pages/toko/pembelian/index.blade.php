@@ -20,7 +20,7 @@
 			@include('page_elements.indexNavigation', [
 				'newDataRoute' 		=> route('shop.buy.create'),
 				'filterDataRoute' 	=> route('shop.buy.index'),
-				'searchLabel' 		=> 'cari status',
+				'searchLabel' 		=> 'cari nomor nota',
 				'filters'			=> ['titles' => ['periode']]
 			])
 		</div>
