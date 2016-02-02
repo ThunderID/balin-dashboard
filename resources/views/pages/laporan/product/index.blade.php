@@ -18,12 +18,9 @@
 
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
-			@include('page_elements.indexNavigation', [
-				'disabled'			=> true,
-				'newDataRoute' 		=> route('report.product.sold'),
-				'filterDataRoute' 	=> route('report.product.sold'),
-				'searchLabel' 		=> 'dd-mm-yyyy to dd-mm-yyyy'
-			])
+			@include('page_elements.dateRangeNavigation', [
+				'filterDataRoute' 	=> route('report.product.sold')
+			])				
 		</div>
 	</div>
 
