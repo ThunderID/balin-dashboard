@@ -91,7 +91,7 @@
 				@if(isset($filters['titles']))
 				@if($title != 'periode')
 				<div class="col-md-12 panel-body" id="filter-contents">
-					<h2 class="m-t-sm">Pilih Filterasi</h2>
+					<h2 class="m-t-sm">Pilih Filter</h2>
 
 					<ul class="nav nav-tabs">
 					@foreach($filters['titles'] as $key => $title)
