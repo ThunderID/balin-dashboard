@@ -53,7 +53,7 @@ class AdministrativeController extends AdminController
 
 		if(Input::has('role'))
 		{
-			$search['role']							= Input::get('category');
+			$search['role']							= Input::get('role');
 		}
 
 		$this->page_attributes->filters 			= 	[
