@@ -15,6 +15,7 @@
 				'disabled' 			=> true,
 				'newDataRoute' 		=> '/',
 				'filterDataRoute' 	=> route('customer.referral.index'),
+				'searchLabel' 		=> 'cari nama',
 				'filters'			=> []
 			])
 		</div>

@@ -14,6 +14,7 @@
 			@include('page_elements.indexNavigation', [
 				'newDataRoute' 		=> route('customer.point.create'),
 				'filterDataRoute' 	=> route('customer.point.index'),
+				'searchLabel' 		=> 'cari nama',
 				'filters'			=> []
 			])
 		</div>

@@ -39,17 +39,27 @@ class AdministrativeController extends AdminController
 	public function index()
 	{
 		//1. Check filter 
-		$filters 									= null;
+		$search 									= [];
 
 		if(Input::has('q'))
 		{
-			$filters 								= ['name' => Input::get('q')];
+			$search 								= ['name' => Input::get('q')];
 			$this->page_attributes->search 			= Input::get('q');
 		}
 		else
 		{
 			$searchResult							= null;
 		}
+
+		if(Input::has('role'))
+		{
+			$search['role']							= Input::get('category');
+		}
+
+		$this->page_attributes->filters 			= 	[
+															'titles' 	=> ['role'],
+															'role'		=> ['admin', 'staff', 'store manager'],
+														];
 
 		//2. Check page
 		if(is_null(Input::get('page')))
@@ -65,9 +75,7 @@ class AdministrativeController extends AdminController
 		$APIAdmin 									= new APIAdmin;
 
 		$admin 										= $APIAdmin->getIndex([
-														'search' 	=> 	[
-																			'name' 	=> Input::get('q'),
-																		],
+														'search' 	=> 	$search,
 														'sort' 		=> 	[
 																			'name'	=> 'asc',
 																		],																		
