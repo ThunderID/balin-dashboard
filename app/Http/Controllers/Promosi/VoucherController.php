@@ -40,17 +40,28 @@ class VoucherController extends AdminController
 	public function index()
 	{
 		//1. Check filter 
-		$filters 									= null;
+		$search 									= [];
 
 		if(Input::has('q'))
 		{
-			$filters 								= ['code' => Input::get('q')];
+			$search['code']							= ['code' => Input::get('q')];
 			$this->page_attributes->search 			= Input::get('q');
 		}
 		else
 		{
 			$searchResult							= null;
 		}
+
+		if(Input::has('tipe'))
+		{
+			$search['type']							= str_replace(" ", "_", Input::get('tipe')[0]);
+		}		
+
+		$this->page_attributes->filters 			= 	[
+															'titles' 	=> ['tipe'],
+															'tipe'		=> ['free shipping cost', 'debit point', 'store manager', 'promo referral'],
+														];
+
 
 		//2. Check page
 		if(is_null(Input::get('page')))
@@ -66,9 +77,7 @@ class VoucherController extends AdminController
 		$APIVoucher 								= new APIVoucher;
 
 		$voucher 									= $APIVoucher->getIndex([
-														'search' 	=> 	[
-																			'code' 	=> Input::get('q'),
-																		],
+														'search' 	=> 	$search,
 														'sort' 		=> 	[
 																			'code'	=> 'asc',
 																		],																		
