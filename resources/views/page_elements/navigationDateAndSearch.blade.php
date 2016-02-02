@@ -29,7 +29,7 @@
 	</div>
 	<div class="col-md-2 col-sm-1 col-xs-12 m-b-md">
 	</div>
-	<div class="col-md-6 col-sm-6 col-xs-12">
+	<div class="col-md-6 col-sm-6 col-xs-12" id="filters">
 		<form action='javascript:void(0)' onSubmit="ajaxFilterSearch(this);">
 			<div class="row">
 				<div class="hidden-lg hidden-md col-sm-12 hidden-xs">
