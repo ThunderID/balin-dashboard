@@ -2,6 +2,9 @@
 namespace App\Http\Controllers\Promosi;
 
 use App\API\connectors\APIProduct;
+use App\API\Connectors\APITag;
+use App\API\Connectors\APICategory;
+use App\API\Connectors\APILabel;
 
 use App\Http\Controllers\AdminController;
 
@@ -39,17 +42,33 @@ class DiscountController extends AdminController
 	public function index()
 	{
 		//1. Check filter 
-		$filters 									= null;
+		$search 									= ['discount' => true,];
 
 		if(Input::has('q'))
 		{
-			$filters 								= ['name' => Input::get('q')];
+			$search['name']							= Input::get('q');
 			$this->page_attributes->search 			= Input::get('q');
 		}
 		else
 		{
 			$searchResult							= null;
 		}
+
+		if(Input::has('category'))
+		{
+			$search['categories']					= str_replace(" ", "-", Input::get('category'));
+		}
+
+		if(Input::has('tag'))
+		{
+			$search['tags']							= str_replace(" ", "-", Input::get('tag'));
+		}
+
+		if(Input::has('label'))
+		{
+			$search['labelname']					= str_replace(" ", "_", Input::get('label'));
+		}
+
 
 		//2. Check page
 		if(is_null(Input::get('page')))
@@ -65,10 +84,7 @@ class DiscountController extends AdminController
 		$APIProduct 								= new APIProduct;
 
 		$product 									= $APIProduct->getIndex([
-														'search' 	=> 	[
-																			'name' 	=> Input::get('q'),
-																			'discount' => true,
-																		],
+														'search' 	=> 	$search,
 														'sort' 		=> 	[
 																			'name'	=> 'asc',
 																		],																		
@@ -88,6 +104,59 @@ class DiscountController extends AdminController
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
 		//6. Generate View
+		$filterTitles								= ['tag','kategori','label'];
+		
+		$filterTags 								= [];
+		$filterCategories 							= [];
+		$filterLabels 								= [];
+
+		$APITag 									= new APITag;
+		$tmpTag 	 								= $APITag->getIndex()['data']['data'];
+
+		$key 										= 0;
+		foreach ($tmpTag as $value) 
+		{
+			if($value['category_id'] != 0)
+			{
+				$filterTags[$key]					= ucwords(str_replace("-", " ",$value['slug']));
+				$key++;
+			}
+		}
+
+
+		$APICategory 								= new APICategory;
+		$tmpCategory 	 							= $APICategory->getIndex()['data']['data'];
+
+		$key 										= 0;
+		foreach ($tmpCategory as $value) 
+		{
+			if($value['category_id'] != 0)
+			{
+				$filterCategories[$key]				= ucwords(str_replace("-", " ",$value['name']));
+				$key++;
+			}
+		}
+
+
+		$APILabel 									= new APILabel;
+		$tmpLabel 	 								= $APILabel->getIndex()['data']['data'];
+
+		$key 										= 0;
+		foreach ($tmpLabel as $value) 
+		{
+			$filterLabels[$key]						= ucwords(str_replace("_", " ",$value['label']));
+			$key++;
+		}		
+
+
+		$this->page_attributes->filters 			= 	[
+															'titles' 	=> $filterTitles,
+															'tag'		=> $filterTags,
+															'kategori'	=> $filterCategories,
+															'label'		=> $filterLabels,
+														];
+
+
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'index';
 
 		return $this->generateView();
