@@ -94,6 +94,10 @@ class PriceController extends AdminController
 		//filters
 		$filterTitles								= ['tag','kategori','label'];
 
+		$filterTags 								= [];
+		$filterCategories 							= [];
+		$filterLabels 								= [];
+
 		$APITag 									= new APITag;
 		$tmpTag 	 								= $APITag->getIndex()['data']['data'];
 

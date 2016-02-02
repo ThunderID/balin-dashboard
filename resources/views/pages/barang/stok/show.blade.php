@@ -113,7 +113,7 @@
 										<?php $stock = $stock + $detail['stock_in'] - $detail['stock_out'];?>
 										<tr>
 											<td class="text-left">
-												{{$key}}
+												{{$key+1}}
 											</td>
 
 											<td class="text-left">

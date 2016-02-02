@@ -121,16 +121,15 @@ class ProductController extends AdminController
 
 		//6. Generate view
 		$filterTitles								= ['tag','kategori','label'];
-
+		
+		$filterTags 								= [];
+		$filterCategories 							= [];
+		$filterLabels 								= [];
 
 		$APITag 									= new APITag;
 		$tmpTag 	 								= $APITag->getIndex()['data']['data'];
 
 		$key 										= 0;
-		$filterTags 								= [];
-		$filterCategories 							= [];
-		$filterLabels 								= [];
-
 		foreach ($tmpTag as $value) 
 		{
 			if($value['category_id'] != 0)
