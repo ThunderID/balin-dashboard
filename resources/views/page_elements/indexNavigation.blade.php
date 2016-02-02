@@ -88,7 +88,7 @@
 		</form>
 		<div class="row">
 			<div id="demo" class="collapse filter-panel">
-				@if($title != 'periode')
+				@if($filters['titles'][0] != 'periode')
 				<div class="col-md-12 panel-body" id="filter-contents">
 					<h2 class="m-t-sm">Pilih Filterasi</h2>
 
