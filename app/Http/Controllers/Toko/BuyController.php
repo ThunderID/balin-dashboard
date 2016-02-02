@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Toko;
 
 use App\Http\Controllers\AdminController;
 use App\API\Connectors\APIPurchase;
-use Input, Session, DB, Redirect, Response, Auth;
+use Input, Session, DB, Redirect, Response, Auth, Carbon;
 
 class BuyController extends AdminController
 {
@@ -20,16 +20,26 @@ class BuyController extends AdminController
 	public function index()
 	{
 		//initialize 
-		$filters 									= null;
+		$search 									= [];
 
-		if(Input::has('q'))
+		if(Input::has('periode'))
 		{
-			$filters 								= ['ondate' => Input::get('q')];
-			$this->page_attributes->search 			= Input::get('q');
+			$tmpdate 								= "01-" . Input::get('periode')[0] . " 00:00:00";
+
+			$search['ondate'] 						= 	[
+															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->format('Y-m-d H:i:s'),
+															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->addMonths(1)->format('Y-m-d H:i:s'),
+														];
 		}
 		else
 		{
 			$searchResult							= null;
+		}
+
+		if(Input::has('q'))
+		{
+			$search['refnumber']					= Input::get('q');
+			$this->page_attributes->search 			= Input::get('q');
 		}
 
 		//get curent page
@@ -46,9 +56,7 @@ class BuyController extends AdminController
 		$APIPurchase 								= new APIPurchase;
 
 		$purchase 									= $APIPurchase->getIndex([
-														'search' 	=> 	[
-																			'ondate' 		=> Input::get('q'),
-																		],
+														'search' 	=> 	$search,
 														'sort' 		=> 	[
 																			'transact_at'	=> 'asc',
 																		],																		
