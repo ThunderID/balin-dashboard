@@ -197,5 +197,5 @@
 
 @section('script_plugin')
 	@include('plugins.ajaxPage')
-	@include('plugins.inputmask')
+	@include('plugins.inputMask')
 @append

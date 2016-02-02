@@ -127,6 +127,9 @@ class ProductController extends AdminController
 		$tmpTag 	 								= $APITag->getIndex()['data']['data'];
 
 		$key 										= 0;
+		$filterTags 								= [];
+		$filterCategories 							= [];
+		$filterLabels 								= [];
 		foreach ($tmpTag as $value) 
 		{
 			if($value['category_id'] != 0)
