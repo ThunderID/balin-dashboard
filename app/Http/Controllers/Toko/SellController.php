@@ -39,7 +39,7 @@ class SellController extends AdminController
 	public function index()
 	{
 		//1. Check filter
-		$filters 									= null;
+		$search 									= [];
 
 		if(Input::has('periode'))
 		{
