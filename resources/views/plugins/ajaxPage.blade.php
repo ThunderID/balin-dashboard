@@ -168,6 +168,8 @@ function filterPeriode(e){
 		toUrl 		= toUrl + "&periode[]=" + q;
 	}
 
+	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+
 	toUrl		= toUrl.replace('?&', '?');
 	toUrl		= toUrl.replace('&&', '&');
 
