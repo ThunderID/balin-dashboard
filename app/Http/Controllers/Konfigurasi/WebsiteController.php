@@ -164,7 +164,6 @@ class WebsiteController extends AdminController
 
 					$website['started_at']			= $inputStartDate;
 
-					$website['ended_at']			= "";
 					$website['images']				= "";
 					$website['images'][]			= 	[
 															'id'		=> '',
@@ -199,7 +198,6 @@ class WebsiteController extends AdminController
 
 				$website['started_at']				= $inputStartDate;
 
-				$website['ended_at']				= "";
 				$website['images']					= $data['data']['images'];
 				$website['images'][]				= 	[
 															'id'		=> '',
