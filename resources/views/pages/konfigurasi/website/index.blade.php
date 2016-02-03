@@ -10,6 +10,12 @@
 	</div>
 <!-- end of head -->
 
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
+			@include('page_elements.alertbox')
+		</div>
+	</div>
+
 <!-- content -->
 	<!-- pekerjaan hari ini -->
 	<div class="row">
@@ -57,8 +63,8 @@
 										@forelse($data['slider']['data']['data'] as $key => $dt)
 										    {!! Form::open(['url' => route('config.website.update', $dt['id']), 'method' => 'PATCH']) !!}
 												<tr>
-													<td class="text-left">
-														<img class="img img-responsive" src="{{$dt['image']['thumbnail']}}" alt="">
+													<td class="col-md-6 text-left">
+														<img class="img img-responsive col-md-12" src="{{$dt['image']['thumbnail']}}" alt="">
 														{!! Form::text('image', $dt['image']['thumbnail'], [
 																		'class'        		=> 'form-control', 
 															]) !!}

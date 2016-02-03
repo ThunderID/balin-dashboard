@@ -7,7 +7,7 @@ use App\API\Connectors\APISlider;
 
 use App\Http\Controllers\AdminController;
 
-use Input, Session, DB, Redirect, Response, Auth;
+use Input, Session, DB, Redirect, Response, Auth, Carbon\Carbon;
 
 /**
  * Handle website resource
@@ -132,14 +132,29 @@ class WebsiteController extends AdminController
 		//1. Check input
 		$inputValue 								= Input::get('value');
 
-		if(Input::has('started_at'))
+		if (preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]))
 		{
-			$inputStartDate 						= date('Y-m-d H:i:s', strtotime(Input::get('started_at')));
-		}
+			if(Input::has('started_at'))
+			{
+				$inputStartDate 			= Carbon::createFromFormat('d-m-Y H:i', Input::get('started_at'))->format('Y-m-d H:i:s');
+			}
 
-		if(Input::has('ended_at'))
+			if(Input::has('ended_at'))
+			{
+				$inputEndDate 				= Carbon::createFromFormat('d-m-Y H:i', Input::get('ended_at'))->format('Y-m-d H:i:s');
+			}
+		}
+		else
 		{
-			$inputEndDate 							= date('Y-m-d H:i:s', strtotime(Input::get('ended_at')));
+			if(Input::has('started_at'))
+			{
+				$inputStartDate 			= Carbon::createFromFormat('d-m-Y H:i', Input::get('started_at'))->format('Y-m-d H:i:s');
+			}
+
+			if(Input::has('ended_at'))
+			{
+				$inputEndDate 				= Carbon::createFromFormat('d-m-Y H:i', Input::get('ended_at'))->format('Y-m-d H:i:s');
+			}
 		}
 
 		if(Input::has('image'))
