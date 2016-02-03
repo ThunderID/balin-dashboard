@@ -102,85 +102,85 @@
 					@include('page_elements.dateRangeNavigation', [
 						'filterDataRoute' 	=> route('goods.price.show', ['id' => $dt['id']])
 					])	
-					@include('page_elements.filterResult', [
-						'closeSearchLink' 	=>  route('goods.price.show', ['id' => $dt['id']]) 
-					])
 				</div>			
-				<div class="col-md-12">
-					<div class="table-responsive">
-						<table class="table table-bordered table-hover table-striped">
-							<thead>
-								<tr>
-									<th class="text-left">
-										No.
-									</th>
-									<th class="col-md-3 text-left">
-										Tanggal
-									</th>
-									<th class="col-md-3 text-right">
-										Harga
-									</th>
-									<th class="col-md-3 text-right">
-										Harga Promo
-									</th>
-									<th class="text-center">
-										Kontrol
-									</th>							
-								</tr>
-							</thead>
-							<tbody>
-								@if(count($dt['prices']) == 0)
+			</div>
+
+			<div id="contentData">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover table-striped">
+								<thead>
 									<tr>
-										<td colspan="6" class="text-center">
-											Tidak ada data
-										</td>
+										<th class="text-left">
+											No.
+										</th>
+										<th class="col-md-3 text-left">
+											Tanggal
+										</th>
+										<th class="col-md-3 text-right">
+											Harga
+										</th>
+										<th class="col-md-3 text-right">
+											Harga Promo
+										</th>
+										<th class="text-center">
+											Kontrol
+										</th>							
 									</tr>
-								@else                
-									<?php $ctr = 0; ?>
-									@foreach($dt['prices'] as $key => $price)
+								</thead>
+								<tbody>
+									@if(count($dt['prices']) == 0)
 										<tr>
-											<td class="text-left">
-												{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $key + 1}}
+											<td colspan="6" class="text-center">
+												Tidak ada data
 											</td>
+										</tr>
+									@else                
+										<?php $ctr = 0; ?>
+										@foreach($dt['prices'] as $key => $price)
+											<tr>
+												<td class="text-left">
+													{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $key + 1}}
+												</td>
 
-											<td class="text-left">
-												@datetime_indo(new Carbon($price['started_at']))
-											</td>
+												<td class="text-left">
+													@datetime_indo(new Carbon($price['started_at']))
+												</td>
 
-											<td class="text-right">
-												@money_indo($price['price'])
-											</td>
+												<td class="text-right">
+													@money_indo($price['price'])
+												</td>
 
-											<td class="text-right">
-												@money_indo($price['promo_price'])
-											</td>
+												<td class="text-right">
+													@money_indo($price['promo_price'])
+												</td>
 
-											<td class="text-center">
-												<a href="{{ route('goods.price.detail.edit', ['productId' => $dt['id'] ,'id' => $price['id']]) }}">Edit</a>, 
-												<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
-													data-target="#price_del"
-													data-id="{{$price['id']}}"
-													data-title="Hapus Data Harga Produk {{$dt['name']}}"
-													data-action="{{ route('goods.price.detail.destroy', ['productId' => $dt['id'] ,'id' => $price['id']]) }}">
-													Hapus
-												</a>
-												<?php
-							        			// <a href="{{ route('goods.product.show', $dt['id']) }}"> Detail</a>,
-												?>                                          
-											</td>    
-										</tr>       
-									@endforeach 
-								@endif
-								
-							</tbody>
-						</table>
-					</div>					
-				</div>
-			</div>	
-			<div class="row">
-				<div class="col-md-12 hollow-pagination" style="text-align:right;">
-					{!! $paging->appends(Input::all())->render() !!}
+												<td class="text-center">
+													<a href="{{ route('goods.price.detail.edit', ['productId' => $dt['id'] ,'id' => $price['id']]) }}">Edit</a>, 
+													<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
+														data-target="#price_del"
+														data-id="{{$price['id']}}"
+														data-title="Hapus Data Harga Produk {{$dt['name']}}"
+														data-action="{{ route('goods.price.detail.destroy', ['productId' => $dt['id'] ,'id' => $price['id']]) }}">
+														Hapus
+													</a>
+													<?php
+								        			// <a href="{{ route('goods.product.show', $dt['id']) }}"> Detail</a>,
+													?>                                          
+												</td>    
+											</tr>       
+										@endforeach 
+									@endif
+									
+								</tbody>
+							</table>
+						</div>					
+					</div>
 				</div>	
+				<div class="row">
+					@include('page_elements.ajaxPaging')
+				</div>							
 			</div>							
 		</div>
 	<div>
