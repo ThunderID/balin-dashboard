@@ -5,7 +5,7 @@ use App\API\Connectors\APIReport;
 
 use App\Http\Controllers\AdminController;
 
-use Input, Session, DB, Redirect, Response, Auth;
+use Input, Session, DB, Redirect, Response, Auth, Carbon;
 
 /**
  * Handle report controller
@@ -37,13 +37,17 @@ class ReportController extends AdminController
 	public function VoucherUsage()
 	{
 		//1. Check filter 
-		$filters 									= null;
+		$search 									= null;
 
-		if(Input::has('q'))
+		if(Input::has('start') && Input::has('end'))
 		{
-			$dates 									= explode('to', Input::get('q'));
-			$filters 								= ['ondate' => $dates];
-			$this->page_attributes->search 			= Input::get('q');
+			$tmpstart 								=  Input::get('start') . " 00:00:00";
+			$tmpend									=  Input::get('end') . " 23:59:59";
+
+			$search['ondate'] 						= 	[
+															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpstart))->format('Y-m-d H:i:s'),
+															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpend))->format('Y-m-d H:i:s'),
+														];
 		}
 		else
 		{
@@ -64,9 +68,7 @@ class ReportController extends AdminController
 		$APIReport 									= new APIReport;
 
 		$report 									= $APIReport->getVoucherUsage([
-														'search' 	=> 	[
-																			'ondate' 	=> Input::get('q'),
-																		],
+														'search' 	=> 	$search,
 														'sort' 		=> 	[
 																			'name'	=> 'asc',
 																		],																		
@@ -109,13 +111,17 @@ class ReportController extends AdminController
 	public function SoldProduct()
 	{
 		//1. Check filter 
-		$filters 									= null;
+		$search 									= null;
 
-		if(Input::has('q'))
+		if(Input::has('start') && Input::has('end'))
 		{
-			$dates 									= explode('to', Input::get('q'));
-			$filters 								= ['ondate' => $dates];
-			$this->page_attributes->search 			= Input::get('q');
+			$tmpstart 								=  Input::get('start') . " 00:00:00";
+			$tmpend									=  Input::get('end') . " 23:59:59";
+
+			$search['ondate'] 						= 	[
+															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpstart))->format('Y-m-d H:i:s'),
+															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpend))->format('Y-m-d H:i:s'),
+														];
 		}
 		else
 		{
@@ -136,9 +142,7 @@ class ReportController extends AdminController
 		$APIReport 									= new APIReport;
 
 		$report 									= $APIReport->getSoldProduct([
-														'search' 	=> 	[
-																			'ondate' 	=> Input::get('q'),
-																		],
+														'search' 	=> 	$search,
 														'sort' 		=> 	[
 																			'name'	=> 'asc',
 																		],																		
