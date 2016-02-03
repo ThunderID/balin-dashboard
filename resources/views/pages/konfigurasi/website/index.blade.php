@@ -59,7 +59,7 @@
 										</tr>
 									</thread>
 									<tbody>									    								
-									    {!! Form::open(['url' => route('config.website.store')]) !!}
+									    {!! Form::open(['url' => route('config.website.store' , ['type' => 'slider'])]) !!}
 									    <tr>
 									    	<td class="col-md-6">
 												<h4 class="m-t-sm">Link Gambar</h4>
@@ -109,6 +109,7 @@
 														<h4 class="m-t-md text-left">Mulai</h4>
 														<?php
 															$date  = Carbon::createFromFormat('Y-m-d H:i:s', $dt['started_at'])->format('d-m-Y H:i');
+															var_dump($dt['ended_at']);
 														?>
 														{!! Form::text('started_at', $date, [
 																		'class'        		=> 'date-time-format form-control', 

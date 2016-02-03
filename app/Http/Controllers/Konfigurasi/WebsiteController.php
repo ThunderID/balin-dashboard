@@ -91,7 +91,10 @@ class WebsiteController extends AdminController
 		
 		$slider 									= $APISlider->getIndex([
 														'search' 	=> 	[
-																			'name' 		=> Input::get('q'),
+																			'ondate'	=> 	[
+																								"",
+																								Carbon::now()->format('Y-m-d H:i:s')
+																							],
 																			'default'	=> 'true',
 																		],
 														'sort' 		=> 	[
@@ -151,7 +154,32 @@ class WebsiteController extends AdminController
 		$APIStore 									= new APIStore;
 		if(empty($id))
 		{
-			\App::abort(404);
+			if(Input::has('type'))
+			{
+				if(Input::get('type') == 'slider')
+				{
+					$website['id']					= "";
+					$website['type']				= "slider";
+					$website['value']				= "";
+
+					$website['started_at']			= $inputStartDate;
+
+					$website['ended_at']			= "";
+					$website['images']				= "";
+					$website['images'][]			= 	[
+															'id'		=> '',
+															'thumbnail'	=> $inputImage,
+															'image_xs'	=> $inputImage,
+															'image_sm'	=> $inputImage,
+															'image_md'	=> $inputImage,
+															'image_lg'	=> $inputImage,
+														];
+				}
+			}
+			else
+			{
+				\App::abort(404);
+			}
 		}
 		else
 		{
@@ -224,6 +252,28 @@ class WebsiteController extends AdminController
 
 	public function deleteSlider($id)
 	{
-		dd($id);
+		$APISlider 									= new APISlider;
+		$APIStore 									= new APIStore;
+
+		$slider 									= $APISlider->getShow($id);
+
+
+		$website 									= $slider['data'];
+
+		$website['ended_at']						= Carbon::now()->format('Y-m-d H:i:s');
+
+		//3. Save website
+		$result 									= $APIStore->postData($website);
+
+		//4. Check Response
+		if($result['status'] != 'success')
+		{
+			$this->errors 							= $result['message'];
+		}
+
+		//5. Return view
+		$this->page_attributes->success 			= "Data Slider Telah Dihapus";
+
+		return $this->generateRedirectRoute('config.website.index', ['id' => Input::get('website')]);
 	}
 }
