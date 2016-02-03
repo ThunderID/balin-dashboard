@@ -132,29 +132,14 @@ class WebsiteController extends AdminController
 		//1. Check input
 		$inputValue 								= Input::get('value');
 
-		if (preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]))
+		if(Input::has('started_at'))
 		{
-			if(Input::has('started_at'))
-			{
-				$inputStartDate 			= Carbon::createFromFormat('d-m-Y H:i', Input::get('started_at'))->format('Y-m-d H:i:s');
-			}
-
-			if(Input::has('ended_at'))
-			{
-				$inputEndDate 				= Carbon::createFromFormat('d-m-Y H:i', Input::get('ended_at'))->format('Y-m-d H:i:s');
-			}
+			$inputStartDate 						= Carbon::createFromFormat('d-m-Y H:i', Input::get('started_at'))->format('Y-m-d H:i:s');
 		}
-		else
-		{
-			if(Input::has('started_at'))
-			{
-				$inputStartDate 			= Carbon::createFromFormat('d-m-Y H:i', Input::get('started_at'))->format('Y-m-d H:i:s');
-			}
 
-			if(Input::has('ended_at'))
-			{
-				$inputEndDate 				= Carbon::createFromFormat('d-m-Y H:i', Input::get('ended_at'))->format('Y-m-d H:i:s');
-			}
+		if(Input::has('ended_at'))
+		{
+			$inputEndDate 							= Carbon::createFromFormat('d-m-Y H:i', Input::get('ended_at'))->format('Y-m-d H:i:s');
 		}
 
 		if(Input::has('image'))
@@ -179,13 +164,14 @@ class WebsiteController extends AdminController
 
 			if(strtolower($data['data']['type'])=='slider')
 			{
-				if($data['data']['started_at']!= $inputStartDate || $data['data']['ended_at']!= $inputEndDate)
+				if($data['data']['images'] != $inputImage)
 				{
 					$website['id']					= '';
 				}
 
 				$website['started_at']				= $inputStartDate;
-				$website['ended_at']				= $inputEndDate;
+
+				$website['ended_at']				= "";
 				$website['images']					= $data['data']['images'];
 				$website['images'][]				= 	[
 															'id'		=> '',
