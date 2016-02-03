@@ -15,7 +15,7 @@
 
 @if(count($errors) == 0)
 		@if($disabled ==  false)
-			<form method="GET" action="{{ $filterDataRoute }}" accept-charset="UTF-8">
+			<form action='javascript:void(0)' onSubmit="filterDateRange(this);">
 		@endif
 		<div class="row">
 			<div class="col-md-2 col-sm-2 col-xs-4 text-center m-t-sm">
@@ -37,6 +37,7 @@
 								'class'         => 'form-control date-format',
 								'placeholder'   => 'Tanggal Mulai',
 								'required'      => 'required',
+								'id'			=> 'start',
 							]
 					) !!} 
 				@endif                                
@@ -65,6 +66,7 @@
 								'class'         => 'form-control date-format',
 								'placeholder'   => 'Tanggal Akhir',
 								'required'      => 'required',
+								'id'			=> 'end',
 							]
 					) !!} 
 				@endif                                
@@ -74,12 +76,18 @@
 				&nbsp;
 			</div>
 
-			<div class="col-md-2 col-sm-2 col-xs-12">
+			<div class="col-md-1 col-sm-2 col-xs-12">
 				@if($disabled ==  true)
-					<a type="submit" class="btn btn-default pull-right btn-block disabled">Go</a>
+					<a type="submit" class="btn btn-default btn-block disabled">Go</a>
 				@else
-					<button type="submit" class="btn btn-default pull-right btn-block">Go</button>
+					<button type="submit" class="btn btn-default btn-block">Go</button>
 				@endif
+			</div>
+
+			<div class="col-md-1">
+				<a class="btn btn-default" onClick="clearDateRange(this)" href="javascript:void(0)">
+					<i class="fa fa-times"></i>
+				</a>
 			</div>
 		</div>
 		@if($disabled ==  false)
@@ -100,5 +108,6 @@
 
 
 @section('script_plugin')
+	@include('plugins.ajaxPage')
 	@include('plugins.inputMask')
 @append

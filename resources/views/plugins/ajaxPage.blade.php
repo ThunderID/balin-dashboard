@@ -129,7 +129,7 @@ function ajaxAddFilter(e){
 	var url     = window.location.href;
 	var toUrl;
 
-	var url		= url.replace(/(page=)[^\&]+/, '');
+	url			= url.replace(/(page=)[^\&]+/, '');
 
 	if(url.indexOf("?") == -1) {
 		toUrl 	= url + "?" + type + "[]=" + filter;
@@ -148,6 +148,41 @@ function ajaxAddFilter(e){
 	window.history.pushState("", "", toUrl);
 }
 {{-- End of Add Filter --}}
+
+
+{{-- Add Filter_Date_Range --}}
+function filterDateRange(e){
+	var url     = window.location.href;
+
+	var toUrl	= url.substring(0, url.indexOf('?'));
+
+	var start	= $(e).find('#start').val();
+	var end		= $(e).find('#end').val();
+
+	if(start == "" || end == ""){
+		return false;
+	}	
+
+	toUrl 		=   toUrl + '?' + 'start=' + start + '&' + 'end=' + end; 
+
+	ajaxPage(toUrl);
+
+	window.history.pushState("", "", toUrl);
+}
+{{-- End Of Filter_Date_Range --}}
+
+
+{{-- Clear Filter_Date_Range --}}
+function clearDateRange(e){
+	var url     = window.location.href;
+
+	var toUrl	= url.substring(0, url.indexOf('?'));
+	
+	ajaxPage(toUrl);
+
+	window.history.pushState("", "", toUrl);	
+}
+{{-- Clear Filter_Date_Range --}}
 
 
 {{-- Add Filter Periode --}}
