@@ -21,6 +21,7 @@
 			@include('page_elements.indexNavigation', [
 				'newDataRoute' 		=> route('goods.product.create'),
 				'filterDataRoute' 	=> route('goods.product.index'),
+				'searchLabel'		=>'cari produk',
 				'filters'			=> $filters,
 			])
 		</div>
