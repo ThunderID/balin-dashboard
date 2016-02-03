@@ -7,7 +7,7 @@ use App\API\Connectors\APISlider;
 
 use App\Http\Controllers\AdminController;
 
-use Input, Session, DB, Redirect, Response, Auth, Carbon\Carbon;
+use Input, Session, DB, Redirect, Response, Auth, Carbon;
 
 /**
  * Handle website resource
@@ -219,5 +219,11 @@ class WebsiteController extends AdminController
 	public function Update($id)
 	{
 		return $this->store($id);
+	}
+
+
+	public function deleteSlider($id)
+	{
+		dd($id);
 	}
 }
