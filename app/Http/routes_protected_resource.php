@@ -66,10 +66,16 @@ Route::group(['prefix' => 'toko', 'namespace' => 'Toko\\'], function()
 	Route::resource('pembelian', 	'BuyController',			['names' => ['index' => 'shop.buy.index', 'create' => 'shop.buy.create', 'store' => 'shop.buy.store', 'show' => 'shop.buy.show', 'edit' => 'shop.buy.edit', 'update' => 'shop.buy.update', 'destroy' => 'shop.buy.destroy']]);
 
 	/**
+	* Routes untuk resend mail
+	*
+	*/
+	Route::get('resend/order/{id}/{status}',					['uses' => 'ResendMailController@sale', 		'as' => 'shop.resend.email']);
+
+	/**
 	* Routes untuk select2 ajax
 	*
 	*/
-	Route::get('sell/ajax/findAmount',							['uses' => 'AjaxController@FindTransactionByAmount', 	'as' => 'ajax.sell.findAmount']);
+	Route::get('sell/ajax/findAmount',							['uses' => 'AjaxController@FindTransactionByAmount', 		'as' => 'ajax.sell.findAmount']);
 	Route::get('sell/ajax/findRefNumber',						['uses' => 'AjaxController@FindTransactionByRefNumber', 	'as' => 'ajax.sell.findRefNumber']);
 });
 

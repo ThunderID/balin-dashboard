@@ -9,6 +9,7 @@
         "laravel/framework": "5.1.*",
         "illuminate/html": "5.*",
         "guzzlehttp/guzzle": "~6.0",
+        "thunderid/balin-mail-template": "dev-master",
         "nesbot/carbon": "~1.14"
     },
     "require-dev": {
