@@ -79,7 +79,7 @@
 								</div>
 							</div>
 
-							<div class="panel panel-default dahboard-list">
+<!-- 							<div class="panel panel-default dahboard-list">
 								<a data-toggle="collapse" data-parent="#accordionBarang" href="#collapse2">
 									<div class="panel-heading">
 										<h4 class="panel-title">
@@ -127,7 +127,7 @@
 		                                </tbody>
 	                                </table>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 			<!-- end of tab barang -->
