@@ -5,7 +5,7 @@ use App\API\Connectors\APISale;
 
 use App\Http\Controllers\AdminController;
 
-use Input, Session, DB, Redirect, Response, Auth;
+use Input, BalinMail;
 
 /**
  * Handle update transaction delivered status
@@ -100,7 +100,7 @@ class CompleteOrderController extends AdminController
 
 		//2. Check input
 		$sale['status']								= 'delivered';
-		$sale['notes']								= Input::get('notes');
+		$sale['notes']								= 'Diterima Oleh '.Input::get('notes');
 
 		//3. Store Transction
 		$result 									= $APISale->postData($sale);
@@ -109,6 +109,13 @@ class CompleteOrderController extends AdminController
 		if($result['status'] != 'success')
 		{
 			$this->errors 							= $result['message'];
+		}
+		//4a. sending mail
+		else
+		{
+			$mail 									= new BalinMail;
+
+			$mail->delivered($result['data'], $this->balininfo());
 		}
 
 		//5. Generate view

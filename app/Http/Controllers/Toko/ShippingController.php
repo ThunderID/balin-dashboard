@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Toko;
 use App\API\Connectors\APISale;
 
 use App\Http\Controllers\AdminController;
-use Input, Session, DB, Redirect, Response, Auth;
+use Input, BalinMail;
 
 /**
  * Handle update transaction shipment status
@@ -111,6 +111,13 @@ class ShippingController extends AdminController
 		{
 			$this->errors 							= $result['message'];
 		}
+		//4a. sending mail
+		else
+		{
+			$mail 									= new BalinMail;
+
+			$mail->shipped($result['data'], $this->balininfo());
+		}
 
 		//5. Generate view
 		if(!empty($id))
@@ -122,6 +129,6 @@ class ShippingController extends AdminController
 			$this->page_attributes->success 		= "Pesanan sedang dalam pengiriman!";
 		}
 
-		return $this->generateRedirectRoute('admin.sell.show', ['id' => $saleid]);
+		return $this->generateRedirectRoute('shop.sell.show', ['id' => $saleid]);
 	}
 }

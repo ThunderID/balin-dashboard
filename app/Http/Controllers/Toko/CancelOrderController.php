@@ -5,7 +5,7 @@ use App\API\Connectors\APISale;
 
 use App\Http\Controllers\AdminController;
 
-use Input, Session, DB, Redirect, Response, Auth;
+use Input, BalinMail;
 
 /**
  * Handle update transaction canceled status
@@ -100,7 +100,7 @@ class CancelOrderController extends AdminController
 
 		//2. Check input
 		$sale['status']								= 'canceled';
-		$sale['notes']								= Input::get('notes');
+		$sale['notes']								= 'Alasan Pembatalan : '.Input::get('notes');
 
 		//3. Store transaction
 		$result 									= $APISale->postData($sale);
@@ -109,6 +109,13 @@ class CancelOrderController extends AdminController
 		if($result['status'] != 'success')
 		{
 			$this->errors 							= $result['message'];
+		}
+		//4a. sending mail
+		else
+		{
+			$mail 									= new BalinMail;
+
+			$mail->canceled($result['data'], $this->balininfo());
 		}
 
 		//5. Generate view
