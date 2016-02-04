@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c4857d7826eeaf6cb0562de7ebe72046",
-    "content-hash": "62e83f30fe96f4daf1ce70b708a79a4e",
+    "hash": "82e675aa5f3ee30947b4fd24d1541d7f",
+    "content-hash": "5a36cc2c7f3ad7f53a3b704ce5172f92",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -2218,6 +2218,42 @@
             "time": "2016-01-07 11:12:32"
         },
         {
+            "name": "thunderid/balin-mail-template",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ThunderID/BALIN-Mail-Template.git",
+                "reference": "300e9623aecf03bb99dfc37277ddf81395790dd3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ThunderID/BALIN-Mail-Template/zipball/300e9623aecf03bb99dfc37277ddf81395790dd3",
+                "reference": "300e9623aecf03bb99dfc37277ddf81395790dd3",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.1.*",
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/migrations/"
+                ],
+                "psr-4": {
+                    "ThunderID\\BalinMailTemplate\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "chelsy",
+                    "email": "chelsymooy1108@gmail.com"
+                }
+            ],
+            "time": "2016-02-04 06:29:20"
+        },
+        {
             "name": "tijsverkoyen/css-to-inline-styles",
             "version": "1.5.5",
             "source": {
@@ -3540,7 +3576,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "thunderid/balin-mail-template": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
