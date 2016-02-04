@@ -19,7 +19,7 @@
 			<h2 style="margin-top:0px;">BALIN Invoice</h2>
 		</div>
 		<div class="col-md-6 m-b-md text-right">
-			<h5>{{$dt['status']}}</h5>
+			<h3>Status : {{ucwords($dt['status'])}}</h3>
 		</div>
 	</div>
 	<div class="row">
@@ -34,22 +34,47 @@
 <!-- content -->
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
+
 			<div class="row">
-				<div class="col-md-6">
-					<h4 style="margin-top:0px;">Nomor Invoice</h4>
-					<p>{{$dt['ref_number']}}</p>
-					<h4 style="margin-top:0px;">Tanggal Invoice</h4>
-					<p>@date_indo(new Carbon($dt['transact_at']))</p>
+				<div class="col-md-5 col-sm-6 col-xs-11">
+					<div class="row">
+						<div class="col-md-6 col-sm-7 col-xs-5">
+							<h4>Nomor Invoice</h4> 
+						</div>
+						<div class="col-md-1 col-sm-1 col-xs-2">
+							<h4>:</h4> 
+						</div>
+						<div class="col-md-5 col-sm-3 col-xs-5">
+							<h4>{{$dt['ref_number']}}</h4> 
+						</div>
+					</div>
 				</div>
-				
-			</div>	
+			</div>
+
+			<div class="row">
+				<div class="col-md-5 col-sm-6 col-xs-11">
+					<div class="row">
+						<div class="col-md-6 col-sm-7 col-xs-5">
+							<h4>Tanggal Invoice</h4> 
+						</div>
+						<div class="col-md-1 col-sm-1 col-xs-2">
+							<h4>:</h4> 
+						</div>
+						<div class="col-md-5 col-sm-3 col-xs-5">
+							<h4>@date_indo(new Carbon($dt['transact_at']))</h4> 
+						</div>
+					</div>
+				</div>
+			</div>
+
+
 			<div class="row">
 				<div class="col-md-12 m-t-md">
 					<p><strong>{{$dt['user']['name']}}</strong> telah melakukan pesanan, sebagai berikut :</p>
 				</div>
 			</div>
 
-			<div class="row">
+			<div class="row m-b-md">
 				<div class="col-md-12">
 					<div class="table-responsive">
 						</br>
@@ -86,7 +111,7 @@
 									@endforeach
 									<tr>
 										<td colspan="6">
-											Kurir {{$dt['shipment']['courier']['name']}}
+											<strong>Biaya Kurir</strong> {{$dt['shipment']['courier']['name']}}
 										</td>
 										<td class="text-right">
 											@money_indo($dt['shipping_cost'])
@@ -94,7 +119,7 @@
 									</tr>
 									<tr>
 										<td colspan="6">
-											Point BALIN
+											<strong>Potongan</strong> Point BALIN
 										</td>
 										<td class="text-right">
 											<?php 
@@ -109,7 +134,7 @@
 									</tr>
 									<tr>
 										<td colspan="6">
-											Voucher {{$dt['voucher']['code']}}
+											<strong>Potongan</strong> Voucher {{$dt['voucher']['code']}}
 										</td>
 										<td class="text-right">
 											@money_indo($dt['voucher_discount'])
@@ -117,7 +142,7 @@
 									</tr>
 									<tr>
 										<td colspan="6">
-											{{$dt['payment']['method']}} {{$dt['payment']['destination']}}
+											<strong>Pembayaran</strong> {{$dt['payment']['method']}} {{$dt['payment']['destination']}}
 										</td>
 										<td class="text-right">
 											@money_indo($dt['payment']['amount'])
@@ -125,7 +150,7 @@
 									</tr>
 									<tr>
 										<td colspan="6">
-											Jumlah yang harus dibayarkan
+											<strong>Jumlah</strong> yang harus dibayarkan
 										</td>
 										<td class="text-right">
 											@money_indo($dt['bills'])
@@ -144,27 +169,36 @@
 					<h5>{{$dt['shipment']['receiver_name']}}</h5>
 					<p>{{$dt['shipment']['address']['address']}}</p>
 					<p>{{$dt['shipment']['address']['zipcode']}}</p>
-					<p>Telp : {{$dt['shipment']['address']['phone']}}</p>
+					<p><i class="fa fa-phone"></i> {{$dt['shipment']['address']['phone']}}</p>
 				</div>
 
 				<div class="col-md-3">
-					<h3>{{$dt['payment']['method']}} {{$dt['payment']['destination']}}</h3>
-					<h5>@money_indo($dt['payment']['amount'])</h5>
-					<p>a.n. {{$dt['payment']['account_name']}}</p>
-					<p>No.rek {{$dt['payment']['account_number']}}</p>
-					<p>Tanggal @date_indo(new Carbon($dt['payment']['ondate']))</p>
+					<h3>Data Pembayaran</h3>
+					@if($dt['payment']['amount'])
+						<h5>{{$dt['payment']['method']}} {{$dt['payment']['destination']}}</h5>
+						<h5>@money_indo($dt['payment']['amount'])</h5>
+						<p><strong>a.n.</strong> {{$dt['payment']['account_name']}}</p>
+						<p><strong>No.rek</strong> {{$dt['payment']['account_number']}}</p>
+						<p><strong>Tanggal</strong> @date_indo(new Carbon($dt['payment']['ondate']))</p>
+					@else
+						<h5>Transaksi belum dibayar</h5>
+					@endif
 				</div>
 
 				<div class="col-md-3">
-					<h3>Nomor Resi</h3>
-					<h5>{{$dt['shipment']['courier']['name']}}</h5>
-					<p>{{$dt['shipment']['receipt_number']}}</p>
+					<h3>Data Pengiriman</h3>
+					@if($dt['shipment']['receipt_number'])
+						<h5>{{$dt['shipment']['courier']['name']}}</h5>
+						<p>{{$dt['shipment']['receipt_number']}}</p>
+					@else
+						<h5>Barang belum dikirim</h5>
+					@endif
 				</div>
 
 				<div class="col-md-3">
-					<h3>Track</h3>
+					<h3>Histori</h3>
 					@foreach($dt['transactionlogs'] as $key => $value)
-						<h5>{{$value['status']}} &nbsp;&nbsp;&nbsp; <small>@date_indo(new Carbon($value['changed_at']))</small></h5>
+						<p><strong>{{$value['status']}}</strong>&nbsp;&nbsp;&nbsp; @date_indo(new Carbon($value['changed_at']))</p>
 					@endforeach
 				</div>
 			</div>
