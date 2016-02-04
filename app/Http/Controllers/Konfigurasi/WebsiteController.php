@@ -160,7 +160,7 @@ class WebsiteController extends AdminController
 				{
 					$website['id']					= "";
 					$website['type']				= "slider";
-					$website['value']				= "";
+					$website['value']				= json_encode(['button' => ['slider_button_url' => Input::get('url')]]);
 
 					$website['started_at']			= $inputStartDate;
 
@@ -187,7 +187,7 @@ class WebsiteController extends AdminController
 
 			$website['id']							= $data['data']['id'];
 			$website['type']						= $data['data']['type'];
-			$website['value']						= $inputValue;
+			$website['value']						= $data['data']['value'];
 
 			if(strtolower($data['data']['type'])=='slider')
 			{

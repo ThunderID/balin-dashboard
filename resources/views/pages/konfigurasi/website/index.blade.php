@@ -55,7 +55,7 @@
 								<table class="table table-bordered table-hover table-striped">
 									<thead>
 										<tr>
-											<th class="text-center" colspan="3">Slider Baru</th>
+											<th class="text-center" colspan="4">Slider Baru</th>
 										</tr>
 									</thread>
 									<tbody>									    								
@@ -67,10 +67,16 @@
 																'class'        		=> 'form-control', 
 													]) !!}
 											</td>
-											<td class="col-md-4">
+											<td class="col-md-2">
 												<h4 class="m-t-sm text-left">Mulai</h4>
 												{!! Form::text('started_at', null, [
 																'class'        		=> 'date-time-format form-control', 
+													]) !!}
+											</td>
+											<td class="col-md-2">
+												<h4 class="m-t-sm text-left">Action</h4>
+												{!! Form::text('url', null, [
+																'class'        		=> 'form-control', 
 													]) !!}
 											</td>
 											<td class="col-md-2 text-center">
@@ -99,11 +105,12 @@
 										@forelse($data['slider']['data']['data'] as $key => $dt)
 											{!! Form::open(['url' => route('config.website.update', ['id' => $dt['id'], 'image' => $dt['image']['thumbnail']] ), 'method' => 'PATCH']) !!}
 												<tr>
-													<td class="text-left">
-														<h4 class="m-t-md">Link Gambar</h4>
-														<p>{{$dt['image']['thumbnail']}}</p>
-														<h4 class="m-t-md">Preview</h4>
-														<img class="img img-responsive" src="{{$dt['image']['thumbnail']}}" alt="">
+													<td class="text-left col-sm-6">
+														<h4 class="m-t-md">Action Link</h4>
+														<?php $image = json_decode($dt['value'], true);?>
+														<p>{{isset($image['button']['slider_button_url']) ? $image['button']['slider_button_url'] : '' }}</p>
+														<img class="img img-responsive col-sm-12" src="{{$dt['image']['thumbnail']}}" alt="">
+														<p><i>source : </i> {{$dt['image']['thumbnail']}}</p>
 													</td>
 													<td class="text-center">
 														<h4 class="m-t-md text-left">Mulai</h4>
