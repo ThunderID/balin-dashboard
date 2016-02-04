@@ -19,7 +19,7 @@
 			<h2 style="margin-top:0px;">BALIN Invoice</h2>
 		</div>
 		<div class="col-md-6 m-b-md text-right">
-			<h5>{{$dt['status']}}</h5>
+			<h3>Status : {{ucwords($dt['status'])}}</h3>
 		</div>
 	</div>
 	<div class="row">
