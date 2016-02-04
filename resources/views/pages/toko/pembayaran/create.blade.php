@@ -68,7 +68,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group">
-					<label for="ondate">Tanggal Pengiriman</label>
+					<label for="ondate">Tanggal Transfer</label>
 					{!! Form::text('ondate', $data['data']['ondate'], [
 								'class'         => 'form-control date-time-format',
 								'tabindex'      => '6', 
