@@ -310,33 +310,7 @@
 	</div>
 	<!-- end of pekerjaan hari ini -->
 
-	<!-- statistik -->	
-<!-- 	<div class="row m-t-none">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			<h3>Statistik</h3>
-		</div>
-	</div>
-	<div class="row clearfix">
-		&nbsp;
-	</div>
-	<div class="row border-bottom">
-		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
-			<div class="row">
-				<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-						    <h3 class="panel-title">Panel title</h3>
-						</div>
-						<div class="panel-body">
-						    Panel content
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> -->
-	<!-- end of statistik -->
-
+	
 <!-- end of content -->
 </div>
 @stop
