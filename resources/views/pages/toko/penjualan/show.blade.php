@@ -198,7 +198,7 @@
 				<div class="col-md-3">
 					<h3>Histori</h3>
 					@foreach($dt['transactionlogs'] as $key => $value)
-						<p><strong>{{$value['status']}}</strong>&nbsp;&nbsp;&nbsp; @date_indo(new Carbon($value['changed_at']))</p>
+						<p><strong>{{$value['status']}}</strong>&nbsp;&nbsp;&nbsp; @date_indo(new Carbon($value['changed_at'])) &nbsp; <a href='#'>[ Resend Email ]</a></p>
 					@endforeach
 				</div>
 			</div>
