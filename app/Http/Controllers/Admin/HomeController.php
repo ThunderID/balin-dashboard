@@ -1,7 +1,7 @@
 <?php 
 namespace App\Http\Controllers\Admin;
 
-use App\API\connectors\APIWarehouse;
+use App\API\Connectors\APIWarehouse;
 use App\API\Connectors\APISale;
 
 use App\Http\Controllers\AdminController;

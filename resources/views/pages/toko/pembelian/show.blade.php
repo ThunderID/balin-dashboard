@@ -75,7 +75,13 @@
 								@else
 									@foreach($dt['transactiondetails'] as $ctr => $detail)
 										<tr>
-											<td class="text-center"><img class="img img-responsive" src="{{$detail['varian']['product']['image_xs']}}" alt=""></td>
+											<td class="text-center">
+											@if(is_null($detail['varian']['product']['thumbnail']))
+												{!! HTML::image('https://pbs.twimg.com/profile_images/600060188872155136/st4Sp6Aw.jpg', 'default', ['class' => 'img-responsive', 'style' => 'width:100px;height:144px;']) !!}
+											@else
+												{!! HTML::image($detail['varian']['product']['thumbnail'], 'default', ['class' => 'img-responsive', 'style' => 'max-width:100px;']) !!}
+											@endif
+											</td>
 											<td class="text-center">{{ $detail['varian']['product']['name'] }}</td>
 											<td class="text-center">{{ $detail['varian']['size'] }}</td>
 											<td class="text-center">{{ $detail['quantity'] }}</td>
