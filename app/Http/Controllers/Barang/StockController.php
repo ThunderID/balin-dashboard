@@ -88,7 +88,7 @@ class StockController extends AdminController
 		$product 									= $APIStock->getIndex([
 															'search' 	=> 	$search,
 															'sort' 		=> 	[
-																				'name'	=> 'asc',
+																				'size'	=> 'asc',
 																			],																		
 															'take'		=> $this->take,
 															'skip'		=> ($page - 1) * $this->take,

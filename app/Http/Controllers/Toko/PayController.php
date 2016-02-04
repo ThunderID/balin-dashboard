@@ -5,7 +5,7 @@ use App\API\Connectors\APISale;
 
 use App\Http\Controllers\AdminController;
 
-use Input, Session, DB, Redirect, Response, Auth;
+use Input, Session, DB, Redirect, Response, Auth, BalinMail;
 
 /**
  * Handle update transaction payment status
@@ -114,6 +114,13 @@ class PayController extends AdminController
 		if($result['status'] != 'success')
 		{
 			$this->errors 							= $result['message'];
+		}
+		//4a. sending mail
+		else
+		{
+			$mail 						= new BalinMail;
+
+			$mail->paid($result['data'], $this->balininfo());
 		}
 
 		//5. Generate view

@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\API\Connectors\APIConfig;
 
 use Illuminate\Support\MessageBag;
 use Redirect, Input, URL;
@@ -81,4 +82,31 @@ abstract class AdminController extends Controller
 		$this->page_attributes->paginator 			= new LengthAwarePaginator($count, $count, $this->take, $current);
 	    $this->page_attributes->paginator->setPath($route);
 	}
+
+	//generate balin store information
+	public function balininfo()
+	{
+  		$APIConfig 									= new APIConfig;
+		
+		$config 									= $APIConfig->getIndex([
+														'search' 	=> 	[
+																			'default'	=> 'true',
+																		],
+														'sort' 		=> 	[
+																			'name'	=> 'asc',
+																		],
+														]);
+
+		$balin 										= $config['data'];
+
+		unset($balin['info']);
+		foreach ($config['data']['info'] as $key => $value) 
+		{
+			$balin['info'][$value['type']]			= $value;
+		}
+
+		return $balin['info'];
+	}
+
+
 }
