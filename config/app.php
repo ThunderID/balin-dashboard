@@ -137,6 +137,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Illuminate\Html\HtmlServiceProvider::class,
+        'Maatwebsite\Excel\ExcelServiceProvider',
 
         /*
          * Application Service Providers...
@@ -198,6 +199,7 @@ return [
         'Collection'=> Illuminate\Database\Eloquent\Collection::class,
         'Carbon'    => 'Carbon\Carbon',
         'BalinMail'     => ThunderID\BalinMailTemplate\BalinMail::class,
+        'Excel'     => 'Maatwebsite\Excel\Facades\Excel',
     ],
 
 ];

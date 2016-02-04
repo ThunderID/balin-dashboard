@@ -96,11 +96,11 @@ class TagController extends AdminController
 			$collection 							= collect($tag['data']['products']);
 
 
-			$result 								= 	$collection->filter(function ($col) {
+			$result 								= $collection->filter(function ($col) {
 															return strpos(strtolower($col['name']), strtolower(Input::get('q'))) !== FALSE;
 														});			
 
-			$tag['data']['products']			= $result;				
+			$tag['data']['products']				= $result;				
 		}
 		else
 		{

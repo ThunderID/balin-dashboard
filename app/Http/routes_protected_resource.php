@@ -63,6 +63,9 @@ Route::group(['prefix' => 'toko', 'namespace' => 'Toko\\'], function()
 	Route::resource('pembatalan',	'CancelOrderController',	['names' => ['create' => 'shop.cancelorder.create', 'store' => 'shop.cancelorder.store'], 'only' => ['create', 'store']]);
 	
 	Route::resource('kurir', 		'CourierController',		['names' => ['index' => 'shop.courier.index', 'create' => 'shop.courier.create', 'store' => 'shop.courier.store', 'show' => 'shop.courier.show', 'edit' => 'shop.courier.edit', 'update' => 'shop.courier.update', 'destroy' => 'shop.courier.destroy']]);
+	Route::get('kurir/cost/{id}',								['uses' => 'CourierController@addShippingCost', 	'as' => 'shop.courier.shippingcost.create']);
+	Route::post('kurir/cost/{id}',								['uses' => 'CourierController@importShippingCost', 	'as' => 'shop.courier.shippingcost.import']);
+
 	Route::resource('pembelian', 	'BuyController',			['names' => ['index' => 'shop.buy.index', 'create' => 'shop.buy.create', 'store' => 'shop.buy.store', 'show' => 'shop.buy.show', 'edit' => 'shop.buy.edit', 'update' => 'shop.buy.update', 'destroy' => 'shop.buy.destroy']]);
 
 	/**

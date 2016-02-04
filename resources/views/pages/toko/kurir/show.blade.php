@@ -87,51 +87,67 @@
 			<div class="row clearfix m-b-md">&nbsp;</div>
 
 			<div class="row">
-				<div class="col-md-12">
-					<h3>Data Pengiriman</h3>
+				<div class="col-md-12 m-b-sm">
+					<h3>Data Ongkos Kirim</h3>
 				</div>
 			</div>	
 
 			<div class="row">
-				<div class="col-md-12">
-					<div class="table-responsive">
-						</br>
-						<table class="table table-bordered table-hover table-striped">
-							<thead>
-								<tr>
-									<th class="text-center">No</th>
-									<th class="text-center">Nomor Resi</th>
-									<th class="text-center">Nota Transaksi</th>
-									<th class="text-center">Tanggal Kirim</th>
-									<th class="text-center">Alamat Pengiriman</th>
-								</tr>
-							</thead>	
-							<tbody>
-								@if (count($data['courier']['shippings']) == 0)
-									<tr>
-										<td colspan="5">
-											<p class="text-center">Tidak ada data</p>
-										</td>
-									</tr>
-								@else
-									@foreach($data['courier']['shippings'] as $ctr => $recent)
-										<td class="text-center">{{ $ctr+1 }}</td>
-										<td class="text-center">{{$recent['receipt_number']}}</td>
-										<td class="text-center">{{$recent['sale']['ref_number']}}</td>
-										<td class="text-center">@date_indo(new Carbon($data['courier']['updated_at']))</td>
-										<td class="text-center">
-											<h5>a.n. {{$recent['receiver_name']}}</h5>
-											<p>{{$recent['address']['address']}}</p>
-											<p>{{$recent['address']['zipcode']}}</p>
-											<p>Telp : {{$recent['address']['phone']}}</p>
-										</td>
-									@endforeach
-								@endif	
-							</tbody>
-						</table>
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
+					@include('page_elements.indexNavigation', [
+						'newDataRoute' 		=> route('shop.courier.shippingcost.create', ['id' => $data['courier']['id'] ]),
+						'filterDataRoute' 	=> route('shop.courier.index'),
+						'newDataLabel'		=> "Import Data Ongkos Kirim",
+						'searchLabel' 		=> 'cari kode pos',
+						'filters'			=> []
+					])
+				</div>  
+			</div>
+
+			<div id="contentData">
+				<div class="row">	
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						@include('page_elements.searchResult', ['closeSearchLink' => route('shop.sell.index') ])
 					</div>
 				</div>
-			</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="table-responsive">
+							</br>
+							<table class="table table-bordered table-hover table-striped">
+								<thead>
+									<tr>
+										<th class="text-center">No</th>
+										<th class="text-center">Range Kode Pos</th>
+										<th class="text-center">Biaya Pengiriman</th>
+									</tr>
+								</thead>	
+								<tbody>
+									@if (count($data['courier']['shippingcosts']) == 0)
+										<tr>
+											<td colspan="5">
+												<p class="text-center">Tidak ada data</p>
+											</td>
+										</tr>
+									@else
+										@foreach($data['courier']['shippingcosts'] as $ctr => $cost)
+										<tr>
+											<td class="text-center">{{ $ctr+1 }}</td>
+											<td class="text-center">{{ $cost['start_postal_code'] }} - {{ $cost['end_postal_code'] }}</td>
+											<td class="text-center">@money_indo($cost['cost'])</td>
+										</tr>
+										@endforeach
+									@endif	
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					@include('page_elements.ajaxPaging')
+				</div>				
+			</div>				
 		</div>
 	</div>
 <!-- end of content	 -->

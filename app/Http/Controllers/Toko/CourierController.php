@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Toko;
 use App\API\connectors\APICourier;
 use App\Http\Controllers\AdminController;
 
-use Input, Session, DB, Redirect, Response, Auth;
+use Input, Session, DB, Redirect, Response, Auth, Excel, Carbon;
 
 class CourierController extends AdminController
 {
@@ -88,18 +88,45 @@ class CourierController extends AdminController
 			$filters 								= ['name' => Input::get('q')];
 			$this->page_attributes->search 			= Input::get('q');
 
-			// $collection 							= collect($courier['data']['products']);
+			$collection 							= collect($courier['data']['shippingcosts']);
 
-			// $result 								= 	$collection->filter(function ($col) {
-			// 												return strpos(strtolower($col['name']), strtolower(Input::get('q'))) !== FALSE;
-			// 											});
+			$result 								= $collection->filter(function ($col) {
+															return ($col['start_postal_code'] <= Input::get('q')) && ($col['end_postal_code'] >= Input::get('q'));
+														});
 
-			// $category['data']['products']			= $result;				
+			$courier['data']['shippingcosts']		= $result;				
 		}
 		else
 		{
 			$this->page_attributes->search 			= null;
 		}
+
+		//get curent page
+		if(is_null(Input::get('page')))
+		{
+			$page 									= 1;
+		}
+		else
+		{
+			$page 									= Input::get('page');
+		}
+
+		//data paging	
+		$collection 								= collect($courier['data']['shippingcosts']);
+
+		if(count($collection) != 0)
+		{
+			$result 								= $collection->chunk($this->take);
+
+			$this->paginate(route('shop.courier.index'), count($courier['data']['shippingcosts']), $page);	
+
+			$courier['data']['shippingcosts']		= $result[($page-1)];
+		}
+		else
+		{
+			$this->paginate(route('shop.courier.index'), count($courier['data']['shippingcosts']), $page);	
+		}
+
 
 		// data here
 		$this->page_attributes->data				= 	[
@@ -237,4 +264,68 @@ class CourierController extends AdminController
 		
 		return $this->generateRedirectRoute('shop.courier.index');	
 	}		
+
+
+	public function addShippingCost($id)
+	{
+		$APICourier 								= new APICourier;
+		$courier 									= $APICourier->getShow($id);
+
+		$courier 									= $courier['data'];
+
+		$breadcrumb									=	[
+															$courier['name']  =>  route('shop.courier.show', ['id' => $id ]),
+															'Ongkos Kirim'  =>  route('shop.courier.edit', ['id' => $id ]),
+														];
+
+		// data here
+		$this->page_attributes->data				= $courier;	
+
+		//generate View
+		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
+
+		$this->page_attributes->source 				=  $this->page_attributes->source . 'Cost.create';
+
+		return $this->generateView();											
+	}
+
+	public function importShippingCost($id)
+	{
+		//get CSV
+		$file_csv         	= Input::file('file');
+	    $attributes 		= [];                
+        $sheet 				= Excel::load($file_csv)->toArray();        
+
+
+        //data cost
+        $cost 				= [];
+        foreach ($sheet as $key => $value) 
+        {
+        	$cost[$key]['id']						= "";
+        	$cost[$key]['start_postal_code']		= $value[0];
+        	$cost[$key]['end_postal_code']			= $value[1];
+        	$cost[$key]['started_at']				= Carbon::createFromFormat('m/d/Y', $value[2])->format('Y-m-d H:i:s');;
+        	$cost[$key]['cost']						= $value[3];
+        }
+
+
+        //get data courier
+		$APICourier 								= new APICourier;
+		$courier 									= $APICourier->getShow($id)['data'];
+		$courier['shippingcosts']        			= $cost;
+
+        //save data 
+		$result 									= $APICourier->postData($courier);
+
+		//response
+		if($result['status'] != 'success')
+		{
+			$this->errors 							= $result['message'];
+		}
+
+		//return view
+		$this->page_attributes->success 			= "Data Ongkos Kirim Telah Ditambahkan";
+		
+		return $this->generateRedirectRoute('shop.courier.show' , ['id' => $id]);	
+	}
 }
