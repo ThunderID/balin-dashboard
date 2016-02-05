@@ -172,7 +172,10 @@
 							</table>
 						</div>					
 					</div>	
-				</div>								
+				</div>	
+				<div class="row">
+					@include('page_elements.ajaxPaging')
+				</div>							
 			</div>								
 		</div>
 	</div>

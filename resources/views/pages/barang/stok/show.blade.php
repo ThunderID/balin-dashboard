@@ -134,7 +134,7 @@
 											<?php $stock = $stock + $detail['stock_in'] - $detail['stock_out'];?>
 											<tr>
 												<td class="text-left">
-													{{$key+1}}
+													{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $key + 1}}
 												</td>
 
 												<td class="text-left">

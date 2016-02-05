@@ -81,7 +81,7 @@
 			<div class="row clearfix m-b-md">&nbsp;</div>
 			<div class="row">
 				<div class="col-md-12">
-					<h4>Daftar Produk Dalam Label Ini</h4> 
+					<h4>Daftar Produk Dalam Kategori Ini</h4> 
 				</div>
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					@include('page_elements.indexNavigation', [
@@ -99,6 +99,8 @@
 							'closeSearchLink' 	=>  route('goods.category.show', ['id' => $data['id']]) 
 						])
 					</div>		
+				</div>		
+				<div class="row">
 					<div class="col-md-12">
 						<div class="table-responsive">
 							<table class="table table-bordered table-hover table-striped">
@@ -134,7 +136,9 @@
 									@else                                                                 
 										@foreach($data['products'] as $ctr => $dt)
 											<tr>
-												<td class="text-center">{{ $ctr+1 }}</td>
+												<td class="text-center">
+													{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $ctr + 1}}
+												</td>
 												<td>
 													{!! HTML::image($dt['thumbnail'], 'default', ['class' => 'img-responsive', 'style' => 'max-width:100px;']) !!}
 												</td>
@@ -173,6 +177,9 @@
 						</div>					
 					</div>	
 				</div>	
+				<div class="row">
+					@include('page_elements.ajaxPaging')
+				</div>					
 			</div>	
 										
 		</div>

@@ -105,6 +105,33 @@ class CategoryController extends AdminController
 			$this->page_attributes->search 			= null;
 		}
 
+		//get curent page
+		if(is_null(Input::get('page')))
+		{
+			$page 									= 1;
+		}
+		else
+		{
+			$page 									= Input::get('page');
+		}
+
+		//data paging	
+		$collection 								= collect($category['data']['products']	);
+
+		if(count($collection) != 0)
+		{
+			$result 								= $collection->chunk($this->take);
+
+			$this->paginate(route('goods.category.show', ['id' => $category['data']['id']]), count($collection), $page);	
+
+			$category['data']['products']			= $result[($page-1)];
+		}
+		else
+		{
+			$this->paginate(route('goods.category.show', ['id' => $category['data']['id']]), count($collection), $page);	
+		}		
+
+
 		// data here
 		$this->page_attributes->data				= $category['data'];
 

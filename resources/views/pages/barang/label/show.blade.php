@@ -78,83 +78,88 @@
 					@include('page_elements.searchResult', [
 						'closeSearchLink' 	=>  route('goods.label.show', ['id' => $data['id']]) 
 					])
-				</div>			
-				<div class="col-md-12">
-					<div class="table-responsive">
-						<table class="table table-bordered table-hover table-striped">
-							<thead>
-								<tr>
-									<th class="text-center">
-										No.
-									</th>
-									<th class="col-md-2 text-left">
-										Thumbnail
-									</th>
-									<th class="col-md-4">
-										Nama Produk
-									</th>
-									<th class="col-md-2 text-center">
-										UPC
-									</th>
-									<th class="col-md-2 text-center">
-										Stok
-									</th>
-									<th class="text-center">
-										Kontrol
-									</th>								
-								</tr>
-							</thead>
-							<tbody>
-								@if(count($data['product']) == 0)
+				</div>	
+				<div class="row">
+					<div class="col-md-12">
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover table-striped">
+								<thead>
 									<tr>
-										<td colspan="7" class="text-center">
-											Tidak ada data
-										</td>
+										<th class="text-center">
+											No.
+										</th>
+										<th class="col-md-2 text-left">
+											Thumbnail
+										</th>
+										<th class="col-md-4">
+											Nama Produk
+										</th>
+										<th class="col-md-2 text-center">
+											UPC
+										</th>
+										<th class="col-md-2 text-center">
+											Stok
+										</th>
+										<th class="text-center">
+											Kontrol
+										</th>								
 									</tr>
-								@else                                                                 
-									@foreach($data['product'] as $ctr => $dt)
+								</thead>
+								<tbody>
+									@if(count($data['product']) == 0)
 										<tr>
-											<td class="text-center">
-												{{  $ctr+1 }}
+											<td colspan="7" class="text-center">
+												Tidak ada data
 											</td>
-											<td>
-												{!! HTML::image($dt['thumbnail'], 'default', ['class' => 'img-responsive', 'style' => 'max-width:100px;']) !!}
-											</td>
-											<td>
-												{{ $dt['name'] }}
-											</td>
-											<td class="text-center">
-												{{ $dt['upc'] }}
-											</td>											
-											</td>
-											<td class="text-center">
-												{{$dt['current_stock']}}
-											</td>
-											<td class="text-center">
-	        									<a href="{{ route('goods.product.show', $dt['id']) }}"> Detail</a>,
-												<a href="{{ route('goods.product.edit', $dt['id']) }}"> Edit</a>, 
-												<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
-													data-target="#product_del"
-													data-id="{{$dt['id']}}"
-													data-title="Hapus Data Produk {{$dt['name']}}"
-													data-action="{{ route('goods.product.destroy', $dt['id']) }}">
-													Hapus
-												</a>                                          
-											</td>    
-										</tr>       
-									@endforeach 
-									
-									@include('page_elements.modaldelete', [
-											'modal_id'      => 'product_del', 
-											'modal_route'   => route('goods.product.destroy')
-									])						
+										</tr>
+									@else                                                                 
+										@foreach($data['product'] as $ctr => $dt)
+											<tr>
+												<td class="text-center">
+													{{  $ctr+1 }}
+												</td>
+												<td>
+													{!! HTML::image($dt['thumbnail'], 'default', ['class' => 'img-responsive', 'style' => 'max-width:100px;']) !!}
+												</td>
+												<td>
+													{{ $dt['name'] }}
+												</td>
+												<td class="text-center">
+													{{ $dt['upc'] }}
+												</td>											
+												</td>
+												<td class="text-center">
+													{{$dt['current_stock']}}
+												</td>
+												<td class="text-center">
+		        									<a href="{{ route('goods.product.show', $dt['id']) }}"> Detail</a>,
+													<a href="{{ route('goods.product.edit', $dt['id']) }}"> Edit</a>, 
+													<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
+														data-target="#product_del"
+														data-id="{{$dt['id']}}"
+														data-title="Hapus Data Produk {{$dt['name']}}"
+														data-action="{{ route('goods.product.destroy', $dt['id']) }}">
+														Hapus
+													</a>                                          
+												</td>    
+											</tr>       
+										@endforeach 
+										
+										@include('page_elements.modaldelete', [
+												'modal_id'      => 'product_del', 
+												'modal_route'   => route('goods.product.destroy')
+										])						
 
-								@endif
-								
-							</tbody>
-						</table>
-					</div>					
-				</div>
+									@endif
+									
+								</tbody>
+							</table>
+						</div>					
+					</div>
+				</div>	
+				<div class="row">
+					@include('page_elements.ajaxPaging')
+				</div>		
 			</div>		
 		</div>
 	<div>
