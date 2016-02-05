@@ -23,7 +23,8 @@ class WebsiteController extends AdminController
 		$this->page_attributes->source 				= 'pages.konfigurasi.website.';
 		$this->page_attributes->breadcrumb			=	[
 															'Website' 	=> route('config.website.index'),
-														];			
+														];	
+        $this->middleware('password.needed', ['only' => ['deleteSlider']]);
 	}
 
 	/**

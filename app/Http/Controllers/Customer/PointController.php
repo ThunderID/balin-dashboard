@@ -21,7 +21,8 @@ class PointController extends AdminController
 		$this->page_attributes->source 				= 'pages.kostumer.poin.';
 		$this->page_attributes->breadcrumb			=	[
 															'Poin' 	=> route('customer.point.index'),
-														];			
+														];	
+        $this->middleware('password.needed', ['only' => ['destroy']]);																
 	}
 
 	/**

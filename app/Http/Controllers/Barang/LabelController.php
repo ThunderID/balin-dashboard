@@ -17,7 +17,8 @@ class LabelController extends AdminController
 		$this->page_attributes->source 				= 'pages.barang.label.';
 		$this->page_attributes->breadcrumb			=	[
 															'Label' 	=> route('goods.label.index'),
-														];			
+														];	
+        $this->middleware('password.needed', ['only' => ['destroy']]);
 	}
 
 	public function index()

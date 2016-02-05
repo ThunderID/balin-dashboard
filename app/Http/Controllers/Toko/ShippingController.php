@@ -21,6 +21,7 @@ class ShippingController extends AdminController
 		$this->page_attributes->breadcrumb			=	[
 															'Kirim Barang' 	=> route('shop.shipping.create'),
 														];			
+        $this->middleware('password.needed', ['only' => ['destroy']]);														
 	}
 
 	/**

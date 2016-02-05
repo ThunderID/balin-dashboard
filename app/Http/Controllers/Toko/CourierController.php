@@ -15,7 +15,8 @@ class CourierController extends AdminController
 		$this->page_attributes->source 				= 'pages.toko.kurir.';
 		$this->page_attributes->breadcrumb			=	[
 															'Kurir' 	=> route('shop.courier.index'),
-														];			
+														];	
+        $this->middleware('password.needed', ['only' => ['destroy']]);																
 	}
 
 	public function index()

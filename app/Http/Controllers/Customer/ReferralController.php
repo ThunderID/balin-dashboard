@@ -21,7 +21,8 @@ class ReferralController extends AdminController
 		$this->page_attributes->source 				= 'pages.kostumer.referral.';
 		$this->page_attributes->breadcrumb			=	[
 															'Referral' 	=> route('customer.referral.index'),
-														];			
+														];	
+        $this->middleware('password.needed', ['only' => ['destroy']]);																
 	}
 
 	/**

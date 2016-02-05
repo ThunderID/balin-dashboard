@@ -21,7 +21,7 @@ class AdministrativeController extends AdminController
 		$this->page_attributes->source 				= 'pages.konfigurasi.administrasi.';
 		$this->page_attributes->breadcrumb			=	[
 															'Administrasi' 	=> route('config.administrative.index'),
-														];			
+														];															
 	}
 
 	/**

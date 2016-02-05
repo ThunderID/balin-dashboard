@@ -21,7 +21,8 @@ class StockController extends AdminController
 		$this->page_attributes->source 				= 'pages.barang.stok.';
 		$this->page_attributes->breadcrumb			=	[
 															'Stok' 	=> route('goods.stock.index'),
-														];			
+														];	
+        $this->middleware('password.needed', ['only' => ['destroy']]);
 	}
 
 	/**

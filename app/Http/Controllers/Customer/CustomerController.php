@@ -21,7 +21,8 @@ class CustomerController extends AdminController
 		$this->page_attributes->source 				= 'pages.kostumer.kostumer.';
 		$this->page_attributes->breadcrumb			=	[
 															'Data Kostumer' 	=> route('customer.customer.index'),
-														];			
+														];	
+        $this->middleware('password.needed', ['only' => ['destroy']]);																
 	}
 
 	/**
