@@ -316,7 +316,7 @@ class ProductController extends AdminController
 		foreach (Input::get('thumbnail') as $key => $image)
 		{
 			$tmpImage 								= 	[
-															'id' 			=> null,
+															'id' 			=> "",
 															'thumbnail'		=> Input::get('thumbnail')[$key],
 															'image_xs'		=> Input::get('image_xs')[$key],
 															'image_sm'		=> Input::get('image_sm')[$key],
@@ -327,6 +327,18 @@ class ProductController extends AdminController
 			if(!empty($tmpImage['thumbnail']) || !empty($tmpImage['image_xs']) || !empty($tmpImage['image_sm']) || !empty($tmpImage['image_md']) || !empty($tmpImage['lg']) )
 			{
 				array_push($images,$tmpImage);
+			}
+
+			if(count($images) == 0)
+			{
+				$images[0] 							= 	[
+															'id' 			=> "",
+															'thumbnail'		=> "",
+															'image_xs'		=> "",
+															'image_sm'		=> "",
+															'image_md'		=> "",
+															'image_lg'		=> "",
+														];
 			}														
 		}
 
@@ -342,6 +354,7 @@ class ProductController extends AdminController
 															'value'			=> "",
 															"label"			=> $tmp,
 															"started_at"	=> date('Y-m-d H:i:s', strtotime('now')),
+															"ended_at"		=> "",
 														];
 		}
 
