@@ -89,8 +89,7 @@
 		<div class="row">
 			<div id="demo" class="collapse filter-panel">
 				@if(isset($filters['titles']))
-				@if($title != 'periode')
-				<div class="col-md-12 panel-body" id="filter-contents">
+				<div class="col-md-12 panel-body">
 					<h2 class="m-t-sm">Pilih Filter</h2>
 
 					<ul class="nav nav-tabs">
@@ -105,68 +104,68 @@
 
 					<div class="tab-content col-md-12">
 						@foreach($filters['titles'] as $key => $title)
-							@if($key == 0)
-							<div id="menu{{$key}}" class="tab-pane m-t-md fade in active">
-							@else
-							<div id="menu{{$key}}" class="tab-pane m-t-md fade">							
-							@endif
-
-							@foreach($filters[$title] as $data)
-								@if(Input::get(strtolower($title)))	
-									@if(in_array(strtolower($data), Input::get(strtolower($title))))
-										<a class="btn btn-default active ajaxDataFilter" onClick="ajaxFilter(this)" data-togle="on" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
-										<i class="fa fa-check-circle"></i>
+							@if($title != 'periode')
+								@if($key == 0)
+								<div id="menu{{$key}}" class="tab-pane m-t-md fade in active">
+								@else
+								<div id="menu{{$key}}" class="tab-pane m-t-md fade">							
+								@endif
+								<div id="filter-{{$key}}">
+								@foreach($filters[$title] as $key => $data)
+									@if(Input::get(strtolower($title)))	
+										@if(in_array(strtolower($data), Input::get(strtolower($title))))
+											<a class="btn btn-default active ajaxDataFilter" onClick="ajaxFilter(this)"  data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
+											<i class="fa fa-check-circle"></i>
+										@else
+											<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
+											<i class="fa fa-circle-thin"></i> 
+										@endif
 									@else
-										<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-togle="off" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
+										<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
 										<i class="fa fa-circle-thin"></i> 
 									@endif
-								@else
-									<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-togle="off" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
-									<i class="fa fa-circle-thin"></i> 
-								@endif
-									&nbsp; {{ $data }} 
-								</a>
-							@endforeach
-							</div>	
+										&nbsp; {{ $data }} 
+									</a>
+								@endforeach
+								</div>	
+								</div>	
+							@else
+								<div id="menu{{$key}}" class="tab-pane m-t-md fade in active">
+									<div class="row">
+										<form action='javascript:void(0)' onSubmit="filterPeriode(this);">
+											<div class="col-sm-8 col-xs-7">
+												<?php
+													$tmp = Input::get('periode');
+													if(count($tmp) > 0)
+													{
+														$dt = $tmp[0];
+													}
+													else
+													{
+														$dt = null;
+													}
+												?>
+												{!! Form::input('text', 'periode', $dt,  [
+													'class'         => 'form-control month-year-format',
+													'placeholder'   => 'mm-yyyy',
+													'id'			=> 'monthyear'
+												]) !!}
+											</div>
+											<div class="col-sm-2 col-xs-3">
+												<button type="submit" class="btn btn-default pull-right btn-block">Go</button>
+											</div>
+											<div class="col-sm-2 col-xs-2">
+												<a class="btn btn-default" onClick="ajaxClearPeriode(this)" href="javascript:void(0)">
+													<i class="fa fa-times"></i>
+												</a>
+											</div>								
+										</form>
+									</div>
+								</div>	
+							@endif
 						@endforeach
 					</div>
 				</div>
-				@else
-				<div class="col-md-12 panel-body">
-					<h2 class="m-t-sm">Periode</h2>
-
-					<div class="row">
-						<form action='javascript:void(0)' onSubmit="filterPeriode(this);">
-							<div class="col-sm-8 col-xs-7">
-								<?php
-									$tmp = Input::get('periode');
-									if(count($tmp) > 0)
-									{
-										$dt = $tmp[0];
-									}
-									else
-									{
-										$dt = null;
-									}
-								?>
-								{!! Form::input('text', 'periode', $dt,  [
-									'class'         => 'form-control month-year-format',
-									'placeholder'   => 'mm-yyyy',
-									'id'			=> 'monthyear'
-								]) !!}
-							</div>
-							<div class="col-sm-2 col-xs-3">
-								<button type="submit" class="btn btn-default pull-right btn-block">Go</button>
-							</div>
-							<div class="col-sm-2 col-xs-2">
-								<a class="btn btn-default" onClick="ajaxClearPeriode(this)" href="javascript:void(0)">
-									<i class="fa fa-times"></i>
-								</a>
-							</div>								
-						</form>
-					</div>
-				</div>
-				@endif
 				@endif
 			</div>
 		</div>

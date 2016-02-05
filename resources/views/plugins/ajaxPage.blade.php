@@ -110,9 +110,12 @@ function ajaxClearSearch() {
 
 {{-- Filter --}}
 function ajaxFilter(e) {
-	var togle 	= $(e).attr("data-togle").toLowerCase();
+	var type 	= $(e).attr("data-type").toLowerCase();
+	var filter 	= $(e).attr("data-filter").toLowerCase();	
 
-	if(togle == "off"){
+	var url     = window.location.href;
+
+	if(url.indexOf(type + "[]=" + filter) == -1){
 		ajaxAddFilter(e);
 	}else{
 		ajaxRemoveFilter(e);
@@ -125,6 +128,8 @@ function ajaxFilter(e) {
 function ajaxAddFilter(e){
 	var type 	= $(e).attr("data-type").toLowerCase();
 	var filter 	= $(e).attr("data-filter").toLowerCase();
+
+	var id 		= $(e).parent().attr('id');
 
 	var url     = window.location.href;
 	var toUrl;
@@ -139,11 +144,12 @@ function ajaxAddFilter(e){
 
 	$(e).addClass("active");
 	$(e).find(".fa").removeClass("fa-circle-thin");
-	$(e).find(".fa").addClass("fa-check-circle");
+	$(e).find(".fa").addClass("fa-refresh fa-spin");
 
 	toUrl		= toUrl.replace('?&', '?');
+	toUrl		= toUrl.replace('&&', '&');
 
-	ajaxPage(toUrl);
+	ajaxPage(toUrl, id);
 
 	window.history.pushState("", "", toUrl);
 }
@@ -250,16 +256,18 @@ function ajaxRemoveFilter(e) {
 
 	$(e).removeClass("active");
 	$(e).find(".fa").removeClass("fa-check-circle");
-	$(e).find(".fa").addClass("fa-circle-thin");
+	$(e).find(".fa").addClass("fa-refresh fa-spin");
 
-	ajaxPage(toUrl);
+	var id 		= $(e).parent().attr('id');
+
+	ajaxPage(toUrl, id);
 	window.history.pushState("", "", toUrl);
  }
 {{-- End of Filter --}}
 
 
 {{--Ajax Paging --}}
-function ajaxPage(toUrl) {
+function ajaxPage(toUrl,e) {
 	$("#contentData").hide(400);
 	$.ajax({
 	   	url: toUrl,
@@ -267,10 +275,10 @@ function ajaxPage(toUrl) {
 	   	success: function(data){
 	    	$('#contentData').html($(data).find('#contentData').html());
 	    	$('#filters').html($(data).find('#filters').html());
-	    	$('#filter-contents').html($(data).find('#filter-contents').html());
+	    	$('#' + e).html($(data).find('#' + e).html());
 			$("#contentData").show(400);
 			$("#filters").show(400);
-			$("#filter-contents").show(400);
+			$("#" + e).show(400);
 			tmpData = data;
 	   	}
 	});	
