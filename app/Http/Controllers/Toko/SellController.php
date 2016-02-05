@@ -61,6 +61,18 @@ class SellController extends AdminController
 			$this->page_attributes->search 			= Input::get('q');
 		}
 
+		if(Input::has('status'))
+		{
+			$search['status']						= Input::get('status');
+		}
+
+
+		$this->page_attributes->filters				= 	[
+															'titles' 	=> ['periode','status'], 
+															'periode' 	=> [],
+															 'status' 	=> ['cart','wait','paid','packed','shipping','delivered','canceled','abandoned']]
+														;
+
 
 		//2. Check page
 		if(is_null(Input::get('page')))

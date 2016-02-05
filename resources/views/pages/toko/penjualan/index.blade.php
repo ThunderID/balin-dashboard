@@ -22,7 +22,7 @@
 				'newDataRoute' 		=> '/',
 				'filterDataRoute' 	=> route('shop.sell.index'),
 				'searchLabel' 		=> 'cari nomor nota',
-				'filters'			=> ['titles' => ['periode']]
+				'filters'			=> $filters
 			])
 		</div>  
 	</div>
