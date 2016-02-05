@@ -22,8 +22,15 @@
 				Periode
 			</div>
 			<div class="col-md-3 col-sm-3 col-xs-8">
+				<?php
+					if(Input::get('start')){
+						$start = Input::get('start');
+					}else{
+						$start = null;
+					}
+				?>
 				@if($disabled ==  true)
-					{!! Form::input('text', 'start', Null ,
+					{!! Form::input('text', 'start', $start ,
 							[
 								'class'         => 'form-control',
 								'placeholder'   => 'Tanggal Mulai',
@@ -32,7 +39,7 @@
 							]
 					) !!} 
 				@else
-					{!! Form::input('text', 'start', Null ,
+					{!! Form::input('text', 'start', $start ,
 							[
 								'class'         => 'form-control date-format',
 								'placeholder'   => 'Tanggal Mulai',
@@ -51,8 +58,15 @@
 				Sampai
 			</div>
 			<div class="col-md-3 col-sm-3 col-xs-8">
+				<?php
+					if(Input::get('end')){
+						$end = Input::get('end');
+					}else{
+						$end = null;
+					}
+				?>				
 				@if($disabled ==  true)
-					{!! Form::input('text', 'end', Null ,
+					{!! Form::input('text', 'end', $end ,
 							[
 								'class'         => 'form-control',
 								'placeholder'   => 'Tanggal Akhir',
@@ -61,7 +75,7 @@
 							]
 					) !!} 
 				@else
-					{!! Form::input('text', 'end', Null ,
+					{!! Form::input('text', 'end', $end ,
 							[
 								'class'         => 'form-control date-format',
 								'placeholder'   => 'Tanggal Akhir',

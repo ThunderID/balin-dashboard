@@ -139,6 +139,57 @@ class StockController extends AdminController
 
 		$this->page_attributes->subtitle 			= $product['data']['product']['name'];
 
+
+		$collection 								= collect($product['data']['details']);
+
+		// filters & collection
+		if(Input::has('start') && Input::has('end'))
+		{
+			$this->page_attributes->search 			= 'Periode ' . Input::get('start') . ' sampai ' . Input::get('end');
+
+			$filterStart							= date('Y-m-d H:i:s', strtotime(Input::get('start')));
+			$filterEnd								= date('Y-m-d H:i:s', strtotime(Input::get('end')));
+
+			$result 								= $collection->filter(function ($col)use($filterStart, $filterEnd) {
+															return $col['transact_at'] >= $filterStart &&  $col['transact_at'] <= $filterEnd;
+														});
+
+			$product['data']['details']				= $result;
+		}
+		else
+		{
+			$result 								= $collection;
+		}	
+
+
+		//get curent page
+		if(is_null(Input::get('page')))
+		{
+			$page 									= 1;
+		}
+		else
+		{
+			$page 									= Input::get('page');
+		}
+
+
+		//data paging	
+		$collection 								= collect($product['data']['details']);
+
+		if(count($collection) != 0)
+		{
+			$result 								= $collection->chunk($this->take);
+
+			$this->paginate(route('goods.stock.show', ['id' => $id]), count($collection), $page);	
+
+			$product['data']['details']				= $result[($page-1)];
+		}
+		else
+		{
+			$this->paginate(route('goods.stock.show', ['id' => $id]), count($collection), $page);	
+		}
+
+
 		// data here
 		$this->page_attributes->data				= 	[
 															'product' => $product,
