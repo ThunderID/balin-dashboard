@@ -1,7 +1,7 @@
 <?php 
 namespace App\Http\Controllers\Barang;
 
-use App\API\connectors\APIStock;
+use App\API\Connectors\APIStock;
 
 use App\Http\Controllers\AdminController;
 

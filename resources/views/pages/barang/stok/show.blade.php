@@ -42,6 +42,17 @@
 					</div>
 					<div class="row">
 						<div class="col-md-6 col-sm-6 col-xs-5">
+							<h4>Ukuran</h4> 
+						</div>
+						<div class="col-md-1 col-sm-1 col-xs-2">
+							<h4>:</h4> 
+						</div>
+						<div class="col-md-5 col-sm-5 col-xs-5">
+							<h4>{{$dt['size']}}</h4> 
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-5">
 							<h4>Stok Gudang</h4> 
 						</div>
 						<div class="col-md-1 col-sm-1 col-xs-2">
