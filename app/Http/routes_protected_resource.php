@@ -110,7 +110,7 @@ Route::group(['prefix' => 'konfigurasi', 'namespace' => 'Konfigurasi\\'], functi
 	
 	Route::resource('website', 	'WebsiteController',			['names' => ['index' => 'config.website.index', 'store' => 'config.website.store', 'update' => 'config.website.update'], 'only' => ['index', 'store', 'update']]);
 	Route::resource('policy', 	'PolicyController',				['names' => ['index' => 'config.policy.index', 'create' => 'config.policy.create', 'store' => 'config.policy.store', 'edit' => 'config.policy.edit', 'update' => 'config.policy.update'], 'except' => ['show', 'destroy']]);
-	Route::get('website/slider/delete/{id}',					['uses' => 'WebsiteController@deleteSlider', 'as' => 'config.website.slider.delete']);
+	Route::delete('website/slider/delete/{id}',					['uses' => 'WebsiteController@deleteSlider', 'as' => 'config.website.slider.delete']);
 });
 
 /**

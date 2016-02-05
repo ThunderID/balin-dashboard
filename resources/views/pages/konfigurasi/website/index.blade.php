@@ -61,9 +61,15 @@
 									<tbody>									    								
 									    {!! Form::open(['url' => route('config.website.store' , ['type' => 'slider'])]) !!}
 									    <tr>
-									    	<td class="col-md-6">
+									    	<td class="col-md-4">
 												<h4 class="m-t-sm">Link Gambar</h4>
 												{!! Form::text('image', null, [
+																'class'        		=> 'form-control', 
+													]) !!}
+											</td>
+											<td class="col-md-4">
+												<h4 class="m-t-sm text-left">Action</h4>
+												{!! Form::text('url', null, [
 																'class'        		=> 'form-control', 
 													]) !!}
 											</td>
@@ -71,12 +77,6 @@
 												<h4 class="m-t-sm text-left">Mulai</h4>
 												{!! Form::text('started_at', null, [
 																'class'        		=> 'date-time-format form-control', 
-													]) !!}
-											</td>
-											<td class="col-md-2">
-												<h4 class="m-t-sm text-left">Action</h4>
-												{!! Form::text('url', null, [
-																'class'        		=> 'form-control', 
 													]) !!}
 											</td>
 											<td class="col-md-2 text-center">
@@ -136,12 +136,20 @@
 													<td class="text-center">
 														<h4 class="m-t-md">&nbsp;</h4>
 														<button type="submit" class="btn btn-md btn-primary" tabindex="3">Simpan</button>
-														<a class="btn btn-danger" href="{{route('config.website.slider.delete', ['id' => $dt['id']] )}}">
+														<a class="btn btn-danger" href="javascript:void(0);"  data-backdrop="static" data-keyboard="false" data-toggle="modal"
+														data-target="#slider_del"
+														data-id="{{$dt['id']}}"
+														data-title="Hapus Data Slider"
+														data-action="{{  route('config.website.slider.delete', ['id' => $dt['id']] ) }}">	
 															<i class="fa fa-times"></i>
 														</a>
 													</td>
 												</tr>
 										    {!! Form::close() !!}
+											@include('page_elements.modaldelete', [
+													'modal_id'      => 'slider_del', 
+													'modal_route'   => route('config.website.slider.delete', ['id' => $dt['id']] )
+											])											    
 										@empty 
 											<tr>
 												<td colspan="4" class="text-center">
