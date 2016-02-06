@@ -111,6 +111,54 @@ class CustomerController extends AdminController
 		$APICustomer 								= new APICustomer;
 		$customer 									= $APICustomer->getShow($id);
 
+
+		// filters
+		if(Input::has('q'))
+		{
+			$filters 								= ['name' => Input::get('q')];
+			$this->page_attributes->search 			= Input::get('q');
+
+			$collection 							= collect($customer['data']['sales']);
+
+
+			$result 								= $collection->filter(function ($col) {
+															return strpos(strtolower($col['ref_number']), strtolower(Input::get('q'))) !== FALSE;
+														});			
+
+			$customer['data']['sales']				= $result;		
+		}
+		else
+		{
+			$this->page_attributes->search 			= null;
+		}
+
+		//get curent page
+		if(is_null(Input::get('page')))
+		{
+			$page 									= 1;
+		}
+		else
+		{
+			$page 									= Input::get('page');
+		}
+
+		//data paging	
+		$collection 								= collect($customer['data']['sales']);
+
+		if(count($collection) != 0)
+		{
+			$result 								= $collection->chunk($this->take);
+
+			$this->paginate(route('customer.customer.show', ['id' => $id]), count($collection), $page);	
+
+			$customer['data']['sales']				= $result[($page-1)];
+		}
+		else
+		{
+			$this->paginate(route('customer.customer.show', ['id' => $id]), count($collection), $page);	
+		}
+
+
 		//2. Check return status
 		if($customer['status'] != 'success')
 		{

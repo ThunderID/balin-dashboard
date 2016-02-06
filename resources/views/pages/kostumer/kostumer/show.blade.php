@@ -179,47 +179,68 @@
 				<div class="col-md-12">
 					<h3>Data Pembelian</h3>
 				</div>
+				<div class="col-md-12 m-t-sm m-b-lg">
+					@include('page_elements.indexNavigation', [
+						'disabled' 			=> true,
+						'newDataRoute' 		=> '/',
+						'searchLabel'		=> 'cari nomor nota',
+						'filterDataRoute' 	=> route('customer.customer.show', ['id' => $dt['id']]),
+						'filters'			=> []
+					])						
+				</div>				
 			</div>
 
-			<div class="row">
-				<div class="col-md-12">
-					<div class="table-responsive">
-						</br>
-						<table class="table table-bordered table-hover table-striped">
-							<thead>
-								<tr>
-									<th class="text-center">No</th>
-									<th class="text-center">No Nota</th>
-									<th class="text-center">Tanggal</th>
-									<th class="text-center">Status</th>
-									<th class="text-center">Total Tagihan</th>
-								</tr>
-							</thead>
-							<tbody>
-								@if (count($dt['sales']) == 0)
+			<div id="contentData">
+				<div class="row">
+					@include('page_elements.searchResult', [
+						'closeSearchLink' 	=>  route('goods.tag.show', ['id' => $dt['id']]) 
+					])
+				</div>	
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="table-responsive">
+							</br>
+							<table class="table table-bordered table-hover table-striped">
+								<thead>
 									<tr>
-										<td colspan="5">
-											<p class="text-center">Tidak ada data</p>
-										</td>
+										<th class="text-center">No</th>
+										<th class="text-center">No Nota</th>
+										<th class="text-center">Tanggal</th>
+										<th class="text-center">Status</th>
+										<th class="text-center">Total Tagihan</th>
 									</tr>
-								@else
-									@foreach($dt['sales'] as $ctr => $sale)
+								</thead>
+								<tbody>
+									@if (count($dt['sales']) == 0)
 										<tr>
-											<td class="text-center">{{ $ctr+1 }}</td>
-											<td class="text-left">{{ $sale['ref_number'] }}</td>
-											<td class="text-center">@date_indo(new Carbon($sale['transact_at']))</td>
-											<td class="text-center">{{ $sale['status'] }}</td>
-											<td class="text-right">@money_indo($sale['bills'])</td>
+											<td colspan="5">
+												<p class="text-center">Tidak ada data</p>
+											</td>
 										</tr>
-									@endforeach
-								@endif
-							</tbody>
-						</table>
+									@else
+										@foreach($dt['sales'] as $ctr => $sale)
+											<tr>
+												<td class="text-center">
+													{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $ctr + 1}}
+												</td>
+												<td class="text-left">{{ $sale['ref_number'] }}</td>
+												<td class="text-center">@date_indo(new Carbon($sale['transact_at']))</td>
+												<td class="text-center">{{ $sale['status'] }}</td>
+												<td class="text-right">@money_indo($sale['bills'])</td>
+											</tr>
+										@endforeach
+									@endif
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="row clearfix">&nbsp;</div>
+				<div class="row">
+					@include('page_elements.ajaxPaging')
+				</div>
+			</div>
 
 		</div>
 	</div>
