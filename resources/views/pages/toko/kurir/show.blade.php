@@ -133,7 +133,9 @@
 									@else
 										@foreach($data['courier']['shippingcosts'] as $ctr => $cost)
 										<tr>
-											<td class="text-center">{{ $ctr+1 }}</td>
+											<td class="text-center">
+												{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $ctr + 1}}
+											</td>
 											<td class="text-center">{{ $cost['start_postal_code'] }} - {{ $cost['end_postal_code'] }}</td>
 											<td class="text-center">@money_indo($cost['cost'])</td>
 										</tr>

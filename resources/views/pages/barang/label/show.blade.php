@@ -116,7 +116,7 @@
 										@foreach($data['product'] as $ctr => $dt)
 											<tr>
 												<td class="text-center">
-													{{  $ctr+1 }}
+													{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $ctr + 1}}
 												</td>
 												<td>
 													{!! HTML::image($dt['thumbnail'], 'default', ['class' => 'img-responsive', 'style' => 'max-width:100px;']) !!}
