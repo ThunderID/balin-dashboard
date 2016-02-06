@@ -188,8 +188,21 @@ class PriceController extends AdminController
 			$page 									= Input::get('page');
 		}
 
-		//paginate
-		$this->paginate(route('goods.price.show', ['id' => $id]), count($product['data']['prices']), $page);
+		//data paging	
+		$collection 								= collect($result);
+
+		if(count($collection) != 0)
+		{
+			$result 								= $collection->chunk($this->take);
+
+			$this->paginate(route('goods.price.show', ['id' => $id]), count($product['data']['prices']), $page);
+
+			$admin['data']['audits']				= $result[($page-1)];
+		}
+		else
+		{
+			$this->paginate(route('goods.price.show', ['id' => $id]), count($product['data']['prices']), $page);
+		}
 
 
 		// set data
