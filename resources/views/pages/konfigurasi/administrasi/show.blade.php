@@ -115,43 +115,53 @@
 				<div class="col-md-12">
 					<h3>Data Audit</h3>
 				</div>
+				<div class="col-md-12 m-t-sm m-b-lg">
+					@include('page_elements.dateRangeNavigation', [
+						'filterDataRoute' 	=> route('config.administrative.show', ['id' => $dt['id']])
+					])	
+				</div>					
 			</div>
 
-			<div class="row">
-				<div class="col-md-12">
-					<div class="table-responsive">
-						</br>
-						<table class="table table-bordered table-hover table-striped">
-							<thead>
-								<tr>
-									<th class="text-center">No</th>
-									<th class="text-center">Tanggal</th>
-									<th class="text-center">Event</th>
-								</tr>
-							</thead>
-							<tbody>
-								@if (count($dt['audits']) == 0)
+			<div id="contentData">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="table-responsive">
+							</br>
+							<table class="table table-bordered table-hover table-striped">
+								<thead>
 									<tr>
-										<td colspan="3">
-											<p class="text-center">Tidak ada data</p>
-										</td>
+										<th class="text-center">No</th>
+										<th class="text-center">Tanggal</th>
+										<th class="text-center">Event</th>
 									</tr>
-								@else
-									@foreach($dt['audits'] as $ctr => $audit)
+								</thead>
+								<tbody>
+									@if (count($dt['audits']) == 0)
 										<tr>
-											<td class="text-center">{{ $ctr+1 }}</td>
-											<td class="text-center">@date_indo(new Carbon($audit['created_at']))</td>
-											<td class="text-left">{{ $audit['event'] }}</td>
+											<td colspan="3">
+												<p class="text-center">Tidak ada data</p>
+											</td>
 										</tr>
-									@endforeach
-								@endif
-							</tbody>
-						</table>
+									@else
+										@foreach($dt['audits'] as $ctr => $audit)
+											<tr>
+												<td class="text-center">
+													{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $ctr + 1}}
+												</td>
+												<td class="text-center">@date_indo(new Carbon($audit['created_at']))</td>
+												<td class="text-left">{{ $audit['event'] }}</td>
+											</tr>
+										@endforeach
+									@endif
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
+				<div class="row">
+					@include('page_elements.ajaxPaging')
+				</div>
 			</div>
-
-			<div class="row clearfix">&nbsp;</div>
 
 		</div>
 	</div>

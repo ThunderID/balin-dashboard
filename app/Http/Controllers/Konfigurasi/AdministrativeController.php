@@ -117,6 +117,56 @@ class AdministrativeController extends AdminController
 		$APIAdmin 									= new APIAdmin;
 		$admin 										= $APIAdmin->getShow($id);
 
+		$collection 								= collect($admin['data']['audits']);
+
+		// filters & collection
+		if(Input::has('start') && Input::has('end'))
+		{
+			$this->page_attributes->search 			= 'Periode ' . Input::get('start') . ' sampai ' . Input::get('end');
+
+			$filterStart							= date('Y-m-d H:i:s', strtotime(Input::get('start')));
+			$filterEnd								= date('Y-m-d H:i:s', strtotime(Input::get('end')));
+
+			$result 								= $collection->filter(function ($col)use($filterStart, $filterEnd) {
+															return $col['ondate'] >= $filterStart &&  $col['ondate'] <= $filterEnd;
+														});
+
+			$admin['data']['audits']				= $result;
+		}
+		else
+		{
+			$result 								= $collection;
+		}	
+
+
+		//get curent page
+		if(is_null(Input::get('page')))
+		{
+			$page 									= 1;
+		}
+		else
+		{
+			$page 									= Input::get('page');
+		}
+
+
+		//data paging	
+		$collection 								= collect($admin['data']['audits']);
+
+		if(count($collection) != 0)
+		{
+			$result 								= $collection->chunk($this->take);
+
+			$this->paginate(route('config.administrative.show', ['id' => $id]), count($collection), $page);
+
+			$admin['data']['audits']				= $result[($page-1)];
+		}
+		else
+		{
+			$this->paginate(route('config.administrative.show', ['id' => $id]), count($collection), $page);
+		}
+
+
 		$this->page_attributes->subtitle 			= $admin['data']['name'];
 
 		$this->page_attributes->data				= 	[
