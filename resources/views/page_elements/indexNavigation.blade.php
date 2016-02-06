@@ -35,7 +35,7 @@
 
 @if(count($errors) == 0)
 <div class="row">		
-	<div class="col-md-7 col-sm-4 hidden-xs">
+	<div class="col-md-5 col-sm-4 hidden-xs">
 		@if($disabled == false)
 			<a class="btn btn-default" href="{{ $newDataRoute }}"><i class="fa fa-plus"></i>&nbsp; {{$newDataLabel}} </a>
 		@else
@@ -49,14 +49,14 @@
 			<a class="btn btn-default disabled" href="#"><i class="fa fa-plus"></i>&nbsp; {{$newDataLabel}}</a>
 		@endif			
 	</div>
-    <div class="col-md-5 col-sm-8 col-xs-12">
+    <div class="col-md-7 col-sm-8 col-xs-12">
 		<form action='javascript:void(0)' onSubmit="ajaxSearch(this);">
 			<div class="row" id="filters">
 				@if(!isset($filters['titles']))
 				<div class="col-md-3 col-sm-3 col-xs-5">
 				</div>
 				@endif
-				<div class="col-md-7 col-sm-7 col-xs-4" style="padding-right:2px;">
+				<div class="col-md-6 col-sm-5 col-xs-4" style="padding-right:2px;">
 					{!! Form::input('text', 'q', Null ,
 							[
 								'id'			=> 'data-search',
@@ -66,11 +66,11 @@
 							]
 					) !!} 
 				</div>
-				<div class="col-md-2 col-sm-2 col-xs-3" style="padding-left:2px;">
+				<div class="col-md-2 col-sm-2 col-xs-2" style="padding-left:2px;">
 					<button type="submit" class="btn btn-default pull-right btn-block" onClick="clearMonthYear()"><i class="fa fa-search"></i></button>
 				</div>
 				@if(isset($filters['titles']))
-				<div class="col-md-3 col-sm-3 col-xs-5" style="padding-left:2px;">
+				<div class="col-md-3 col-sm-3 col-xs-4" style="padding-left:2px;">
 					@foreach($filters['titles'] as $key => $title)
 						@if(Input::get(strtolower($title)))
 							<?php $filterActivated = true ?>
@@ -84,6 +84,13 @@
 					@endif
 				</div>				
 				@endif
+
+				<div class="col-md-1 col-sm-2 col-xs-2" style="padding-left:2px;">
+					<a class="btn btn-default pull-right btn-block"  data-target="#demo">
+						<i class="fa fa-sort-alpha-asc"></i>
+					</a>
+				</div>
+
 			</div>
 		</form>
 		<div class="row">
