@@ -172,10 +172,14 @@
 			<div class="row">
 				<div class="col-md-3">
 					<h3>Alamat Tujuan</h3>
-					<h5>{{$dt['shipment']['receiver_name']}}</h5>
-					<p>{{$dt['shipment']['address']['address']}}</p>
-					<p>{{$dt['shipment']['address']['zipcode']}}</p>
-					<p><i class="fa fa-phone"></i> {{$dt['shipment']['address']['phone']}}</p>
+					@if($dt['shipment']['receiver_name'])
+						<h5>{{$dt['shipment']['receiver_name']}}</h5>
+						<p>{{$dt['shipment']['address']['address']}}</p>
+						<p>{{$dt['shipment']['address']['zipcode']}}</p>
+						<p><i class="fa fa-phone"></i> {{$dt['shipment']['address']['phone']}}</p>
+					@else
+						<h5>Tidak ada data</h5>
+					@endif
 				</div>
 
 				<div class="col-md-3">
