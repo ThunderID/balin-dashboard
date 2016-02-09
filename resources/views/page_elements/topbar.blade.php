@@ -14,8 +14,8 @@
 	<!-- end of balin logo -->
 
 	<!-- menu -->
-				<div class="col-md-8 col-sm-9 text-center" style="padding:0px;">
-					<ul class="nav navbar-top-links">
+				<div class="col-md-8 col-sm-9 text-center" style="padding:0px; ">
+					<ul class="nav navbar-top-links" style="margin-right:-25px;">
 						<li><a href="{{ URL::route('admin.dashboard') }}" class="menu-desktop link-gray">Dashboard</a></li>
 
 						<li class="dropdown">
