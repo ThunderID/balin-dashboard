@@ -35,7 +35,7 @@
 
 @if(count($errors) == 0)
 <div class="row">		
-	<div class="col-md-5 col-sm-4 hidden-xs">
+	<div class="col-md-6 col-sm-5 hidden-xs">
 		@if($disabled == false)
 			<a class="btn btn-default" href="{{ $newDataRoute }}"><i class="fa fa-plus"></i>&nbsp; {{$newDataLabel}} </a>
 		@else
@@ -49,14 +49,14 @@
 			<a class="btn btn-default disabled" href="#"><i class="fa fa-plus"></i>&nbsp; {{$newDataLabel}}</a>
 		@endif			
 	</div>
-    <div class="col-md-7 col-sm-8 col-xs-12">
+    <div class="col-md-6 col-sm-7 col-xs-12">
 		<form action='javascript:void(0)' onSubmit="ajaxSearch(this);">
 			<div class="row" id="filters">
 				@if(!isset($filters['titles']))
 				<div class="col-md-3 col-sm-3 col-xs-5">
 				</div>
 				@endif
-				<div class="col-md-6 col-sm-5 col-xs-4" style="padding-right:2px;">
+				<div class="col-md-7 col-sm-6 col-xs-5" style="padding-right:2px;">
 					{!! Form::input('text', 'q', Null ,
 							[
 								'id'			=> 'data-search',
@@ -70,27 +70,23 @@
 					<button type="submit" class="btn btn-default pull-right btn-block" onClick="clearMonthYear()"><i class="fa fa-search"></i></button>
 				</div>
 				@if(isset($filters['titles']))
-				<div class="col-md-3 col-sm-3 col-xs-4" style="padding-left:2px;">
+				<div class="col-md-3 col-sm-4 col-xs-5" style="padding-left:2px;">
 					@foreach($filters['titles'] as $key => $title)
 						@if(Input::get(strtolower($title)))
 							<?php $filterActivated = true ?>
 						@endif
 					@endforeach
-
-					@if(isset($filterActivated))
-					<a class="btn btn-default active pull-right btn-block btn-filter" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
-					@else
-					<a class="btn btn-default pull-right btn-block btn-filter" data-toggle="collapse" data-target="#demo"><i class="fa fa-caret-down"></i> &nbsp; Filter</a>
+						@if(isset($filterActivated))
+						<a class="btn btn-default active pull-right btn-block btn-filter" data-toggle="collapse" data-target="#demo">
+							<i class="fa fa-caret-down"></i> &nbsp; Filter
+						</a>
+						@else
+						<a class="btn btn-default pull-right btn-block btn-filter" data-toggle="collapse" data-target="#demo">
+							<i class="fa fa-caret-down"></i> &nbsp; Filter
+						</a>
 					@endif
 				</div>				
 				@endif
-
-				<div class="col-md-1 col-sm-2 col-xs-2" style="padding-left:2px;">
-					<a class="btn btn-default pull-right btn-block"  data-target="#demo">
-						<i class="fa fa-sort-alpha-asc"></i>
-					</a>
-				</div>
-
 			</div>
 		</form>
 		<div class="row">
@@ -176,6 +172,13 @@
 				@endif
 			</div>
 		</div>
+		<div class="row">
+			<div id="demo2" class="collapse sort-panel">
+				<div class="col-md-12 panel-body">
+					<h2>Sort by</h2>
+				</div>		
+			</div>		
+		</div>		
 	</div>
 </div>	
 @else
@@ -195,12 +198,25 @@
 	$('.filter-panel').on('show.bs.collapse', function(e){
 		$('.btn-filter').find('.fa').removeClass('fa-caret-down')
 		$('.btn-filter').find('.fa').addClass('fa-caret-up')
+		$('#demo2').collapse('hide');
 	});
 
 	$('.filter-panel').on('hide.bs.collapse', function(e){
 		$('.btn-filter').find('.fa').removeClass('fa-caret-up')
 		$('.btn-filter').find('.fa').addClass('fa-caret-down')
 	});	
+
+	$('.sort-panel').on('show.bs.collapse', function(e){
+		$('.btn-sort').find('.fa').removeClass('fa-caret-down')
+		$('.btn-sort').find('.fa').addClass('fa-caret-up')
+		$('#demo').collapse('hide');
+	});	
+
+	$('.sort-panel').on('hide.bs.collapse', function(e){
+		$('.btn-sort').find('.fa').removeClass('fa-caret-up')
+		$('.btn-sort').find('.fa').addClass('fa-caret-down')
+	});	
+
 @append
 
 @section('script_plugin')
