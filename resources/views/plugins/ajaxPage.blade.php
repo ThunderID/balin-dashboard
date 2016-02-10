@@ -31,6 +31,8 @@ function ajaxSearch(e) {
 
 	toUrl 		= toUrl + "?q=" + q;
 
+	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+
 	ajaxPage(toUrl);
 	window.history.pushState("", "", toUrl);
 }
@@ -58,6 +60,8 @@ function ajaxFilterSearch(e) {
 
 	toUrl		= toUrl.replace('&&', '&');
 
+	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+
 	ajaxPage(toUrl);
 	window.history.pushState("", "", toUrl);
 }
@@ -80,6 +84,8 @@ function ajaxMonthYearRange(e) {
 
 	toUrl 		= toUrl + "?periode=" + q;
 
+	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+
 	ajaxPage(toUrl);
 	window.history.pushState("", "", toUrl);
 }
@@ -99,6 +105,8 @@ function ajaxClearSearch() {
 			toUrl	= toUrl.replace(/(q=)[^\&]+/, '');
 		}
 	}
+
+	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
 
 	$("#demo").collapse('hide');
 
@@ -171,6 +179,8 @@ function filterDateRange(e){
 
 	toUrl 		=   toUrl + '?' + 'start=' + start + '&' + 'end=' + end; 
 
+	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+
 	ajaxPage(toUrl);
 
 	window.history.pushState("", "", toUrl);
@@ -184,6 +194,8 @@ function clearDateRange(e){
 
 	var toUrl	= url.substring(0, url.indexOf('?'));
 	
+	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+
 	ajaxPage(toUrl);
 
 	window.history.pushState("", "", toUrl);	
@@ -233,6 +245,8 @@ function ajaxClearPeriode() {
 		return false;
 	}
 
+	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+
 	clearMonthYear();
 
 	ajaxPage(toUrl);
@@ -253,6 +267,8 @@ function ajaxRemoveFilter(e) {
 	var toUrl	= url.replace(toRemove, '');	
 
 	toUrl		= toUrl.replace('?&', '?');
+
+	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
 
 	$(e).removeClass("active");
 	$(e).find(".fa").removeClass("fa-check-circle");
