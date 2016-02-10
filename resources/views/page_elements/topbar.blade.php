@@ -7,7 +7,7 @@
 
 	<!-- balin logo	-->
 				<div class="col-md-2 col-sm-1">
-					<a href="#">
+					<a href="{{ URL::route('admin.dashboard') }}">
 						{!! HTML::image('images/balin-white.png', 'alt', array( 'class' => 'nav-logo', 'style' => 'margin-top: 15px; max-width: 150px; max-height: 30px;' )) !!}
 					</a>
 				</div>
