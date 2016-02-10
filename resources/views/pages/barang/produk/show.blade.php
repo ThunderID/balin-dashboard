@@ -123,7 +123,7 @@
 								</div>
 								<div class="col-md-8 col-sm-3 col-xs-5">
 									@foreach($dt['labels'] as $lable)
-						                <label class="label label-default">{{ str_replace('_', ' ', ucfirst($lable['lable'] ) )}}</label> &nbsp;
+						                <label class="label label-default">{{ str_replace('_', ' ', ucfirst($lable['lable'] ) )}}</label>
 									@endforeach
 								</div>
 							</div>
@@ -141,7 +141,7 @@
 								</div>
 								<div class="col-md-8 col-sm-3 col-xs-5">
 									@foreach($dt['categories'] as $category)
-						                <label class="label label-default">{{ str_replace('_', ' ', ucfirst($category['name'] ) )}}</label> &nbsp;
+						                <label class="label label-default">{{ str_replace('_', ' ', ucfirst($category['name'] ) )}}</label>
 									@endforeach									
 								</div>
 							</div>
@@ -159,7 +159,7 @@
 								</div>
 								<div class="col-md-8 col-sm-3 col-xs-5">
 									@foreach($dt['tags'] as $tag)
-						                <label class="label label-default">{{ str_replace('_', ' ', ucfirst($tag['slug'] ) )}}</label> &nbsp;
+						                <label class="label label-default">{{ str_replace('_', ' ', ucfirst($tag['slug'] ) )}}</label>
 									@endforeach									
 								</div>
 							</div>
