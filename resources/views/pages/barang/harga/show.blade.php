@@ -138,7 +138,7 @@
 										</tr>
 									@else                
 										<?php $ctr = 0; ?>
-										@foreach($dt['prices'] as $key => $price)
+										@foreach($dt['prices'][0] as $key => $price)
 											<tr>
 												<td class="text-left">
 													{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $key + 1}}

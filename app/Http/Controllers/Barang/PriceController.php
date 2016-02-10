@@ -197,7 +197,7 @@ class PriceController extends AdminController
 
 			$this->paginate(route('goods.price.show', ['id' => $id]), count($product['data']['prices']), $page);
 
-			$admin['data']['audits']				= $result[($page-1)];
+			$product['data']['prices']				= $result[($page-1)];
 		}
 		else
 		{
