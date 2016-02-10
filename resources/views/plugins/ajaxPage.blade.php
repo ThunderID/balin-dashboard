@@ -280,6 +280,12 @@ function ajaxPage(toUrl,e) {
 			$("#filters").show(400);
 			$("#" + e).show(400);
 			tmpData = data;
+	   	},
+	   	error: function(){
+	   		var error = "</br></br><h2 class='text-center m-t-md'>Terjadi masalah penerimaan data, silahkan muat ulang halaman</h2>";
+
+	    	$('#contentData').html(error);
+			$("#contentData").show(400);
 	   	}
 	});	
 };
