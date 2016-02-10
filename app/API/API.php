@@ -6,9 +6,10 @@ use GuzzleHttp\Psr7\Request;
 
 class API
 {
-	protected $domain			= '192.168.1.118';
-	// protected $domain			= 'localhost';
+	// protected $domain			= '192.168.1.118';
+	protected $domain			= 'localhost';
 	protected $port				= '8800';
+	protected $timeout			= 2;
 	protected $basic_url;
 
 	public function __construct()
@@ -28,11 +29,11 @@ class API
 	{
 		$client 				= new Client([
 										'base_uri' => $this->basic_url,
-									    'timeout'  => 2.0
+									    'timeout'  => $this->timeout
 									]);
 
 		$request 				= new Request('GET',  $this->basic_url . $url);
-		$response 				= $client->send($request, ['timeout' => 2]);
+		$response 				= $client->send($request, ['timeout' => $this->timeout]);
 		$body 					= $response->getBody();
 
 		return (string) $body;
@@ -42,7 +43,7 @@ class API
 	{
 		$client 				= new Client([
 										'base_uri' => $this->basic_url,
-									    'timeout'  => 2.0,
+									    'timeout'  => $this->timeout,
 									]);
 
 		$response 				= $client->request('POST',  $this->basic_url . $url, ['form_params' => $data] );
@@ -56,12 +57,12 @@ class API
 	{
 		$client 				= new Client([
 										'base_uri' => $this->basic_url,
-									    'timeout'  => 2.0,
+									    'timeout'  => $this->timeout,
 									]);
 
 
 		$request 				= new Request('DELETE',  $this->basic_url . $url);
-		$response 				= $client->send($request, ['timeout' => 2]);
+		$response 				= $client->send($request, ['timeout' => $this->timeout]);
 
 		$body 					= $response->getBody();
 
