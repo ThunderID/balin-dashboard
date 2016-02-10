@@ -6307,12 +6307,12 @@ body.fixed-sidebar.mini-navbar .navbar-default .nav li a span {
 
 .btn-default {
   background-color: #fff;
-  border-color: #c2c2c2;
+  border-color: #777;
   color: black; }
 
 .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
   background-color: #f7f7f7;
-  border-color: #bababa;
+  border-color: #6f6f6f;
   color: black; }
 
 .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {

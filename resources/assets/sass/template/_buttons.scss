@@ -103,13 +103,13 @@
 
 .btn-default {
   background-color: $white;
-  border-color: $dark-gray;
+  border-color: #777;
   color: black;
 }
 
 .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
   background-color: darken($white, 3%);
-  border-color: darken($dark-gray, 3%);
+  border-color: darken(#777, 3%);
   color: black;
 }
 
