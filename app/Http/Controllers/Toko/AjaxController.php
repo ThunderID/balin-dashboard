@@ -35,7 +35,7 @@ class AjaxController extends Controller
 		foreach ($sale['data']['data'] as $key => $data) 
 		{
 			$datas[$key]['id']						= $data['id'];
-			$datas[$key]['bills']					= ucwords(str_replace('_', ' ', $data['bills']));
+			$datas[$key]['bills']					= 'IDR '.number_format(ucwords(str_replace('_', ' ', $data['bills'])), 0, ',', '.');
 		}										
 
 		//return
