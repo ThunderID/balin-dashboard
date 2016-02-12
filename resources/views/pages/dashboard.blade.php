@@ -19,42 +19,44 @@
 		</div>
 	</div>
 
-	<div class="row clearfix">
-		&nbsp;
-	</div>
-	
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
+			@include('page_elements.alertbox')
+		</div>
+	</div>	
+
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-xs">
 			<div role="tabpanel">
 		{{-- Nav tabs --}}
 				<ul class="nav nav-tabs" role="tablist">
 					<li role="presentation" class="active">
-						<a href="#toko" aria-controls="toko" role="tab" data-toggle="tab">
+						<a href="#toko" id="trig_toko" aria-controls="toko" role="tab" data-toggle="tab">
 							Toko ({{$data['shipped']['count'] + $data['packed']['count'] + $data['paid']['count'] + $data['wait']['count']}})
 						</a>
 					</li>
 					<li role="presentation">
-						<a href="#barang" aria-controls="barang" role="tab" data-toggle="tab">
+						<a href="#barang" id="trig_barang" aria-controls="barang" role="tab" data-toggle="tab">
 							Barang ({{$data['warehouse']['count']}})
 						</a>
 					</li>
 					 <li role="presentation">
-						<a href="#laporan" aria-controls="tab" role="tab" data-toggle="tab">
+						<a href="#laporan" id="trig_laporan" aria-controls="tab" role="tab" data-toggle="tab">
 							Laporan (0)
 						</a>
 					</li>
 					<li role="presentation">
-						<a href="#pengaturan" aria-controls="tab" role="tab" data-toggle="tab">
+						<a href="#pengaturan" id="trig_pengaturan" aria-controls="tab" role="tab" data-toggle="tab">
 							Pengaturan (0)
 						</a>
 					</li>
 					<li role="presentation">
-						<a href="#customer" aria-controls="tab" role="tab" data-toggle="tab">
+						<a href="#customer" id="trig_customer" aria-controls="tab" role="tab" data-toggle="tab">
 							Customer (0)
 						</a>
 					</li>
 					<li role="presentation">
-						<a href="#promosi" aria-controls="tab" role="tab" data-toggle="tab">
+						<a href="#promosi" id="" aria-controls="tab" role="tab" data-toggle="tab">
 							Promosi (0)
 						</a>
 					</li>                    
@@ -87,7 +89,7 @@
 			                                        <td>
 														[{{$value['ref_number']}}] {{$value['user']['name']}} -  @money_indo($value['amount'])
 			                                        </td>
-			                                        <td class="col-xs-1"><a href="{{route('shop.pay.create')}}">Validasi</a></td>
+			                                        <td class="col-xs-1"><a href="{{route('shop.pay.create', ['id' => $value['id']])}}">Validasi</a></td>
 			                                    </tr>
 											@empty
 												<tr>
@@ -236,7 +238,11 @@
 			                                        <td>
 			                                            {{$value['product']['name']}}
 			                                        </td>
-			                                        <td class="col-xs-1"><a href="{{route('shop.buy.create', ['pid' => $value['product']['id']])}}">Kerjakan</a></td>
+			                                        <td class="col-xs-1">
+			                                        	<a href="{{route('shop.buy.create', ['pid' => $value['product_id'], 'vid' => $value['id']])}}">
+			                                        		Kerjakan
+			                                        	</a>
+			                                        </td>
 												</tr>
 											@empty
 												<tr>
@@ -354,3 +360,15 @@
 
 </div>
 @stop
+
+@section('scripts')
+	@if(Input::get('tab'))
+	$( document ).ready(function() {
+	    $('#trig_{!! Input::get('tab') !!}').click();
+
+	    var url     = window.location.href;
+		url			= url.replace(/(tab)[^\&]+/, '');
+		window.history.pushState("", "", url);
+	});
+	@endif
+@append

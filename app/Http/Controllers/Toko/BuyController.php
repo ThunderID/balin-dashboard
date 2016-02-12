@@ -3,7 +3,8 @@ namespace App\Http\Controllers\Toko;
 
 use App\Http\Controllers\AdminController;
 use App\API\Connectors\APIPurchase;
-use Input, Session, DB, Redirect, Response, Auth, Carbon;
+use App\API\Connectors\APIProduct;
+use Input, Session, DB, Redirect, Response, Auth, Carbon,App;
 
 class BuyController extends AdminController
 {
@@ -95,7 +96,7 @@ class BuyController extends AdminController
 		if(Input::has('q'))
 		{
 			$this->page_attributes->search 			= Input::get('q');
-		}		
+		}
 
 		// data here
 		$this->page_attributes->data				= 	[
@@ -154,7 +155,66 @@ class BuyController extends AdminController
 		}
 
 		//2. Initialize data
-		$this->page_attributes->data 				=  $data;
+		if(Input::get('pid') && Input::get('vid'))
+		{
+			$APIProduct 							= new APIProduct;
+
+			$product 								= $APIProduct->getShow(Input::get('pid'))['data'] ;	
+
+			foreach ($product['varians'] as $key => $value) 
+			{
+				if(Input::get('vid') == $value['id'])
+				{
+					$product['varians']				= ['0' => $value];
+				}
+			}
+
+			if(count($product['varians']) == 0)
+			{
+				App::abort(404, 'data not found');
+			}
+
+			$data['data'] 							= 	[
+															'id' 				=> null,
+															'user_id'			=> null,
+															'supplier_id'		=> null,
+															'voucher_id'		=> null,
+															'ref_number'		=> null,
+															'type'				=> 'buy',
+															'transact_at'		=> null,
+															'unique_number'		=> null,
+															'shipping_cost'		=> null,
+															'voucher_discount'	=> null,
+															'amount'			=> null,
+															'status'			=> null,
+															'transactionlogs'	=> [],
+															'supplier'			=> [],
+															'transactiondetails'=> 	[
+																						'0' => 	[
+																									'id'				=> null,
+																									'transaction_id'	=> null,
+																									'varian_id' 		=> $product['varians'][0]['id'],
+																							        'quantity' 			=> null,
+																							        'price' 			=> null,
+																							        'discount' 			=> null,
+																							        'varian'			=>	[
+																							        							'id'			=> $product['varians'][0]['id'],
+																							        							'product_id'	=> $product['varians'][0]['product_id'],
+																							        							'sku'			=> $product['varians'][0]['sku'],
+																							        							'size'			=> $product['varians'][0]['size'],
+																							        							'product'		=> 	[
+																							        													'id'		=> $product['id'],
+																							        													'name'		=> $product['name']
+																							        												]
+																							        						]
+																								]
+																					]
+														];
+			$data['src']							= 'dashboard';														
+
+		}
+
+		$this->page_attributes->data 				= $data;
 
 		//3. Generate breadcrumb
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
@@ -226,7 +286,13 @@ class BuyController extends AdminController
 			$this->page_attributes->success 		= "Data Pembelian Telah Ditambahkan";
 		}
 
-		return $this->generateRedirectRoute('shop.buy.index');
+		//decide redirect
+		if(strtolower(Input::get('src')) == 'dashboard')
+		{
+			return $this->generateRedirectRoute('admin.dashboard', ['tab' => 'barang']);
+		}else{
+			return $this->generateRedirectRoute('shop.buy.index');
+		}
 	}
 
 	/**

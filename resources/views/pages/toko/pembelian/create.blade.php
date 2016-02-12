@@ -80,6 +80,9 @@
     @else
     {!! Form::open(['url' => route('shop.buy.store'), 'method' => 'POST']) !!}
     @endif
+
+	{!! Form::hidden('src', $data['src'], []) !!}
+
 		<div class="row">
 			<div class="col-md-3">
 				<div class="form-group">
@@ -128,7 +131,7 @@
 	$( document ).ready(function() {
 		<!-- init microtemplate -->
 		<!-- preload details -->
-		@if(count($data['data']['transactiondetails']))
+		@if(count($data['data']['transactiondetails'] > 0))
 			@foreach($data['data']['transactiondetails'] as $key => $valueDetail)
 				$('#tmplt').find('.input-quantity').val({{$valueDetail['quantity']}});
 				$('#tmplt').find('.input-price').val({{$valueDetail['price']}});

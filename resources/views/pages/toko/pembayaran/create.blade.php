@@ -7,11 +7,7 @@
 <!-- end of head -->
 
 <!-- body -->
-	@if(isset(  $data['data']['id'] ))
-    {!! Form::open(['url' => route('shop.pay.update', $data['data']['id']), 'method' => 'PATCH']) !!}
-    @else
     {!! Form::open(['url' => route('shop.pay.store'), 'method' => 'POST']) !!}
-    @endif
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group">
@@ -95,15 +91,9 @@
 @section('scripts')
 	<!-- preload select2 payment -->
     var preload_data_payment = [];
-    @if(isset($data['data']['payments']))
-	    @foreach($data['data']['payments'] as $payment)
-	        var id                      = {{$payment['transaction_id']}};
-	        var text                    = '{{$payment['amount']}}';
-	        preload_data_payment.push({ id: id, text: text});
-	    @endforeach
-	@elseif(Input::get('transaction_id') && Input::get('payment'))    
-        var id                      = '{{ Input::get('transaction_id') }}';
-        var text                    = '{{ ucwords(str_replace('_', ' ', Input::get('payment'))) }}';
+    @if(isset($data['data']['id']))
+        var id                      = '{{ $data['data']['id'] }}';
+        var text                    = '@money_indo($data['data']['bills'])';
         preload_data_payment.push({ id: id, text: text});
     @endif
 	<!-- end of preload select2 payment -->
@@ -111,7 +101,7 @@
 
 
 @section('script_plugin')
-    @include('plugins.select2', ['section' => 'payment'])
+    @include('plugins.select2', ['section' => 'payment', 'max_input' => 1])
 	@include('plugins.summerNote')
 	@include('plugins.inputMask')
 @stop

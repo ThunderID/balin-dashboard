@@ -51,10 +51,24 @@ class PayController extends AdminController
 			\App::abort(404);
 		}
 
-		//2. Generate breadcrumb
+
+		//2. Get input 
+		if(Input::get('id'))
+		{
+			$APISale								= new APISale;
+			$data 									= $APISale->getShow(Input::get('id'));
+			$data['data']['account_name']			= null;
+			$data['data']['method']					= null;
+			$data['data']['destination']			= null;
+			$data['data']['account_number']			= null;
+			$data['data']['ondate']					= null;
+		}
+
+
+		//3. Generate breadcrumb
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
-		//3. Generate view
+		//4. Generate view
 		$this->page_attributes->data 				=  $data;
 
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'create';
@@ -118,9 +132,9 @@ class PayController extends AdminController
 		//4a. sending mail
 		else
 		{
-			$mail 						= new BalinMail;
+			// $mail 									= new BalinMail;
 
-			$mail->paid($result['data'], $this->balininfo());
+			// $mail->paid($result['data'], $this->balininfo());
 		}
 
 		//5. Generate view
@@ -133,6 +147,6 @@ class PayController extends AdminController
 			$this->page_attributes->success 		= "Pesanan sudah di validasi";
 		}
 
-		return $this->generateRedirectRoute('shop.sell.show', ['id' => $saleid]);
+		return $this->generateRedirectRoute('admin.dashboard', ['tab' => 'toko']);
 	}
 }
