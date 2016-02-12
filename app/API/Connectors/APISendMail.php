@@ -8,12 +8,11 @@ class APISendMail extends APIData
 		parent::__construct();
 
 		$this->api->timeout 				= 10;
-		$this->api->basic_url				= 'localhost:9000';
 	}
 
 	public function invoice($invoice, $store)
 	{
-		$this->apiUrl 						= '/shop/invoice';
+		$this->apiUrl 						= '/mail/invoice';
 
 		$this->apiData 						= array_merge($this->apiData, ["invoice" => $invoice, "store" => $store]);
 
@@ -22,7 +21,7 @@ class APISendMail extends APIData
 
 	public function paidorder($order, $store)
 	{
-		$this->apiUrl 						= '/shop/paid';
+		$this->apiUrl 						= '/mail/paid';
 
 		$this->apiData 						= array_merge($this->apiData, ["order" => $order, "store" => $store]);
 
@@ -31,7 +30,7 @@ class APISendMail extends APIData
 
 	public function shippingorder($order, $store)
 	{
-		$this->apiUrl 						= '/shop/shipped';
+		$this->apiUrl 						= '/mail/shipped';
 
 		$this->apiData 						= array_merge($this->apiData, ["order" => $order, "store" => $store]);
 
@@ -40,7 +39,7 @@ class APISendMail extends APIData
 
 	public function deliveredorder($order, $store)
 	{
-		$this->apiUrl 						= '/shop/delivered';
+		$this->apiUrl 						= '/mail/delivered';
 
 		$this->apiData 						= array_merge($this->apiData, ["order" => $order, "store" => $store]);
 
@@ -49,7 +48,7 @@ class APISendMail extends APIData
 	
 	public function cancelorder($order, $store)
 	{
-		$this->apiUrl 						= '/shop/canceled';
+		$this->apiUrl 						= '/mail/canceled';
 
 		$this->apiData 						= array_merge($this->apiData, ["order" => $order, "store" => $store]);
 
