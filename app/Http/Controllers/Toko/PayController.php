@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Toko;
 
 use App\API\Connectors\APISale;
+use App\API\Connectors\APISendMail;
 
 use App\Http\Controllers\AdminController;
 
@@ -132,9 +133,9 @@ class PayController extends AdminController
 		//4a. sending mail
 		else
 		{
-			// $mail 									= new BalinMail;
-
-			// $mail->paid($result['data'], $this->balininfo());
+			$mail 									= new APISendMail;
+		
+			$mail->paidorder($result['data'], $this->balininfo());
 		}
 
 		//5. Generate view

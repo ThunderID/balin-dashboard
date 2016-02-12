@@ -2,10 +2,11 @@
 namespace App\Http\Controllers\Toko;
 
 use App\API\Connectors\APISale;
+use App\API\Connectors\APISendMail;
 
 use App\Http\Controllers\AdminController;
 
-use Input, BalinMail;
+use Input;
 
 /**
  * Handle resend mail
@@ -36,7 +37,7 @@ class ResendMailController extends AdminController
 		}
 
 		$type 						= 'Email';
-		$mail 						= new BalinMail;
+		$mail 						= new APISendMail;
 		
 		switch ($status) 
 		{
@@ -45,19 +46,19 @@ class ResendMailController extends AdminController
 					$type			= 'Invoice';
 				break;
 			case 'paid':
-					$mail->paid($result['data'], $this->balininfo());
+					$mail->paidorder($result['data'], $this->balininfo());
 					$type			= 'Validasi Pembayaran';
 				break;
 			case 'shipping':
-					$mail->shipped($result['data'], $this->balininfo());
+					$mail->shippingorder($result['data'], $this->balininfo());
 					$type			= 'Nota Pengiriman';
 				break;
 			case 'delivered':
-					$mail->delivered($result['data'], $this->balininfo());
+					$mail->deliveredorder($result['data'], $this->balininfo());
 					$type			= 'Konfirmasi Pesanan Delivered';
 				break;
 			case 'canceled':
-					$mail->canceled($result['data'], $this->balininfo());
+					$mail->cancelorder($result['data'], $this->balininfo());
 					$type			= 'Konfirmasi Pembatalan Pesanan';
 				break;
 			default:

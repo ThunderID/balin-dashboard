@@ -28,7 +28,7 @@ class AuthController extends AdminController
 													'password' 		=> Input::get('password'),
 													'grant_type'	=> 'password',
 													'client_id'		=> env('API_client_id'),
-													'client_secret'	=> env('API_client_scret'),
+													'client_secret'	=> env('API_client_secret'),
 												];
 
 

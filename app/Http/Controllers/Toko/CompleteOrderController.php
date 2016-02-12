@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Toko;
 
 use App\API\Connectors\APISale;
+use App\API\Connectors\APISendMail;
 
 use App\Http\Controllers\AdminController;
 
@@ -113,9 +114,9 @@ class CompleteOrderController extends AdminController
 		//4a. sending mail
 		else
 		{
-			$mail 									= new BalinMail;
-
-			$mail->delivered($result['data'], $this->balininfo());
+			$mail 									= new APISendMail;
+		
+			$mail->deliveredorder($result['data'], $this->balininfo());
 		}
 
 		//5. Generate view

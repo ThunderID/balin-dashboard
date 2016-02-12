@@ -102,7 +102,7 @@ abstract class AdminController extends Controller
 		unset($balin['info']);
 		foreach ($config['data']['info'] as $key => $value) 
 		{
-			$balin['info'][$value['type']]			= $value;
+			$balin['info'][$value['type']]			= $value['value'];
 		}
 
 		return $balin['info'];

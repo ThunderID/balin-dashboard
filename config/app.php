@@ -145,7 +145,6 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        ThunderID\BalinMailTemplate\BalinMailTemplateServiceProvider::class,
 
     ],
 
@@ -198,7 +197,6 @@ return [
         'HTML'      => 'Illuminate\Html\HtmlFacade',
         'Collection'=> Illuminate\Database\Eloquent\Collection::class,
         'Carbon'    => 'Carbon\Carbon',
-        'BalinMail'     => ThunderID\BalinMailTemplate\BalinMail::class,
         'Excel'     => 'Maatwebsite\Excel\Facades\Excel',
     ],
 

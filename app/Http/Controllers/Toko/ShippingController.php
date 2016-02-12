@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Toko;
 
 use App\API\Connectors\APISale;
+use App\API\Connectors\APISendMail;
 
 use App\Http\Controllers\AdminController;
 use Input, BalinMail;
@@ -115,9 +116,9 @@ class ShippingController extends AdminController
 		//4a. sending mail
 		else
 		{
-			$mail 									= new BalinMail;
-
-			$mail->shipped($result['data'], $this->balininfo());
+			$mail 									= new APISendMail;
+		
+			$mail->shippingorder($result['data'], $this->balininfo());
 		}
 
 		//5. Generate view

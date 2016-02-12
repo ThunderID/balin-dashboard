@@ -11,6 +11,8 @@ abstract class APIData
 
 	function __construct() 
 	{
+		$this->api 					= new API;
+
 		$this->apiData 				= ['access_token' => Session::get('APIToken')];
 		
 		if(is_null(Session::get('APIToken')))
@@ -21,7 +23,6 @@ abstract class APIData
 
 	protected function get()
 	{
-		$api 						= new API;
 		$queryString 				= Null;
 
 		foreach ($this->apiData as $title => $data) {
@@ -57,24 +58,20 @@ abstract class APIData
 
 		$this->apiUrl				= $this->apiUrl . '?' . $queryString;
 
-		$result 					= json_decode($api->get($this->apiUrl), true);
+		$result 					= json_decode($this->api->get($this->apiUrl), true);
 
 		return $this->validateResponse($result);
 	}
 
 	protected function post()
 	{
-		$api 						= new API;
-
-		$result 					= json_decode($api->post($this->apiUrl, $this->apiData),true);
+		$result 					= json_decode($this->api->post($this->apiUrl, $this->apiData),true);
 
 		return $this->validateResponse($result);
 	}
 
 	protected function delete()
 	{
-		$api 						= new API;
-		
 		$queryString 				= null;
 
 		foreach ($this->apiData as $key => $data) 
@@ -84,7 +81,7 @@ abstract class APIData
 
 		$this->apiUrl				= $this->apiUrl . '?' . $queryString;
 
-		$result 					= json_decode($api->delete($this->apiUrl), true);		
+		$result 					= json_decode($this->api->delete($this->apiUrl), true);		
 
 		return $this->validateResponse($result);
 	}	
