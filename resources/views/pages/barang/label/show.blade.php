@@ -24,11 +24,6 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			<div class="row">
-				<div class="col-md-12">
-					<a class="btn btn-default pull-right disabled"  href="/"> Edit Data </a>
-				</div>
-			</div>			
-			<div class="row">
 				<div class="col-md-5 col-sm-6 col-xs-11">
 					<div class="row">
 
@@ -82,7 +77,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="table-responsive">
-							<table class="table table-bordered table-hover table-striped">
+							<table class="table table-hover">
 								<thead>
 									<tr>
 										<th class="text-center">

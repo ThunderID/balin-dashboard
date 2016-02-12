@@ -182,7 +182,7 @@
 					<a class="btn btn-default" href="{{ route('goods.varian.create', ['pid' => $dt['id']] ) }}"><i class="fa fa-plus"></i>&nbsp;Ukuran Baru</a>
 					<div class="table-responsive">
 						</br>
-						<table class="table table-bordered table-hover table-striped">
+						<table class="table table-hover">
 							<thead>
 								<tr>
 									<th class="text-center">No</th>

@@ -103,7 +103,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="table-responsive">
-							<table class="table table-bordered table-hover table-striped">
+							<table class="table table-hover">
 								<thead>
 									<tr>
 										<th class="text-center">

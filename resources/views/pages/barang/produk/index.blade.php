@@ -40,16 +40,16 @@
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="table-responsive">
-					<table class="table table-bordered table-hover table-striped">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th class="col-md-1 text-center">
 									No.
 								</th>
-								<th class="col-md-2 text-center">
+								<th class="col-md-2 text-left">
 									Thumbnail
 								</th>
-								<th class="col-md-2 text-center">
+								<th class="col-md-2 text-left">
 									Nama Produk
 								</th>
 								<th class="col-md-1 text-center">
@@ -58,7 +58,7 @@
 								<th class="col-md-2 text-center">
 									Stok
 								</th>
-								<th class="col-md-2 text-center">
+								<th class="col-md-2 text-right">
 									Harga
 								</th>								
 								<th class="col-md-2 text-center">
