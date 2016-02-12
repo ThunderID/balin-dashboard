@@ -9,8 +9,8 @@ class API
 	// protected $domain			= '192.168.1.118';
 	protected $domain			= 'localhost';
 	protected $port				= '8800';
-	protected $timeout			= 2;
-	protected $basic_url;
+	public $timeout				= 2;
+	public $basic_url;
 
 	public function __construct()
 	{
