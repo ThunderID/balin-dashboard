@@ -51,7 +51,15 @@ class PackingController extends AdminController
 			\App::abort(404);
 		}
 
-		//2. Generate breadcrumb
+		//2. Get input 
+		if(Input::get('id'))
+		{
+			$APISale								= new APISale;
+			$data 									= $APISale->getShow(Input::get('id'));
+			$data['data']['account_name']			= null;
+		}
+
+		//3. Generate breadcrumb
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
 		//3. Generate view
@@ -112,6 +120,6 @@ class PackingController extends AdminController
 			$this->page_attributes->success 		= "Pesanan sudah di packing!";
 		}
 
-		return $this->generateRedirectRoute('shop.sell.show', ['id' => $saleid]);
+		return $this->generateRedirectRoute('admin.dashboard', ['tab' => 'toko']);
 	}
 }

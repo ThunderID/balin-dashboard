@@ -52,10 +52,18 @@ class ShippingController extends AdminController
 			\App::abort(404);
 		}
 
-		//2. Generate breadcrumb
+		//2. Get input 
+		if(Input::get('id'))
+		{
+			$APISale								= new APISale;
+			$data 									= $APISale->getShow(Input::get('id'));
+			$data['data']['receipt_number']			= null;
+		}	
+
+		//3. Generate breadcrumb
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
-		//3. Generate view
+		//4. Generate view
 		$this->page_attributes->data 				=  $data;
 
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'create';
@@ -131,6 +139,6 @@ class ShippingController extends AdminController
 			$this->page_attributes->success 		= "Pesanan sedang dalam pengiriman!";
 		}
 
-		return $this->generateRedirectRoute('shop.sell.show', ['id' => $saleid]);
+		return $this->generateRedirectRoute('admin.dashboard', ['tab' => 'toko']);
 	}
 }

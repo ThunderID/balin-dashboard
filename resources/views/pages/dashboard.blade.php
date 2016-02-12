@@ -87,7 +87,8 @@
 			                                            {{ $key + 1 }}
 			                                        </td>
 			                                        <td>
-														[{{$value['ref_number']}}] {{$value['user']['name']}} -  @money_indo($value['amount'])
+														<p>[{{$value['ref_number']}}] {{$value['user']['name']}}</p>
+														<p>@money_indo($value['amount'])</p>
 			                                        </td>
 			                                        <td class="col-xs-1"><a href="{{route('shop.pay.create', ['id' => $value['id']])}}">Validasi</a></td>
 			                                    </tr>
@@ -123,9 +124,10 @@
 			                                            {{ $key + 1 }}
 			                                        </td>
 			                                        <td>
-														[{{$value['ref_number']}}] {{$value['user']['name']}} -  @money_indo($value['amount'])
+														<p>[{{$value['ref_number']}}] {{$value['user']['name']}}</p>
+														<p>{{ $value['product_notes'] }}</p>
 			                                        </td>
-			                                        <td class="col-xs-1"><a href="{{route('shop.packing.create')}}">Kerjakan</a></td>
+			                                        <td class="col-xs-1"><a href="{{route('shop.packing.create', ['id' => $value['id']])}}">Kerjakan</a></td>
 			                                    </tr>
 											@empty
 												<tr>
@@ -149,7 +151,7 @@
 										</h4>
 									</div>
 								</a>
-								<div id="collapse_toko_3" class="collapse">
+								<div id="collapse_toko_3" class="collapse {{ ($data['packed']['count'] > 0)?'in':'' }}">
 		                            <table class="table table-hover">
 		                                <tbody>
 											@forelse($data['packed']['data'] as $key => $value)
@@ -158,9 +160,10 @@
 			                                            {{ $key + 1 }}
 			                                        </td>
 			                                        <td>
-														[{{$value['ref_number']}}] {{$value['user']['name']}} -  @money_indo($value['amount'])
+														<p>[{{$value['ref_number']}}] {{$value['user']['name']}}</p>
+														<p>{{ $value['address_notes'] }}</p>
 			                                        </td>
-			                                        <td class="col-xs-1"><a href="{{route('shop.shipping.create')}}">Kirim Barang</a></td>
+			                                        <td class="col-xs-1"><a href="{{route('shop.shipping.create', ['id' => $value['id']])}}">Kirim Barang</a></td>
 			                                    </tr>
 											@empty
 												<tr>
@@ -184,7 +187,7 @@
 										</h4>
 									</div>
 								</a>
-								<div id="collapse_toko_4" class="panel-collapse collapse">
+								<div id="collapse_toko_4" class="panel-collapse collapse {{ ($data['shipped']['count'] > 0)?'in':'' }}">
 		                            <table class="table table-hover">
 		                                <tbody>
 											@forelse($data['shipped']['data'] as $key => $value)
@@ -193,9 +196,10 @@
 			                                            {{ $key + 1 }}
 			                                        </td>
 			                                        <td>
-														[{{$value['ref_number']}}] {{$value['user']['name']}} -  @money_indo($value['amount'])
+														<p>[{{$value['ref_number']}}] {{$value['user']['name']}}</p>
+														<p>No. Resi Pengiriman : {{$value['shipping_notes']}}</p>
 			                                        </td>
-			                                        <td class="col-xs-1"><a href="{{route('shop.completeorder.create')}}">Kerjakan</a></td>
+			                                        <td class="col-xs-1"><a href="{{route('shop.completeorder.create', ['id' => $value['id']])}}">Validasi</a></td>
 			                                    </tr>
 											@empty
 												<tr>
@@ -366,8 +370,7 @@
 	$( document ).ready(function() {
 	    $('#trig_{!! Input::get('tab') !!}').click();
 
-	    var url     = window.location.href;
-		url			= url.replace(/(tab)[^\&]+/, '');
+	    var url     = '{{ URL::route('admin.dashboard') }}';
 		window.history.pushState("", "", url);
 	});
 	@endif

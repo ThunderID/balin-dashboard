@@ -7,15 +7,11 @@
 <!-- end of head -->
 
 <!-- body -->
-	@if(isset(  $data['data']['id'] ))
-    {!! Form::open(['url' => route('shop.completeorder.update', $data['data']['id']), 'method' => 'PATCH']) !!}
-    @else
     {!! Form::open(['url' => route('shop.completeorder.store'), 'method' => 'POST']) !!}
-    @endif
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group">
-					<label for="transaction"># Pesanan</label>
+					<label for="transaction">Nomor Nota Transaksi</label>
 					{!! Form::text('transaction_id', null, [
 								'class'         => 'select-transaction', 
 								'tabindex'      => '1',
@@ -53,15 +49,9 @@
 @section('scripts')
 	<!-- preload select2 transaction -->
     var preload_data_transaction = [];
-    @if(isset($data['data']['transactions']))
-	    @foreach($data['data']['transactions'] as $transaction)
-	        var id                      = {{$transaction['transaction_id']}};
-	        var text                    = '{{$transaction['ref_number']}}';
-	        preload_data_transaction.push({ id: id, text: text});
-	    @endforeach
-	@elseif(Input::get('transaction_id') && Input::get('transaction'))    
-        var id                      = '{{ Input::get('transaction_id') }}';
-        var text                    = '{{ ucwords(str_replace('_', ' ', Input::get('transaction'))) }}';
+    @if(isset($data['data']['id']))
+        var id                      = '{{ $data['data']['id'] }}';
+        var text                    = '{{ $data['data']['ref_number'] }}';
         preload_data_transaction.push({ id: id, text: text});
     @endif
 	<!-- end of preload select2 transaction -->

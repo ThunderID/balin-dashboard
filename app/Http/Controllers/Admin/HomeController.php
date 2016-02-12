@@ -30,19 +30,16 @@ class HomeController extends AdminController
 
 
 		$paid 								= $APISale->getIndex([
-													'search' 	=> 	['status' => 'paid'],
+													'search' 	=> 	['status' => 'paid', 'productnotes' => true],
 												])['data'];
-
 
 		$packed 							= $APISale->getIndex([
-													'search' 	=> 	['status' => 'packed'],
+													'search' 	=> 	['status' => 'packed', 'addressnotes' => true],
 												])['data'];
-
 
 		$shipped 							= $APISale->getIndex([
-													'search' 	=> 	['status' => 'shipped'],
+													'search' 	=> 	['status' => 'shipping', 'shippingnotes' => true],
 												])['data'];
-
 
 		$this->page_attributes->data 		= 	[
 													'warehouse' => $warehouse,
