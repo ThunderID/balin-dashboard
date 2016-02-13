@@ -25,28 +25,10 @@
 							</a>
 							<ul class="dropdown-menu submenu-desktop">
 								<li><a href="{{ URL::route('goods.product.index') }}">Produk</a></li>
-								<li><a href="{{ URL::route('goods.price.index') }}">Harga</a></li>
-								<li><a href="{{ URL::route('goods.stock.index') }}">Stok</a></li>
 								<li><a href="{{ URL::route('goods.category.index') }}">Kategori</a></li>
 								<li><a href="{{ URL::route('goods.tag.index') }}">Tag</a></li>
 								<li><a href="{{ URL::route('goods.label.index') }}">Label</a></li>
-							</ul>
-						</li>
-
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle link-gray text-right menu-desktop" data-toggle="dropdown" aria-expanded="true">
-								Toko
-								<span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu submenu-desktop">
-								<li><a href="{{ URL::route('shop.sell.index') }}">Data Penjualan</a></li>
-								<li><a href="{{ URL::route('shop.pay.create') }}">Validasi Bayar</a></li>
-								<li><a href="{{ URL::route('shop.packing.create') }}">Packing</a></li>
-								<li><a href="{{ URL::route('shop.shipping.create') }}">Kirim Barang</a></li>
-								<li><a href="{{ URL::route('shop.completeorder.create') }}">Transaksi Selesai</a></li>
-								<li><a href="{{ URL::route('shop.cancelorder.create') }}">Transaksi Dibatalkan</a></li>
-								<li><a href="{{ URL::route('shop.courier.index') }}">Kurir</a></li>
-								<li><a href="{{ URL::route('shop.buy.index') }}">Data Pembelian</a></li>
+								<li><a href="#">Pengadaan Barang</a></li>
 							</ul>
 						</li>
 
@@ -58,6 +40,7 @@
 							<ul class="dropdown-menu submenu-desktop">
 								<li><a href="{{ URL::route('report.product.sold') }}">Penjualan Barang</a></li>
 								<li><a href="{{ URL::route('report.voucher.usage') }}">Penggunaan Voucher</a></li>
+								<li><a href="#">Laporan Stok</a></li>
 							</ul>
 						</li>
 
@@ -70,18 +53,19 @@
 								<li><a href="{{ URL::route('config.administrative.index') }}">Administrasi</a></li>
 								<li><a href="{{ URL::route('config.website.index') }}">Website</a></li>
 								<li><a href="{{ URL::route('config.policy.index') }}">Policy</a></li>
+								<li><a href="{{ URL::route('shop.courier.index') }}">Kurir</a></li>
 							</ul>
 						</li>
 
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle link-gray text-right menu-desktop" data-toggle="dropdown" aria-expanded="true">
-								Customer
+								Pelanggan
 								<span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu submenu-desktop">
-								<li><a href="{{ URL::route('customer.customer.index') }}">Data Customer</a></li>
+								<li><a href="{{ URL::route('customer.customer.index') }}">Data Pelanggan</a></li>
 								<li><a href="{{ URL::route('customer.point.index') }}">Poin</a></li>
-								<li><a href="{{ URL::route('customer.referral.index') }}">Referral</a></li>
+								<li><a href="#">Relasi</a></li>
 							</ul>							
 						</li>
 
@@ -258,15 +242,6 @@
 								</a>
 							</div>
 							<div class="hidden-lg hidden-md col-sm-4 hidden-xs m-b-md">
-								<a href="javascript:void(0);" data-id="Toko" class="btn btn-default btn-block btn-sm pull-left mobile-menu">
-									<span class="fa-stack fa-4x">
-									  	<i class="fa fa-shopping-basket fa-stack-1x"></i>
-									</span>
-									</br>
-									<h3>Toko</h3>
-								</a>
-							</div>
-							<div class="hidden-lg hidden-md col-sm-4 hidden-xs m-b-md">
 								<a href="javascript:void(0);" data-id="Laporan" class="btn btn-default btn-block btn-sm pull-left mobile-menu">
 									<span class="fa-stack fa-4x">
 									  	<i class="fa fa-book fa-stack-1x"></i>
@@ -324,15 +299,6 @@
 								</a>
 							</div>
 							<div class="hidden-sm col-xs-6 m-b-md">
-								<a href="javascript:void(0);" data-id="Toko" class="btn btn-default btn-block btn-sm pull-left mobile-menu">
-									<span class="fa-stack fa-3x">
-									  	<i class="fa fa-shopping-basket fa-stack-1x"></i>
-									</span>
-									</br>
-									<h5>Toko</h5>
-								</a>
-							</div>
-							<div class="hidden-sm col-xs-6 m-b-md">
 								<a href="javascript:void(0);" data-id="Laporan" class="btn btn-default btn-block btn-sm pull-left mobile-menu">
 									<span class="fa-stack fa-3x">
 									  	<i class="fa fa-book fa-stack-1x"></i>
@@ -385,20 +351,6 @@
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('goods.price.index') }}" class="btn btn-default btn-block btn-sm pull-left">
-										<h4>
-											Harga
-										</h4>
-									</a>
-								</div>
-								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('goods.stock.index') }}" class="btn btn-default btn-block btn-sm pull-left">
-										<h4>
-											Stok
-										</h4>
-									</a>
-								</div>
-								<div class="col-sm-12 col-xs-12 m-b-sm">
 									<a href="{{ URL::route('goods.category.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Kategori
@@ -419,69 +371,16 @@
 										</h4>
 									</a>
 								</div>
+								<div class="col-sm-12 col-xs-12 m-b-sm">
+									<a href="{{ URL::route('goods.label.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+										<h4>
+											Pengadaan Barang
+										</h4>
+									</a>
+								</div>								
 							</div>																											
 		<!-- end of submenu product -->
 
-		<!-- submenu toko -->
-							<div id="Toko" class="mobile-submenu hidden">
-								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('shop.sell.index') }}" class="btn btn-default btn-block btn-sm pull-left">
-										<h4>
-											Data Penjualan
-										</h4>
-									</a>
-								</div>
-								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('shop.pay.create') }}" class="btn btn-default btn-block btn-sm pull-left">
-										<h4>
-											Validasi Bayar
-										</h4>
-									</a>
-								</div>
-								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('shop.packing.create') }}" class="btn btn-default btn-block btn-sm pull-left">
-										<h4>
-											Packing
-										</h4>
-									</a>
-								</div>
-								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('shop.shipping.create') }}" class="btn btn-default btn-block btn-sm pull-left">
-										<h4>
-											Kirim Barang
-										</h4>
-									</a>
-								</div>
-								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('shop.completeorder.create') }}" class="btn btn-default btn-block btn-sm pull-left">
-										<h4>
-											Transaksi Selesai
-										</h4>
-									</a>
-								</div>
-								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('shop.cancelorder.create') }}" class="btn btn-default btn-block btn-sm pull-left">
-										<h4>
-											Transaksi Dibatalkan
-										</h4>
-									</a>
-								</div>
-								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('shop.courier.index') }}" class="btn btn-default btn-block btn-sm pull-left">
-										<h4>
-											Kurir
-										</h4>
-									</a>
-								</div>
-								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('shop.buy.index') }}" class="btn btn-default btn-block btn-sm pull-left">
-										<h4>
-											Data Pembelian
-										</h4>
-									</a>
-								</div>																																				
-							</div>
-		<!-- end of submenu toko -->
 
 		<!-- submenu laporan -->
 							<div id="Laporan" class="mobile-submenu hidden">
@@ -499,6 +398,13 @@
 										</h4>
 									</a>
 								</div>
+								<div class="col-sm-12 col-xs-12 m-b-sm">
+									<a href="#" class="btn btn-default btn-block btn-sm pull-left">
+										<h4>
+											Laporan Stok
+										</h4>
+									</a>
+								</div>								
 							</div>
 		<!-- end of submenu laporan -->
 
@@ -525,6 +431,13 @@
 										</h4>
 									</a>
 								</div>
+								<div class="col-sm-12 col-xs-12 m-b-sm">
+									<a href="{{ URL::route('shop.courier.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+										<h4>
+											Kurir
+										</h4>
+									</a>
+								</div>								
 							</div>
 		<!-- end of submenu pengaturan -->
 
@@ -533,7 +446,7 @@
 								<div class="col-sm-12 col-xs-12 m-b-sm">
 									<a href="{{ URL::route('customer.customer.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
-											Data Customer
+											Data Pelanggan
 										</h4>
 									</a>
 								</div>								
@@ -545,9 +458,9 @@
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('customer.referral.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="#" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
-											Referral
+											Relasi
 										</h4>
 									</a>
 								</div>
