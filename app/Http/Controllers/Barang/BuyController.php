@@ -1,5 +1,5 @@
 <?php 
-namespace App\Http\Controllers\Toko;
+namespace App\Http\Controllers\Barang;
 
 use App\Http\Controllers\AdminController;
 use App\API\Connectors\APIPurchase;
@@ -11,10 +11,10 @@ class BuyController extends AdminController
 	public function __construct()
 	{
 		parent::__construct();
-		$this->page_attributes->title 				= 'Data Pembelian';
-		$this->page_attributes->source 				= 'pages.toko.pembelian.';
+		$this->page_attributes->title 				= 'Data Pengadaan Barang';
+		$this->page_attributes->source 				= 'pages.barang.pembelian.';
 		$this->page_attributes->breadcrumb			=	[
-															'Data Pembelian' 	=> route('shop.buy.index'),
+															'Data Pengadaan Barang' 	=> route('shop.buy.index'),
 														];			
 	}
 
@@ -134,11 +134,11 @@ class BuyController extends AdminController
 			$data 									= null;
 
 			$breadcrumb								=	[
-															'Data Baru' => route('shop.buy.create'),
+															'Baru' => route('shop.buy.create'),
 														];
 
 
-			$this->page_attributes->subtitle 		= 'Data Baru';
+			$this->page_attributes->subtitle 		= 'Baru';
 		}
 		else
 		{

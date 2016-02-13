@@ -1,5 +1,5 @@
 <?php 
-namespace App\Http\Controllers\Toko;
+namespace App\Http\Controllers\konfigurasi;
 
 use App\API\connectors\APICourier;
 use App\Http\Controllers\AdminController;
@@ -12,7 +12,7 @@ class CourierController extends AdminController
 	{
 		parent::__construct();
 		$this->page_attributes->title 				= 'Kurir';
-		$this->page_attributes->source 				= 'pages.toko.kurir.';
+		$this->page_attributes->source 				= 'pages.konfigurasi.kurir.';
 		$this->page_attributes->breadcrumb			=	[
 															'Kurir' 	=> route('shop.courier.index'),
 														];	

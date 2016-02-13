@@ -168,4 +168,8 @@ class ReportController extends AdminController
 
 		return $this->generateView();
 	}
+	
+	public function BuyProduct()
+	{
+	}	
 }

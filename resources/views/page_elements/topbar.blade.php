@@ -28,7 +28,7 @@
 								<li><a href="{{ URL::route('goods.category.index') }}">Kategori</a></li>
 								<li><a href="{{ URL::route('goods.tag.index') }}">Tag</a></li>
 								<li><a href="{{ URL::route('goods.label.index') }}">Label</a></li>
-								<li><a href="#">Pengadaan Barang</a></li>
+								<li><a href="{{ URL::route('shop.buy.index') }}">Pengadaan Barang</a></li>
 							</ul>
 						</li>
 
@@ -40,7 +40,7 @@
 							<ul class="dropdown-menu submenu-desktop">
 								<li><a href="{{ URL::route('report.product.sold') }}">Penjualan Barang</a></li>
 								<li><a href="{{ URL::route('report.voucher.usage') }}">Penggunaan Voucher</a></li>
-								<li><a href="#">Laporan Stok</a></li>
+								<li><a href="{{ URL::route('report.product.stok') }}">Laporan Stok</a></li>
 							</ul>
 						</li>
 
@@ -65,7 +65,7 @@
 							<ul class="dropdown-menu submenu-desktop">
 								<li><a href="{{ URL::route('customer.customer.index') }}">Data Pelanggan</a></li>
 								<li><a href="{{ URL::route('customer.point.index') }}">Poin</a></li>
-								<li><a href="#">Relasi</a></li>
+								<li><a href="{{ URL::route('customer.csr.index') }}">Relasi</a></li>
 							</ul>							
 						</li>
 
@@ -372,7 +372,7 @@
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('goods.label.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('shop.buy.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Pengadaan Barang
 										</h4>
@@ -399,7 +399,7 @@
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="#" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('report.product.stok') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Laporan Stok
 										</h4>
@@ -458,7 +458,7 @@
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="#" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('customer.csr.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Relasi
 										</h4>

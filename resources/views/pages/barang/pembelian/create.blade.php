@@ -131,7 +131,7 @@
 	$( document ).ready(function() {
 		<!-- init microtemplate -->
 		<!-- preload details -->
-		@if(count($data['data']['transactiondetails'] > 0))
+		@if(count($data['data']['transactiondetails'])  > 0)
 			@foreach($data['data']['transactiondetails'] as $key => $valueDetail)
 				$('#tmplt').find('.input-quantity').val({{$valueDetail['quantity']}});
 				$('#tmplt').find('.input-price').val({{$valueDetail['price']}});
