@@ -87,7 +87,8 @@
 					@include('page_elements.indexNavigation', [
 						'newDataRoute' 		=> route('goods.product.create',  ['category_id' => $data['id'], 'category' => $data['name']]),
 						'filterDataRoute' 	=> route('goods.category.show', ['id' => $data['id']]),
-						'filters'			=> []
+						'filters'			=> [],
+						'sorts'				=> $sorts,
 					])
 				</div>
 			</div>

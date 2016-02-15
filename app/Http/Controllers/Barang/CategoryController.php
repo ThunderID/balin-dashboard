@@ -2,8 +2,11 @@
 namespace App\Http\Controllers\Barang;
 
 use App\API\connectors\APICategory;
+use App\API\connectors\APIProduct;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Helper\SortList;
+
 use Input, Session, DB, Redirect, Response, Auth, Collection;
 
 class CategoryController extends AdminController
@@ -79,31 +82,39 @@ class CategoryController extends AdminController
 
 	public function show($id)
 	{
-		//get data 
+		//get data category
 		$APICategory	 							= new APICategory;
 		$category									= $APICategory->getShow($id);
 
 		$this->page_attributes->subtitle 			= $category['data']['name'];
 
-
-		// filters
+		//search
 		if(Input::has('q'))
 		{
-			$filters 								= ['name' => Input::get('q')];
+			$search 								= 	[
+															'name'		=> 	Input::get('q'),
+															'category'	=> 	str_replace(" ", "_", strtolower($category['data']['name'])),
+														];
+
 			$this->page_attributes->search 			= Input::get('q');
-
-			$collection 							= collect($category['data']['products']);
-
-			$result 								= 	$collection->filter(function ($col) {
-															return strpos(strtolower($col['name']), strtolower(Input::get('q'))) !== FALSE;
-														});
-
-			$category['data']['products']			= $result;			
 		}
 		else
 		{
-			$this->page_attributes->search 			= null;
+			$search 								= 	[
+															'category'	=> 	str_replace(" ", "_", strtolower($category['data']['name'])),
+														];
+		}		
+
+		//sort
+		if (Input::has('sort'))
+		{
+			$sort_item 								= explode('-', Input::get('sort'));
+			$sort 									= [$sort_item[0] => $sort_item[1]];
 		}
+		else
+		{
+			$sort									= ['name' => 'asc'];
+		}	
 
 		//get curent page
 		if(is_null(Input::get('page')))
@@ -115,22 +126,30 @@ class CategoryController extends AdminController
 			$page 									= Input::get('page');
 		}
 
+		//get product data
+		$APIProduct	 								= new APIProduct;
+
+		$product 									= $APIProduct->getIndex([
+															'search' 	=> 	$search,
+															'sort' 		=> 	$sort,																		
+															'take'		=> $this->take,
+															'skip'		=> ($page - 1) * $this->take,
+														]);
+
 		//data paging	
-		$collection 								= collect($category['data']['products']	);
+		$this->paginate(route('goods.category.show', ['id' => $category['data']['id']]), $product['data']['count'], $page);
 
-		if(count($collection) != 0)
-		{
-			$result 								= $collection->chunk($this->take);
+		$category['data']['products']				= $product['data']['data'];
 
-			$this->paginate(route('goods.category.show', ['id' => $category['data']['id']]), count($collection), $page);	
+		//sorting
+		$SortList 									= new SortList;
 
-			$category['data']['products']			= $result[($page-1)];
-		}
-		else
-		{
-			$this->paginate(route('goods.category.show', ['id' => $category['data']['id']]), count($collection), $page);	
-		}		
-
+		$this->page_attributes->sorts 				= 	[
+															'titles'	=> ['nama', 'harga', 'stok'],
+															'nama'		=> $SortList->getSortingList('nama'),
+															'harga'		=> $SortList->getSortingList('harga'),
+															'stok'		=> $SortList->getSortingList('stok'),
+														]; 	
 
 		// data here
 		$this->page_attributes->data				= $category['data'];
