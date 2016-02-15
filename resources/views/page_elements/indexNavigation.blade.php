@@ -136,9 +136,9 @@
 					<ul class="nav nav-tabs">
 					@foreach($filters['titles'] as $key => $title)
 						@if($key == 0)
-							<li class="active"><a data-toggle="tab" href="#menu{{$key}}">{{ ucwords($title) }}</a></li>
+							<li class="active"><a data-toggle="tab" href="#menu{{$key}}">{{ ucwords(str_replace('_', ' ',$title)) }}</a></li>
 						@else
-							<li><a data-toggle="tab" href="#menu{{$key}}">{{ ucwords($title) }}</a></li>
+							<li><a data-toggle="tab" href="#menu{{$key}}">{{ ucwords(str_replace('_', ' ',$title)) }}</a></li>
 						@endif
 					@endforeach
 					</ul>
@@ -165,7 +165,7 @@
 											<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
 											<i class="fa fa-circle-thin"></i> 
 										@endif
-											&nbsp; {{ $data }} 
+											&nbsp; {{ ucwords($data) }} 
 										</a>
 									@endforeach
 									</div>	
@@ -220,9 +220,9 @@
 					<ul class="nav nav-tabs">
 					@foreach($sorts['titles'] as $key => $title)
 						@if($key == 0)
-							<li class="active"><a data-toggle="tab" href="#menu_sort{{$key}}">{{ ucwords($title) }}</a></li>
+							<li class="active"><a data-toggle="tab" href="#menu_sort{{$key}}">{{ ucwords(str_replace('_', ' ', $title)) }}</a></li>
 						@else
-							<li><a data-toggle="tab" href="#menu_sort{{$key}}">{{ ucwords($title) }}</a></li>
+							<li><a data-toggle="tab" href="#menu_sort{{$key}}">{{ ucwords(str_replace('_', ' ', $title)) }}</a></li>
 						@endif				
 					@endforeach
 					</ul>	
@@ -249,7 +249,7 @@
 										<a class="btn btn-default ajaxDataSort" onClick="ajaxSorting(this)"  data-sort="{{ $sorts[$title]['code'][$key] }}"  href="javascript:void(0)">
 										<i class="fa fa-circle-thin"></i> 						
 									@endif								
-										&nbsp; {{ $data }} 
+										&nbsp; {{ ucwords($data) }} 
 									</a>
 								@endforeach
 								</div>

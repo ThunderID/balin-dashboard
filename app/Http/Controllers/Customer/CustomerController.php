@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 use App\API\Connectors\APICustomer;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Helper\SortList;
 
 use Input, Session, DB, Redirect, Response, Auth;
 
@@ -62,6 +63,29 @@ class CustomerController extends AdminController
 			$page 									= Input::get('page');
 		}
 
+		//3. sorting
+		if (Input::has('sort'))
+		{
+			$sort_item 								= explode('-', Input::get('sort'));
+			$sort 									= [$sort_item[0] => $sort_item[1]];
+		}
+		else
+		{
+			$sort									= ['name' => 'asc'];
+		}
+
+
+		$SortList 									= new SortList;
+		
+		$this->page_attributes->sorts 				= 	[
+															'titles'		=> ['nama', 'kode_referral', 'total_reference', 'total_poin'],
+															'nama'			=> $SortList->getSortingList('nama'),
+															'kode_referral'	=> $SortList->getSortingList('referralcode'),
+															'total_reference'=> $SortList->getSortingList('totalreference'),
+															'total_poin'	=> $SortList->getSortingList('totalpoint'),
+														]; 
+
+
 		//3. Get data from API
 		$APICustomer 								= new APICustomer;
 
@@ -69,9 +93,7 @@ class CustomerController extends AdminController
 														'search' 	=> 	[
 																			'name' 	=> Input::get('q'),
 																		],
-														'sort' 		=> 	[
-																			'name'	=> 'asc',
-																		],																		
+														'sort' 		=> $sort,																		
 														'take'		=> $this->take,
 														'skip'		=> ($page - 1) * $this->take,
 														]);
