@@ -113,7 +113,7 @@ class CategoryController extends AdminController
 		}
 		else
 		{
-			$sort									= ['name' => 'asc'];
+			$sort									= [];
 		}	
 
 		//get curent page

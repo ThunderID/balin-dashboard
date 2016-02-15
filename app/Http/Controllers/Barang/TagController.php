@@ -115,7 +115,7 @@ class TagController extends AdminController
 		}
 		else
 		{
-			$sort									= ['name' => 'asc'];
+			$sort									= [];
 		}
 
 	

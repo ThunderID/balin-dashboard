@@ -35,14 +35,14 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="table-responsive">
-					<table class="table table-bordered table-hover table-striped">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th class="col-md-1 text-center">No.</th>
-								<th class="col-md-4 text-center">Nama Customer</th>
+								<th class="col-md-4 text-left">Nama Customer</th>
 								<th class="col-md-2 text-center">Expire</th>
-								<th class="col-md-2 text-center">Jumlah Poin</th>
-								<th class="text-center col-md-3">Notes</th>
+								<th class="col-md-2 text-right">Jumlah Poin</th>
+								<th class="col-md-3 text-right">Notes</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -61,7 +61,7 @@
 										<td class="text-left">
 											{{ $dt['user']['name'] }}
 										</td>
-										<td class="text-left">
+										<td class="text-center">
 											@datetime_indo(new Carbon($dt['expired_at']))
 										</td>
 										<td class="text-right">

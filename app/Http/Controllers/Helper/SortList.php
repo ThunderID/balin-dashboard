@@ -123,7 +123,17 @@ class sortList
 																								'bills-asc',
 																								'bills-desc',
 																							]
-																		],																			
+																		],
+												'kadaluarsa'		=> 	[
+																			'subtitle'	=>	[
+																								'Urutkan dari tanggal expire lama ke baru',
+																								'Urutkan dari tanggal expire baru ke lama',
+																							],
+																			'code'		=> 	[
+																								'expired-asc',
+																								'expired-desc',
+																							]
+																		],																		
 											];
 	}
 

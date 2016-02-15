@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 use App\API\Connectors\APIPoint;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Helper\SortList;
 
 use Input, Session, DB, Redirect, Response, Auth;
 
@@ -40,17 +41,38 @@ class PointController extends AdminController
 	public function index()
 	{
 		//1. Check filter 
-		$filters 									= null;
+		$search 									= null;
 
 		if(Input::has('q'))
 		{
-			$filters 								= ['customername' => Input::get('q')];
+			$search 								= ['customername' => Input::get('q')];
 			$this->page_attributes->search 			= Input::get('q');
 		}
 		else
 		{
 			$searchResult							= null;
 		}
+
+
+		//sort
+		if (Input::has('sort'))
+		{
+			$sort_item 								= explode('-', Input::get('sort'));
+			$sort 									= [$sort_item[0] => $sort_item[1]];
+		}
+		else
+		{
+			$sort									= [];
+		}
+
+		$SortList 									= new SortList;
+		
+		$this->page_attributes->sorts 				= 	[
+															'titles'		=> ['kadaluarsa', 'jumlah'],
+															'kadaluarsa'	=> $SortList->getSortingList('kadaluarsa'),
+															'jumlah'		=> $SortList->getSortingList('jumlah'),
+														]; 
+
 
 		//2. Check page
 		if(is_null(Input::get('page')))
@@ -66,12 +88,8 @@ class PointController extends AdminController
 		$APIPoint 									= new APIPoint;
 
 		$point 										= $APIPoint->getIndex([
-														'search' 	=> 	[
-																			'customername' 	=> Input::get('q'),
-																		],
-														'sort' 		=> 	[
-																			'name'	=> 'asc',
-																		],																		
+														'search' 	=> $search,
+														'sort' 		=> $sort,																		
 														'take'		=> $this->take,
 														'skip'		=> ($page - 1) * $this->take,
 														]);
