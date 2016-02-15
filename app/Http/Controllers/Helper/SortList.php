@@ -113,7 +113,17 @@ class sortList
 																								'totalpoint-asc',
 																								'totalpoint-desc',
 																							]
-																		],																		
+																		],
+												'tagihan'			=> 	[
+																			'subtitle'	=>	[
+																								'Urutkan Total tagihan sedikit ke banyak',
+																								'Urutkan Total tagihan banyak ke sedikit',
+																							],
+																			'code'		=> 	[
+																								'bills-asc',
+																								'bills-desc',
+																							]
+																		],																			
 											];
 	}
 

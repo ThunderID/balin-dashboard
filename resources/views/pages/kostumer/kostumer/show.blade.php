@@ -185,7 +185,8 @@
 						'newDataRoute' 		=> '/',
 						'searchLabel'		=> 'cari nomor nota',
 						'filterDataRoute' 	=> route('customer.customer.show', ['id' => $dt['id']]),
-						'filters'			=> []
+						'filters'			=> [],
+						'sorts'				=> $sorts
 					])						
 				</div>				
 			</div>
@@ -201,20 +202,21 @@
 					<div class="col-md-12">
 						<div class="table-responsive">
 							</br>
-							<table class="table table-bordered table-hover table-striped">
+							<table class="table table-hover">
 								<thead>
 									<tr>
 										<th class="text-center">No</th>
-										<th class="text-center">No Nota</th>
+										<th class="text-left">No Nota</th>
 										<th class="text-center">Tanggal</th>
 										<th class="text-center">Status</th>
-										<th class="text-center">Total Tagihan</th>
+										<th class="text-right">Total Tagihan</th>
+										<th class="text-center">Kontrol</th>
 									</tr>
 								</thead>
 								<tbody>
 									@if (count($dt['sales']) == 0)
 										<tr>
-											<td colspan="5">
+											<td colspan="6">
 												<p class="text-center">Tidak ada data</p>
 											</td>
 										</tr>
@@ -228,6 +230,11 @@
 												<td class="text-center">@date_indo(new Carbon($sale['transact_at']))</td>
 												<td class="text-center">{{ $sale['status'] }}</td>
 												<td class="text-right">@money_indo($sale['bills'])</td>
+												<td class="text-center">
+													<a href="#">
+														Detail
+													</a>
+												</td>
 											</tr>
 										@endforeach
 									@endif

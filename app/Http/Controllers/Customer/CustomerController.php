@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\API\Connectors\APICustomer;
+use App\API\Connectors\APISale;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Helper\SortList;
@@ -137,22 +138,42 @@ class CustomerController extends AdminController
 		// filters
 		if(Input::has('q'))
 		{
-			$filters 								= ['name' => Input::get('q')];
+			$search 								= 	[
+															'refnumber'	=> Input::get('q'),
+															'userid'	=> $id,
+														];
 			$this->page_attributes->search 			= Input::get('q');
-
-			$collection 							= collect($customer['data']['sales']);
-
-
-			$result 								= $collection->filter(function ($col) {
-															return strpos(strtolower($col['ref_number']), strtolower(Input::get('q'))) !== FALSE;
-														});			
-
-			$customer['data']['sales']				= $result;		
 		}
 		else
 		{
+			$search 								= 	[
+															'userid'	=> $id,
+														];
+
 			$this->page_attributes->search 			= null;
 		}
+
+
+		// sorting
+		if (Input::has('sort'))
+		{
+			$sort_item 								= explode('-', Input::get('sort'));
+			$sort 									= [$sort_item[0] => $sort_item[1]];
+		}
+		else
+		{
+			$sort									= ['name' => 'asc'];
+		}
+
+
+		$SortList 									= new SortList;
+		
+		$this->page_attributes->sorts 				= 	[
+															'titles'		=> ['tanggal', 'nota', 'tagihan'],
+															'tanggal'		=> $SortList->getSortingList('tanggal'),
+															'nota'			=> $SortList->getSortingList('nota'),
+															'tagihan'		=> $SortList->getSortingList('tagihan'),
+														]; 
 
 		//get curent page
 		if(is_null(Input::get('page')))
@@ -164,21 +185,21 @@ class CustomerController extends AdminController
 			$page 									= Input::get('page');
 		}
 
+		// get data
+		$APISale 									= new APISale;
+
+		$sale 										= $APISale->getIndex([
+														'search' 	=> $search,
+														'sort' 		=> $sort,																		
+														'take'		=> $this->take,
+														'skip'		=> ($page - 1) * $this->take,
+														]);
+
+		$customer['data']['sales']					= $sale['data']['data'];		
+
+
 		//data paging	
-		$collection 								= collect($customer['data']['sales']);
-
-		if(count($collection) != 0)
-		{
-			$result 								= $collection->chunk($this->take);
-
-			$this->paginate(route('customer.customer.show', ['id' => $id]), count($collection), $page);	
-
-			$customer['data']['sales']				= $result[($page-1)];
-		}
-		else
-		{
-			$this->paginate(route('customer.customer.show', ['id' => $id]), count($collection), $page);	
-		}
+		$this->paginate(route('customer.customer.show', ['id' => $id]), $sale['data']['count'], $page);	
 
 
 		//2. Check return status

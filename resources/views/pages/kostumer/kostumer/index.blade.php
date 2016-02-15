@@ -36,15 +36,15 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="table-responsive">
-					<table class="table table-bordered table-hover table-striped">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th class="col-md-1 text-center">No.</th>
-								<th class="col-md-2 text-center">Nama</th>
-								<th class="col-md-2 text-center">Email</th>
-								<th class="col-md-2 text-center">Kode Referral</th>
+								<th class="col-md-2 text-left">Nama</th>
+								<th class="col-md-2 text-left">Email</th>
+								<th class="col-md-2 text-left">Kode Referral</th>
 								<th class="col-md-1 text-center">Total Reference</th>
-								<th class="col-md-2 text-center">Total Poin</th>
+								<th class="col-md-2 text-right">Total Poin</th>
 								<th class="text-center col-md-2">Kontrol</th>
 							</tr>
 						</thead>
