@@ -197,7 +197,7 @@ function filterDateRange(e){
 		return false;
 	}	
 
-	toUrl 		=   toUrl + '?' + 'start=' + start + '&' + 'end=' + end; 
+	toUrl 		= toUrl + '?' + 'start=' + start + '&' + 'end=' + end; 
 
 	toUrl 		= toUrl.replace(/(sort)[^\&]+/, '');
 
@@ -244,17 +244,17 @@ function filterPeriode(e){
 	var toUrl	= url.replace(/(periode)[^\&]+/, '');
 
 	if(url.indexOf("?") == -1) {
-		toUrl 		= toUrl + "?periode[]=" + q;
+		toUrl 	= toUrl + "?periode[]=" + q;
 	}else{
-		toUrl 		= toUrl + "&periode[]=" + q;
+		toUrl 	= toUrl + "&periode[]=" + q;
 	}
 
-	toUrl 			= toUrl.replace(/(sort)[^\&]+/, '');
+	toUrl 		= toUrl.replace(/(sort)[^\&]+/, '');
 
-	toUrl			= toUrl.replace(/(page)[^\&]+/, '');
+	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
 
-	toUrl			= toUrl.replace('?&', '?');
-	toUrl			= toUrl.replace('&&', '&');
+	toUrl		= toUrl.replace('?&', '?');
+	toUrl		= toUrl.replace('&&', '&');
 
 	clearSort();
 
@@ -342,12 +342,12 @@ function ajaxAddSort(e) {
 	var url     = window.location.href;
 	var toUrl	= url.replace(/(sort)[^\&]+/, '');
 
-	toUrl 		= url.replace(/(page)[^\&]+/, '');
+	toUrl 		= toUrl.replace(/(page)[^\&]+/, '');
 
 	if(toUrl.indexOf("?") == -1) {
-		toUrl 		= toUrl + "?sort=" + type;
+		toUrl 	= toUrl + "?sort=" + type;
 	}else{
-		toUrl 		= toUrl + "&sort=" + type;
+		toUrl 	= toUrl + "&sort=" + type;
 	}	
 
 	toUrl		= toUrl.replace('?&', '?');
