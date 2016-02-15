@@ -48,15 +48,12 @@ class ProductController extends AdminController
 	{
 
 		//1. Check filter
-		$filters 									= null;
 		$search 									= [];
 
 		if(Input::has('q'))
 		{
 			$search 								= ['name' 			=> Input::get('q')];
-			$filters 								= 	[
-															'name' 	=> 	Input::get('q')
-														];
+
 			$this->page_attributes->search 			= Input::get('q');
 		}
 		else
