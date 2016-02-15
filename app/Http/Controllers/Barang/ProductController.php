@@ -7,6 +7,7 @@ use App\API\Connectors\APICategory;
 use App\API\Connectors\APILabel;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Helper\SortList;
 
 use Input, Session, DB, Redirect, Response, Auth;
 
@@ -45,6 +46,7 @@ class ProductController extends AdminController
 	 */
 	public function index()
 	{
+
 		//1. Check filter
 		$filters 									= null;
 		$search 									= [];
@@ -164,6 +166,8 @@ class ProductController extends AdminController
 			$key++;
 		}		
 
+		$SortList 									= new SortList;
+
 
 		$this->page_attributes->filters 			= 	[
 															'titles' 	=> $filterTitles,
@@ -171,6 +175,13 @@ class ProductController extends AdminController
 															'kategori'	=> $filterCategories,
 															'label'		=> $filterLabels,
 														];
+		
+		$this->page_attributes->sorts 				= 	[
+															'titles'	=> ['nama', 'harga', 'stok'],
+															'nama'		=> $SortList->getSortingList('nama'),
+															'harga'		=> $SortList->getSortingList('harga'),
+															'stok'		=> $SortList->getSortingList('stok'),
+														]; 														
 
 		//7. Generate view
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'index';

@@ -23,6 +23,7 @@
 				'filterDataRoute' 	=> route('goods.product.index'),
 				'searchLabel'		=>'cari produk',
 				'filters'			=> $filters,
+				'sorts'				=> $sorts,
 			])
 		</div>
 	</div>
