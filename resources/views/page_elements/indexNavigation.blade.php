@@ -52,6 +52,10 @@
     <div class="col-md-7 col-sm-8 col-xs-12">
 		<form action='javascript:void(0)' onSubmit="ajaxSearch(this);">
 			<div class="row" id="filters">
+				@if(!isset($sorts['titles']))
+				<div class="col-md-2 col-sm-3 col-xs-3">
+				</div>
+				@endif	
 				@if(!isset($filters['titles']))
 				<div class="col-md-8 col-sm-7 col-xs-8" style="padding-right:2px;">
 				@else
@@ -88,25 +92,38 @@
 						@endif
 					</div>
 					<div class="hidden-lg hidden-md hidden-sm">
-						<a class="btn btn-default pull-right btn-block" data-toggle="collapse" data-target="#demo">
+						@if(isset($filterActivated))
+						<a class="btn btn-default active pull-right btn-block" data-toggle="collapse" data-target="#demo">
 							<i class="fa fa-list-ol"></i>
 						</a>
+						@else
+						<a class="btn btn-default pull-right btn-block" data-toggle="collapse" data-target="#demo">
+							<i class="fa fa-list-ol"></i>
+						</a>						
+						@endif
 					</div>					
 				</div>				
 				@endif
 
+				@if(isset($sorts['titles']))
 				<div class="col-md-2 col-sm-3 col-xs-3" style="padding-left:2px;">
+					@if(Input::get('sort'))
+						<?php $stat_sort = "active"; ?>
+					@else
+						<?php $stat_sort = null; ?>
+					@endif
 					<div class="hidden-xs">
-						<a class="btn btn-default pull-right btn-block btn-sort"  data-toggle="collapse" data-target="#demo2">
+						<a class="btn btn-default {{ $stat_sort }} pull-right btn-block btn-sort"  data-toggle="collapse" data-target="#demo2">
 							<i class="fa fa-caret-down"></i> &nbsp; Sort
 						</a>	
 					</div>
 					<div class="hidden-lg hidden-md hidden-sm">
-						<a class="btn btn-default pull-right btn-block"  data-toggle="collapse" data-target="#demo2">
+						<a class="btn btn-default {{ $stat_sort }} pull-right btn-block"  data-toggle="collapse" data-target="#demo2">
 							<i class="fa fa-sort-amount-asc"></i>
 						</a>
 					</div>
 				</div>
+				@endif
 
 			</div>
 		</form>
@@ -134,24 +151,24 @@
 								@else
 								<div id="menu{{$key}}" class="tab-pane m-t-md fade">							
 								@endif
-								<div id="filter-{{$key}}">
-								@foreach($filters[$title] as $key => $data)
-									@if(Input::get(strtolower($title)))	
-										@if(in_array(strtolower($data), Input::get(strtolower($title))))
-											<a class="btn btn-default active ajaxDataFilter" onClick="ajaxFilter(this)"  data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
-											<i class="fa fa-check-circle"></i>
+									<div id="filter-{{$key}}">
+									@foreach($filters[$title] as $key => $data)
+										@if(Input::get(strtolower($title)))
+											@if(in_array(strtolower($data), Input::get(strtolower($title))))
+												<a class="btn btn-default active ajaxDataFilter" onClick="ajaxFilter(this)"  data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
+												<i class="fa fa-check-circle"></i>
+											@else
+												<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
+												<i class="fa fa-circle-thin"></i> 
+											@endif
 										@else
 											<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
 											<i class="fa fa-circle-thin"></i> 
 										@endif
-									@else
-										<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
-										<i class="fa fa-circle-thin"></i> 
-									@endif
-										&nbsp; {{ $data }} 
-									</a>
-								@endforeach
-								</div>	
+											&nbsp; {{ $data }} 
+										</a>
+									@endforeach
+									</div>	
 								</div>	
 							@else
 								<div id="menu{{$key}}" class="tab-pane m-t-md fade in active">
@@ -193,13 +210,58 @@
 				@endif
 			</div>
 		</div>
+
 		<div class="row">
 			<div id="demo2" class="collapse sort-panel">
+				@if(isset($sorts['titles']))
 				<div class="col-md-12 panel-body">
 					<h2>Sort by</h2>
-				</div>		
+
+					<ul class="nav nav-tabs">
+					@foreach($sorts['titles'] as $key => $title)
+						@if($key == 0)
+							<li class="active"><a data-toggle="tab" href="#menu_sort{{$key}}">{{ ucwords($title) }}</a></li>
+						@else
+							<li><a data-toggle="tab" href="#menu_sort{{$key}}">{{ ucwords($title) }}</a></li>
+						@endif				
+					@endforeach
+					</ul>	
+
+					<div class="tab-content col-md-12">
+						@foreach($sorts['titles'] as $key => $title)
+							@if($key == 0)
+							<div  id="menu_sort{{$key}}" class="tab-pane m-t-md fade in active">
+							@else
+							<div  id="menu_sort{{$key}}" class="tab-pane m-t-md fade">							
+							@endif
+
+								<div id="sort-{{$key}}">
+								@foreach($sorts[$title]['subtitle'] as $key => $data)
+									@if(Input::get('sort'))	
+										@if(in_array($sorts[$title]['code'][$key], [strtolower(Input::get('sort'))]))
+											<a class="btn btn-default active ajaxDataSort" onClick="ajaxSorting(this)"  data-sort="{{ $sorts[$title]['code'][$key] }}"  href="javascript:void(0)">
+											<i class="fa fa-check-circle"></i> 
+										@else
+											<a class="btn btn-default ajaxDataSort" onClick="ajaxSorting(this)"  data-sort="{{ $sorts[$title]['code'][$key] }}"  href="javascript:void(0)">
+											<i class="fa fa-circle-thin"></i> 
+										@endif
+									@else
+										<a class="btn btn-default ajaxDataSort" onClick="ajaxSorting(this)"  data-sort="{{ $sorts[$title]['code'][$key] }}"  href="javascript:void(0)">
+										<i class="fa fa-circle-thin"></i> 						
+									@endif								
+										&nbsp; {{ $data }} 
+									</a>
+								@endforeach
+								</div>
+
+							</div>
+						@endforeach
+					</div>
+				</div>
+				@endif
 			</div>		
-		</div>		
+		</div>
+
 	</div>
 </div>	
 @else

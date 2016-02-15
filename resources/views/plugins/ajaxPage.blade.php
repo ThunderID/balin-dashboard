@@ -31,7 +31,11 @@ function ajaxSearch(e) {
 
 	toUrl 		= toUrl + "?q=" + q;
 
+	toUrl 		= toUrl.replace(/(sort)[^\&]+/, '');
+
 	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+
+	clearSort();
 
 	ajaxPage(toUrl);
 	window.history.pushState("", "", toUrl);
@@ -60,7 +64,11 @@ function ajaxFilterSearch(e) {
 
 	toUrl		= toUrl.replace('&&', '&');
 
+	toUrl 		= toUrl.replace(/(sort)[^\&]+/, '');
+
 	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+
+	clearSort();
 
 	ajaxPage(toUrl);
 	window.history.pushState("", "", toUrl);
@@ -84,7 +92,11 @@ function ajaxMonthYearRange(e) {
 
 	toUrl 		= toUrl + "?periode=" + q;
 
+	toUrl 		= toUrl.replace(/(sort)[^\&]+/, '');
+
 	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+
+	clearSort();
 
 	ajaxPage(toUrl);
 	window.history.pushState("", "", toUrl);
@@ -106,9 +118,13 @@ function ajaxClearSearch() {
 		}
 	}
 
+	toUrl 		= toUrl.replace(/(sort)[^\&]+/, '');
+
 	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
 
 	$("#demo").collapse('hide');
+
+	clearSort();
 
 	ajaxPage(toUrl);
 	window.history.pushState("", "", toUrl);	
@@ -150,12 +166,16 @@ function ajaxAddFilter(e){
 		toUrl 	= url + "&" + type + "[]=" + filter;
 	}
 
+	toUrl 		= toUrl.replace(/(sort)[^\&]+/, '');
+
+	toUrl		= toUrl.replace('?&', '?');
+	toUrl		= toUrl.replace('&&', '&');
+
 	$(e).addClass("active");
 	$(e).find(".fa").removeClass("fa-circle-thin");
 	$(e).find(".fa").addClass("fa-refresh fa-spin");
 
-	toUrl		= toUrl.replace('?&', '?');
-	toUrl		= toUrl.replace('&&', '&');
+	clearSort();
 
 	ajaxPage(toUrl, id);
 
@@ -179,7 +199,11 @@ function filterDateRange(e){
 
 	toUrl 		=   toUrl + '?' + 'start=' + start + '&' + 'end=' + end; 
 
+	toUrl 		= toUrl.replace(/(sort)[^\&]+/, '');
+
 	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+
+	clearSort();
 
 	ajaxPage(toUrl);
 
@@ -194,7 +218,11 @@ function clearDateRange(e){
 
 	var toUrl	= url.substring(0, url.indexOf('?'));
 	
+	toUrl 		= toUrl.replace(/(sort)[^\&]+/, '');
+
 	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+
+	clearSort();
 
 	ajaxPage(toUrl);
 
@@ -221,11 +249,14 @@ function filterPeriode(e){
 		toUrl 		= toUrl + "&periode[]=" + q;
 	}
 
-	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+	toUrl 			= toUrl.replace(/(sort)[^\&]+/, '');
 
-	toUrl		= toUrl.replace('?&', '?');
-	toUrl		= toUrl.replace('&&', '&');
+	toUrl			= toUrl.replace(/(page)[^\&]+/, '');
 
+	toUrl			= toUrl.replace('?&', '?');
+	toUrl			= toUrl.replace('&&', '&');
+
+	clearSort();
 
 	ajaxPage(toUrl);
 	window.history.pushState("", "", toUrl);	
@@ -245,9 +276,12 @@ function ajaxClearPeriode() {
 		return false;
 	}
 
+	toUrl 		= toUrl.replace(/(sort)[^\&]+/, '');
+
 	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
 
 	clearMonthYear();
+	clearSort();
 
 	ajaxPage(toUrl);
 	window.history.pushState("", "", toUrl);	
@@ -266,9 +300,11 @@ function ajaxRemoveFilter(e) {
 	var toRemove= type + "[]=" + filter;
 	var toUrl	= url.replace(toRemove, '');	
 
-	toUrl		= toUrl.replace('?&', '?');
+	toUrl 		= toUrl.replace(/(sort)[^\&]+/, '');
 
 	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+
+	toUrl		= toUrl.replace('?&', '?');
 
 	$(e).removeClass("active");
 	$(e).find(".fa").removeClass("fa-check-circle");
@@ -276,10 +312,77 @@ function ajaxRemoveFilter(e) {
 
 	var id 		= $(e).parent().attr('id');
 
+	clearSort();
+
 	ajaxPage(toUrl, id);
 	window.history.pushState("", "", toUrl);
  }
 {{-- End of Filter --}}
+
+
+{{-- Sorting --}}
+function ajaxSorting(e) {
+	var type 	= $(e).attr("data-sort").toLowerCase();
+
+	var url     = window.location.href;
+
+	if(url.indexOf("sort=" + type) == -1){
+		ajaxAddSort(e);
+	}else{
+		ajaxRemoveSort(e);
+	}
+}
+{{-- End of Sorting --}}
+
+{{-- add Sorting --}}
+function ajaxAddSort(e) {
+	var type 	= $(e).attr("data-sort").toLowerCase();
+	var id 		= $(e).parent().attr('id');
+
+	var url     = window.location.href;
+	var toUrl	= url.replace(/(sort)[^\&]+/, '');
+
+	if(url.indexOf("?") == -1) {
+		toUrl 		= toUrl + "?sort=" + type;
+	}else{
+		toUrl 		= toUrl + "&sort=" + type;
+	}	
+
+	toUrl		= toUrl.replace('?&', '?');
+	toUrl		= toUrl.replace('??', '?');
+	toUrl		= toUrl.replace('&&', '&');
+
+	clearSort();
+
+	$(e).addClass("active");
+	$(e).find(".fa").removeClass("fa-circle-thin");
+	$(e).find(".fa").addClass("fa-refresh fa-spin");
+
+	ajaxPage(toUrl, id);
+	window.history.pushState("", "", toUrl);
+}
+{{-- end of add Sorting --}}
+
+
+{{-- remove Sorting --}}
+function ajaxRemoveSort(e) {
+	var type 	= $(e).attr("data-sort").toLowerCase();
+	var id 		= $(e).parent().attr('id');
+
+	var url     = window.location.href;
+	var toUrl	= url.replace(/(sort)[^\&]+/, '');
+
+	toUrl		= toUrl.replace('?&', '?');
+	toUrl		= toUrl.replace('&&', '&');
+
+	$(e).removeClass("active");
+	$(e).find(".fa").removeClass("fa-check-circle");
+	$(e).find(".fa").addClass("fa-refresh fa-spin");
+
+	ajaxPage(toUrl, id);
+	window.history.pushState("", "", toUrl);	
+}
+{{-- end of remove Sorting --}}
 
 
 {{--Ajax Paging --}}
@@ -310,6 +413,13 @@ function ajaxPage(toUrl,e) {
 {{-- UI--}}
 	function clearMonthYear(){
 		$('#monthyear').val("");
+	}
+
+	function clearSort(){
+		$('.ajaxDataSort').removeClass("active");
+		$('.ajaxDataSort').find(".fa").removeClass("fa-check-circle");
+		$('.ajaxDataSort').find(".fa").removeClass("fa-spin");
+		$('.ajaxDataSort').find(".fa").addClass("fa-circle-thin");
 	}
 {{-- End of UI--}}
 
