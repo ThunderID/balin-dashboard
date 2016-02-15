@@ -2,8 +2,11 @@
 namespace App\Http\Controllers\Barang;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Helper\SortList;
+
 use App\API\Connectors\APIPurchase;
 use App\API\Connectors\APIProduct;
+
 use Input, Session, DB, Redirect, Response, Auth, Carbon,App;
 
 class BuyController extends AdminController
@@ -43,6 +46,7 @@ class BuyController extends AdminController
 			$this->page_attributes->search 			= Input::get('q');
 		}
 
+
 		//get curent page
 		if(is_null(Input::get('page')))
 		{
@@ -53,16 +57,37 @@ class BuyController extends AdminController
 			$page 									= Input::get('page');
 		}
 
+
+		//sorting
+		if (Input::has('sort'))
+		{
+			$sort_item 								= explode('-', Input::get('sort'));
+			$sort 									= [$sort_item[0] => $sort_item[1]];
+		}
+		else
+		{
+			$sort									= [];
+		}
+
+		$SortList 									= new SortList;
+
+		$this->page_attributes->sorts 				= 	[
+															'titles'	=> ['tanggal','nota', 'jumlah'],
+															'tanggal'	=> $SortList->getSortingList('tanggal'),
+															'nota'		=> $SortList->getSortingList('nota'),
+															'jumlah'	=> $SortList->getSortingList('jumlah'),
+														];
+
+
 		// data here
 		$APIPurchase 								= new APIPurchase;
 
+
 		$purchase 									= $APIPurchase->getIndex([
-														'search' 	=> 	$search,
-														'sort' 		=> 	[
-																			'transact_at'	=> 'asc',
-																		],																		
-														'take'		=> $this->take,
-														'skip'		=> ($page - 1) * $this->take,
+															'search' 	=> $search,
+															'sort' 		=> $sort,
+															'take'		=> $this->take,
+															'skip'		=> ($page - 1) * $this->take,
 														]);
 
 		$this->page_attributes->data				= 	[

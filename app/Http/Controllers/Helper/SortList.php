@@ -53,7 +53,37 @@ class sortList
 																						'label-asc',
 																						'label-desc',
 																					]
-																],																	
+																],	
+												'tanggal'	=> 	[
+																	'subtitle'	=>	[
+																						'Urutkan dari tanggal lama ke baru',
+																						'Urutkan dari tanggal baru ke lama',
+																					],
+																	'code'		=> 	[
+																						'newest-asc',
+																						'newest-desc',
+																					]
+																],
+												'nota'		=> 	[
+																	'subtitle'	=>	[
+																						'Urutkan nomor nota kecil ke besar',
+																						'Urutkan nomor nota besar ke kecil',
+																					],
+																	'code'		=> 	[
+																						'refnumber-asc',
+																						'refnumber-desc',
+																					]
+																],
+												'jumlah'		=> 	[
+																	'subtitle'	=>	[
+																						'Urutkan jumlah kecil ke besar',
+																						'Urutkan jumlah besar ke kecil',
+																					],
+																	'code'		=> 	[
+																						'amount-asc',
+																						'amount-desc',
+																					]
+																],																																	
 											];
 	}
 

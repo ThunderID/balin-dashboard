@@ -21,7 +21,8 @@
 				'newDataRoute' 		=> route('shop.buy.create'),
 				'filterDataRoute' 	=> route('shop.buy.index'),
 				'searchLabel' 		=> 'cari nomor nota',
-				'filters'			=> ['titles' => ['periode']]
+				'filters'			=> ['titles' => ['periode']],
+				'sorts'				=> $sorts,
 			])
 		</div>
 	</div>

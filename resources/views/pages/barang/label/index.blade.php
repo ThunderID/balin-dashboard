@@ -15,7 +15,7 @@
 				'disabled'			=> 'false',
 				'newDataRoute' 		=> '/',
 				'filterDataRoute' 	=> route('goods.label.index'),
-				'filters'			=> []
+				'filters'			=> [],
 			])			
 		</div>  
 	</div>
