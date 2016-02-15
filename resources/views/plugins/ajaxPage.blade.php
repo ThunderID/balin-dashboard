@@ -342,7 +342,9 @@ function ajaxAddSort(e) {
 	var url     = window.location.href;
 	var toUrl	= url.replace(/(sort)[^\&]+/, '');
 
-	if(url.indexOf("?") == -1) {
+	toUrl 		= url.replace(/(page)[^\&]+/, '');
+
+	if(toUrl.indexOf("?") == -1) {
 		toUrl 		= toUrl + "?sort=" + type;
 	}else{
 		toUrl 		= toUrl + "&sort=" + type;
