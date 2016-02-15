@@ -92,8 +92,8 @@ class CategoryController extends AdminController
 		if(Input::has('q'))
 		{
 			$search 								= 	[
-															'name'		=> 	Input::get('q'),
-															'category'	=> 	str_replace(" ", "_", strtolower($category['data']['name'])),
+															'name'			=> 	Input::get('q'),
+															'categories'	=> 	str_replace(" ", "-", strtolower($category['data']['slug'])),
 														];
 
 			$this->page_attributes->search 			= Input::get('q');
@@ -101,7 +101,7 @@ class CategoryController extends AdminController
 		else
 		{
 			$search 								= 	[
-															'category'	=> 	str_replace(" ", "_", strtolower($category['data']['name'])),
+															'categories'	=> 	str_replace(" ", "-", strtolower($category['data']['slug'])),
 														];
 		}		
 
@@ -130,8 +130,8 @@ class CategoryController extends AdminController
 		$APIProduct	 								= new APIProduct;
 
 		$product 									= $APIProduct->getIndex([
-															'search' 	=> 	$search,
-															'sort' 		=> 	$sort,																		
+															'search' 	=> $search,
+															'sort' 		=> $sort,																		
 															'take'		=> $this->take,
 															'skip'		=> ($page - 1) * $this->take,
 														]);

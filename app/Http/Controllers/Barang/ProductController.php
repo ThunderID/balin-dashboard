@@ -78,12 +78,12 @@ class ProductController extends AdminController
 
 		if (Input::has('sort'))
 		{
-			$sort_item 							= explode('-', Input::get('sort'));
-			$sort 								= [$sort_item[0] => $sort_item[1]];
+			$sort_item 								= explode('-', Input::get('sort'));
+			$sort 									= [$sort_item[0] => $sort_item[1]];
 		}
 		else
 		{
-			$sort								= ['name' => 'asc'];
+			$sort									= ['name' => 'asc'];
 		}
 
 		//2. Check page
@@ -100,8 +100,8 @@ class ProductController extends AdminController
 		$APIProduct 								= new APIProduct;
 
 		$product 									= $APIProduct->getIndex([
-															'search' 	=> 	$search,
-															'sort' 		=> 	$sort,																		
+															'search' 	=> $search,
+															'sort' 		=> $sort,																		
 															'take'		=> $this->take,
 															'skip'		=> ($page - 1) * $this->take,
 														]);
