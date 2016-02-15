@@ -201,11 +201,11 @@ class CourierController extends AdminController
 		//image
 		$tmpImage 									= 	[
 															'id' 			=> "",
-															'thumbnail'		=> Input::get('thumbnail'),
-															'image_xs'		=> Input::get('image_xs'),
-															'image_sm'		=> Input::get('image_sm'),
-															'image_md'		=> Input::get('image_md'),
-															'image_lg'		=> Input::get('image_lg'),
+															'thumbnail'		=> $this->isDataEmpty(Input::get('thumbnail')),
+															'image_xs'		=> $this->isDataEmpty(Input::get('image_xs')),
+															'image_sm'		=> $this->isDataEmpty(Input::get('image_sm')),
+															'image_md'		=> $this->isDataEmpty(Input::get('image_md')),
+															'image_lg'		=> $this->isDataEmpty(Input::get('image_lg')),
 															'is_default'	=> TRUE,
 														];	
 
@@ -328,5 +328,15 @@ class CourierController extends AdminController
 		$this->page_attributes->success 			= "Data Ongkos Kirim Telah Ditambahkan";
 		
 		return $this->generateRedirectRoute('shop.courier.show' , ['id' => $id]);	
+	}
+
+	public function isDataEmpty($data)
+	{
+		if(is_null($data))
+		{
+			return "";
+		}
+
+		return $data;
 	}
 }
