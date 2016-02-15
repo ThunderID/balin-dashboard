@@ -16,8 +16,8 @@ class sortList
 		$this->sorts 					= 	[
 												'nama'	=> 	[
 																	'subtitle'	=>	[
-																						'Urutkan berdasarkan nama A-Z',
-																						'Urutkan berdasarkan nama Z-A'
+																						'Urutkan nama A ke Z',
+																						'Urutkan nama Z ke A'
 																					],
 																	'code'		=>	[
 																						'name-asc',
@@ -26,8 +26,8 @@ class sortList
 																],
 												'harga'		=>	[
 																	'subtitle'	=>	[
-																						'Urutkan berdasarkanharga paling rendah',
-																						'Urutkan berdasarkan harga paling tinggi',
+																						'Urutkan harga rendah ke tinggi',
+																						'Urutkan harga tinggi ke rendah',
 																					],
 																	'code'		=> 	[
 																						'price-asc',
@@ -36,14 +36,24 @@ class sortList
 																],
 												'stok'		=> 	[
 																	'subtitle'	=>	[
-																						'Urutkan berdasarkan stok paling sedikit',
-																						'Urutkan berdasarkan stok paling banyak', 
+																						'Urutkan stok sedikit ke banyak',
+																						'Urutkan stok banyak ke sedikit', 
 																					],
 																	'code'		=> 	[
 																						'stock-asc',
 																						'stock-desc',
 																					]
-																]					
+																],
+												'label'		=> 	[
+																	'subtitle'	=>	[
+																						'Urutkan dari A ke Z',
+																						'Urutkan dari Z ke A', 
+																					],
+																	'code'		=> 	[
+																						'label-asc',
+																						'label-desc',
+																					]
+																],																	
 											];
 	}
 

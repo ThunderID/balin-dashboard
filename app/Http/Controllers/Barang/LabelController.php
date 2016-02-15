@@ -5,6 +5,7 @@ use App\API\Connectors\APILabel;
 use App\API\Connectors\APIProduct;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Helper\SortList;
 
 use Input, Session, DB, Redirect, Response, Auth;
 
@@ -32,6 +33,17 @@ class LabelController extends AdminController
 			$this->page_attributes->search 			= Input::get('q');
 		}
 
+		//sort
+		if (Input::has('sort'))
+		{
+			$sort_item 							= explode('-', Input::get('sort'));
+			$sort 								= [$sort_item[0] => $sort_item[1]];
+		}
+		else
+		{
+			$sort								= ['name' => 'asc'];
+		}			
+
 		//get curent page
 		if(is_null(Input::get('page')))
 		{
@@ -48,7 +60,8 @@ class LabelController extends AdminController
 		$labels										= $APILabel->getIndex([
 															'search' 	=> 	[
 																				'name' 	=> Input::get('q'),
-																			],																	
+																			],			
+															'sort'		=> $sort,
 															'take'		=> $this->take,
 															'skip'		=> ($page - 1) * $this->take,
 														]);
@@ -61,6 +74,15 @@ class LabelController extends AdminController
 		{
 			$this->page_attributes->data['data']  			= array_merge($this->page_attributes->data['data'], [$key => ['id' => $value['label'] ,'name' => ucwords(str_replace('_', ' ', $value['label'])) ]] );
 		}
+
+		//sorting
+
+		$SortList 									= new SortList;
+
+		$this->page_attributes->sorts 				= 	[
+															'titles'	=> ['label'],
+															'label'		=> $SortList->getSortingList('label'),
+														]; 			
 
 		//breadcrumb
 		$breadcrumb 								= 	[];	
@@ -85,7 +107,18 @@ class LabelController extends AdminController
 		if(Input::has('q'))
 		{
 			$this->page_attributes->search 			= Input::get('q');
-		}		
+		}	
+
+		//sort
+		if (Input::has('sort'))
+		{
+			$sort_item 							= explode('-', Input::get('sort'));
+			$sort 								= [$sort_item[0] => $sort_item[1]];
+		}
+		else
+		{
+			$sort								= ['name' => 'asc'];
+		}	
 
 		//get curent page
 		if(is_null(Input::get('page')))
@@ -104,12 +137,20 @@ class LabelController extends AdminController
 																				'labelname' => $id,
 																				'name' 	=> Input::get('q')
 																			],
-															'sort' 		=> 	[
-																				'name'	=> 'asc',
-																			],																		
+															'sort' 		=> $sort,																		
 															'take'		=> $this->take,
 															'skip'		=> ($page - 1) * $this->take,
 														]);
+
+		$SortList 									= new SortList;
+
+		$this->page_attributes->sorts 				= 	[
+															'titles'	=> ['nama', 'harga', 'stok'],
+															'nama'		=> $SortList->getSortingList('nama'),
+															'harga'		=> $SortList->getSortingList('harga'),
+															'stok'		=> $SortList->getSortingList('stok'),
+														]; 	
+
 
 		$this->page_attributes->data				= 	[
 															'id' => $id,

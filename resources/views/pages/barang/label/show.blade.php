@@ -63,7 +63,8 @@
 					@include('page_elements.indexNavigation', [
 						'newDataRoute' 		=> route('goods.product.create', ['label_id' => $data['id'], 'label' => $data['name']]),
 						'filterDataRoute' 	=> route('goods.tag.show', ['id' => $data['id']]),
-						'filters'			=> []
+						'filters'			=> [],
+						'sorts'				=> $sorts,
 					])						
 				</div>
 			</div>		
@@ -86,14 +87,17 @@
 										<th class="col-md-2 text-left">
 											Thumbnail
 										</th>
-										<th class="col-md-4">
+										<th class="col-md-2">
 											Nama Produk
 										</th>
-										<th class="col-md-2 text-center">
+										<th class="col-md-1 text-center">
 											UPC
 										</th>
 										<th class="col-md-2 text-center">
 											Stok
+										</th>
+										<th class="col-md-2 text-center">
+											Harga
 										</th>
 										<th class="text-center">
 											Kontrol
@@ -126,6 +130,9 @@
 												<td class="text-center">
 													{{$dt['current_stock']}}
 												</td>
+												<td class="text-right">
+													 @money_indo($dt['price'])
+												</td>												
 												<td class="text-center">
 		        									<a href="{{ route('goods.product.show', $dt['id']) }}"> Detail</a>,
 													<a href="{{ route('goods.product.edit', $dt['id']) }}"> Edit</a>, 
