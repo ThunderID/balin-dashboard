@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Laporan;
 use App\API\Connectors\APIReport;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Helper\SortList;
 
 use Input, Session, DB, Redirect, Response, Auth, Carbon;
 
@@ -128,6 +129,16 @@ class ReportController extends AdminController
 			$searchResult							= null;
 		}
 
+		if (Input::has('sort'))
+		{
+			$sort_item 								= explode('-', Input::get('sort'));
+			$sort 									= [$sort_item[0] => $sort_item[1]];
+		}
+		else
+		{
+			$sort									= ['name' => 'asc'];
+		}
+
 		//2. Check page
 		if(is_null(Input::get('page')))
 		{
@@ -142,13 +153,18 @@ class ReportController extends AdminController
 		$APIReport 									= new APIReport;
 
 		$report 									= $APIReport->getSoldProduct([
-														'search' 	=> 	$search,
-														'sort' 		=> 	[
-																			'name'	=> 'asc',
-																		],																		
+														'search' 	=> $search,
+														'sort' 		=> $sort,																		
 														'take'		=> $this->take,
 														'skip'		=> ($page - 1) * $this->take,
 														]);
+
+		$SortList 									= new SortList;
+
+		$this->page_attributes->sorts 				= 	[
+															'titles'	=> ['nama'],
+															'nama'		=> $SortList->getSortingList('nama'),
+														]; 		
 
 		$this->page_attributes->data				= 	[
 															'report' => $report,

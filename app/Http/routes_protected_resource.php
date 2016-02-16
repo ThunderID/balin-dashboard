@@ -45,8 +45,10 @@ Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan\\'], function()
 	*
 	*/
 	Route::get('penggunaan/voucher',							['uses' => 'ReportController@voucherusage', 'as' => 'report.voucher.usage']);
-	Route::get('penjualan/barang',								['uses' => 'ReportController@soldproduct', 'as' => 'report.product.sold']);
 	Route::get('pembelian/barang',								['uses' => 'ReportController@buyproduct', 'as' => 'report.product.stok']);
+
+	Route::resource('penjualan',  	'SaleController',			['names' => ['index' => 'report.product.sale', 'show' => 'report.product.sale.detail'], 'only' => ['show', 'index']]);
+
 });
 
 /**

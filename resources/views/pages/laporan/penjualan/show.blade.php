@@ -78,16 +78,16 @@
 				<div class="col-md-12">
 					<div class="table-responsive">
 						</br>
-						<table class="table table-bordered table-hover table-striped">
+						<table class="table table-hover ">
 							<thead>
 								<tr>
 									<th class="text-center"></th>
 									<th class="text-center">Nama Barang</th>
 									<th class="text-center">Ukuran</th>
 									<th class="text-center">Qty</th>
-									<th class="text-center">Harga</th>
-									<th class="text-center">Diskon</th>
-									<th class="text-center">Sub Total</th>
+									<th class="text-right">Harga</th>
+									<th class="text-right">Diskon</th>
+									<th class="text-right">Sub Total</th>
 								</tr>
 							</thead>
 							<tbody>

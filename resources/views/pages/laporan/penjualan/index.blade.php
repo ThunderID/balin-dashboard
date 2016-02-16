@@ -22,7 +22,8 @@
 				'newDataRoute' 		=> '/',
 				'filterDataRoute' 	=> route('shop.sell.index'),
 				'searchLabel' 		=> 'cari nomor nota',
-				'filters'			=> $filters
+				'filters'			=> $filters,
+				'sorts'				=> $sorts,
 			])
 		</div>  
 	</div>
@@ -38,7 +39,7 @@
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="table-responsive">
-					<table class="table table-bordered table-hover table-striped">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th class="col-md-1 text-center">
@@ -53,13 +54,13 @@
 								<th class="col-md-2">
 									Nama Customer
 								</th>
-								<th class="col-md-2 text-center">
+								<th class="col-md-2 text-right">
 									Tagihan
 								</th>
-								<th class="col-md-1 text-center">
+								<th class="col-md-2 text-center">
 									Status
 								</th>
-								<th class="col-md-2 text-center">
+								<th class="col-md-1 text-center">
 									Kontrol
 								</th>							
 							</tr>
@@ -93,7 +94,7 @@
 											{{$dt['status']}}
 										</td>
 										<td class="text-center">
-											<a href="{{ route('shop.sell.show', $dt['id']) }}"> Detail</a>
+											<a href="{{ route('report.product.sale.detail', $dt['id']) }}"> Detail</a>
 										</td>    
 									</tr>       
 								@endforeach 
