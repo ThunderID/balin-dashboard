@@ -53,7 +53,7 @@
 				<div class="col-md-12">
 					<div class="table-responsive">
 						</br>
-						<table class="table table-bordered table-hover table-striped">
+						<table class="table table-bordered table-hover">
 							<thead>
 								<tr>
 									<th class="text-center"></th>

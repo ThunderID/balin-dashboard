@@ -51,13 +51,9 @@
 			<!-- tab slider -->
 					<div role="tabpanel" class="tab-pane active" id="slider">
 						<div class="panel-group" id="accordionslider" style="margin-top:5px;">
+							<h2>Slider Baru</h2>
 							<div class="table-responsive">
-								<table class="table table-bordered table-hover table-striped">
-									<thead>
-										<tr>
-											<th class="text-center" colspan="4">Slider Baru</th>
-										</tr>
-									</thread>
+								<table class="table">
 									<tbody>									    								
 									    {!! Form::open(['url' => route('config.website.store' , ['type' => 'slider'])]) !!}
 									    <tr>
@@ -88,14 +84,16 @@
 									</tbody>
 								</table>
 							</div>
+
+							<div class="row clearfix">
+								&nbsp;
+							</div>
+							<h2>Data Slider</h2>
 							<div class="table-responsive">
-								<table class="table table-bordered table-hover table-striped">
-									<thead>
+								<table class="table table-hover">
+									<thead>										
 										<tr>
-											<th class="text-center" colspan="4">Data Slider</th>
-										</tr>										
-										<tr>
-											<th class="col-md-6 text-center">Slider</th>
+											<th class="col-md-6 text-left">Slider</th>
 											<th class="col-md-2 text-center">Tanggal Tampil</th>
 											<th class="col-md-2 text-center">Status</th>
 											<th class="col-md-2 text-center">Kontrol</th>
@@ -168,7 +166,7 @@
 					<div role="tabpanel" class="tab-pane" id="toko">
 						<div class="panel-group" id="accordionToko" style="margin-top:5px;">
 							<div class="table-responsive">
-								<table class="table table-bordered table-hover table-striped">
+								<table class="table table-hover">
 									<tbody>
 										@forelse($data['storeinfo']['data']['data'] as $key => $dt)
 										    {!! Form::open(['url' => route('config.website.update', $dt['id']), 'method' => 'PATCH']) !!}
