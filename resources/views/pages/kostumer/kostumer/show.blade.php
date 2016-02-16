@@ -231,9 +231,7 @@
 												<td class="text-center">{{ $sale['status'] }}</td>
 												<td class="text-right">@money_indo($sale['bills'])</td>
 												<td class="text-center">
-													<a href="#">
-														Detail
-													</a>
+													<a href="{{ route('report.product.sale.detail', $sale['id']) }}"> Detail</a>, 
 												</td>
 											</tr>
 										@endforeach
