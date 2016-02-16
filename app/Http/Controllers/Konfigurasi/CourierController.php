@@ -2,7 +2,9 @@
 namespace App\Http\Controllers\konfigurasi;
 
 use App\API\connectors\APICourier;
+
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Helper\SortList;
 
 use Input, Session, DB, Redirect, Response, Auth, Excel, Carbon;
 
@@ -44,15 +46,26 @@ class CourierController extends AdminController
 			$page 									= Input::get('page');
 		}
 
+
+		//sort
+		if (Input::has('sort'))
+		{
+			$sort_item 								= explode('-', Input::get('sort'));
+			$sort 									= [$sort_item[0] => $sort_item[1]];
+		}
+		else
+		{
+			$sort									= ['name' => 'asc'];
+		}
+
+
 		// data here
 		$APICourier 								= new APICourier;
 		$courier 									= $APICourier->getIndex([
 															'search' 	=> 	[
 																				'name' 	=> Input::get('q'),
 																			],
-															'sort' 		=> 	[
-																				'name'	=> 'asc',
-																			],																		
+															'sort' 		=> $sort,																		
 															'take'		=> $this->take,
 															'skip'		=> ($page - 1) * $this->take,
 														]);
@@ -60,6 +73,15 @@ class CourierController extends AdminController
 		$this->page_attributes->data				= 	[
 															'courier' 	=> $courier['data']
 														];
+
+
+		//sorting
+		$SortList 									= new SortList;
+
+		$this->page_attributes->sorts 				= 	[
+															'titles'	=> ['nama'],
+															'nama'		=> $SortList->getSortingList('nama'),
+														]; 	
 
 		//paginate
 		$this->paginate(route('shop.courier.index'), $courier['data']['count'], $page);

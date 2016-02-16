@@ -20,7 +20,8 @@
 			@include('page_elements.indexNavigation', [
 				'newDataRoute' 		=> route('shop.courier.create'),
 				'filterDataRoute' 	=> route('shop.courier.index'),
-				'filters'			=> []
+				'filters'			=> [],
+				'sorts'				=> $sorts,
 			])
 		</div>
 	</div>
@@ -40,7 +41,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="table-responsive">
-					<table class="table table-bordered table-hover table-striped">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th class="text-center">No.</th>
