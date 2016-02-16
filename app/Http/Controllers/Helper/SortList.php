@@ -153,6 +153,26 @@ class sortList
 																								'quota-asc',
 																								'quota-desc',
 																							]
+																		],
+												'promo'				=> 	[
+																			'subtitle'	=>	[
+																								'Urutkan dari harga promo rendah ke tinggi',
+																								'Urutkan dari harga promo tinggi ke rendah',
+																							],
+																			'code'		=> 	[
+																								'promo-asc',
+																								'promo-desc',
+																							]
+																		],
+												'discount'				=> 	[
+																			'subtitle'	=>	[
+																								'Urutkan dari diskon rendah ke tinggi',
+																								'Urutkan dari diskon tinggi ke rendah',
+																							],
+																			'code'		=> 	[
+																								'discount-asc',
+																								'discount-desc',
+																							]
 																		],																		
 											];
 	}

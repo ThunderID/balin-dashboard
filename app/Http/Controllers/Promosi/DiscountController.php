@@ -7,6 +7,7 @@ use App\API\Connectors\APICategory;
 use App\API\Connectors\APILabel;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Helper\SortList;
 
 use Input, Session, DB, Redirect, Response, Auth;
 
@@ -69,6 +70,16 @@ class DiscountController extends AdminController
 			$search['labelname']					= str_replace(" ", "_", Input::get('label'));
 		}
 
+		if (Input::has('sort'))
+		{
+			$sort_item 								= explode('-', Input::get('sort'));
+			$sort 									= [$sort_item[0] => $sort_item[1]];
+		}
+		else
+		{
+			$sort									= ['name' => 'asc'];
+		}
+
 
 		//2. Check page
 		if(is_null(Input::get('page')))
@@ -84,10 +95,8 @@ class DiscountController extends AdminController
 		$APIProduct 								= new APIProduct;
 
 		$product 									= $APIProduct->getIndex([
-														'search' 	=> 	$search,
-														'sort' 		=> 	[
-																			'name'	=> 'asc',
-																		],																		
+														'search' 	=> $search,
+														'sort' 		=> $sort,																		
 														'take'		=> $this->take,
 														'skip'		=> ($page - 1) * $this->take,
 														]);
@@ -147,6 +156,16 @@ class DiscountController extends AdminController
 			$filterLabels[$key]						= ucwords(str_replace("_", " ",$value['label']));
 			$key++;
 		}		
+
+		$SortList 									= new SortList;
+
+		$this->page_attributes->sorts 				= 	[
+															'titles'	=> ['nama', 'harga', 'promo', 'discount'],
+															'nama'		=> $SortList->getSortingList('nama'),
+															'harga'		=> $SortList->getSortingList('harga'),
+															'promo'		=> $SortList->getSortingList('promo'),
+															'discount'	=> $SortList->getSortingList('discount'),
+														]; 	
 
 
 		$this->page_attributes->filters 			= 	[
