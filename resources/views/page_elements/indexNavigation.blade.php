@@ -155,14 +155,14 @@
 									@foreach($filters[$title] as $key => $data)
 										@if(Input::get(strtolower($title)))
 											@if(in_array(strtolower($data), Input::get(strtolower($title))))
-												<a class="btn btn-default active ajaxDataFilter" onClick="ajaxFilter(this)"  data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
+												<a class="btn btn-default active ajaxDataFilter btn-label" onClick="ajaxFilter(this)"  data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
 												<i class="fa fa-check-circle"></i>
 											@else
-												<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
+												<a class="btn btn-default ajaxDataFilter btn-label" onClick="ajaxFilter(this)" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
 												<i class="fa fa-circle-thin"></i> 
 											@endif
 										@else
-											<a class="btn btn-default ajaxDataFilter" onClick="ajaxFilter(this)" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
+											<a class="btn btn-default ajaxDataFilter btn-label" onClick="ajaxFilter(this)" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
 											<i class="fa fa-circle-thin"></i> 
 										@endif
 											&nbsp; {{ ucwords($data) }} 
@@ -239,14 +239,14 @@
 								@foreach($sorts[$title]['subtitle'] as $key => $data)
 									@if(Input::get('sort'))	
 										@if(in_array($sorts[$title]['code'][$key], [strtolower(Input::get('sort'))]))
-											<a class="btn btn-default active ajaxDataSort" onClick="ajaxSorting(this)"  data-sort="{{ $sorts[$title]['code'][$key] }}"  href="javascript:void(0)">
+											<a class="btn btn-default active ajaxDataSort btn-label" onClick="ajaxSorting(this)"  data-sort="{{ $sorts[$title]['code'][$key] }}"  href="javascript:void(0)">
 											<i class="fa fa-check-circle"></i> 
 										@else
-											<a class="btn btn-default ajaxDataSort" onClick="ajaxSorting(this)"  data-sort="{{ $sorts[$title]['code'][$key] }}"  href="javascript:void(0)">
+											<a class="btn btn-default ajaxDataSort btn-label" onClick="ajaxSorting(this)"  data-sort="{{ $sorts[$title]['code'][$key] }}"  href="javascript:void(0)">
 											<i class="fa fa-circle-thin"></i> 
 										@endif
 									@else
-										<a class="btn btn-default ajaxDataSort" onClick="ajaxSorting(this)"  data-sort="{{ $sorts[$title]['code'][$key] }}"  href="javascript:void(0)">
+										<a class="btn btn-default ajaxDataSort btn-label" onClick="ajaxSorting(this)"  data-sort="{{ $sorts[$title]['code'][$key] }}"  href="javascript:void(0)">
 										<i class="fa fa-circle-thin"></i> 						
 									@endif								
 										&nbsp; {{ ucwords($data) }} 
