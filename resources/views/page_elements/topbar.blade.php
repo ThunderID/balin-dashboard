@@ -41,6 +41,8 @@
 								<li><a href="{{ URL::route('report.product.sale') }}">Laporan Penjualan</a></li>
 								<li><a href="{{ URL::route('report.voucher.usage') }}">Laporan Penggunaan Voucher</a></li>
 								<li><a href="{{ URL::route('report.product.stok') }}">Laporan Stok</a></li>
+								<li><a href="{{ URL::route('report.product.stok') }}">Laporan Cart</a></li>
+								<li><a href="{{ URL::route('report.product.stok') }}">Laporan Transaksi Batal</a></li>
 							</ul>
 						</li>
 
@@ -404,7 +406,21 @@
 											Laporan Stok
 										</h4>
 									</a>
-								</div>								
+								</div>	
+								<div class="col-sm-12 col-xs-12 m-b-sm">
+									<a href="{{ URL::route('report.product.stok') }}" class="btn btn-default btn-block btn-sm pull-left">
+										<h4>
+											Laporan Cart
+										</h4>
+									</a>
+								</div>	
+								<div class="col-sm-12 col-xs-12 m-b-sm">
+									<a href="{{ URL::route('report.product.stok') }}" class="btn btn-default btn-block btn-sm pull-left">
+										<h4>
+											Laporan Transaksi Batal
+										</h4>
+									</a>
+								</div>																								
 							</div>
 		<!-- end of submenu laporan -->
 
