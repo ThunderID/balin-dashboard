@@ -4,6 +4,7 @@ namespace App\Http\Controllers\konfigurasi;
 use App\API\Connectors\APIAdmin;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Helper\SortList;
 
 use Input, Session, DB, Redirect, Response, Auth, Validator;
 
@@ -61,6 +62,16 @@ class AdministrativeController extends AdminController
 															'role'		=> ['admin', 'staff', 'store manager'],
 														];
 
+		if (Input::has('sort'))
+		{
+			$sort_item 								= explode('-', Input::get('sort'));
+			$sort 									= [$sort_item[0] => $sort_item[1]];
+		}
+		else
+		{
+			$sort									= ['name' => 'asc'];
+		}
+
 		//2. Check page
 		if(is_null(Input::get('page')))
 		{
@@ -75,10 +86,8 @@ class AdministrativeController extends AdminController
 		$APIAdmin 									= new APIAdmin;
 
 		$admin 										= $APIAdmin->getIndex([
-														'search' 	=> 	$search,
-														'sort' 		=> 	[
-																			'name'	=> 'asc',
-																		],																		
+														'search' 	=> $search,
+														'sort' 		=> $sort,																		
 														'take'		=> $this->take,
 														'skip'		=> ($page - 1) * $this->take,
 														]);
@@ -87,12 +96,19 @@ class AdministrativeController extends AdminController
 															'admin' => $admin,
 														];
 
+		$SortList 									= new SortList;
+
+		$this->page_attributes->sorts 				= 	[
+															'titles'	=> ['nama'],
+															'nama'		=> $SortList->getSortingList('nama'),
+														]; 	
+
 		//4. Generate paginator
 		$this->paginate(route('config.administrative.index'), $admin['data']['count'], $page);
 
 		//5. Generate breadcrumb
-		$breadcrumb								=	[
-													];
+		$breadcrumb									=	[
+														];
 
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 		

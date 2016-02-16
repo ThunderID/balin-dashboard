@@ -22,6 +22,7 @@
 				'filterDataRoute' 	=> route('config.administrative.index'),
 				'searchLabel' 		=> 'cari nama',
 				'filters'			=> $filters,
+				'sorts'				=> $sorts,
 			])
 		</div>
 	</div>
@@ -43,8 +44,8 @@
 						<thead>
 							<tr>
 								<th class="col-md-1 text-center">No.</th>
-								<th class="col-md-3 text-center">Nama</th>
-								<th class="col-md-3 text-center">Email</th>
+								<th class="col-md-3 text-left">Nama</th>
+								<th class="col-md-3 text-left">Email</th>
 								<th class="col-md-2 text-center">Role</th>
 								<th class="col-md-3 text-center">Kontrol</th>
 							</tr>
