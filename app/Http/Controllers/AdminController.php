@@ -10,7 +10,7 @@ abstract class AdminController extends Controller
 {
 	protected $page_attributes;
 	protected $errors;
-	protected $take 				= 10;
+	protected $take 				= 15;
 
 	function __construct() 
 	{
