@@ -6231,6 +6231,9 @@ body.fixed-sidebar.mini-navbar .navbar-default .nav li a span {
 .btn-w-m {
   min-width: 120px; }
 
+.btn-label {
+  margin-bottom: 5px; }
+
 .btn-primary.btn-outline {
   color: #1ab394; }
 
