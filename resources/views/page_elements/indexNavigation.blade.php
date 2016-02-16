@@ -299,7 +299,6 @@
 		$('.btn-sort').find('.fa').removeClass('fa-caret-up')
 		$('.btn-sort').find('.fa').addClass('fa-caret-down')
 	});	
-
 @append
 
 @section('script_plugin')
