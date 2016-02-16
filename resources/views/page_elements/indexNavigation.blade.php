@@ -38,28 +38,28 @@
 	<div class="col-md-5 col-sm-4 hidden-xs">
 		@if($disabled == false)
 			<a class="btn btn-default" href="{{ $newDataRoute }}"><i class="fa fa-plus"></i>&nbsp; {{$newDataLabel}} </a>
-		@else
-			<a class="btn btn-default disabled" href="#"><i class="fa fa-plus"></i>&nbsp; {{$newDataLabel}} </a>
 		@endif
 	</div>
 	<div class="hidden-lg hidden-md hidden-sm col-xs-12 m-b-md">
 		@if($disabled == false)
 			<a class="btn btn-default" href="{{ $newDataRoute }}"><i class="fa fa-plus"></i>&nbsp; {{$newDataLabel}}</a>
-		@else
-			<a class="btn btn-default disabled" href="#"><i class="fa fa-plus"></i>&nbsp; {{$newDataLabel}}</a>
 		@endif			
 	</div>
     <div class="col-md-7 col-sm-8 col-xs-12">
 		<form action='javascript:void(0)' onSubmit="ajaxSearch(this);">
 			<div class="row" id="filters">
-				@if(!isset($sorts['titles']))
-				<div class="col-md-2 col-sm-3 col-xs-3">
-				</div>
-				@endif	
 				@if(!isset($filters['titles']))
-				<div class="col-md-8 col-sm-7 col-xs-8" style="padding-right:2px;">
+					@if(!isset($sorts['titles']))
+						<div class="col-md-10 col-sm-10 col-xs-11" style="padding-right:2px;">
+					@else
+						<div class="col-md-8 col-sm-7 col-xs-8" style="padding-right:2px;">
+					@endif
 				@else
-				<div class="col-md-6 col-sm-4 col-xs-3" style="padding-right:2px;">
+					@if(!isset($sorts['titles']))
+					<div class="col-md-8 col-sm-7 col-xs-6" style="padding-right:2px;">
+					@else
+					<div class="col-md-6 col-sm-4 col-xs-3" style="padding-right:2px;">
+					@endif					
 				@endif
 					{!! Form::input('text', 'q', Null ,
 							[
