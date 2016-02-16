@@ -133,6 +133,26 @@ class sortList
 																								'expired-asc',
 																								'expired-desc',
 																							]
+																		],
+												'kode'				=> 	[
+																			'subtitle'	=>	[
+																								'Urutkan dari kode A ke Z',
+																								'Urutkan dari kode Z ke A',
+																							],
+																			'code'		=> 	[
+																								'code-asc',
+																								'code-desc',
+																							]
+																		],
+												'quota'				=> 	[
+																			'subtitle'	=>	[
+																								'Urutkan dari kuota sedikit ke banyak',
+																								'Urutkan dari kuota banyak ke sedikit',
+																							],
+																			'code'		=> 	[
+																								'quota-asc',
+																								'quota-desc',
+																							]
 																		],																		
 											];
 	}

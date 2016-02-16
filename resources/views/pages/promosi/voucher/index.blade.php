@@ -22,6 +22,7 @@
 				'filterDataRoute' 	=> route('promote.voucher.index'),
 				'searchLabel' 		=> 'cari kode',
 				'filters'			=> $filters,				
+				'sorts'				=> $sorts,				
 			])
 		</div>
 	</div>
@@ -48,7 +49,7 @@
 								<th class="col-md-2 text-center">Kode</th>
 								<th class="col-md-3 text-center">Masa Berlaku</th>
 								<th class="col-md-2 text-center">Tipe</th>
-								<th class="col-md-1 text-center">Nilai</th>
+								<th class="col-md-1 text-center">Jumlah</th>
 								<th class="col-md-1 text-center">Quota</th>
 								<th class="col-md-2 text-center">Kontrol</th>
 							</tr>
@@ -71,6 +72,7 @@
 										</td>
 										<td class="text-center">
 											@datetime_indo(new Carbon($dt['started_at']))
+											 s/d
 											@datetime_indo(new Carbon($dt['expired_at']))
 										</td>
 										<td class="text-left">

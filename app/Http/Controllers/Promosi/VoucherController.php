@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Promosi;
 use App\API\Connectors\APIVoucher;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Helper\SortList;
 
 use Input, Session, DB, Redirect, Response, Auth;
 
@@ -55,6 +56,17 @@ class VoucherController extends AdminController
 		if(Input::has('tipe'))
 		{
 			$search['type']							= str_replace(" ", "_", Input::get('tipe')[0]);
+		}
+
+		//sort
+		if (Input::has('sort'))
+		{
+			$sort_item 								= explode('-', Input::get('sort'));
+			$sort 									= [$sort_item[0] => $sort_item[1]];
+		}
+		else
+		{
+			$sort									= ['name' => 'asc'];
 		}		
 
 		$this->page_attributes->filters 			= 	[
@@ -77,16 +89,25 @@ class VoucherController extends AdminController
 		$APIVoucher 								= new APIVoucher;
 
 		$voucher 									= $APIVoucher->getIndex([
-														'search' 	=> 	$search,
-														'sort' 		=> 	[
-																			'code'	=> 'asc',
-																		],																		
+														'search' 	=> $search,
+														'sort' 		=> $sort,																		
 														'take'		=> $this->take,
 														'skip'		=> ($page - 1) * $this->take,
 														]);
 
 		$this->page_attributes->data				= 	[
 															'voucher' => $voucher,
+														];
+
+
+		$SortList 									= new SortList;
+
+		$this->page_attributes->sorts 				= 	[
+															'titles'	=> ['kode', 'tanggal', 'jumlah', 'kuota'],
+															'kode'		=> $SortList->getSortingList('kode'),
+															'tanggal'	=> $SortList->getSortingList('tanggal'),
+															'jumlah'	=> $SortList->getSortingList('jumlah'),
+															'kuota'		=> $SortList->getSortingList('quota'),
 														];
 
 		//4. Generate paginator

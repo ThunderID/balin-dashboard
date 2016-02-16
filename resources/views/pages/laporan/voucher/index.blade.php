@@ -19,7 +19,8 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			@include('page_elements.dateRangeNavigation', [
-				'filterDataRoute' 	=> route('report.voucher.usage')
+				'filterDataRoute' 	=> route('report.voucher.usage'),
+				'sorts'				=> $sorts,
 			])
 		</div>
 	</div>
