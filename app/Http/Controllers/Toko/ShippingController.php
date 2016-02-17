@@ -130,14 +130,11 @@ class ShippingController extends AdminController
 		}
 
 		//5. Generate view
-		if(!empty($id))
-		{
-			$this->page_attributes->success 		= "Pesanan sedang dalam pengiriman!";
-		}
-		else
-		{
-			$this->page_attributes->success 		= "Pesanan sedang dalam pengiriman!";
-		}
+		$this->page_attributes->success 			= 	[
+															'title' 		=> 'Pesanan sudah dikirim. ',
+															'action'		=> 	route('report.product.sale.detail', ['id' => $saleid]),
+															'actionTitle'	=> 'Klik disini untuk melihat Invoice barang.',
+														];
 
 		return $this->generateRedirectRoute('admin.dashboard', ['tab' => 'toko']);
 	}

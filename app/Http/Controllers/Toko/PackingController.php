@@ -113,7 +113,7 @@ class PackingController extends AdminController
 		//5. Generate view
 		//5. Generate view
 		$this->page_attributes->success 			= 	[
-															'title' 		=> 'Pesanan sudah di packing! ',
+															'title' 		=> 'Pesanan sudah dipacking! ',
 															'action'		=> 	route('report.product.sale.detail', ['id' => $saleid]),
 															'actionTitle'	=> 'Klik disini untuk melihat Invoice barang.',
 														];

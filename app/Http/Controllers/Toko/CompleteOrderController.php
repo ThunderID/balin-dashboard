@@ -128,14 +128,11 @@ class CompleteOrderController extends AdminController
 		}
 
 		//5. Generate view
-		if(!empty($id))
-		{
-			$this->page_attributes->success 		= "Pesanan sudah di diterima pembeli";
-		}
-		else
-		{
-			$this->page_attributes->success 		= "Pesanan sudah di diterima pembeli";
-		}
+		$this->page_attributes->success 			= 	[
+															'title' 		=> 'Pesanan sudah diterima pembeli. ',
+															'action'		=> 	route('report.product.sale.detail', ['id' => $saleid]),
+															'actionTitle'	=> 'Klik disini untuk melihat Invoice barang.',
+														];
 
 		return $this->generateRedirectRoute('admin.dashboard', ['tab' => 'toko']);
 	}
