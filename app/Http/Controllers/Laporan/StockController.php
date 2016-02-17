@@ -1,26 +1,26 @@
 <?php 
-namespace App\Http\Controllers\Barang;
+namespace App\Http\Controllers\Laporan;
 
 use App\API\Connectors\APIStock;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Helper\SortList;
 
 use Input, Session, DB, Redirect, Response, Auth, Carbon;
-
 /**
- * Handle stock information
+ * Handle report controller
  * 
- * @author cmooy
+ * @author budi
  */
 class StockController extends AdminController
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->page_attributes->title 				= 'Stok';
-		$this->page_attributes->source 				= 'pages.barang.stok.';
+		$this->page_attributes->title 				= 'Laporan Stok';
+		$this->page_attributes->source 				= 'pages.laporan.stok.';
 		$this->page_attributes->breadcrumb			=	[
-															'Stok' 	=> route('goods.stock.index'),
+															'Laporan Stok' 	=> route('report.stock.product'),
 														];	
         $this->middleware('password.needed', ['only' => ['destroy']]);
 	}
@@ -47,7 +47,7 @@ class StockController extends AdminController
 			$tmpdate 								= "01-" . Input::get('periode') . " 00:00:00";
 
 			$search['ondate'] 						= 	[
-															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->format('Y-m-d H:i:s'),
+															"",
 															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->addMonths(1)->format('Y-m-d H:i:s'),
 														];
 
@@ -58,11 +58,10 @@ class StockController extends AdminController
 
 
 			$search['ondate'] 						= 	[
-															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->format('Y-m-d H:i:s'),
+															"",
 															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->addMonths(1)->format('Y-m-d H:i:s'),
 														];
 		}
-
 
 		if(Input::has('q'))
 		{
@@ -70,6 +69,20 @@ class StockController extends AdminController
 			$this->page_attributes->search 			= Input::get('q');
 		}
 
+		if(Input::has('size'))
+		{
+			$search['size']							= Input::get('size');
+		}		
+
+		if (Input::has('sort'))
+		{
+			$sort_item 								= explode('-', Input::get('sort'));
+			$sort 									= [$sort_item[0] => $sort_item[1]];
+		}
+		else
+		{
+			$sort									= ['name' => 'asc'];
+		}
 
 		//2. Check page
 		if(is_null(Input::get('page')))
@@ -81,12 +94,13 @@ class StockController extends AdminController
 			$page 									= Input::get('page');
 		}
 
+
 		//3. Get data from API
 		$APIStock 									= new APIStock;
 
 		$product 									= $APIStock->getIndex([
 															'search' 	=> $search,
-															'sort' 		=> $sort,																		
+															'sort' 		=> $sort,		
 															'take'		=> $this->take,
 															'skip'		=> ($page - 1) * $this->take,
 														]);
@@ -95,8 +109,20 @@ class StockController extends AdminController
 															'product' => $product,
 														];
 
+		$this->page_attributes->filters				= 	[
+															'titles' 	=> ['size'], 
+															'size' 		=> ['15','15½','16']
+														];
+
+		$SortList 									= new SortList;
+		$this->page_attributes->sorts 				= 	[
+															'titles'			=> ['stockinventory', 'stockout'],
+															'stockinventory'	=> $SortList->getSortingList('stockinventory'),
+															'stockout'			=> $SortList->getSortingList('stockout'),
+														]; 														
+
 		//4. Generate paginator
-		$this->paginate(route('goods.stock.index'), $product['data']['count'], $page);
+		$this->paginate(route('report.stock.product'), $product['data']['count'], $page);
 
 		//5. Generate breadcrumb
 		$breadcrumb 								= [];	
@@ -130,7 +156,7 @@ class StockController extends AdminController
 		{
 			$this->errors 							= $product['message'];
 			
-			return $this->generateRedirectRoute('goods.stock.index');	
+			return $this->generateRedirectRoute('report.stock.product');	
 		}
 
 		$this->page_attributes->subtitle 			= $product['data']['product']['name'];
@@ -176,13 +202,13 @@ class StockController extends AdminController
 		{
 			$result 								= $collection->chunk($this->take);
 
-			$this->paginate(route('goods.stock.show', ['id' => $id]), count($collection), $page);	
+			$this->paginate(route('report.stock.product.detail', ['id' => $id]), count($collection), $page);	
 
 			$product['data']['details']				= $result[($page-1)];
 		}
 		else
 		{
-			$this->paginate(route('goods.stock.show', ['id' => $id]), count($collection), $page);	
+			$this->paginate(route('report.stock.product.detail', ['id' => $id]), count($collection), $page);	
 		}
 
 
@@ -193,7 +219,7 @@ class StockController extends AdminController
 
 		//3. Generate breadcrumb
 		$breadcrumb 								=	[
-															$product['data']['product']['name'] => route('goods.stock.show', ['id' => $id])
+															$product['data']['product']['name'] => route('report.stock.product.detail', ['id' => $id])
 														];	
 
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
@@ -202,5 +228,5 @@ class StockController extends AdminController
 		$this->page_attributes->source 				= $this->page_attributes->source . 'show';
 
 		return $this->generateView();
-	}	
+	}		
 }

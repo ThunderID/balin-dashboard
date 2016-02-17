@@ -195,8 +195,13 @@
 												<a class="btn btn-default active ajaxDataFilter btn-label" onClick="ajaxFilter(this)"  data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
 												<i class="fa fa-check-circle"></i>
 											@else
-												<a class="btn btn-default ajaxDataFilter btn-label" onClick="ajaxFilter(this)" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
-												<i class="fa fa-circle-thin"></i> 
+												@if(in_array($data, Input::get($title)))
+													<a class="btn btn-default active ajaxDataFilter btn-label" onClick="ajaxFilter(this)"  data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
+													<i class="fa fa-check-circle"></i>												
+												@else
+													<a class="btn btn-default ajaxDataFilter btn-label" onClick="ajaxFilter(this)" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">
+													<i class="fa fa-circle-thin"></i> 
+												@endif
 											@endif
 										@else
 											<a class="btn btn-default ajaxDataFilter btn-label" onClick="ajaxFilter(this)" data-filter="{{ str_replace(' ', '%20', $data) }}" data-type="{{$title}}" href="javascript:void(0)">

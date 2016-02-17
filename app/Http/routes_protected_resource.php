@@ -49,6 +49,8 @@ Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan\\'], function()
 	Route::get('rekap/penjualan',								['uses' => 'RecapController@sale', 'as' => 'report.recap.sale']);
 	Route::resource('penjualan',  	'SaleController',			['names' => ['index' => 'report.product.sale', 'show' => 'report.product.sale.detail'], 'only' => ['show', 'index']]);
 
+	Route::resource('stok/barang',  	'StockController',		['names' => ['index' => 'report.stock.product', 'show' => 'report.stock.product.detail'], 'only' => ['show', 'index']]);
+
 });
 
 /**
@@ -162,7 +164,6 @@ Route::group(['prefix' => 'toko', 'namespace' => 'Toko\\'], function()
 	*
 	*/
 
-	Route::resource('stok',  	'StockController',			['names' => ['index' => 'goods.stock.index', 'show' => 'goods.stock.show'], 'only' => ['show', 'index']]);
 
 
 

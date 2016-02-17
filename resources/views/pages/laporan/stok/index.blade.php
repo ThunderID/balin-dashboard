@@ -11,7 +11,12 @@
 
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			@include('page_elements.navigationDateAndSearch')
+			@include('page_elements.indexNavigation', [
+				'type' 				=> 'date',
+				'searchLabel'		=>'cari produk',
+				'filters'			=> $filters,
+				'sorts'				=> $sorts,
+			])			
 		</div>
 	</div>	
 	
@@ -19,7 +24,7 @@
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12 m-b-md">
 				@include('page_elements.searchResult', [
-					'closeSearchLink' 	=> route('goods.stock.index') 
+					'closeSearchLink' 	=> route('report.stock.product') 
 				])
 			</div>
 		</div>
@@ -30,11 +35,11 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="table-responsive">
-					<table class="table table-bordered table-hover table-striped">
+					<table class="table table-hover">
 						<thead>
 							<tr>
 								<th class="text-center col-md-1">No.</th>
-								<th class="text-center col-md-2">SKU</th>
+								<th class="text-left col-md-2">SKU</th>
 								<th class="text-center col-md-3">Nama Produk</th>
 								<th class="text-center col-md-2">Ukuran</th>
 								<th class="text-center col-md-1">Stok Gudang</th>
@@ -61,7 +66,7 @@
 										<td class="text-left">
 											{{ $dt['product']['name'] }}
 										</td>
-										<td class="text-left">
+										<td class="text-center">
 											{{ $dt['size'] }}
 										</td>
 										<td class="text-center">
@@ -71,7 +76,7 @@
 											{{ ($dt['sold_item']) }}
 										</td>
 										<td class="text-center">
-											<a href="{{ route('goods.stock.show', $dt['id']) }}"> Detail</a>
+											<a href="{{ route('report.stock.product.detail', $dt['id']) }}"> Detail</a>
 										</td>
 									</tr>
 								@endforeach 

@@ -24,6 +24,7 @@
 		<div class="wrapper white-bg">
 			@yield('content')			
 		</div>
+		</br>
 					
 
 		<!-- modals -->

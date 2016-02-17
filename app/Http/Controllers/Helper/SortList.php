@@ -164,7 +164,7 @@ class sortList
 																								'promo-desc',
 																							]
 																		],
-												'discount'				=> 	[
+												'discount'			=> 	[
 																			'subtitle'	=>	[
 																								'Urutkan dari diskon rendah ke tinggi',
 																								'Urutkan dari diskon tinggi ke rendah',
@@ -172,6 +172,26 @@ class sortList
 																			'code'		=> 	[
 																								'discount-asc',
 																								'discount-desc',
+																							]
+																		],
+												'stockinventory'	=> 	[
+																			'subtitle'	=>	[
+																								'Urutkan dari stok gudang rendah ke tinggi',
+																								'Urutkan dari stok gudang tinggi ke rendah',
+																							],
+																			'code'		=> 	[
+																								'stockinventory-asc',
+																								'stockinventory-desc',
+																							]
+																		],
+												'stockout'	=> 	[
+																			'subtitle'	=>	[
+																								'Urutkan dari stok keluar rendah ke tinggi',
+																								'Urutkan dari stok keluar tinggi ke rendah',
+																							],
+																			'code'		=> 	[
+																								'stockout-asc',
+																								'stockout-desc',
 																							]
 																		],																		
 											];
