@@ -148,6 +148,8 @@ function ajaxFilter(e) {
 
 	var url     = window.location.href;
 
+	url 		= url.replace('%C2%BD', '½');
+
 	if(url.indexOf(type + "[]=" + filter) == -1){
 		ajaxAddFilter(e);
 	}else{
@@ -305,6 +307,7 @@ function ajaxRemoveFilter(e) {
 	filter 		= filter.replace(" ","%20"); 
 
 	var url     = window.location.href;
+	url 		= url.replace('%C2%BD', '½');
 
 	var toRemove= type + "[]=" + filter;
 	var toUrl	= url.replace(toRemove, '');	
