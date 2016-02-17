@@ -18,10 +18,9 @@
 
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			@include('page_elements.dateRangeNavigation', [
-				'filterDataRoute' 	=> route('report.voucher.usage'),
-				'sorts'				=> $sorts,
-			])
+			@include('page_elements.navigationDateAndSearch')
+			
+
 		</div>
 	</div>
 
@@ -37,7 +36,7 @@
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="table-responsive">
-					<table class="table table-hover">
+					<table class="table ">
 						<thead>
 							<tr>
 								<th class="col-md-1 text-center">
@@ -52,22 +51,22 @@
 								<th class="col-md-1 text-center">
 									Qty
 								</th>
-								<th class="col-md-1 text-center">
+								<th class="col-md-1 text-right">
 									Harga
 								</th>
-								<th class="col-md-1 text-center">
+								<th class="col-md-1 text-right">
 									Total
 								</th>
-								<th class="col-md-1 text-center">
+								<th class="col-md-1 text-right">
 									Ongkir
 								</th>
-								<th class="col-md-1 text-center">
+								<th class="col-md-1 text-right">
 									Potongan Point
 								</th>
-								<th class="col-md-1 text-center">
+								<th class="col-md-1 text-right">
 									Potongan Transfer
 								</th>
-								<th class="col-md-1 text-center">
+								<th class="col-md-1 text-right">
 									Total Bayar
 								</th>
 								<th class="col-md-1 text-center">
@@ -85,45 +84,39 @@
 							@else
 								@foreach($data['report']['data']['data'] as $key => $dt)
 									<tr>
-										<td class="text-center">
+										<td class="text-center" rowspan="{{ count($dt['transactiondetails']) }}">
 											{{ ($paging->perPage() * ($paging->currentPage() - 1)) + $key + 1}}
 										</td>
-										<td class="text-left">
+										<td class="text-left" rowspan="{{ count($dt['transactiondetails']) }}">
 											{{ $dt['user']['name'] }}
 										</td>
 										<td class="text-left">
-											@foreach($dt['transactiondetails'] as $detail)
-												{{ $detail['varian']['product']['name'] }} (Size : {{ $detail['varian']['size'] }})
-											@endforeach
+											{{ $dt['transactiondetails'][0]['varian']['product']['name'] }} (Size : {{ $dt['transactiondetails'][0]['varian']['size'] }})
 										</td>
 										<td class="text-center">
-											@foreach($dt['transactiondetails'] as $detail)
-												{{ $detail['quantity'] }}
-											@endforeach
+											{{ $dt['transactiondetails'][0]['quantity'] }}
 										</td>
 										<td class="text-right">
-											@foreach($dt['transactiondetails'] as $detail)
-												@money_indo($detail['price'])
-											@endforeach
+											@money_indo($dt['transactiondetails'][0]['price'])
 										</td>
-										<td class="text-right">
+										<td class="text-right" rowspan="{{ count($dt['transactiondetails']) }}">
 											@money_indo($dt['amount'])
 										</td>
-										<td class="text-right">
+										<td class="text-right" rowspan="{{ count($dt['transactiondetails']) }}">
 											@money_indo($dt['shipping_cost'])
 										</td>
-										<td class="text-right">
+										<td class="text-right" rowspan="{{ count($dt['transactiondetails']) }}">
 											@foreach($dt['paidpointlogs'] as $point)
 												@money_indo(abs($point['amount']))
 											@endforeach
 										</td>
-										<td class="text-right">
+										<td class="text-right" rowspan="{{ count($dt['transactiondetails']) }}">
 											@money_indo($dt['unique_number'])
 										</td>
-										<td class="text-right">
+										<td class="text-right" rowspan="{{ count($dt['transactiondetails']) }}">
 											@money_indo($dt['payment']['amount'])
 										</td>
-										<td class="text-center">
+										<td class="text-center" rowspan="{{ count($dt['transactiondetails']) }}">
 											@foreach($dt['paidpointlogs'] as $point)
 												@if(isset($point['referencepointvoucher']))
 													{{$point['referencepointvoucher']['referencevoucher']['code']}}
@@ -134,7 +127,21 @@
 												@endif
 											@endforeach
 										</td>
-									</tr>       
+									</tr>    
+
+									@for ($x = 1; $x < count($dt['transactiondetails']); $x++)
+									<tr>
+										<td class='text-left'>
+											{{ $dt['transactiondetails'][$x]['varian']['product']['name'] }} (Size : {{ $dt['transactiondetails'][$x]['varian']['size'] }})
+										</td>
+										<td class='text-center'>
+											{{ $dt['transactiondetails'][$x]['quantity'] }}
+										</td>
+										<td class='text-right'>
+											@money_indo($dt['transactiondetails'][$x]['price'])
+										</td>
+									</tr>
+									@endfor									
 								@endforeach 
 							@endif
 						</tbody>

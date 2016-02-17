@@ -78,7 +78,7 @@
 				<div class="col-md-12">
 					<div class="table-responsive">
 						</br>
-						<table class="table table-hover ">
+						<table class="table">
 							<thead>
 								<tr>
 									<th class="text-center"></th>
