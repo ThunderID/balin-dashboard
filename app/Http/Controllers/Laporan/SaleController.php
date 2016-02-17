@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Laporan;
 use App\API\Connectors\APISale;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Helper\SortList;
 
 use Input, Session, DB, Redirect, Response, Auth;
 /**
@@ -25,6 +26,7 @@ class SaleController extends AdminController
 	{
 		//1. Check filter
 		$search 									= [];
+		$sort 										= [];
 
 		if(Input::has('periode'))
 		{
@@ -50,16 +52,40 @@ class SaleController extends AdminController
 		{
 			$search['status']						= Input::get('status');
 		}
+		else
+		{
+			$search['status']						= ['wait','paid','packed','shipping','delivered'];
+		}
 
 
 		$this->page_attributes->filters				= 	[
 															'titles' 	=> ['periode','status'], 
 															'periode' 	=> [],
-															 'status' 	=> ['cart','wait','paid','packed','shipping','delivered','canceled','abandoned']]
+															 'status' 	=> ['wait','paid','packed','shipping','delivered']]
 														;
 
 
-		//2. Check page
+		//2. Sorting
+		if (Input::has('sort'))
+		{
+			$sort_item 								= explode('-', Input::get('sort'));
+			$sort 									= [$sort_item[0] => $sort_item[1]];
+		}
+		else
+		{
+			$sort									= [];
+		}
+
+		$SortList 									= new SortList;
+		$this->page_attributes->sorts 				= 	[
+															'titles'	=> ['tanggal', 'nota', 'tagihan'],
+															'tanggal'	=> $SortList->getSortingList('tanggal'),
+															'nota'		=> $SortList->getSortingList('nota'),
+															'tagihan'	=> $SortList->getSortingList('tagihan'),
+														]; 	
+
+
+		//3. Check page
 		if(is_null(Input::get('page')))
 		{
 			$page 									= 1;
@@ -69,21 +95,19 @@ class SaleController extends AdminController
 			$page 									= Input::get('page');
 		}
 
-		//3. Generate breadcrumb
+		//4. Generate breadcrumb
 		$breadcrumb 								=	[
 															'Laporan Penjualan' 		=> route('report.product.sale'),
 														];	
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 														
 
-		//4. Get data from API
+		//5. Get data from API
 		$APISale 									= new APISale;
 
 		$sale 										= $APISale->getIndex([
-														'search' 	=> 	$search,
-														'sort' 		=> 	[
-																			'transact_at'	=> 'asc',
-																		],																		
+														'search' 	=> $search,
+														'sort' 		=> $sort,																		
 														'take'		=> $this->take,
 														'skip'		=> ($page - 1) * $this->take,
 														]);
@@ -92,15 +116,15 @@ class SaleController extends AdminController
 															'sale' => $sale,
 														];
 
-		//5. Generate paginator
+		//6. Generate paginator
 		$this->paginate(route('report.product.sale'), $sale['data']['count'], $page);
 
-		//6. Generate breadcrumb
+		//7. Generate breadcrumb
 		$breadcrumb								=	[
 													];
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
-		//7. Generate view
+		//8. Generate view
 		$this->page_attributes->source 				=  $this->page_attributes->source . '.index';
 
 		return $this->generateView();
