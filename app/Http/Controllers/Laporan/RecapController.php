@@ -67,8 +67,6 @@ class RecapController extends AdminController
 
 
 		$this->page_attributes->filters				= 	[
-															'titles' 		=> ['pembayaran'], 
-															'pembayaran' 	=> ['Cash','Voucher']
 														];
 
 
