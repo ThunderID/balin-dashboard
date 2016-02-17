@@ -88,7 +88,7 @@
 			                                        </td>
 			                                        <td>
 														<p>[{{$value['ref_number']}}] {{$value['user']['name']}}</p>
-														<p>@money_indo($value['amount'])</p>
+														<p>@money_indo($value['bills'])</p>
 			                                        </td>
 			                                        <td class="col-xs-1"><a href="{{route('shop.pay.create', ['id' => $value['id']])}}">Validasi</a></td>
 			                                    </tr>

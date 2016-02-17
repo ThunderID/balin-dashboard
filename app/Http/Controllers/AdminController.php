@@ -52,7 +52,7 @@ abstract class AdminController extends Controller
   		}
 
   		// return view
-		return $this->layout;		
+		return $this->layout;
 	}
 
 
@@ -60,9 +60,26 @@ abstract class AdminController extends Controller
 	{
 		if(count($this->errors) == 0)
 		{
+			$title 				= null;
+			$action 			= null;
+			$actionTitle		= null;
+
+			if(is_array($this->page_attributes->success))
+			{
+				$title			= $this->page_attributes->success['title'];
+				$action			= $this->page_attributes->success['action'];
+				$actionTitle	= $this->page_attributes->success['actionTitle'];
+			}
+			else
+			{
+				$title			= $this->page_attributes->success;
+			}
+
 			return Redirect::route($to, $parameter)
-					->with('msg',$this->page_attributes->success)
-					->with('msg-type', 'success');
+					->with('msg',$title)
+					->with('msg-type', 'success')
+					->with('msg-action', $action)
+					->with('msg-title', $actionTitle);
 		}
 		else
 		{

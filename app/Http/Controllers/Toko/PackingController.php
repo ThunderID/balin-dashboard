@@ -111,14 +111,12 @@ class PackingController extends AdminController
 		}
 
 		//5. Generate view
-		if(!empty($id))
-		{
-			$this->page_attributes->success 		= "Pesanan sudah di packing!";
-		}
-		else
-		{
-			$this->page_attributes->success 		= "Pesanan sudah di packing!";
-		}
+		//5. Generate view
+		$this->page_attributes->success 			= 	[
+															'title' 		=> 'Pesanan sudah di packing! ',
+															'action'		=> 	route('report.product.sale.detail', ['id' => $saleid]),
+															'actionTitle'	=> 'Klik disini untuk melihat Invoice barang.',
+														];
 
 		return $this->generateRedirectRoute('admin.dashboard', ['tab' => 'toko']);
 	}

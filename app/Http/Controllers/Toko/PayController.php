@@ -132,21 +132,19 @@ class PayController extends AdminController
 		}
 		//4a. sending mail
 		else
-		{
-			$mail 									= new APISendMail;
+		// {
+		// 	$mail 									= new APISendMail;
 		
-			$mail->paidorder($result['data'], $this->balininfo());
-		}
+		// 	$mail->paidorder($result['data'], $this->balininfo());
+		// }
 
 		//5. Generate view
-		if(!empty($id))
-		{
-			$this->page_attributes->success 		= "Pesanan sudah di validasi";
-		}
-		else
-		{
-			$this->page_attributes->success 		= "Pesanan sudah di validasi";
-		}
+		$this->page_attributes->success 			= 	[
+															'title' 		=> 'Pesanan sudah di validasi. ',
+															'action'		=> 	route('report.product.sale.detail', ['id' => $saleid]),
+															'actionTitle'	=> 'Klik disini untuk melihat Invoice barang.',
+														];
+
 
 		return $this->generateRedirectRoute('admin.dashboard', ['tab' => 'toko']);
 	}

@@ -5,6 +5,11 @@
 	            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 @if(Session::has('msg'))
 	                {!!Session::get('msg')!!}
+	                @if(Session::has('msg-action') && Session::has('msg-title'))
+	                	<a href="{!! Session::get('msg-action') !!}">
+	                		{!! Session::get('msg-title') !!}
+	                	</a>
+	                @endif
                 @else
     	            @foreach ($errors->all('<p>:message</p>') as $error)
 		                {!! $error !!}
