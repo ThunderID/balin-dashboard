@@ -20,21 +20,25 @@
 		$searchLabel = 'Cari Data';
 	}
 
-	if(!isset($newDataRoute)){
-		array_push($errors, "Link untuk data baru tidak ada ( var : newDataRoute )");
+	if(!isset($type)){
+		if(!isset($newDataRoute)){
+			array_push($errors, "Link untuk data baru tidak ada ( var : newDataRoute )");
+		}
+
+		if(!isset($filterDataRoute)){
+			array_push($errors, "Link untuk cari data tidak ada ( var : filterDataRoute )");
+		}
+
+		if(!isset($filters)){
+			array_push($errors, "Data filter tidak ada ( var : filters['titles' => ['a','n'], 'a' => ['a.1', 'a.n'],'n' => []] )");
+		}
 	}
 
-	if(!isset($filterDataRoute)){
-		array_push($errors, "Link untuk cari data tidak ada ( var : filterDataRoute )");
-	}
-
-	if(!isset($filters)){
-		array_push($errors, "Data filter tidak ada ( var : filters['titles' => ['a','n'], 'a' => ['a.1', 'a.n'],'n' => []] )");
-	}
 ?>
 
 @if(count($errors) == 0)
-<div class="row">		
+<div class="row">
+	@if(!isset($type))
 	<div class="col-md-5 col-sm-4 hidden-xs">
 		@if($disabled == false)
 			<a class="btn btn-default" href="{{ $newDataRoute }}"><i class="fa fa-plus"></i>&nbsp; {{$newDataLabel}} </a>
@@ -45,6 +49,39 @@
 			<a class="btn btn-default" href="{{ $newDataRoute }}"><i class="fa fa-plus"></i>&nbsp; {{$newDataLabel}}</a>
 		@endif			
 	</div>
+	@else
+		@if($type == 'date')
+		<div class="col-md-5 col-sm-4 col-xs-12">
+			<form action='javascript:void(0)' onSubmit="ajaxMonthYearRange(this);">
+				<div class="row">
+					<div class="col-md-3 col-sm-12 col-xs-12">
+						<h3 style="margin-top:7px;">Periode</h3>
+					</div>
+					<div class="col-md-6 col-sm-8 col-xs-8" style="padding-right:2px;">
+						@if(Input::get('periode'))
+						<?php 
+							$range = Input::get('periode');
+						?>
+						@else
+						<?php
+							$range = date('m-Y');
+						?>
+						@endif
+						{!! Form::input('text', 'periode', $range,  [
+							'class'         => 'form-control month-year-format',
+							'placeholder'   => 'mm-yyyy',
+							'id'			=> 'monthyear'
+						]) !!}
+					</div>
+					<div class="col-md-3 col-sm-4 col-xs-4" style="padding-left:2px;">
+						<button type="submit" class="btn btn-default pull-right btn-block">Go</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		@endif
+	@endif
+
     <div class="col-md-7 col-sm-8 col-xs-12">
 		<form action='javascript:void(0)' onSubmit="ajaxSearch(this);">
 			<div class="row" id="filters">

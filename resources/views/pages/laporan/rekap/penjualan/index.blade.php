@@ -18,15 +18,19 @@
 
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			@include('page_elements.navigationDateAndSearch')
-			
-
+			@include('page_elements.indexNavigation', [
+				'type'				=> 'date',
+				'searchLabel'		=> 'cari nama pembeli',
+				'filters'			=> $filters,
+				'sorts'				=> $sorts,
+			])			
 		</div>
 	</div>
 
 	<div id="contentData">
 		<div class="row">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">			
+			<div class="col-md-12 col-sm-12 col-xs-12 m-b-md">
+				@include('page_elements.searchResult', ['closeSearchLink' => route('goods.product.index') ])
 			</div>
 		</div>
 		</br> 

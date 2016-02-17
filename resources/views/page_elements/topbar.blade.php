@@ -39,7 +39,7 @@
 							</a>
 							<ul class="dropdown-menu submenu-desktop">
 								<li><a href="{{ URL::route('report.product.sale') }}">Laporan Penjualan</a></li>
-								<li><a href="{{ URL::route('report.voucher.usage') }}">Laporan Penggunaan Voucher</a></li>
+								<li><a href="{{ URL::route('report.recap.sale') }}">Rekap Penjualan & Voucher</a></li>
 								<li><a href="{{ URL::route('report.product.stok') }}">Laporan Stok</a></li>
 								<li><a href="{{ URL::route('report.product.stok') }}">Laporan Cart</a></li>
 								<li><a href="{{ URL::route('report.product.stok') }}">Laporan Transaksi Batal</a></li>
@@ -394,9 +394,9 @@
 									</a>
 								</div>
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('report.voucher.usage') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('report.recap.sale') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>Laporan 
-											Penggunaan Voucher
+											Rekap Penjualan & Voucher
 										</h4>
 									</a>
 								</div>

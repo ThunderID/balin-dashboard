@@ -44,9 +44,9 @@ Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan\\'], function()
 	* Routes untuk sub menu laporan
 	*
 	*/
-	Route::get('penggunaan/voucher',							['uses' => 'ReportController@voucherusage', 'as' => 'report.voucher.usage']);
 	Route::get('pembelian/barang',								['uses' => 'ReportController@buyproduct', 'as' => 'report.product.stok']);
 
+	Route::get('rekap/penjualan',								['uses' => 'RecapController@sale', 'as' => 'report.recap.sale']);
 	Route::resource('penjualan',  	'SaleController',			['names' => ['index' => 'report.product.sale', 'show' => 'report.product.sale.detail'], 'only' => ['show', 'index']]);
 
 });

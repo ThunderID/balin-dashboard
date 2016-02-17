@@ -1,7 +1,7 @@
 <?php 
 namespace App\Http\Controllers\Laporan;
 
-use App\API\Connectors\APISale;
+use App\API\Connectors\APIReport;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Helper\SortList;
@@ -12,17 +12,17 @@ use Input, Session, DB, Redirect, Response, Auth, Carbon;
  * 
  * @author budi
  */
-class SaleController extends AdminController
+class RecapController extends AdminController
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->page_attributes->title 				= 	'Laporan Penjualan';
-		$this->page_attributes->source 				= 	'pages.laporan.penjualan.';
+		$this->page_attributes->title 				= 	'Rekap Penjualan & Penggunaan Voucher';
+		$this->page_attributes->source 				= 	'pages.laporan.rekap.';
 		$this->page_attributes->breadcrumb			=	[];		
 	}
 
-	public function index()
+	public function sale()
 	{
 		//1. Check filter
 		$search 									= [];
@@ -51,25 +51,25 @@ class SaleController extends AdminController
 
 		if(Input::has('q'))
 		{
-			$search['refnumber']					= Input::get('q');
+			$search['name']							= Input::get('q');
 			$this->page_attributes->search 			= Input::get('q');
 		}
 
-		if(Input::has('status'))
+		if (Input::has('sort'))
 		{
-			$search['status']						= Input::get('status');
+			$sort_item 								= explode('-', Input::get('sort'));
+			$sort 									= [$sort_item[0] => $sort_item[1]];
 		}
 		else
 		{
-			$search['status']						= ['wait','paid','packed','shipping','delivered'];
+			$sort									= [];
 		}
 
 
 		$this->page_attributes->filters				= 	[
-															'titles' 	=> ['periode','status'], 
-															'periode' 	=> [],
-															 'status' 	=> ['wait','paid','packed','shipping','delivered']]
-														;
+															'titles' 		=> ['pembayaran'], 
+															'pembayaran' 	=> ['Cash','Voucher']
+														];
 
 
 		//2. Sorting
@@ -85,10 +85,9 @@ class SaleController extends AdminController
 
 		$SortList 									= new SortList;
 		$this->page_attributes->sorts 				= 	[
-															'titles'	=> ['tanggal', 'nota', 'tagihan'],
+															'titles'	=> ['tanggal', 'jumlah'],
 															'tanggal'	=> $SortList->getSortingList('tanggal'),
-															'nota'		=> $SortList->getSortingList('nota'),
-															'tagihan'	=> $SortList->getSortingList('tagihan'),
+															'jumlah'	=> $SortList->getSortingList('jumlah'),
 														]; 	
 
 
@@ -104,15 +103,15 @@ class SaleController extends AdminController
 
 		//4. Generate breadcrumb
 		$breadcrumb 								=	[
-															'Laporan Penjualan' 		=> route('report.product.sale'),
+															'Rekap Penjualan & Penggunaan Voucher' 		=> route('report.recap.sale'),
 														];	
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 														
 
 		//5. Get data from API
-		$APISale 									= new APISale;
+		$APIReport 									= new APIReport;
 
-		$sale 										= $APISale->getIndex([
+		$report 									= $APIReport->getVoucherUsage([
 														'search' 	=> $search,
 														'sort' 		=> $sort,																		
 														'take'		=> $this->take,
@@ -120,49 +119,14 @@ class SaleController extends AdminController
 														]);
 
 		$this->page_attributes->data				= 	[
-															'sale' => $sale,
+															'report' => $report,
 														];
 
 		//6. Generate paginator
-		$this->paginate(route('report.product.sale'), $sale['data']['count'], $page);
-
+		$this->paginate(route('report.recap.sale'), $report['data']['count'], $page);
 
 		//7. Generate view
-		$this->page_attributes->source 				=  $this->page_attributes->source . '.index';
-
-		return $this->generateView();
-	}
-
-	public function show($id)
-	{
-		//1. Get data from API
-		$APISale 									= new APISale;
-		$sale 										= $APISale->getShow($id);
-
-		//2. Check return status
-		if($sale['status'] != 'success')
-		{
-			$this->errors 							= $sale['message'];
-			
-			return $this->generateRedirectRoute('report.product.sale');	
-		}
-
-		$this->page_attributes->subtitle 			= $sale['data']['ref_number'];
-		
-		$this->page_attributes->data				= 	[
-															'sale' => $sale,
-														];
-
-		//3. Generate breadcrumb
-		$breadcrumb 								=	[
-															'Laporan Penjualan' 		=> route('report.product.sale'),
-															$sale['data']['ref_number'] => route('report.product.sale.detail', ['id' => $id])
-														];	
-		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
-
-		//4. Generate view
-
-		$this->page_attributes->source 				= $this->page_attributes->source . 'show';
+		$this->page_attributes->source 				=  $this->page_attributes->source . 'penjualan.index';
 
 		return $this->generateView();
 	}

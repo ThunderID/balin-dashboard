@@ -23,13 +23,19 @@ function ajaxSearch(e) {
 
 	var toUrl	= window.location.href;
 
+	var periode = getParameterByName('periode', toUrl);
+
 	if(toUrl.indexOf("?") != -1) {
 		toUrl	= toUrl.substring(0, toUrl.indexOf('?'));
 	}
 
 	$("#demo").collapse('hide');
 
-	toUrl 		= toUrl + "?q=" + q;
+	toUrl 		= toUrl + "?q=" + q ;
+	if(periode != null)
+	{
+		toUrl	= toUrl + '&periode=' + periode;
+	}
 
 	toUrl 		= toUrl.replace(/(sort)[^\&]+/, '');
 
@@ -121,6 +127,9 @@ function ajaxClearSearch() {
 	toUrl 		= toUrl.replace(/(sort)[^\&]+/, '');
 
 	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+
+	toUrl		= toUrl.replace('&&', '&');
+	toUrl		= toUrl.replace('?&', '?');
 
 	$("#demo").collapse('hide');
 
@@ -424,5 +433,17 @@ function ajaxPage(toUrl,e) {
 		$('.ajaxDataSort').find(".fa").addClass("fa-circle-thin");
 	}
 {{-- End of UI--}}
+
+{{-- Functions --}}
+	function getParameterByName(name, url) {
+	    if (!url) url = window.location.href;
+	    name = name.replace(/[\[\]]/g, "\\$&");
+	    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+	        results = regex.exec(url);
+	    if (!results) return null;
+	    if (!results[2]) return '';
+	    return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
+{{-- end of Functions --}}
 
 </script>
