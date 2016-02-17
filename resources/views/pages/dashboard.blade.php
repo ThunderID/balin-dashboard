@@ -243,7 +243,7 @@
 			                                            {{$value['product']['name']}}
 			                                        </td>
 			                                        <td class="col-xs-1">
-			                                        	<a href="{{route('shop.buy.create', ['pid' => $value['product_id'], 'vid' => $value['id']])}}">
+			                                        	<a href="{{route('shop.buy.create', ['pid' => $value['product_id'], 'vid' => $value['id'], 'ref' => 'dashboard'])}}">
 			                                        		Kerjakan
 			                                        	</a>
 			                                        </td>

@@ -116,7 +116,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group text-right">
+					@if(Input::get('ref'))
+					<a href="{{ URL::route('shop.buy.index', ['tab' => 'barang']) }}" class="btn btn-md btn-default" tabindex="5">Batal</a>
+					@else
 					<a href="{{ URL::route('shop.buy.index') }}" class="btn btn-md btn-default" tabindex="5">Batal</a>
+					@endif
 					<button type="submit" class="btn btn-md btn-primary" tabindex="4">Simpan</button>
 				</div>        
 			</div>        

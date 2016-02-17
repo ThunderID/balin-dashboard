@@ -111,14 +111,16 @@ Route::group(['prefix' => 'promosi', 'namespace' => 'Promosi\\'], function()
 });
 
 
-
-
-///trash
+/**
+* Routes untuk menu transaksi
+*
+*/
+Route::group(['prefix' => 'toko', 'namespace' => 'Toko\\'], function()
+{
 	/**
 	* Routes untuk sub menu sale dan proses
 	*
 	*/
-	Route::resource('penjualan',  	'SellController',			['names' => ['index' => 'shop.sell.index', 'show' => 'shop.sell.show'], 'only' => ['show', 'index']]);
 	Route::resource('pembayaran',  	'PayController',			['names' => ['create' => 'shop.pay.create', 'store' => 'shop.pay.store'], 'only' => ['create', 'store']]);
 	Route::resource('packing',  	'PackingController',		['names' => ['create' => 'shop.packing.create', 'store' => 'shop.packing.store'], 'only' => ['create', 'store']]);
 	Route::resource('pengirman',  	'ShippingController',		['names' => ['create' => 'shop.shipping.create', 'store' => 'shop.shipping.store'], 'only' => ['create', 'store']]);
@@ -137,8 +139,14 @@ Route::group(['prefix' => 'promosi', 'namespace' => 'Promosi\\'], function()
 	*/
 	Route::get('sell/ajax/findAmount',							['uses' => 'AjaxController@FindTransactionByAmount', 		'as' => 'ajax.sell.findAmount']);
 	Route::get('sell/ajax/findRefNumber',						['uses' => 'AjaxController@FindTransactionByRefNumber', 	'as' => 'ajax.sell.findRefNumber']);
+});
 
 
+
+
+///trash
+
+	Route::resource('penjualan',  	'SellController',			['names' => ['index' => 'shop.sell.index', 'show' => 'shop.sell.show'], 'only' => ['show', 'index']]);
 
 
 	/**

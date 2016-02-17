@@ -87,6 +87,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group text-right">
+					<a href="{{ URL::route('admin.dashboard',['tab' => 'toko']) }}" class="btn btn-md btn-default" tabindex="13">Batal</a>
 					<button type="submit" class="btn btn-md btn-primary" tabindex="12">Simpan</button>
 				</div>        
 			</div>        
