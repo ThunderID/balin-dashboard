@@ -34,6 +34,13 @@
 <!-- content -->
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
+			<div class="row">
+				<div class="col-md-12">
+					<a class="btn btn-default pull-right"  href="{{route('shop.resend.email', ['id' => $dt['id'], 'status' => 'abandoned']) }}"> Ingatkan Kustomer </a>
+				</div>
+				<div class="hidden-lg hidden-md col-sm-12 col-xs-12 m-b-md">
+				</div>				
+			</div>				
 
 			<div class="row">
 				<div class="col-md-5 col-sm-6 col-xs-11">

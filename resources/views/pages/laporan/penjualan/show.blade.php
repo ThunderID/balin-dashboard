@@ -28,7 +28,6 @@
 		</div>
 	</div>
 	<!-- end of title sub-page -->
-
 <!-- end of head -->
 
 <!-- content -->
