@@ -242,8 +242,8 @@
 
 @section('scripts')
 	$(document).ready(function() {
-		$('.galery').hide().fadeIn('slow');
 		$('.galery').attr("class","img img-responsive canvasSource");
+		$('.galery').hide().fadeIn('slow');
 	});
 
 	function clickNext() {
@@ -253,7 +253,7 @@
 	function clickPrev() {
 		$('#car-btn-prev').trigger("click");
 	}
-@stop
+@append
 
 @section('script_plugin')
 	@include('plugins.owlCarousel')
