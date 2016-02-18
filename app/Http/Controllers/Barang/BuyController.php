@@ -35,10 +35,7 @@ class BuyController extends AdminController
 															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->addMonths(1)->format('Y-m-d H:i:s'),
 														];
 		}
-		else
-		{
-			$searchResult							= null;
-		}
+
 
 		if(Input::has('q'))
 		{

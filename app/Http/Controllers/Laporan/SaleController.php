@@ -66,8 +66,7 @@ class SaleController extends AdminController
 
 
 		$this->page_attributes->filters				= 	[
-															'titles' 	=> ['periode','status'], 
-															'periode' 	=> [],
+															'titles' 	=> ['status'], 
 															 'status' 	=> ['wait','paid','packed','shipping','delivered']
 														];
 

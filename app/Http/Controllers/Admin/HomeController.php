@@ -41,12 +41,17 @@ class HomeController extends AdminController
 													'search' 	=> 	['status' => 'shipping', 'shippingnotes' => true],
 												])['data'];
 
+		$expired 							= $APISale->getIndex([
+													'search' 	=> 	['expiredwait' => true],
+												])['data'];
+
 		$this->page_attributes->data 		= 	[
 													'warehouse' => $warehouse,
-													'wait' => $wait,
-													'paid' => $paid,
-													'packed' => $packed,
-													'shipped' => $shipped,
+													'wait' 		=> $wait,
+													'paid' 		=> $paid,
+													'packed' 	=> $packed,
+													'shipped' 	=> $shipped,
+													'expired' 	=> $expired,
 												];
 
 

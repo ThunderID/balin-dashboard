@@ -216,26 +216,26 @@
 
 				{{-- Transaksi kadaluarsa --}}
 							<div class="panel panel-default dahboard-list">
-								<a data-toggle="collapse"  href="#collapse_toko_4">
+								<a data-toggle="collapse"  href="#collapse_toko_5">
 									<div class="panel-heading">
 										<h4 class="panel-title">
-											Transaksi kadaluarsa ({{$data['shipped']['count']}})
+											Transaksi kadaluarsa ({{$data['expired']['count']}})
 										</h4>
 									</div>
 								</a>
-								<div id="collapse_toko_4" class="panel-collapse collapse {{ ($data['shipped']['count'] > 0)?'in':'' }}">
+								<div id="collapse_toko_5" class="panel-collapse collapse {{ ($data['expired']['count'] > 0)?'in':'' }}">
 		                            <table class="table table-hover">
 		                                <tbody>
-											@forelse($data['shipped']['data'] as $key => $value)
+											@forelse($data['expired']['data'] as $key => $value)
 												<tr>
 			                                        <td class="col-xs-1" style="padding-left: 25px !important;">
 			                                            {{ $key + 1 }}
 			                                        </td>
 			                                        <td>
 														<p>[{{$value['ref_number']}}] {{$value['user']['name']}}</p>
-														<p>No. Resi Pengiriman : {{$value['shipping_notes']}}</p>
+														@datetime_indo(new Carbon($value['transact_at']))
 			                                        </td>
-			                                        <td class="col-xs-1"><a href="{{route('shop.completeorder.create', ['id' => $value['id']])}}">Validasi</a></td>
+			                                        <td class="col-xs-1"><a href="{{route('shop.cancelorder.create', ['id' => $value['id']])}}">Batalkan</a></td>
 			                                    </tr>
 											@empty
 												<tr>

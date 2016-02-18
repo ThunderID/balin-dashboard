@@ -84,7 +84,7 @@ function ajaxFilterSearch(e) {
 
 {{-- month year range search--}}
 function ajaxMonthYearRange(e) {
-	var q 		= $(e).find('#monthyear').val();
+	var q 		= $(e).find('#monthyearperiode').val();
 
 	if(q == ""){
 		return false;

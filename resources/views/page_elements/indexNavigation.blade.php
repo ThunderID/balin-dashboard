@@ -67,7 +67,7 @@
 						{!! Form::input('text', 'periode', $range,  [
 							'class'         => 'form-control month-year-format',
 							'placeholder'   => 'mm-yyyy',
-							'id'			=> 'monthyear'
+							'id'			=> 'monthyearperiode'
 						]) !!}
 					</div>
 					<div class="col-md-3 col-sm-4 col-xs-4" style="padding-left:2px;">
