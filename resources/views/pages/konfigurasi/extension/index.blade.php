@@ -82,7 +82,7 @@
 											@endif
 										</td>
 										<td class="text-center">
-											<a href="{{ route('config.extension.show', $dt['id']) }}"> Detail</a>, 
+											<!-- <a href="{{ route('config.extension.show', $dt['id']) }}"> Detail</a>,  -->
 											<a href="{{ route('config.extension.edit', $dt['id']) }}"> Edit</a>, 
 											<a href="#" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#extension_del"
 												data-id="{{$dt['id']}}"

@@ -80,24 +80,24 @@
 						</div>
 					</div>
 				</div>
+				@foreach($data['data']['transactionextensions'] as $key => $value)
 				<div class="row">
 					<div class="col-md-7 col-sm-10 col-xs-11">
 						<div class="row">
 
 							<div class="col-md-3 col-sm-5 col-xs-5">
-								<h4>Kartu Ucapan</h4> 
+								<h4>{{$value['productextension']['name']}}</h4> 
 							</div>
 							<div class="col-md-1 col-sm-1 col-xs-2">
 								<h4>:</h4> 
 							</div>
 							<div class="col-md-8 col-sm-6 col-xs-5">
-								<?php
-								// <h4>{{ $data['data']['shipment']['cards']}}}</h4> 
-								?>
+								{!!$value['value']!!}
 							</div>
 						</div>
 					</div>
-				</div>					
+				</div>
+				@endforeach			
 			@endif			
 		</div>
 	</div>

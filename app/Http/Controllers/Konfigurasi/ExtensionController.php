@@ -228,6 +228,7 @@ class ExtensionController extends AdminController
 															'id' 			=> $id,
 															'name'			=> Input::get('name'),
 															'is_active'		=> Input::get('is_active'),
+															'description'	=> Input::get('description'),
 															'images'		=> ['0' => $tmpImage],
 														];
 		$data['price']								= str_replace('IDR ', '', str_replace('.', '', Input::get('price')));
