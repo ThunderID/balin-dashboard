@@ -41,7 +41,7 @@
 								<li><a href="{{ URL::route('report.product.sale') }}">Laporan Penjualan</a></li>
 								<li><a href="{{ URL::route('report.recap.sale') }}">Rekap Penjualan & Voucher</a></li>
 								<li><a href="{{ URL::route('report.stock.product') }}">Laporan Stok</a></li>
-								<li><a href="{{ URL::route('report.product.stok') }}">Laporan Cart</a></li>
+								<li><a href="{{ URL::route('report.product.abandoned') }}">Laporan Abandoned Cart</a></li>
 								<li><a href="{{ URL::route('report.product.cancel') }}">Laporan Transaksi Batal</a></li>
 							</ul>
 						</li>
@@ -408,9 +408,9 @@
 									</a>
 								</div>	
 								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('report.product.stok') }}" class="btn btn-default btn-block btn-sm pull-left">
+									<a href="{{ URL::route('report.product.abandoned') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
-											Laporan Cart
+											Laporan Abandoned Cart
 										</h4>
 									</a>
 								</div>	
