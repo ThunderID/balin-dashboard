@@ -51,10 +51,18 @@ class CancelOrderController extends AdminController
 			\App::abort(404);
 		}
 
-		//2. Generate breadcrumb
+		//2. Get input 
+		if(Input::get('id'))
+		{
+			$APISale								= new APISale;
+			$data 									= $APISale->getShow(Input::get('id'));
+			$data['data']['notes']					= null;
+		}
+
+		//3. Generate breadcrumb
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
-		//3. Generate view
+		//4. Generate view
 		$this->page_attributes->data 				=  $data;
 
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'create';
@@ -119,15 +127,12 @@ class CancelOrderController extends AdminController
 		}
 
 		//5. Generate view
-		if(!empty($id))
-		{
-			$this->page_attributes->success 		= "Pesanan sudah di batalkan!";
-		}
-		else
-		{
-			$this->page_attributes->success 		= "Pesanan sudah di batalkan!";
-		}
+		$this->page_attributes->success 			= 	[
+															'title' 		=> 'Pesanan sudah dibatalkan. ',
+															'action'		=> 	route('report.product.sale.detail', ['id' => $saleid]),
+															'actionTitle'	=> 'Klik disini untuk melihat Invoice barang dibatalkan.',
+														];			
 
-		return $this->generateRedirectRoute('shop.sell.show', ['id' => $saleid]);
+		return $this->generateRedirectRoute('admin.dashboard', ['tab' => 'toko']);
 	}
 }
