@@ -91,9 +91,14 @@
 					<h4>Kartu Stok</h4> 
 				</div>
 				<div class="col-md-12 m-t-sm m-b-lg">
-					@include('page_elements.dateRangeNavigation', [
-						'filterDataRoute' 	=> route('goods.price.show', ['id' => $dt['id']])
-					])	
+					@include('page_elements.indexNavigation', [
+						'type'				=> 'date',
+						'searchLabel'		=> 'cari nama pembeli',
+						'disabled'			=> true,
+						'filters'			=> $filters,
+						'sorts'				=> $sorts,
+						'noSearch'			=> true,
+					])						
 				</div>			
 			</div>
 
@@ -141,15 +146,15 @@
 													@date_indo(new Carbon($detail['transact_at']))
 												</td>
 
-												<td class="text-right">
+												<td class="text-center">
 													{{$detail['stock_in']}}
 												</td>
 
-												<td class="text-right">
+												<td class="text-center">
 													{{$detail['stock_out']}}
 												</td>
 
-												<td class="text-right">
+												<td class="text-center">
 													{{$stock}}
 												</td>
 											</tr>       

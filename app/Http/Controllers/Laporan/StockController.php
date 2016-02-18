@@ -161,7 +161,6 @@ class StockController extends AdminController
 
 		$this->page_attributes->subtitle 			= $product['data']['product']['name'];
 
-
 		$collection 								= collect($product['data']['details']);
 
 		// filters & collection
@@ -183,6 +182,24 @@ class StockController extends AdminController
 			$result 								= $collection;
 		}	
 
+
+		if (Input::has('sort'))
+		{
+			$sort_item 								= explode('-', Input::get('sort'));
+			$sort 									= [$sort_item[0] => $sort_item[1]];
+		}
+		else
+		{
+			$sort									= ['name' => 'asc'];
+		}
+
+		$this->page_attributes->filters				= 	[];
+
+		$SortList 									= new SortList;
+		$this->page_attributes->sorts 				= 	[
+															'titles'	=> ['tanggal'],
+															'tanggal'	=> $SortList->getSortingList('tanggal'),
+														]; 			
 
 		//get curent page
 		if(is_null(Input::get('page')))

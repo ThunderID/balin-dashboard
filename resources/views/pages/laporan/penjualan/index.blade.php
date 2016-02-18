@@ -18,11 +18,12 @@
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			@include('page_elements.indexNavigation', [
-				'type'				=> 'date',
-				'searchLabel'		=> 'cari nama pembeli',
+				'newDataRoute' 		=> route('goods.product.create'),
+				'filterDataRoute' 	=> route('goods.product.index'),
+				'searchLabel'		=>'cari produk',
 				'filters'			=> $filters,
 				'sorts'				=> $sorts,
-			])	
+			])			
 		</div>  
 	</div>
 

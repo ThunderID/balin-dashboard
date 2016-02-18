@@ -68,8 +68,8 @@ class SaleController extends AdminController
 		$this->page_attributes->filters				= 	[
 															'titles' 	=> ['periode','status'], 
 															'periode' 	=> [],
-															 'status' 	=> ['wait','paid','packed','shipping','delivered']]
-														;
+															 'status' 	=> ['wait','paid','packed','shipping','delivered']
+														];
 
 
 		//2. Sorting

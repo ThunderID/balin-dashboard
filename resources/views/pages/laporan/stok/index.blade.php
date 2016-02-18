@@ -40,7 +40,7 @@
 							<tr>
 								<th class="text-center col-md-1">No.</th>
 								<th class="text-left col-md-2">SKU</th>
-								<th class="text-center col-md-3">Nama Produk</th>
+								<th class="text-left col-md-3">Nama Produk</th>
 								<th class="text-center col-md-2">Ukuran</th>
 								<th class="text-center col-md-1">Stok Gudang</th>
 								<th class="text-center col-md-1">Stok Keluar</th>
