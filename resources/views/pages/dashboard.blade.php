@@ -214,6 +214,44 @@
 							</div>		
 				{{-- End of barang diterima --}}
 
+				{{-- Transaksi kadaluarsa --}}
+							<div class="panel panel-default dahboard-list">
+								<a data-toggle="collapse"  href="#collapse_toko_4">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											Transaksi kadaluarsa ({{$data['shipped']['count']}})
+										</h4>
+									</div>
+								</a>
+								<div id="collapse_toko_4" class="panel-collapse collapse {{ ($data['shipped']['count'] > 0)?'in':'' }}">
+		                            <table class="table table-hover">
+		                                <tbody>
+											@forelse($data['shipped']['data'] as $key => $value)
+												<tr>
+			                                        <td class="col-xs-1" style="padding-left: 25px !important;">
+			                                            {{ $key + 1 }}
+			                                        </td>
+			                                        <td>
+														<p>[{{$value['ref_number']}}] {{$value['user']['name']}}</p>
+														<p>No. Resi Pengiriman : {{$value['shipping_notes']}}</p>
+			                                        </td>
+			                                        <td class="col-xs-1"><a href="{{route('shop.completeorder.create', ['id' => $value['id']])}}">Validasi</a></td>
+			                                    </tr>
+											@empty
+												<tr>
+			                                        <td class="col-xs-1 text-center" style="padding-left: 25px !important;">
+			                                            Tidak ada pekerjaan untuk sekarang.
+			                                        </td>
+			                                    </tr>
+											@endforelse
+		                                </tbody>
+		                            </table> 
+								</div>
+							</div>		
+				{{-- End of Transaksi kadaluarsa --}}
+
+
+
 						</div>
 					</div>
 			{{-- End of tab toko --}}

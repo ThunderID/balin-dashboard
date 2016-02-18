@@ -229,15 +229,19 @@ function clearDateRange(e){
 
 	var toUrl	= url.substring(0, url.indexOf('?'));
 	
-	toUrl 		= toUrl.replace(/(sort)[^\&]+/, '');
+	if(url.indexOf("start") != -1){
+		toUrl 		= toUrl.replace(/(sort)[^\&]+/, '');
 
-	toUrl		= toUrl.replace(/(page)[^\&]+/, '');
+		toUrl		= toUrl.replace(/(page)[^\&]+/, '');
 
-	clearSort();
+		clearSort();
 
-	ajaxPage(toUrl);
+		ajaxPage(toUrl);
 
-	window.history.pushState("", "", toUrl);	
+		window.history.pushState("", "", toUrl);
+	} else {
+		return false;
+	}
 }
 {{-- Clear Filter_Date_Range --}}
 

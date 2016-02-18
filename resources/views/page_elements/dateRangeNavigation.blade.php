@@ -107,7 +107,7 @@
 		</div>		
 
 		<div class="col-md-1 col-sm-1 hidden-xs">
-			<a class="btn btn-default" onClick="clearDateRange(this)" href="javascript:void(0)">
+			<a id="clearbtn" class="btn btn-default" onClick="clearDateRange(this)" href="javascript:void(0)">
 				<i class="fa fa-times"></i>
 			</a>
 		</div>
@@ -224,6 +224,10 @@
 		$('.btn-sort').find('.fa').removeClass('fa-caret-up')
 		$('.btn-sort').find('.fa').addClass('fa-caret-down')
 	});	
+
+	$('#clearbtn').click(function() {
+		$('.date-format').val('');
+	});
 @append
 
 	
