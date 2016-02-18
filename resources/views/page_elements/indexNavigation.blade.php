@@ -21,19 +21,16 @@
 	}
 
 	if(!isset($type)){
-		if(!isset($newDataRoute)){
-			array_push($errors, "Link untuk data baru tidak ada ( var : newDataRoute )");
-		}
-
-		if(!isset($filterDataRoute)){
-			array_push($errors, "Link untuk cari data tidak ada ( var : filterDataRoute )");
-		}
-
-		if(!isset($filters)){
-			array_push($errors, "Data filter tidak ada ( var : filters['titles' => ['a','n'], 'a' => ['a.1', 'a.n'],'n' => []] )");
+		if($disabled == false){
+			if(!isset($newDataRoute)){
+				array_push($errors, "Link untuk data baru tidak ada ( var : newDataRoute )");
+			}
 		}
 	}
 
+	if(!isset($filters)){
+		array_push($errors, "Data filter tidak ada ( var : filters['titles' => ['a','n'], 'a' => ['a.1', 'a.n'],'n' => []] )");
+	}	
 ?>
 
 @if(count($errors) == 0)
@@ -93,11 +90,12 @@
 					@endif
 				@else
 					@if(!isset($sorts['titles']))
-					<div class="col-md-8 col-sm-7 col-xs-6" style="padding-right:2px;">
+						<div class="col-md-8 col-sm-7 col-xs-6" style="padding-right:2px;">
 					@else
-					<div class="col-md-6 col-sm-4 col-xs-3" style="padding-right:2px;">
+						<div class="col-md-6 col-sm-4 col-xs-3" style="padding-right:2px;">
 					@endif					
 				@endif
+				@if(!isset($noSearch))
 					{!! Form::input('text', 'q', Null ,
 							[
 								'id'			=> 'data-search',
@@ -106,9 +104,12 @@
 								'required'      => 'required',
 							]
 					) !!} 
+				@endif
 				</div>
 				<div class="col-md-2 col-sm-2 col-xs-3" style="padding-left:2px;">
-					<button type="submit" class="btn btn-default pull-right btn-block" onClick="clearMonthYear()"><i class="fa fa-search"></i></button>
+					@if(!isset($noSearch))
+						<button type="submit" class="btn btn-default pull-right btn-block" onClick="clearMonthYear()"><i class="fa fa-search"></i></button>
+					@endif
 				</div>
 				@if(isset($filters['titles']))
 				<div class="col-md-2 col-sm-3 col-xs-3" style="padding-left:2px;">
