@@ -6,8 +6,8 @@ use GuzzleHttp\Psr7\Request;
 
 class API
 {
-	// protected $domain			= '192.168.1.118';
-	protected $domain			= 'localhost';
+	protected $domain			= '192.168.1.118';
+	// protected $domain			= 'localhost';
 	protected $port				= '8800';
 	public $timeout				= 2;
 	public $basic_url;
