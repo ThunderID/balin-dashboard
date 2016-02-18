@@ -196,8 +196,6 @@ class StockController extends AdminController
 														'skip'		=> ($page - 1) * $this->take,
 														]);
 
-		dd($stock);
-
 		$this->page_attributes->data				= 	[
 															'product' => $stock,
 														];
