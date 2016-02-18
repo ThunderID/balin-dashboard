@@ -56,6 +56,7 @@
 								<li><a href="{{ URL::route('config.website.index') }}">Website</a></li>
 								<li><a href="{{ URL::route('config.policy.index') }}">Policy</a></li>
 								<li><a href="{{ URL::route('shop.courier.index') }}">Kurir</a></li>
+								<li><a href="{{ URL::route('config.extension.index') }}">Produk Extension</a></li>
 							</ul>
 						</li>
 
@@ -453,7 +454,14 @@
 											Kurir
 										</h4>
 									</a>
-								</div>								
+								</div>	
+								<div class="col-sm-12 col-xs-12 m-b-sm">
+									<a href="{{ URL::route('config.extension.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+										<h4>
+											Produk Extension
+										</h4>
+									</a>
+								</div>							
 							</div>
 		<!-- end of submenu pengaturan -->
 

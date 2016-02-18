@@ -70,7 +70,8 @@ Route::group(['prefix' => 'konfigurasi', 'namespace' => 'Konfigurasi\\'], functi
 	Route::resource('website', 	'WebsiteController',			['names' => ['index' => 'config.website.index', 'store' => 'config.website.store', 'update' => 'config.website.update'], 'only' => ['index', 'store', 'update']]);
 	Route::resource('policy', 	'PolicyController',				['names' => ['index' => 'config.policy.index', 'create' => 'config.policy.create', 'store' => 'config.policy.store', 'edit' => 'config.policy.edit', 'update' => 'config.policy.update'], 'except' => ['show', 'destroy']]);
 	Route::delete('website/slider/delete/{id}',					['uses' => 'WebsiteController@deleteSlider', 'as' => 'config.website.slider.delete']);
-
+	
+	Route::resource('extension',	'ExtensionController',		['names' => ['index' => 'config.extension.index', 'create' => 'config.extension.create', 'store' => 'config.extension.store', 'show' => 'config.extension.show', 'edit' => 'config.extension.edit', 'update' => 'config.extension.update', 'destroy' => 'config.extension.destroy']]);
 
 	Route::resource('kurir', 		'CourierController',		['names' => ['index' => 'shop.courier.index', 'create' => 'shop.courier.create', 'store' => 'shop.courier.store', 'show' => 'shop.courier.show', 'edit' => 'shop.courier.edit', 'update' => 'shop.courier.update', 'destroy' => 'shop.courier.destroy']]);
 	Route::get('kurir/cost/{id}',								['uses' => 'CourierController@addShippingCost', 	'as' => 'shop.courier.shippingcost.create']);
