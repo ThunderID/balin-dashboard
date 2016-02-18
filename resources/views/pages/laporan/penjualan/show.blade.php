@@ -127,30 +127,42 @@
 										<td colspan="6">
 											<strong>Potongan</strong> Point BALIN
 										</td>
-										<td class="text-right">
-											<?php 
-												$point = 0;
-												foreach ($dt['paidpointlogs'] as $key => $value) 
-												{
-													$point = $point + abs($value['amount']);
-												}
-											?>
-											@money_indo($point)
+										<td class="text-right text-red">
+											@money_indo($dt['point_discount'])
 										</td>
 									</tr>
 									<tr>
 										<td colspan="6">
 											<strong>Potongan</strong> Voucher {{$dt['voucher']['code']}}
 										</td>
-										<td class="text-right">
+										<td class="text-right text-red">
 											@money_indo($dt['voucher_discount'])
+										</td>
+									</tr>
+									<tr>
+										<td colspan="6">
+											<strong>Pengenal Pembayaran</strong>
+										</td>
+										<td class="text-right text-red">
+											@money_indo($dt['unique_number'])
+										</td>
+									</tr>
+									<tr>
+										<td colspan="6">
+											<strong>Biaya</strong>
+											@foreach($dt['transactionextensions'] as $key => $value)
+												<br/> {{$value['productextension']['name']}}
+											@endforeach
+										</td>
+										<td class="text-right">
+											@money_indo($dt['extend_cost'])
 										</td>
 									</tr>
 									<tr>
 										<td colspan="6">
 											<strong>Pembayaran</strong> {{$dt['payment']['method']}} {{$dt['payment']['destination']}}
 										</td>
-										<td class="text-right">
+										<td class="text-right text-red">
 											@money_indo($dt['payment']['amount'])
 										</td>
 									</tr>
