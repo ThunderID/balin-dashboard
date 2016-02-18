@@ -8,7 +8,7 @@
 
 <!-- body -->
 	@if(isset($data['price']['data']['id']))
-    {!! Form::open(['url' => route('goods.price.detail.update', ['productID' => $data['productId'], 'id' => $data['price']['data']['id']]), 'method' => 'PATCH']) !!}
+    {!! Form::open(['url' => route('goods.price.update', ['productID' => $data['productId'], 'id' => $data['price']['data']['id']]), 'method' => 'PATCH']) !!}
     @else
     {!! Form::open(['url' => route('goods.price.store'), 'method' => 'POST']) !!}
     @endif

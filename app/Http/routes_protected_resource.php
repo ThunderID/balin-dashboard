@@ -12,6 +12,7 @@ Route::group(['prefix' => 'barang', 'namespace' => 'Barang\\', 'middleware' => '
 	*/
 	Route::resource('produk',  				'ProductController',	['names' => ['index' => 'goods.product.index', 'create' => 'goods.product.create', 'store' => 'goods.product.store', 'show' => 'goods.product.show', 'edit' => 'goods.product.edit', 'update' => 'goods.product.update', 'destroy' => 'goods.product.destroy']]);
 	Route::resource('produk/{pid}/varian',	'VarianController',		['names' => ['index' => 'goods.varian.index', 'create' => 'goods.varian.create', 'store' => 'goods.varian.store', 'show' => 'goods.varian.show', 'edit' => 'goods.varian.edit', 'update' => 'goods.varian.update', 'destroy' => 'goods.varian.destroy']]);
+	Route::resource('produk/{pid}/harga',  	'PriceController',		['names' => ['index' => 'goods.price.index', 'create' => 'goods.price.create', 'store' => 'goods.price.store', 'show' => 'goods.price.show', 'edit' => 'goods.price.edit', 'update' => 'goods.price.update', 'destroy' => 'goods.price.destroy']]);
 	
 	/**
 	* Routes untuk sub menu atribut dari produk
@@ -156,8 +157,6 @@ Route::group(['prefix' => 'toko', 'namespace' => 'Toko\\'], function()
 	*
 	*/
 
-	Route::resource('harga',  				'PriceController',		['names' => ['index' => 'goods.price.index', 'create' => 'goods.price.create', 'store' => 'goods.price.store', 'show' => 'goods.price.show']]);
-	Route::resource('harga/{pid}/detail', 	'PriceController', 		['names' => ['create' => 'goods.price.detail.create', 'store' => 'goods.price.detail.store', 'edit' => 'goods.price.detail.edit', 'update' => 'goods.price.detail.update', 'destroy' => 'goods.price.detail.destroy']]);
 	
 	/**
 	* Routes untuk stok produk

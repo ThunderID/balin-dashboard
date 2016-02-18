@@ -27,7 +27,7 @@
 <!-- content -->
 	<div class="row">
 		<div class="col-md-12">
-			<a class="btn btn-default pull-right"  href="{{ route('goods.price.detail.create', ['id' => $dt['id']] ) }}"> Harga Baru </a>
+			<a class="btn btn-default pull-right"  href="{{ route('goods.price.create', ['id' => $dt['id']] ) }}"> Harga Baru </a>
 		</div>
 	</div>
 	<div class="row">
@@ -100,7 +100,8 @@
 				</div>
 				<div class="col-md-12 m-t-sm m-b-lg">
 					@include('page_elements.dateRangeNavigation', [
-						'filterDataRoute' 	=> route('goods.price.show', ['id' => $dt['id']])
+						'filterDataRoute' 	=> route('goods.price.show', ['id' => $dt['id']]),
+						'sorts'				=> $sorts,
 					])	
 				</div>			
 			</div>
@@ -109,7 +110,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="table-responsive">
-							<table class="table table-bordered table-hover table-striped">
+							<table class="table table-hover">
 								<thead>
 									<tr>
 										<th class="text-left">
@@ -157,12 +158,12 @@
 												</td>
 
 												<td class="text-center">
-													<a href="{{ route('goods.price.detail.edit', ['productId' => $dt['id'] ,'id' => $price['id']]) }}">Edit</a>, 
+													<a href="{{ route('goods.price.edit', ['productId' => $dt['id'] ,'id' => $price['id']]) }}">Edit</a>, 
 													<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" data-toggle="modal" 
 														data-target="#price_del"
 														data-id="{{$price['id']}}"
 														data-title="Hapus Data Harga Produk {{$dt['name']}}"
-														data-action="{{ route('goods.price.detail.destroy', ['productId' => $dt['id'] ,'id' => $price['id']]) }}">
+														data-action="{{ route('goods.price.destroy', ['productId' => $dt['id'] ,'id' => $price['id']]) }}">
 														Hapus
 													</a>
 													<?php

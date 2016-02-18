@@ -7,7 +7,9 @@ use App\API\Connectors\APICategory;
 use App\API\Connectors\APILabel;
 
 use App\Http\Controllers\AdminController;
-use Input, Session, DB, Redirect, Response, Auth, Carbon, Collection;
+use App\Http\Controllers\Helper\SortList;
+
+use Input, Session, DB, Redirect, Response, Auth, Carbon, Collection, App;
 
 class PriceController extends AdminController
 {
@@ -17,149 +19,36 @@ class PriceController extends AdminController
 		$this->page_attributes->title 				= 'Harga';
 		$this->page_attributes->source 				= 'pages.barang.harga.';
 		$this->page_attributes->breadcrumb			=	[
-															'Harga' 	=> route('goods.price.index'),
+															'Produk' 	=> route('goods.product.index'),
 														];			
 														
         $this->middleware('password.needed', ['only' => ['destroy']]);
 	}
 
-	public function index()
-	{
-		//initialize 
-		$search 									= [];
-
-		if(Input::has('q'))
-		{
-			$search['name']							= Input::get('q');
-			$this->page_attributes->search 			= Input::get('q');
-		}
-
-		if(Input::has('category'))
-		{
-			$search['categories']					= str_replace(" ", "-", Input::get('category'));
-		}
-
-		if(Input::has('tag'))
-		{
-			$search['tags']							= str_replace(" ", "-", Input::get('tag'));
-		}
-
-		if(Input::has('label'))
-		{
-			$search['labelname']					= str_replace(" ", "_", Input::get('label'));
-		}
-
-		if (Input::has('sort'))
-		{
-			$sort_item 							= explode('-', Input::get('sort'));
-			$sort 								= [$sort_item[0] => $sort_item[1]];
-		}
-		else
-		{
-			$sort								= ['name' => 'asc'];
-		}		
-
-
-		//get curent page
-		if(is_null(Input::get('page')))
-		{
-			$page 									= 1;
-		}
-		else
-		{
-			$page 									= Input::get('page');
-		}
-
-		// data here
-		$APIProduct 								= new APIProduct;
-
-		$product 									= $APIProduct->getIndex([
-															'search' 	=> 	$search,
-															'sort' 		=> 	$sort,																		
-															'take'		=> $this->take,
-															'skip'		=> ($page - 1) * $this->take,
-														]);
-
-		$this->page_attributes->data				= 	[
-															'product' => $product,
-														];
-
-		//paginate
-		$this->paginate(route('goods.price.index'), $product['data']['count'], $page);
-
-		//breadcrumb
-		$breadcrumb 								= [];	
-
-
-		//filters
-		$filterTitles								= ['tag','kategori','label'];
-
-		$filterTags 								= [];
-		$filterCategories 							= [];
-		$filterLabels 								= [];
-
-		$APITag 									= new APITag;
-		$tmpTag 	 								= $APITag->getIndex()['data']['data'];
-
-		$key 										= 0;
-		foreach ($tmpTag as $value) 
-		{
-			if($value['category_id'] != 0)
-			{
-				$filterTags[$key]					= ucwords(str_replace("-", " ",$value['slug']));
-				$key++;
-			}
-		}
-
-
-		$APICategory 								= new APICategory;
-		$tmpCategory 	 							= $APICategory->getIndex()['data']['data'];
-
-		$key 										= 0;
-		foreach ($tmpCategory as $value) 
-		{
-			if($value['category_id'] != 0)
-			{
-				$filterCategories[$key]				= ucwords(str_replace("-", " ",$value['name']));
-				$key++;
-			}
-		}
-
-
-		$APILabel 									= new APILabel;
-		$tmpLabel 	 								= $APILabel->getIndex()['data']['data'];
-
-
-		foreach ($tmpLabel as $value) 
-		{
-			$filterLabels[$key]						= ucwords(str_replace("_", " ",$value['label']));
-		}		
-
-
-		$this->page_attributes->filters 			= 	[
-															'titles' 	=> $filterTitles,
-															'tag'		=> $filterTags,
-															'kategori'	=> $filterCategories,
-															'label'		=> $filterLabels,
-														];
-
-		//generate View
-		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
-
-		$this->page_attributes->source 				=  $this->page_attributes->source . 'index';
-
-		return $this->generateView();
-	}
-
-	public function show($id)
+	public function index($pid = null)
 	{
 		//initialize 
 		$APIProduct 								= new APIProduct;
-		$product 									= $APIProduct->getShow($id);
+		$product 									= $APIProduct->getShow($pid);
 
 		$this->page_attributes->subtitle 			= $product['data']['name'];
 
 		$collection 								= collect($product['data']['prices']);
+
+		//sorting
+		if (Input::has('sort'))
+		{
+			$sort_item 								= explode('-', Input::get('sort'));
+
+			if($sort_item[1] == 'asc')
+			{
+				$collection							= $collection->sortBy('started_at');
+			}
+			else
+			{
+				$collection							= $collection->sortByDesc('started_at');
+			}
+		}
 
 		// filters & collection
 		if(Input::has('start') && Input::has('end'))
@@ -195,13 +84,13 @@ class PriceController extends AdminController
 		{
 			$result 								= $collection->chunk($this->take);
 
-			$this->paginate(route('goods.price.show', ['id' => $id]), count($product['data']['prices']), $page);
+			$this->paginate(route('goods.price.show', ['id' => $pid]), count($product['data']['prices']), $page);
 
 			$product['data']['prices']				= $result[($page-1)];
 		}
 		else
 		{
-			$this->paginate(route('goods.price.show', ['id' => $id]), count($product['data']['prices']), $page);
+			$this->paginate(route('goods.price.show', ['id' => $pid]), count($product['data']['prices']), $page);
 		}
 
 
@@ -209,11 +98,18 @@ class PriceController extends AdminController
 		$product['data']['prices']					= $result->forPage($page, $this->take);
 		$this->page_attributes->data				= 	[
 															'product' => $product['data'],
-														];		
+														];
+
+		$SortList 									= new SortList;
+		$this->page_attributes->sorts 				= 	[
+															'titles'	=> ['tanggal'],
+															'tanggal'	=> $SortList->getSortingList('tanggal'),
+														]; 														
 
 		//breadcrumb
 		$breadcrumb 								=	[
-															$product['data']['name'] => route('goods.price.show', ['id' => $id])
+															$product['data']['name'] => route('goods.product.show', ['id' => $pid]),
+															'Harga' => route('goods.price.show', ['id' => $pid]),
 														];	
 
 		//generate View
@@ -221,7 +117,13 @@ class PriceController extends AdminController
 
 		$this->page_attributes->source 				= $this->page_attributes->source . 'show';
 
-		return $this->generateView();
+		return $this->generateView();		
+	}
+
+	public function show($id)
+	{
+		//initialize 
+		return $this->index($id);
 	}	
 
 	public function create($productId = null,  $id = null)
@@ -243,8 +145,9 @@ class PriceController extends AdminController
 														];
 
 				$breadcrumb							=	[
-															$product['data']['name'] => route('goods.price.show', ['productId' => $productId]),
-															'Harga Baru' => route('goods.price.detail.create', ['productId' => $productId]),
+															$product['data']['name'] => route('goods.product.show', ['id' => $productId]),
+															'Harga' => route('goods.price.show', ['id' => $productId]),
+															'Harga Baru' => route('goods.price.create', ['productId' => $productId]),
 														];
 
 				$this->page_attributes->subtitle 	= $product['data']['name'];
@@ -265,24 +168,15 @@ class PriceController extends AdminController
 														];
 
 				$breadcrumb							=	[
-															$product['data']['name'] => route('goods.price.show', ['productId' => $productId]),
-															'Edit Harga'   =>  route('goods.price.detail.edit', ['productId' => $productId, 'id' => $id]),
+															$product['data']['name'] => route('goods.product.show', ['id' => $productId]),
+															'Harga' => route('goods.price.show', ['id' => $productId]),
+															'Edit Harga'   =>  route('goods.price.edit', ['productId' => $productId, 'id' => $id]),
 														];
 			}
 		}
 		else
 		{
-			$data 									= 	[
-															'productId' 	=> $productId,
-															'name'			=> null,
-															'price'			=> null,
-														];
-
-			$breadcrumb								=	[
-															'Data Baru' => route('goods.price.create'),
-														];
-
-			$this->page_attributes->subtitle 		= 'Data Baru';
+			App::abort(404, 'No product id');
 		}
 
 		//generate View
