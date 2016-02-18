@@ -5,6 +5,7 @@ use App\API\connectors\APIProduct;
 use App\API\Connectors\APITag;
 use App\API\Connectors\APICategory;
 use App\API\Connectors\APILabel;
+use App\API\Connectors\APIBroadcast;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Helper\SortList;
@@ -179,5 +180,83 @@ class DiscountController extends AdminController
 		$this->page_attributes->source 				=  $this->page_attributes->source . 'index';
 
 		return $this->generateView();
+	}
+
+	/**
+	 * create form of a discount
+	 * 
+	 * 1. Get Previous data and page setting
+	 * 2. Generate breadcrumb
+	 * 3. Generate view
+	 * @param id
+	 * @return Object View
+	 */
+	public function create()
+	{
+		//1. Get page setting
+		$data 									= null;
+
+		$breadcrumb								=	[
+														'Data Baru' => route('promote.discount.create'),
+													];
+
+
+		$this->page_attributes->subtitle 		= 'Data Baru';
+
+		//2. Generate breadcrumb
+		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
+
+
+		//3. Generate view
+		$this->page_attributes->source 				=  $this->page_attributes->source . 'create';
+
+		return $this->generateView();
+	}
+
+	/**
+	 * store discount queue
+	 * 
+	 * 1. Get Previous data and page setting
+	 * 2. Generate breadcrumb
+	 * 3. Generate view
+	 * @param id
+	 * @return Object View
+	 */
+	public function store()
+	{
+		//get data
+		$data['discount_percentage']				= Input::get('discount_percentage');
+
+		if(Input::has('category_ids'))
+		{
+			$c_ids									= explode(',', Input::get('category_ids'));
+			$data['category_ids']					= $c_ids;	
+		}
+
+		if(Input::has('tag_ids'))
+		{
+			$t_ids									= explode(',', Input::get('tag_ids'));
+			$data['tag_ids']						= $t_ids;	
+		}
+
+		$data['discount_amount']					= str_replace('IDR ', '', str_replace('.', '', Input::get('discount_amount')));
+		$data['started_at'] 						= date('Y-m-d H:i:s', strtotime(Input::get('started_at')));
+		$data['ended_at'] 							= date('Y-m-d H:i:s', strtotime(Input::get('ended_at')));
+
+		//api
+		$APIBroadcast 								= new APIBroadcast;
+
+		$result 									= $APIBroadcast->postData($data);
+
+		//response
+		if($result['status'] != 'success')
+		{
+			$this->errors 							= $result['message'];
+		}
+
+		//return view
+		$this->page_attributes->success 			= "Data Diskon Telah Ditambahkan. Membutuhkan waktu kurang lebih 10 menit untuk mengubah data diskon.";
+		
+		return $this->generateRedirectRoute('promote.discount.index');				
 	}
 }

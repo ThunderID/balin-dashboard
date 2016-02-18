@@ -110,7 +110,7 @@ Route::group(['prefix' => 'promosi', 'namespace' => 'Promosi\\'], function()
 	*
 	*/
 	Route::resource('voucher', 		'VoucherController',		['names' => ['index' => 'promote.voucher.index', 'create' => 'promote.voucher.create', 'store' => 'promote.voucher.store', 'edit' => 'promote.voucher.edit', 'update' => 'promote.voucher.update', 'destroy' => 'promote.voucher.destroy'], 'except' => ['show']]);
-	Route::resource('diskon',  		'DiscountController',		['names' => ['index' => 'promote.discount.index'], 'only' => ['index']]);
+	Route::resource('diskon',  		'DiscountController',		['names' => ['index' => 'promote.discount.index', 'create' => 'promote.discount.create', 'store' => 'promote.discount.store'], 'only' => ['index', 'create', 'store']]);
 });
 
 

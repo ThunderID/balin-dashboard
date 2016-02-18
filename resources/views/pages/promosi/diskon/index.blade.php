@@ -10,10 +10,15 @@
 	</div>
 
 	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
+			@include('page_elements.alertbox')
+		</div>
+	</div>
+	
+	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			@include('page_elements.indexNavigation', [
-				'disabled'			=> true,
-				'newDataRoute' 		=> route('goods.product.create'),
+				'newDataRoute' 		=> route('promote.discount.create'),
 				'filterDataRoute' 	=> route('promote.discount.index'),
 				'searchLabel' 		=> 'cari produk',
 				'filters'			=> $filters,					
