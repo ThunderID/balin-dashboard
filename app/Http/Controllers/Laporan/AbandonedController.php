@@ -12,13 +12,13 @@ use Input, Session, DB, Redirect, Response, Auth, Carbon;
  * 
  * @author budi
  */
-class CanceledTransactionController extends AdminController
+class AbandonedController extends AdminController
 {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->page_attributes->title 				= 	'Laporan Transaksi Batal';
-		$this->page_attributes->source 				= 	'pages.laporan.batal.';
+		$this->page_attributes->title 				= 	'Laporan Abandoned Cart';
+		$this->page_attributes->source 				= 	'pages.laporan.abandoned.';
 
 		$this->page_attributes->breadcrumb			=	[];		
 	}
@@ -57,7 +57,7 @@ class CanceledTransactionController extends AdminController
 		}
 
 
-		$search['status']							= ['canceled'];
+		$search['search']							= ['expiredcart' => true];
 
 
 		$this->page_attributes->filters				= 	[];
@@ -94,7 +94,7 @@ class CanceledTransactionController extends AdminController
 
 		//4. Generate breadcrumb
 		$breadcrumb 								=	[
-															'Laporan Transaksi Batal' 		=> route('report.product.cancel'),
+															'Laporan Abandoned Cart' 		=> route('report.product.abandoned'),
 														];	
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 														
@@ -114,7 +114,7 @@ class CanceledTransactionController extends AdminController
 														];
 
 		//6. Generate paginator
-		$this->paginate(route('report.product.cancel'), $sale['data']['count'], $page);
+		$this->paginate(route('report.product.abandoned'), $sale['data']['count'], $page);
 
 
 		//7. Generate view
@@ -134,7 +134,7 @@ class CanceledTransactionController extends AdminController
 		{
 			$this->errors 							= $sale['message'];
 			
-			return $this->generateRedirectRoute('report.product.cancel');	
+			return $this->generateRedirectRoute('report.product.abandoned');	
 		}
 
 		$this->page_attributes->subtitle 			= $sale['data']['ref_number'];
@@ -145,8 +145,8 @@ class CanceledTransactionController extends AdminController
 
 		//3. Generate breadcrumb
 		$breadcrumb 								=	[
-															'Laporan Transaksi Batal' 		=> route('report.product.cancel'),
-															$sale['data']['ref_number'] => route('report.product.cancel.detail', ['id' => $id])
+															'Laporan Abandoned Cart' 		=> route('report.product.abandoned'),
+															$sale['data']['ref_number'] => route('report.product.abandoned.detail', ['id' => $id])
 														];	
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 

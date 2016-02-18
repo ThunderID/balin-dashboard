@@ -50,6 +50,7 @@ Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan\\'], function()
 	Route::get('rekap/penjualan',								['uses' => 'RecapController@sale', 'as' => 'report.recap.sale']);
 	Route::resource('penjualan',  	'SaleController',			['names' => ['index' => 'report.product.sale', 'show' => 'report.product.sale.detail'], 'only' => ['show', 'index']]);
 	Route::resource('transaksibatal','CanceledTransactionController',['names' => ['index' => 'report.product.cancel', 'show' => 'report.product.cancel.detail'], 'only' => ['show', 'index']]);
+	Route::resource('abandonedcart','AbandonedController',		['names' => ['index' => 'report.product.abandoned', 'show' => 'report.product.abandoned.detail'], 'only' => ['show', 'index']]);
 
 	Route::resource('stok/barang',  	'StockController',		['names' => ['index' => 'report.stock.product', 'show' => 'report.stock.product.detail'], 'only' => ['show', 'index']]);
 
