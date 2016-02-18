@@ -38,16 +38,6 @@ class SaleController extends AdminController
 														];
 
 		}												
-		else
-		{
-			$tmpdate 								= "01-" . date('m-Y') . " 00:00:00";
-
-
-			$search['ondate'] 						= 	[
-															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->format('Y-m-d H:i:s'),
-															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->addMonths(1)->format('Y-m-d H:i:s'),
-														];
-		}
 
 		if(Input::has('q'))
 		{
