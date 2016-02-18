@@ -1,4 +1,4 @@
-<div class="container-fluid">
+ <div class="container-fluid">
 	<div class="row">
 
 <!-- desktop section -->
@@ -68,7 +68,6 @@
 							<ul class="dropdown-menu submenu-desktop">
 								<li><a href="{{ URL::route('customer.customer.index') }}">Data Pelanggan</a></li>
 								<li><a href="{{ URL::route('customer.point.index') }}">Poin</a></li>
-								<li><a href="{{ URL::route('customer.csr.index') }}">Relasi</a></li>
 							</ul>							
 						</li>
 
@@ -478,13 +477,6 @@
 									<a href="{{ URL::route('customer.point.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Poin
-										</h4>
-									</a>
-								</div>
-								<div class="col-sm-12 col-xs-12 m-b-sm">
-									<a href="{{ URL::route('customer.csr.index') }}" class="btn btn-default btn-block btn-sm pull-left">
-										<h4>
-											Relasi
 										</h4>
 									</a>
 								</div>
