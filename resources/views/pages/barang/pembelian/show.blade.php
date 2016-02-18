@@ -34,15 +34,40 @@
 <!-- content -->
 	<div class="row">
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
+			
 			<div class="row">
-				<div class="col-md-6">
-					<h4 style="margin-top:0px;">Nomor Invoice</h4>
-					<p>{{$dt['ref_number']}}</p>
-					<h4 style="margin-top:0px;">Tanggal Invoice</h4>
-					<p>@date_indo(new Carbon($dt['transact_at']))</p>
+				<div class="col-md-5 col-sm-6 col-xs-11">
+					<div class="row">
+						<div class="col-md-6 col-sm-7 col-xs-5">
+							<h4>Nomor Invoice</h4> 
+						</div>
+						<div class="col-md-1 col-sm-1 col-xs-2">
+							<h4>:</h4> 
+						</div>
+						<div class="col-md-5 col-sm-3 col-xs-5">
+							<h4>{{$dt['ref_number']}}</h4> 
+						</div>
+					</div>
 				</div>
-				
-			</div>	
+			</div>
+
+			<div class="row">
+				<div class="col-md-5 col-sm-6 col-xs-11">
+					<div class="row">
+						<div class="col-md-6 col-sm-7 col-xs-5">
+							<h4>Tanggal Invoice</h4> 
+						</div>
+						<div class="col-md-1 col-sm-1 col-xs-2">
+							<h4>:</h4> 
+						</div>
+						<div class="col-md-5 col-sm-3 col-xs-5">
+							<h4>@date_indo(new Carbon($dt['transact_at']))</h4> 
+						</div>
+					</div>
+				</div>
+			</div>
+
+
 			<div class="row">
 				<div class="col-md-12 m-t-md">
 					<p>Pembelian dari <strong>{{$dt['supplier']['name']}}</strong> sebagai berikut :</p>
@@ -53,16 +78,16 @@
 				<div class="col-md-12">
 					<div class="table-responsive">
 						</br>
-						<table class="table table-bordered table-hover">
+						<table class="table table-hover">
 							<thead>
 								<tr>
 									<th class="text-center"></th>
 									<th class="text-center">Nama Barang</th>
 									<th class="text-center">Ukuran</th>
 									<th class="text-center">Qty</th>
-									<th class="text-center">Harga</th>
-									<th class="text-center">Diskon</th>
-									<th class="text-center">Sub Total</th>
+									<th class="text-right">Harga</th>
+									<th class="text-right">Diskon</th>
+									<th class="text-right">Sub Total</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -91,8 +116,8 @@
 										</tr>
 									@endforeach
 									<tr>
-										<td colspan="6">
-											Total Bayar
+										<td colspan="6" class="text-right">
+											<strong>Total Bayar</strong>
 										</td>
 										<td class="text-right">
 											@money_indo($dt['amount'])
