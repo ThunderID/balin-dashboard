@@ -92,9 +92,6 @@ Route::group(['prefix' => 'customer', 'namespace' => 'Customer\\'], function()
 	Route::resource('kostumer',  	'CustomerController',		['names' => ['index' => 'customer.customer.index', 'show' => 'customer.customer.show'], 'only' => ['show', 'index']]);
 	Route::resource('point', 		'PointController',			['names' => ['index' => 'customer.point.index', 'create' => 'customer.point.create', 'store' => 'customer.point.store', 'edit' => 'customer.point.edit', 'update' => 'customer.point.update'], 'except' => ['show', 'destroy']]);
 
-
-	Route::resource('relasi', 		'CsrController',			['names' => ['index' => 'customer.csr.index', 'create' => 'customer.csr.create', 'store' => 'customer.csr.store', 'show' => 'customer.csr.show'], 'except' => ['edit', 'update', 'destroy']]);
-
 	/**
 	* Routes untuk select2 ajax
 	*
