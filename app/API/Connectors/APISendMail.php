@@ -7,7 +7,7 @@ class APISendMail extends APIData
 	{
 		parent::__construct();
 
-		$this->api->timeout 				= 10;
+		$this->api->timeout 				= 30;
 	}
 
 	public function invoice($invoice, $store)
@@ -51,6 +51,15 @@ class APISendMail extends APIData
 		$this->apiUrl 						= '/mail/canceled';
 
 		$this->apiData 						= array_merge($this->apiData, ["order" => $order, "store" => $store]);
+
+		return $this->post();
+	}	
+
+	public function abandoned($cart, $store)
+	{
+		$this->apiUrl 						= '/mail/abandoned';
+
+		$this->apiData 						= array_merge($this->apiData, ["cart" => $cart, "store" => $store]);
 
 		return $this->post();
 	}	

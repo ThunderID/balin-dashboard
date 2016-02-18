@@ -146,28 +146,3 @@ Route::group(['prefix' => 'toko', 'namespace' => 'Toko\\'], function()
 	Route::get('sell/ajax/findAmount',							['uses' => 'AjaxController@FindTransactionByAmount', 		'as' => 'ajax.sell.findAmount']);
 	Route::get('sell/ajax/findRefNumber',						['uses' => 'AjaxController@FindTransactionByRefNumber', 	'as' => 'ajax.sell.findRefNumber']);
 });
-
-
-
-
-///trash
-
-	Route::resource('penjualan',  	'SellController',			['names' => ['index' => 'shop.sell.index', 'show' => 'shop.sell.show'], 'only' => ['show', 'index']]);
-
-
-	/**
-	* Routes untuk sub menu harga produk
-	*
-	*/
-
-	
-	/**
-	* Routes untuk stok produk
-	*
-	*/
-
-
-
-
-
-	Route::resource('referral',  	'ReferralController',		['names' => ['index' => 'customer.referral.index'], 'only' => ['index']]);

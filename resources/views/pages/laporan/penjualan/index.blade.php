@@ -28,7 +28,7 @@
 
 	<div id="contentData">
 		<div class="row">			
-			@include('page_elements.searchResult', ['closeSearchLink' => route('shop.sell.index') ])
+			@include('page_elements.searchResult', ['closeSearchLink' => route('report.product.sale') ])
 		</div>
 		</br> 	
 <!-- end of head -->

@@ -107,7 +107,7 @@
 			<div id="contentData">
 				<div class="row">	
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						@include('page_elements.searchResult', ['closeSearchLink' => route('shop.sell.index') ])
+						@include('page_elements.searchResult', ['closeSearchLink' => route('report.product.sale') ])
 					</div>
 				</div>
 

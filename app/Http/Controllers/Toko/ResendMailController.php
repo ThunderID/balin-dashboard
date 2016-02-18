@@ -61,6 +61,10 @@ class ResendMailController extends AdminController
 					$mail->cancelorder($result['data'], $this->balininfo());
 					$type			= 'Konfirmasi Pembatalan Pesanan';
 				break;
+			case 'abandoned':
+					$mail->abandoned($result['data'], $this->balininfo());
+					$type			= 'Email Pengingat';
+				break;
 			default:
 				$this->errors 		= 'Status tidak valid';
 				break;
@@ -68,6 +72,6 @@ class ResendMailController extends AdminController
 
 		$this->page_attributes->success 		= $type." sudah di kirim ";
 
-		return $this->generateRedirectRoute('shop.sell.show', ['id' => $id]);
+		return $this->generateRedirectRoute('report.product.sale', ['id' => $id]);
 	}
 }
