@@ -57,7 +57,7 @@ class AbandonedController extends AdminController
 		}
 
 
-		$search['search']							= ['expiredcart' => true];
+		$search['expiredcart']							= true;
 
 
 		$this->page_attributes->filters				= 	[];
@@ -98,7 +98,6 @@ class AbandonedController extends AdminController
 														];	
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 														
-
 		//5. Get data from API
 		$APISale 									= new APISale;
 
