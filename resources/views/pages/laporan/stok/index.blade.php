@@ -43,7 +43,6 @@
 								<th class="text-left col-md-3">Nama Produk</th>
 								<th class="text-center col-md-2">Ukuran</th>
 								<th class="text-center col-md-1">Stok Gudang</th>
-								<th class="text-center col-md-1">Stok Keluar</th>
 								<th class="text-center col-md-2">Kontrol</th>
 							</tr>
 						</thead> 
@@ -71,9 +70,6 @@
 										</td>
 										<td class="text-center">
 											{{ $dt['inventory_stock'] }}
-										</td>
-										<td class="text-center">
-											{{ ($dt['sold_item']) }}
 										</td>
 										<td class="text-center">
 											<a href="{{ route('report.stock.product.detail', $dt['id']) }}"> Detail</a>

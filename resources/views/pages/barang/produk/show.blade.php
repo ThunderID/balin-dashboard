@@ -32,9 +32,11 @@
 				<div class="col-md-12">
 					<a class="btn btn-default pull-right"  href="{{ route('goods.product.edit', ['id' => $dt['id']] ) }}"> Edit Data </a>
 				</div>
+				<div class="hidden-lg hidden-md col-sm-12 col-xs-12 m-b-md">
+				</div>				
 			</div>			
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-md-6 m-b-md">
 					<div class="row">
 						<div class="col-md-offset-10 col-md-2">
 							<a href="javascript:clickNext();"><i class="fa fa-angle-right fa-lg pull-right"></i></a>

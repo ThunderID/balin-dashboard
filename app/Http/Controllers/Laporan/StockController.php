@@ -147,61 +147,36 @@ class StockController extends AdminController
 	 */
 	public function show($id)
 	{
-		//1. Get data from API
-		$APIStock 									= new APIStock;
-		$product 									= $APIStock->getShow($id);
+		//1. Check filter
+		$search 									= [];
+		$sort 										= [];
 
-		//2. Check return status
-		if($product['status'] != 'success')
+		if(Input::has('periode'))
 		{
-			$this->errors 							= $product['message'];
-			
-			return $this->generateRedirectRoute('report.stock.product');	
-		}
+			$tmpdate 								= "01-" . Input::get('periode') . " 00:00:00";
 
-		$this->page_attributes->subtitle 			= $product['data']['product']['name'];
+			$search['ondate'] 						= 	[
+															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->format('Y-m-d H:i:s'),
+															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->addMonths(1)->format('Y-m-d H:i:s'),
+														];
 
-		$collection 								= collect($product['data']['details']);
-
-		// filters & collection
-		if(Input::has('start') && Input::has('end'))
-		{
-			$this->page_attributes->search 			= 'Periode ' . Input::get('start') . ' sampai ' . Input::get('end');
-
-			$filterStart							= date('Y-m-d H:i:s', strtotime(Input::get('start')));
-			$filterEnd								= date('Y-m-d H:i:s', strtotime(Input::get('end')));
-
-			$result 								= $collection->filter(function ($col)use($filterStart, $filterEnd) {
-															return $col['transact_at'] >= $filterStart &&  $col['transact_at'] <= $filterEnd;
-														});
-
-			$product['data']['details']				= $result;
-		}
+		}												
 		else
 		{
-			$result 								= $collection;
-		}	
+			$tmpdate 								= "01-" . date('m-Y') . " 00:00:00";
 
 
-		if (Input::has('sort'))
-		{
-			$sort_item 								= explode('-', Input::get('sort'));
-			$sort 									= [$sort_item[0] => $sort_item[1]];
-		}
-		else
-		{
-			$sort									= ['name' => 'asc'];
+			$search['ondate'] 						= 	[
+															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->format('Y-m-d H:i:s'),
+															Carbon::createFromFormat('d-m-Y H:i:s', ($tmpdate))->addMonths(1)->format('Y-m-d H:i:s'),
+														];
 		}
 
 		$this->page_attributes->filters				= 	[];
+		$this->page_attributes->sorts				= 	[];
 
-		$SortList 									= new SortList;
-		$this->page_attributes->sorts 				= 	[
-															'titles'	=> ['tanggal'],
-															'tanggal'	=> $SortList->getSortingList('tanggal'),
-														]; 			
 
-		//get curent page
+		//2. get curent page
 		if(is_null(Input::get('page')))
 		{
 			$page 									= 1;
@@ -212,36 +187,32 @@ class StockController extends AdminController
 		}
 
 
-		//data paging	
-		$collection 								= collect($product['data']['details']);
+		//4. Get data from API
+		$APIStock 									= new APIStock;
+		$stock 										= $APIStock->getShow($id, [
+														'search' 	=> $search,
+														'sort' 		=> $sort,																		
+														'take'		=> $this->take,
+														'skip'		=> ($page - 1) * $this->take,
+														]);
 
-		if(count($collection) != 0)
-		{
-			$result 								= $collection->chunk($this->take);
+		dd($stock);
 
-			$this->paginate(route('report.stock.product.detail', ['id' => $id]), count($collection), $page);	
-
-			$product['data']['details']				= $result[($page-1)];
-		}
-		else
-		{
-			$this->paginate(route('report.stock.product.detail', ['id' => $id]), count($collection), $page);	
-		}
-
-
-		// data here
 		$this->page_attributes->data				= 	[
-															'product' => $product,
+															'product' => $stock,
 														];
 
-		//3. Generate breadcrumb
+
+		$this->paginate(route('report.stock.product.detail', ['id' => $id]), count($stock['data']['details']), $page);														
+
+		//5. Generate breadcrumb
 		$breadcrumb 								=	[
-															$product['data']['product']['name'] => route('report.stock.product.detail', ['id' => $id])
+															$stock['data']['product']['name'] => route('report.stock.product.detail', ['id' => $id])
 														];	
+		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);														
 
-		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
-		//4. Generate view
+		//6. Generate view
 		$this->page_attributes->source 				= $this->page_attributes->source . 'show';
 
 		return $this->generateView();

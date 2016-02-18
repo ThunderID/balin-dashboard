@@ -106,7 +106,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="table-responsive">
-							<table class="table table-hover">
+							<table class="table">
 								<thead>
 									<tr>
 										<th class="col-md-1 text-left">

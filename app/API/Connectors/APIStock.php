@@ -22,9 +22,14 @@ class APIStock extends APIData
 		return $this->get();
 	}
 
-	public function getShow($id)
+	public function getShow($id, $parameter = null)
 	{
 		$this->apiUrl 					= '/product/stock/card/' . $id;
+
+		if(!is_null($parameter))
+		{
+			$this->apiData 				= array_merge($this->apiData, $parameter);
+		}		
 
 		return $this->get();
 	}	
