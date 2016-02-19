@@ -113,7 +113,6 @@
 						</div>
 					</div>								
 							
- 
 					<div class="row">
 						<div class="col-md-12 col-sm-6 col-xs-11">
 							<div class="row">
@@ -172,6 +171,76 @@
 			</div>
 
 			<div class="row clearfix m-b-md">&nbsp;</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<h3>Stok Produk</h3>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-3">
+					<div class="panel panel-list panel-default">
+						<div class="panel-heading">Stok Display</div>
+						<div class="panel-body">
+							<h4 class="m-r-sm m-t-sm text-right">
+								@if($dt['current_stock'])
+									{!! $dt['current_stock'] !!}
+								@else
+									0
+								@endif
+							</h4>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="panel panel-list panel-default">
+						<div class="panel-heading">Stok Gudang</div>
+						<div class="panel-body">
+							<h4 class="m-r-sm m-t-sm text-right">
+								@if($dt['inventory_stock'])
+									{!! $dt['inventory_stock'] !!}
+								@else
+									0
+								@endif
+							</h4>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="panel panel-list panel-default">
+						<div class="panel-heading">Stok Dibayar</div>
+						<div class="panel-body">
+							<h4 class="m-r-sm m-t-sm text-right">
+								@if($dt['reserved_stock'])
+									{!! $dt['reserved_stock'] !!}
+								@else
+									0
+								@endif						
+							</h4>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-3">
+					<div class="panel panel-list panel-default">
+						<div class="panel-heading">Stok Dipesan</div>
+						<div class="panel-body">
+							<h4 class="m-r-sm m-t-sm text-right">
+								@if($dt['on_hold_stock'])
+									{!! $dt['on_hold_stock'] !!}
+								@else
+									0
+								@endif						
+							</h4>
+						</div>
+					</div>
+				</div>		
+			</div>		
+
+			<div class="row clearfix m-b-sm">&nbsp;</div>
 
 			<div class="row">
 				<div class="col-md-12">
