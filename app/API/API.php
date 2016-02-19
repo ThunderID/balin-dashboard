@@ -61,9 +61,8 @@ class API
 									    'timeout'  => $this->timeout,
 									]);
 
-
-		$request 				= new Request('DELETE',  $this->basic_url . $url);
-		$response 				= $client->send($request, ['timeout' => $this->timeout]);
+		$response 				= $client->delete($this->basic_url . $url , ['timeout' => $this->timeout]);
+		$response->addHeader('Content-Type','application/json');
 
 		$body 					= $response->getBody();
 
