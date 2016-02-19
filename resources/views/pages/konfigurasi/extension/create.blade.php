@@ -45,11 +45,17 @@
 					]) !!}
 				</div>              
 			</div>						
-			<div class="col-md-6">
+			<div class="col-md-3">
 				<div class="form-group">
-					<label for="parent" class="text-capitalize">Active</label>
+					<label for="is_active" class="text-capitalize">Active</label>
 					{!! Form::select('is_active', array('0' => 'False', '1' => 'True'), $data['is_active'], ['tabindex' => 4, 'class' => 'form-control']) !!}
-				</div>              
+				</div>
+			</div>	
+			<div class="col-md-3">
+				<div class="form-group">
+					<label for="is_customize" class="text-capitalize">Kostum Pesan ? </label>
+					{!! Form::select('is_customize', array('0' => 'False', '1' => 'True'), $data['is_customize'], ['tabindex' => 4, 'class' => 'form-control']) !!}
+				</div>
 			</div>						
 		</div>
 		

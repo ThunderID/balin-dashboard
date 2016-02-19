@@ -228,6 +228,7 @@ class ExtensionController extends AdminController
 															'id' 			=> $id,
 															'name'			=> Input::get('name'),
 															'is_active'		=> Input::get('is_active'),
+															'is_costumize'	=> Input::get('is_costumize'),
 															'description'	=> Input::get('description'),
 															'images'		=> ['0' => $tmpImage],
 														];
