@@ -8228,6 +8228,9 @@ a:hover, a:focus {
 .text-uppercase, .initialism {
   text-transform: uppercase; }
 
+.text-red {
+  color: red; }
+
 .b-r {
   border-right: 1px solid #e7eaec; }
 
