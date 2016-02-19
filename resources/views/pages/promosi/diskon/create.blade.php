@@ -10,7 +10,7 @@
     {!! Form::open(['url' => route('promote.discount.store'), 'method' => 'POST']) !!}
 	<div class="row">
 
-		<div class="col-md-12 m-b-md">
+		<div class="col-md-12 m-b-sm">
 			<h5 class="sub-header text-red">
 				Berikan diskon untuk kategori / tag tertentu, kosongkan keduanya untuk diskon semua produk.
 				Jika keduanya diisi maka diskon berlaku untuk produk dengan kategori dan tag tsb.
@@ -41,7 +41,7 @@
 			</div>
 		</div>
 		
-		<div class="col-md-12 m-b-md">
+		<div class="col-md-12 m-t-md m-b-sm">
 			<h5 class="sub-header text-red">
 				Tanggal mulai dan akhir merupakan periode berlaku diskon, prioritas utama jadwal harga akan mengikuti diskon. Setelah diskon berakhir, harga kembali seperti semula/sesuai jadwal.
 			</h5>
@@ -68,7 +68,7 @@
 			</div>
 		</div>
 		
-		<div class="col-md-12 m-b-md">
+		<div class="col-md-12 m-t-md m-b-sm">
 			<h5 class="sub-header text-red">
 				Isi salah satu cara pemberian potongan harga, jika keduanya maka potongan harga akan dilakukan dahulu kemudian di potong persentasi harga yang baru.
 			</h5>
