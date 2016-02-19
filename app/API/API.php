@@ -2,11 +2,10 @@
 
 use Exception;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
 
 class API
 {
-	protected $domain			= '192.168.1.118';
+	protected $domain			= 'http://192.168.1.118';
 	// protected $domain			= 'localhost';
 	protected $port				= '8800';
 	public $timeout				= 2;
@@ -32,8 +31,9 @@ class API
 									    'timeout'  => $this->timeout
 									]);
 
-		$request 				= new Request('GET',  $this->basic_url . $url);
-		$response 				= $client->send($request, ['timeout' => $this->timeout]);
+		$response 				= $client->get($this->basic_url . $url , ['timeout' => $this->timeout]);
+		$response->addHeader('Content-Type','application/json');
+
 		$body 					= $response->getBody();
 
 		return (string) $body;
@@ -46,7 +46,8 @@ class API
 									    'timeout'  => $this->timeout,
 									]);
 
-		$response 				= $client->request('POST',  $this->basic_url . $url, ['form_params' => $data] );
+		$response 				= $client->post($this->basic_url . $url, ['body' => $data] , ['timeout' => $this->timeout] );
+		$response->addHeader('Content-Type','application/json');
 
 		$body 					= $response->getBody();
 
