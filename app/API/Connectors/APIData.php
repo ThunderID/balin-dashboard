@@ -76,7 +76,7 @@ abstract class APIData
 
 		foreach ($this->apiData as $key => $data) 
 		{
-			$queryString 			= $queryString . $key . '=' . $data . '?' ;
+			$queryString 			= $queryString . $key . '=' . $data . '&' ;
 		}
 
 		$this->apiUrl				= $this->apiUrl . '?' . $queryString;
