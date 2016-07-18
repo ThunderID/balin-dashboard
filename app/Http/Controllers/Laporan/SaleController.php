@@ -61,13 +61,12 @@ class SaleController extends AdminController
 		}
 		else
 		{
-			$search['status']						= ['wait','paid','packed','shipping','delivered'];
+			$search['status']						= ['wait', 'payment_process','paid','packed','shipping','delivered'];
 		}
-
 
 		$this->page_attributes->filters				= 	[
 															'titles' 	=> ['status'], 
-															 'status' 	=> ['wait','paid','packed','shipping','delivered']
+															 'status' 	=> ['wait', 'payment_process','paid','packed','shipping','delivered']
 														];
 
 

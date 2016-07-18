@@ -25,7 +25,7 @@ class HomeController extends AdminController
 		$APISale 							= new APISale;
 
 		$wait 								= $APISale->getIndex([
-													'search' 	=> 	['status' => 'wait'],
+													'search' 	=> 	['status' => ['wait', 'payment_process']],
 												])['data'];
 
 

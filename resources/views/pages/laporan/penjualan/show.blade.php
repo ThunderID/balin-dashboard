@@ -219,7 +219,7 @@
 				<div class="col-md-3">
 					<h3>Histori</h3>
 					@foreach($dt['transactionlogs'] as $key => $value)
-						<p><strong>{{$value['status']}}</strong>&nbsp;&nbsp;&nbsp; @date_indo(new Carbon($value['changed_at'])) &nbsp; @if(in_array($value['status'], ['wait', 'paid', 'shipping', 'delivered', 'canceled'])) <a href="{{route('shop.resend.email', ['id' => $value['transaction_id'], 'status' => $value['status']])}}">[ Resend Email ]</a> @endif</p>
+						<p><strong>{{$value['status']}}</strong>&nbsp;&nbsp;&nbsp; @date_indo(new Carbon($value['changed_at'])) &nbsp; @if(in_array($value['status'], ['wait', 'payment_process', 'paid', 'shipping', 'delivered', 'canceled'])) <a href="{{route('shop.resend.email', ['id' => $value['transaction_id'], 'status' => $value['status']])}}">[ Resend Email ]</a> @endif</p>
 					@endforeach
 				</div>
 			</div>
