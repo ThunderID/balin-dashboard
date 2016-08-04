@@ -107,7 +107,7 @@
 									<h4>:</h4> 
 								</div>
 								<div class="col-md-8 col-sm-3 col-xs-5">
-									<h4>@money_indo($dt['price'])</h4> 
+									<h4>@money_indo($dt['promo_price'])</h4> 
 								</div>
 							</div>
 						</div>

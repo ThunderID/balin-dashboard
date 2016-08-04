@@ -81,8 +81,6 @@
     {!! Form::open(['url' => route('shop.buy.store'), 'method' => 'POST']) !!}
     @endif
 
-	{!! Form::hidden('src', $data['src'], []) !!}
-
 		<div class="row">
 			<div class="col-md-3">
 				<div class="form-group">

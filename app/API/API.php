@@ -5,8 +5,8 @@ use GuzzleHttp\Client;
 
 class API
 {
-	protected $domain			= 'http://192.168.1.118';
-	// protected $domain			= 'localhost';
+	// protected $domain			= 'http://192.168.1.118';
+	protected $domain			= 'http://localhost';
 	protected $port				= '8800';
 	public $timeout				= 2;
 	public $basic_url;

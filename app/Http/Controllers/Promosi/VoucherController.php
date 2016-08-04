@@ -149,8 +149,10 @@ class VoucherController extends AdminController
 		}
 		else
 		{
-			$APIVoucher 								= new APIVoucher;
+			$APIVoucher 							= new APIVoucher;
 			$data 									= ['data' => $APIVoucher->getShow($id)['data'] ];	
+			$data['data']['expired_at']				= \Carbon\Carbon::parse($data['data']['expired_at'])->format('d-m-Y H:i');		
+			$data['data']['started_at']				= \Carbon\Carbon::parse($data['data']['started_at'])->format('d-m-Y H:i');		
 
 			$breadcrumb								=	[
 															$data['data']['code']  =>  route('promote.voucher.index'),
@@ -218,7 +220,7 @@ class VoucherController extends AdminController
 			$voucher['quota']						= $inputQuota;
 			$voucher['started_at']					= $inputStartDate;
 			$voucher['expired_at']					= $inputExpireDate;
-			$voucher['quotalogs']					= $data['data']['quotalogs'];
+			// $voucher['quotalogs']					= $data['data']['quotalogs'];
 		}
 		else
 		{

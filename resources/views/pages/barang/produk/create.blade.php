@@ -63,7 +63,7 @@
 											'class'         => 'form-control input-image-lg', 
 											'tabindex'      => '11',
 											'placeholder'   => 'Masukkan url image lg',
-								]) !!}							
+								]) !!}
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -97,6 +97,7 @@
     @else
     {!! Form::open(['url' => route('goods.product.store'), 'method' => 'POST']) !!}
     @endif
+    	{!! Form::hidden('prices', json_encode($data['data']['prices'])) !!}
 		<div class="row">
 			<div class="col-md-6">
 				<div class="form-group">

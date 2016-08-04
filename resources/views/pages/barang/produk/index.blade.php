@@ -97,7 +97,12 @@
 											{{$dt['current_stock']}}
 										</td>
 										<td class="text-right">
+											@if($dt['promo_price'] > 0)
+											 <strike>@money_indo($dt['price'])</strike>
+											 @money_indo($dt['promo_price'])
+											@else
 											 @money_indo($dt['price'])
+											@endif
 										</td>									
 										<td class="text-center">
 											<a href="{{ route('goods.product.show', $dt['id']) }}"> Detail</a>,

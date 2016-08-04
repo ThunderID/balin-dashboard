@@ -206,7 +206,6 @@ class ProductController extends AdminController
 															'product' => $product,
 														];
 
-
 		//2. Get collection search
 		if(Input::has('q'))
 		{
@@ -260,7 +259,8 @@ class ProductController extends AdminController
 			//explode description saved in json
 			$tmp									= json_decode($data['data']['description'], true);
 			$data['data']['description']			= $tmp['description'];			
-			$data['data']['fit']					= $tmp['fit'];		
+			$data['data']['fit']					= $tmp['fit'];
+			$data['data']['price_start']			= \Carbon\Carbon::parse($data['data']['price_start'])->format('d-m-Y H:i');		
 
 			$breadcrumb								=	[
 															$data['data']['name']  =>  route('goods.product.show', ['id' => $data['data']['id']] ),
@@ -308,7 +308,12 @@ class ProductController extends AdminController
 	public function store($id = "")
 	{
 		//1. Store Price
-		$prices 									= [];
+		$prices 									= json_decode(Input::get('prices'), true);
+
+		if(is_null($prices))
+		{
+			$prices 								= [];
+		}
 
 		$tmpPrice 									= 	[
 															'id' 			=> "",
@@ -317,7 +322,6 @@ class ProductController extends AdminController
 															'started_at'	=> date('Y-m-d H:i:s', strtotime(Input::get('started_at'))),
 														];		
 		array_push($prices,$tmpPrice);
-
 
 		//2. Store Image
 		$images 									= [];
@@ -330,6 +334,7 @@ class ProductController extends AdminController
 															'image_sm'		=> Input::get('image_sm')[$key],
 															'image_md'		=> Input::get('image_md')[$key],
 															'image_lg'		=> Input::get('image_lg')[$key],
+															'is_default'	=> Input::get('default')[$key],
 														];
 
 			if(!empty($tmpImage['thumbnail']) || !empty($tmpImage['image_xs']) || !empty($tmpImage['image_sm']) || !empty($tmpImage['image_md']) || !empty($tmpImage['lg']) )
@@ -346,6 +351,7 @@ class ProductController extends AdminController
 															'image_sm'		=> "",
 															'image_md'		=> "",
 															'image_lg'		=> "",
+															'is_default'	=> "",
 														];
 			}														
 		}
