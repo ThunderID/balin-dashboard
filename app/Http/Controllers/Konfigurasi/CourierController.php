@@ -1,7 +1,7 @@
 <?php 
 namespace App\Http\Controllers\konfigurasi;
 
-use App\API\connectors\APICourier;
+use App\API\Connectors\APICourier;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Helper\SortList;

@@ -1,8 +1,8 @@
 <?php 
 namespace App\Http\Controllers\Barang;
 
-use App\API\connectors\APITag;
-use App\API\connectors\APIProduct;
+use App\API\Connectors\APITag;
+use App\API\Connectors\APIProduct;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Helper\SortList;

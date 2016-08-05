@@ -1,8 +1,8 @@
 <?php 
 namespace App\Http\Controllers\Barang;
 
-use App\API\connectors\APICategory;
-use App\API\connectors\APIProduct;
+use App\API\Connectors\APICategory;
+use App\API\Connectors\APIProduct;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Helper\SortList;

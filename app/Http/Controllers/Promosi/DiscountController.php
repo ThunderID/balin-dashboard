@@ -1,7 +1,7 @@
 <?php 
 namespace App\Http\Controllers\Promosi;
 
-use App\API\connectors\APIProduct;
+use App\API\Connectors\APIProduct;
 use App\API\Connectors\APITag;
 use App\API\Connectors\APICategory;
 use App\API\Connectors\APILabel;

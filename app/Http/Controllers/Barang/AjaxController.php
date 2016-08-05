@@ -1,7 +1,7 @@
 <?php 
 namespace App\Http\Controllers\Barang;
 
-use App\API\connectors\APIAjax;
+use App\API\Connectors\APIAjax;
 
 use App\Http\Controllers\Controller;
 use Input, Collection;
