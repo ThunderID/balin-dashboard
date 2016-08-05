@@ -5,9 +5,9 @@ use GuzzleHttp\Client;
 
 class API
 {
-	// protected $domain			= 'http://192.168.1.118';
-	protected $domain			= 'http://localhost';
-	protected $port				= '8800';
+	protected $domain			= env('RESOURCE_DOMAIN', 'localhost');
+	protected $port				= env('RESOURCE_PORT', '');
+
 	public $timeout				= 2;
 	public $basic_url;
 
