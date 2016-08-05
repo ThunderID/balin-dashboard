@@ -91,7 +91,7 @@ class PasswordController extends AdminController
 		//3. Save password
 		if($result['status'] == "success")
 		{
-			Session::set('APIToken', $result['data']['token']['access_token']);
+			Session::set('APIToken', $result['data']['token']['token']);
 			Session::set('userID', $result['data']['me']['id']);
 
 			$APIAdmin 									= new APIAdmin;

@@ -13,7 +13,7 @@ abstract class APIData
 	{
 		$this->api 					= new API;
 
-		$this->apiData 				= ['access_token' => Session::get('APIToken')];
+		$this->apiData 				= ['token' => Session::get('APIToken')];
 		
 		if(is_null(Session::get('APIToken')))
 		{
