@@ -4,6 +4,7 @@ namespace App\Http\Controllers\konfigurasi;
 use App\API\Connectors\APIStore;
 use App\API\Connectors\APIStorePage;
 use App\API\Connectors\APISlider;
+use App\API\Connectors\APIBanner;
 
 use App\Http\Controllers\AdminController;
 
@@ -103,10 +104,26 @@ class WebsiteController extends AdminController
 																		],
 														]);
 
+		$APIBanner 									= new APIBanner;
+		
+		$banner 									= $APIBanner->getIndex([
+														'search' 	=> 	[
+																			'ondate'	=> 	[
+																								"",
+																								Carbon::now()->format('Y-m-d H:i:s')
+																							],
+																			'default'	=> 'true',
+																		],
+														'sort' 		=> 	[
+																			'name'	=> 'asc',
+																		],
+														]);
+
 		$this->page_attributes->data				= 	[
 															'storepage' => $storepage,
 															'storeinfo' => $storeinfo,
 															'slider' 	=> $slider,
+															'banner' 	=> $banner,
 														];
 		//4. Generate breadcrumb
 		$breadcrumb								=	[
@@ -157,11 +174,18 @@ class WebsiteController extends AdminController
 		{
 			if(Input::has('type'))
 			{
-				if(Input::get('type') == 'slider')
+				if(in_array(Input::get('type'), ['slider', 'left_banner', 'right_banner', 'full_banner']))
 				{
 					$website['id']					= "";
-					$website['type']				= "slider";
-					$website['value']				= json_encode(['button' => ['slider_button_url' => Input::get('url')]]);
+					$website['type']				= Input::get('type');
+					if(str_is('*banner', Input::get('type')))
+					{
+						$website['value']			= json_encode(['button' => ['slider_button_url' => Input::get('url')]]);
+					}
+					else
+					{
+						$website['value']			= json_encode(['button' => ['banner_button_url' => Input::get('url')]]);
+					}
 
 					$website['started_at']			= $inputStartDate;
 
@@ -173,6 +197,7 @@ class WebsiteController extends AdminController
 															'image_sm'	=> $inputImage,
 															'image_md'	=> $inputImage,
 															'image_lg'	=> $inputImage,
+															'is_default'=> true,
 														];
 				}
 			}
@@ -190,9 +215,9 @@ class WebsiteController extends AdminController
 			$website['type']						= $data['data']['type'];
 			$website['value']						= $data['data']['value'];
 
-			if(strtolower($data['data']['type'])=='slider')
+			if(in_array($data['data']['type'], ['slider', 'left_banner', 'right_banner', 'full_banner']))
 			{
-				if($data['data']['images'] != $inputImage)
+				if(isset($inputImage) && $data['data']['images'] != $inputImage)
 				{
 					$website['id']					= '';
 				}
@@ -200,14 +225,19 @@ class WebsiteController extends AdminController
 				$website['started_at']				= $inputStartDate;
 
 				$website['images']					= $data['data']['images'];
-				$website['images'][]				= 	[
-															'id'		=> '',
-															'thumbnail'	=> $inputImage,
-															'image_xs'	=> $inputImage,
-															'image_sm'	=> $inputImage,
-															'image_md'	=> $inputImage,
-															'image_lg'	=> $inputImage,
-														];
+				
+				if(isset($inputImage))
+				{
+					$website['images'][]				= 	[
+																'id'		=> '',
+																'thumbnail'	=> $inputImage,
+																'image_xs'	=> $inputImage,
+																'image_sm'	=> $inputImage,
+																'image_md'	=> $inputImage,
+																'image_lg'	=> $inputImage,
+																'is_default'=> true,
+															];
+				}
 			}
 			else
 			{
@@ -272,6 +302,33 @@ class WebsiteController extends AdminController
 
 		//5. Return view
 		$this->page_attributes->success 			= "Data Slider Telah Dihapus";
+
+		return $this->generateRedirectRoute('config.website.index', ['id' => Input::get('website')]);
+	}
+
+	public function deleteBanner($id)
+	{
+		$APIBanner 									= new APIBanner;
+		$APIStore 									= new APIStore;
+
+		$banner 									= $APIBanner->getShow($id);
+
+
+		$website 									= $banner['data'];
+
+		$website['ended_at']						= Carbon::now()->format('Y-m-d H:i:s');
+
+		//3. Save website
+		$result 									= $APIStore->postData($website);
+
+		//4. Check Response
+		if($result['status'] != 'success')
+		{
+			$this->errors 							= $result['message'];
+		}
+
+		//5. Return view
+		$this->page_attributes->success 			= "Data Banner Telah Dihapus";
 
 		return $this->generateRedirectRoute('config.website.index', ['id' => Input::get('website')]);
 	}

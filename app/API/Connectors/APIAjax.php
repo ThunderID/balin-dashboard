@@ -24,7 +24,7 @@ class APIAjax extends APIData
 
 	public function getCategory($filter = null)
 	{
-		$this->apiUrl 					= '/balin/public/clusters/category/';
+		$this->apiUrl 					= '/balin/public/clusters/category';
 
 		if(!is_null($filter))
 		{
@@ -36,7 +36,7 @@ class APIAjax extends APIData
 
 	public function getTag($filter = null)
 	{
-		$this->apiUrl 					= '/balin/public/clusters/tag/';
+		$this->apiUrl 					= '/balin/public/clusters/tag';
 
 		if(!is_null($filter))
 		{
