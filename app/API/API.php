@@ -13,7 +13,7 @@ class API
 
 	public function __construct()
 	{
-		$this->domain 			= 'http://localhost';
+		$this->domain 			= env('RESOURCE_DOMAIN', '');
 		$this->port 			= env('RESOURCE_PORT', '');
 		
 		$this->basic_url 		= $this->domain;
