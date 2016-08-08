@@ -118,13 +118,6 @@ class CancelOrderController extends AdminController
 		{
 			$this->errors 							= $result['message'];
 		}
-		//4a. sending mail
-		else
-		{
-			$mail 									= new BalinMail;
-
-			$mail->canceled($result['data'], $this->balininfo());
-		}
 
 		//5. Generate view
 		$this->page_attributes->success 			= 	[

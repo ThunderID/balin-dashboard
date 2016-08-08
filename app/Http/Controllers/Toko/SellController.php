@@ -70,7 +70,7 @@ class SellController extends AdminController
 		$this->page_attributes->filters				= 	[
 															'titles' 	=> ['periode','status'], 
 															'periode' 	=> [],
-															 'status' 	=> ['cart','wait', 'payment_process','paid','packed','shipping','delivered','canceled','abandoned']
+															 'status' 	=> ['cart','wait', 'veritrans_processing_payment','paid','packed','shipping','delivered','canceled','abandoned']
 														];
 
 
