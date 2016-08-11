@@ -287,6 +287,8 @@ class BuyController extends AdminController
 			unset($data['varians']);
 		}
 
+		$data['status']								= 'delivered';
+
 		//api
 		$APIPurchase 								= new APIPurchase;
 
