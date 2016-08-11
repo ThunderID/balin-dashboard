@@ -251,14 +251,7 @@ class CategoryController extends AdminController
 		}
 
 		//return view
-		if(!empty($id))
-		{
-			$this->page_attributes->success 		= "Data Produk Telah Diedit";
-		}
-		else
-		{
-			$this->page_attributes->success 		= "Data Produk Telah Ditambahkan";
-		}
+		$this->page_attributes->success 			= "Data Produk Telah Dihapus";
 		
 		return $this->generateRedirectRoute('goods.category.index');	
 	}		
