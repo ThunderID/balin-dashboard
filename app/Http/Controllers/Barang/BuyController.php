@@ -327,4 +327,29 @@ class BuyController extends AdminController
 	{
 		return $this->store($id);
 	}
+
+	public function destroy($id)
+	{
+		//api get
+		$APIPurchase 								= new APIPurchase;
+
+		$data 										= $APIPurchase->getShow($id);
+
+		$data['data']['status']						= 'canceled'; 								
+
+		//canceling data
+		$result 									= $APIPurchase->postData($data['data']);
+
+		//response
+		if($result['status'] != 'success')
+		{
+			$this->errors 							= $result['message'];
+		}
+
+		//return view
+		$this->page_attributes->success 			= "Transaksi Telah Dibatalkan";
+		
+		return $this->generateRedirectRoute('shop.buy.index');
+	}
+
 }

@@ -50,19 +50,19 @@
 								<th class="col-md-2">
 									Tanggal
 								</th>
-								<th class="col-md-2 text-left">
+								<th class="col-md-1 text-left">
 									No Nota
 								</th>
-								<th class="col-md-2">
+								<th class="col-md-2 text-center">
 									Nama Supplier
 								</th>
-								<th class="col-md-2 text-center">
+								<th class="col-md-2 text-right">
 									Total
 								</th>
 								<th class="col-md-2 text-center">
 									Status
 								</th>
-								<th class="col-md-1 text-center">
+								<th class="col-md-2 text-center">
 									Kontrol
 								</th>							
 							</tr>
@@ -86,7 +86,7 @@
 										<td>
 											{{ $dt['ref_number'] }}
 										</td>
-										<td>
+										<td class="text-center">
 											{{ $dt['supplier']['name'] }}
 										</td>
 										<td class="text-right">
@@ -97,10 +97,26 @@
 										</td>
 										<td class="text-center">
 											<a href="{{ route('shop.buy.show', $dt['id']) }}"> Detail</a>,
-											<a href="{{ route('shop.buy.edit', $dt['id']) }}"> Edit</a> 
+											<a href="{{ route('shop.buy.edit', $dt['id']) }}"> Edit</a>,
+											<a href="javascript:void(0);" data-backdrop="static" data-keyboard="false" 
+												data-toggle="modal" 
+												data-target="#stock_del"
+												data-id="{{$dt['id']}}"
+												data-title="Batalkan Pengadaan Barang - {{ $dt['ref_number'] }}"
+												data-action="{{ route('shop.buy.destroy', $dt['id']) }}">
+												Batal</a>
 										</td>    
 									</tr>       
 								@endforeach 
+
+								@include('page_elements.modaldelete', [
+										'modal_id'      => 'stock_del', 
+										'modal_route'   => route('shop.buy.destroy'),
+										'custom'		=> 	[
+																'caption_yes' 	=> 'Batalkan Pengadaan Barang',
+																'caption_no'	=> 'Tidak jadi'
+															]
+								])									
 							@endif
 							
 						</tbody>
