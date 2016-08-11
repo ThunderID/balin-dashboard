@@ -30,6 +30,7 @@
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-md">
 			<div class="row">
 				<div class="col-md-12">
+					<a class="btn btn-default pull-right m-l-sm"  href="{{ route('goods.price.show', ['pid' => $dt['id']]) }}"> Manage Harga </a>	
 					<a class="btn btn-default pull-right"  href="{{ route('goods.product.edit', ['id' => $dt['id']] ) }}"> Edit Data </a>
 				</div>
 				<div class="hidden-lg hidden-md col-sm-12 col-xs-12 m-b-md">
@@ -89,8 +90,7 @@
 								</div>
 								<div class="col-md-8 col-sm-3 col-xs-5">
 									<h4>
-										@money_indo($dt['price']) &nbsp;
-										<span><a href="{{ route('goods.price.show', ['pid' => $dt['id']]) }}">[ Histori Harga ]</a></span>
+										@money_indo($dt['price'])
 									</h4>
 								</div>
 							</div>
