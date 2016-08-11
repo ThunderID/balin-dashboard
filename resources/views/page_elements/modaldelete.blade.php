@@ -14,7 +14,7 @@
                             ['class' => 'mod_id']
                     ) !!}   
                     <div class="form-group">
-                        <p>Isikan password Anda sebagai konfirmasi penghapusan data.</p>
+                        <p>Isikan password Anda untuk konfirmasi.</p>
                     </div>                  
                     <div class="form-group">
                         <label for="pwd">Password</label>
@@ -26,10 +26,10 @@
                     </div>
                 	</br>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-md btn-block btn-danger" tabindex="1">Delete</button>
+                        <button type="submit" class="btn btn-md btn-block btn-danger" tabindex="1">{{ isset($custom['caption_yes']) ? $custom['caption_yes'] : 'Delete'}}</button>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-md btn-block btn-default" tabindex="1" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-md btn-block btn-default" tabindex="1" data-dismiss="modal">{{ isset($custom['caption_no']) ? $custom['caption_no'] : 'Batal' }}</button>
                     </div>    
                 {!! Form::close() !!}
             </div>
