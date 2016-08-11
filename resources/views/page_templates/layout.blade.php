@@ -16,10 +16,13 @@
 	</head>
 
 	<body>
-		<div class="wrapper white-bg border-bottom">
+		<div class="wrapper white-bg border-bottom navbar-fixed-top">
 			@include('page_elements.topbar')
 		</div>
 
+		<div class="wrapper white-bg m-t-md m-b-md">
+			&nbsp;
+		</div>
 
 		<div class="wrapper white-bg">
 			@yield('content')			
