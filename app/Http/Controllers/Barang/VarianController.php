@@ -55,6 +55,7 @@ class VarianController extends AdminController
 
 		$this->page_attributes->data['data']		= $this->VarianFindData($product['data']['varians'], $id)['data'];
 		$this->page_attributes->data['name']		= $product['data']['name'];
+		$this->page_attributes->data['upc']			= $product['data']['upc'];
 
 		//2. Generate breadcrumb
 		$breadcrumb 								=	[

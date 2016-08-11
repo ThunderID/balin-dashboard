@@ -14,7 +14,7 @@
 	<div class="row">
 		<div class="col-md-12 m-b-md">
 			<h4 class="sub-header">
-				Data Ukuran {{ $data['data']['size'] }}
+				Data Ukuran {{ $data['data']['size'] }} 
 			</h4> 				
 
 			@include('page_elements.alertbox')
@@ -23,7 +23,9 @@
 	<!-- end of title sub-page -->
 
 <!-- end of head -->
-
+<?php
+	// dd($data);
+?>
 <!-- body -->
 	@if(isset(  $data['data']['id'] ))
 		{!! Form::open(['url' => route('goods.varian.update', ['pid' => $data['pid'], 'id' => $data['data']['id']] ), 'method' => 'PATCH']) !!}
@@ -31,7 +33,18 @@
 		{!! Form::open(['url' => route('goods.varian.store', ['pid' => $data['pid']] ), 'method' => 'POST', 'id' => 'my-awesome-dropzone', 'class' => 'dropzone']) !!}
 	@endif
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="sku">UPC</label>
+					{!! Form::text('sku', $data['upc'], [
+								'class'         => 'form-control', 
+								'placeholder'   => 'Masukkan kode SKU',
+								'tabindex'      => '0', 
+								'disabled'		=> 'disabled'
+					]) !!}
+				</div>
+			</div> 			
+			<div class="col-md-4">
 				<div class="form-group">
 					<label for="sku">SKU</label>
 					{!! Form::text('sku', $data['data']['sku'], [
@@ -41,7 +54,7 @@
 					]) !!}
 				</div>
 			</div> 			
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<div class="form-group">
 					<label for="size">Ukuran</label>
 					{!! Form::text('size', $data['data']['size'], [
