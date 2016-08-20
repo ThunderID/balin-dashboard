@@ -113,6 +113,21 @@ class WebsiteController extends AdminController
 																								Carbon::now()->format('Y-m-d H:i:s')
 																							],
 																			'default'	=> 'true',
+																			'type'		=> 'banner',
+																		],
+														'sort' 		=> 	[
+																			'name'	=> 'asc',
+																		],
+														]);
+
+		$instagram 									= $APIBanner->getIndex([
+														'search' 	=> 	[
+																			'ondate'	=> 	[
+																								"",
+																								Carbon::now()->format('Y-m-d H:i:s')
+																							],
+																			'default'	=> 'true',
+																			'type'		=> 'banner_instagram',
 																		],
 														'sort' 		=> 	[
 																			'name'	=> 'asc',
@@ -124,6 +139,7 @@ class WebsiteController extends AdminController
 															'storeinfo' => $storeinfo,
 															'slider' 	=> $slider,
 															'banner' 	=> $banner,
+															'instagram' => $instagram,
 														];
 		//4. Generate breadcrumb
 		$breadcrumb								=	[
@@ -174,17 +190,21 @@ class WebsiteController extends AdminController
 		{
 			if(Input::has('type'))
 			{
-				if(in_array(Input::get('type'), ['slider', 'left_banner', 'right_banner', 'full_banner']))
+				if(in_array(Input::get('type'), ['slider', 'banner', 'banner_instagram']))
 				{
 					$website['id']					= "";
 					$website['type']				= Input::get('type');
-					if(str_is('*banner', Input::get('type')))
+					if(str_is('slider', Input::get('type')))
 					{
 						$website['value']			= json_encode(['button' => ['slider_button_url' => Input::get('url')]]);
 					}
+					elseif(str_is('banner_instagram', Input::get('type')))
+					{
+						$website['value']			= json_encode(['action' => Input::get('url')]);
+					}
 					else
 					{
-						$website['value']			= json_encode(['button' => ['banner_button_url' => Input::get('url')]]);
+						$website['value']			= json_encode(['action_url' => Input::get('url'), 'caption' => Input::get('caption'), 'position' => Input::get('position')]);
 					}
 
 					$website['started_at']			= $inputStartDate;
@@ -215,7 +235,7 @@ class WebsiteController extends AdminController
 			$website['type']						= $data['data']['type'];
 			$website['value']						= $data['data']['value'];
 
-			if(in_array($data['data']['type'], ['slider', 'left_banner', 'right_banner', 'full_banner']))
+			if(in_array($data['data']['type'], ['slider', 'banner', 'banner_instagram']))
 			{
 				if(isset($inputImage) && $data['data']['images'] != $inputImage)
 				{

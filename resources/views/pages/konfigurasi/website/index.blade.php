@@ -36,6 +36,9 @@
 						<a href="#banner" aria-controls="banner" role="tab" data-toggle="tab">Banner</a>
 					</li>
 					<li role="presentation">
+						<a href="#instagram" aria-controls="instagram" role="tab" data-toggle="tab">Instagram</a>
+					</li>
+					<li role="presentation">
 						<a href="#slider" aria-controls="slider" role="tab" data-toggle="tab">Slider</a>
 					</li>
 					<li role="presentation">
@@ -58,11 +61,17 @@
 							<div class="table-responsive">
 								<table class="table">
 									<tbody>									    								
-									    {!! Form::open(['url' => route('config.website.store' , ['type' => 'left_banner'])]) !!}
+									    {!! Form::open(['url' => route('config.website.store' , ['type' => 'banner'])]) !!}
 									    <tr>
 									    	<td class="col-md-4">
-												<h4 class="m-t-sm">Link Gambar Banner Kiri</h4>
+												<h4 class="m-t-sm">Link Gambar</h4>
 												{!! Form::text('image', null, [
+																'class'        		=> 'form-control', 
+													]) !!}
+											</td>
+											<td class="col-md-4">
+												<h4 class="m-t-sm">Caption</h4>
+												{!! Form::text('caption', null, [
 																'class'        		=> 'form-control', 
 													]) !!}
 											</td>
@@ -71,69 +80,26 @@
 												{!! Form::text('url', null, [
 																'class'        		=> 'form-control', 
 													]) !!}
-											</td>
-											<td class="col-md-2">
-												<h4 class="m-t-sm text-left">Mulai</h4>
-												{!! Form::text('started_at', null, [
-																'class'        		=> 'date-time-format form-control', 
-													]) !!}
-											</td>
-											<td class="col-md-2 text-center">
-												<h4 class="m-t-sm">&nbsp;</h4>
-												<button type="submit" class="btn btn-md btn-primary" tabindex="3"><i class="fa fa-plus"></i> &nbsp; Tambah</button>
 											</td>
 										</tr>
-									    {!! Form::close() !!}
-									    {!! Form::open(['url' => route('config.website.store' , ['type' => 'right_banner'])]) !!}
-									    <tr>
+										<tr>
 									    	<td class="col-md-4">
-												<h4 class="m-t-sm">Link Gambar Banner Kanan</h4>
-												{!! Form::text('image', null, [
+												<h4 class="m-t-sm">Position</h4>
+												{!! Form::text('position', null, [
 																'class'        		=> 'form-control', 
 													]) !!}
 											</td>
 											<td class="col-md-4">
-												<h4 class="m-t-sm text-left">Action</h4>
-												{!! Form::text('url', null, [
-																'class'        		=> 'form-control', 
-													]) !!}
-											</td>
-											<td class="col-md-2">
 												<h4 class="m-t-sm text-left">Mulai</h4>
 												{!! Form::text('started_at', null, [
 																'class'        		=> 'date-time-format form-control', 
 													]) !!}
 											</td>
-											<td class="col-md-2 text-center">
+											<td class="col-md-4 text-right">
 												<h4 class="m-t-sm">&nbsp;</h4>
 												<button type="submit" class="btn btn-md btn-primary" tabindex="3"><i class="fa fa-plus"></i> &nbsp; Tambah</button>
 											</td>
-										</tr>
-									    {!! Form::close() !!}
-									    {!! Form::open(['url' => route('config.website.store' , ['type' => 'full_banner'])]) !!}
-									    <tr>
-									    	<td class="col-md-4">
-												<h4 class="m-t-sm">Link Gambar Banner Full</h4>
-												{!! Form::text('image', null, [
-																'class'        		=> 'form-control', 
-													]) !!}
-											</td>
-											<td class="col-md-4">
-												<h4 class="m-t-sm text-left">Action</h4>
-												{!! Form::text('url', null, [
-																'class'        		=> 'form-control', 
-													]) !!}
-											</td>
-											<td class="col-md-2">
-												<h4 class="m-t-sm text-left">Mulai</h4>
-												{!! Form::text('started_at', null, [
-																'class'        		=> 'date-time-format form-control', 
-													]) !!}
-											</td>
-											<td class="col-md-2 text-center">
-												<h4 class="m-t-sm">&nbsp;</h4>
-												<button type="submit" class="btn btn-md btn-primary" tabindex="3"><i class="fa fa-plus"></i> &nbsp; Tambah</button>
-											</td>
+											
 										</tr>
 									    {!! Form::close() !!}
 									</tbody>
@@ -161,7 +127,9 @@
 													<td class="text-left col-sm-6">
 														<h4 class="m-t-md">Action Link</h4>
 														<?php $image = json_decode($dt['value'], true);?>
-														<p>{{isset($image['button']['banner_button_url']) ? $image['button']['banner_button_url'] : '' }}</p>
+														<p>{{isset($image['action_url']) ? $image['action_url'] : '' }}</p>
+														<h4 class="m-t-md">Caption</h4>
+														<p>{{isset($image['caption']) ? $image['caption'] : '' }}</p>
 														<img class="img img-responsive col-sm-12" src="{{$dt['thumbnail']}}" alt="">
 														<p><i>source : </i> {{$dt['thumbnail']}}</p>
 													</td>
@@ -216,6 +184,119 @@
 						</div>
 					</div>
 			<!-- end of tab banner -->
+			<!-- tab instagram -->
+					<div role="tabpanel" class="tab-pane" id="instagram">
+						<div class="panel-group" id="accordioninstagram" style="margin-top:5px;">
+							<h2>Instagram Baru</h2>
+							<div class="table-responsive">
+								<table class="table">
+									<tbody>									    								
+									    {!! Form::open(['url' => route('config.website.store' , ['type' => 'banner_instagram'])]) !!}
+									    <tr>
+									    	<td class="col-md-4">
+												<h4 class="m-t-sm">Link Gambar</h4>
+												{!! Form::text('image', null, [
+																'class'        		=> 'form-control', 
+													]) !!}
+											</td>
+											<td class="col-md-4">
+												<h4 class="m-t-sm text-left">Action</h4>
+												{!! Form::text('url', null, [
+																'class'        		=> 'form-control', 
+													]) !!}
+											</td>
+											<td class="col-md-2">
+												<h4 class="m-t-sm text-left">Mulai</h4>
+												{!! Form::text('started_at', null, [
+																'class'        		=> 'date-time-format form-control', 
+													]) !!}
+											</td>
+											<td class="col-md-2 text-center">
+												<h4 class="m-t-sm">&nbsp;</h4>
+												<button type="submit" class="btn btn-md btn-primary" tabindex="3"><i class="fa fa-plus"></i> &nbsp; Tambah</button>
+											</td>
+										</tr>
+									    {!! Form::close() !!}
+									</tbody>
+								</table>
+							</div>
+
+							<div class="row clearfix">
+								&nbsp;
+							</div>
+							<h2>Data Instagram</h2>
+							<div class="table-responsive">
+								<table class="table table-hover">
+									<thead>										
+										<tr>
+											<th class="col-md-6 text-left">Instagram</th>
+											<th class="col-md-2 text-center">Tanggal Tampil</th>
+											<th class="col-md-2 text-center">Status</th>
+											<th class="col-md-2 text-center">Kontrol</th>
+										</tr>
+									</thead>
+									<tbody>									    								
+										@forelse($data['instagram']['data']['data'] as $key => $dt)
+											{!! Form::open(['url' => route('config.website.update', ['id' => $dt['id'], 'image' => $dt['thumbnail']] ), 'method' => 'PATCH']) !!}
+												<tr>
+													<td class="text-left col-sm-6">
+														<h4 class="m-t-md">Action Link</h4>
+														<?php $image = json_decode($dt['value'], true);?>
+														<p>{{isset($image['action']) ? $image['action'] : '' }}</p>
+														<img class="img img-responsive col-sm-12" src="{{$dt['thumbnail']}}" alt="">
+														<p><i>source : </i> {{$dt['thumbnail']}}</p>
+													</td>
+													<td class="text-center">
+														<h4 class="m-t-md text-left">Mulai</h4>
+														<?php
+															$date  = Carbon::createFromFormat('Y-m-d H:i:s', $dt['started_at'])->format('d-m-Y H:i');
+														?>
+														{!! Form::text('started_at', $date, [
+																		'class'        		=> 'date-time-format form-control', 
+															]) !!}
+													</td>													
+													<td class="text-center">
+														<h4 class="m-t-md">&nbsp;</h4>
+														@if(strtotime($dt['started_at']) <= strtotime('now'))
+															<h4 class="m-t-md" style="color:green;">
+																Live
+															</h4>
+														@else
+															<h4 class="m-t-md">
+																Waiting
+															</h4>
+														@endif
+													</td>
+													<td class="text-center">
+														<h4 class="m-t-md">&nbsp;</h4>
+														<button type="submit" class="btn btn-md btn-primary" tabindex="3">Simpan</button>
+														<a class="btn btn-danger" href="javascript:void(0);"  data-backdrop="static" data-keyboard="false" data-toggle="modal"
+														data-target="#instagram_del"
+														data-id="{{$dt['id']}}"
+														data-title="Hapus Data instagram"
+														data-action="{{  route('config.website.banner.delete', ['id' => $dt['id']] ) }}">	
+															<i class="fa fa-times"></i>
+														</a>
+													</td>
+												</tr>
+										    {!! Form::close() !!}
+											@include('page_elements.modaldelete', [
+													'modal_id'      => 'banner_del', 
+													'modal_route'   => route('config.website.banner.delete', ['id' => $dt['id']] )
+											])											    
+										@empty 
+											<tr>
+												<td colspan="4" class="text-center">
+													Tidak ada data
+												</td>
+											</tr>
+										@endforelse 
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+			<!-- end of tab instagram -->
 			<!-- tab slider -->
 					<div role="tabpanel" class="tab-pane" id="slider">
 						<div class="panel-group" id="accordionslider" style="margin-top:5px;">
