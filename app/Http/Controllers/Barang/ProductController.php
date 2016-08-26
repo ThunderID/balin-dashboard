@@ -405,6 +405,7 @@ class ProductController extends AdminController
 															'description'	=> json_encode([
 																				'description' 	=> Input::get('description'),
 																				'fit'			=> Input::get('fit'),
+																				'care'			=> Input::get('care'),
 																				]),
 															'started_at'	=> Input::get('started_at'),
 															'images'		=> $images,

@@ -21,7 +21,7 @@
 								<label for="thumbnail" class="text-capitalize">URL Image (320 X 463 px)</label>
 								{!! Form::text('thumbnail[]', null, [
 											'class'         => 'form-control input-image-thumbnail', 
-											'tabindex'      => '11',
+											'tabindex'      => '12',
 											'placeholder'   => 'Masukkan url image thumbnail',
 								]) !!}
 							</div>
@@ -31,7 +31,7 @@
 								<label for="logo" class="text-capitalize">URL Image (320 X 463 px)</label>
 								{!! Form::text('image_xs[]', null, [
 											'class'         => 'form-control input-image-xs', 
-											'tabindex'      => '11',
+											'tabindex'      => '13',
 											'placeholder'   => 'Masukkan url image xs',
 								]) !!}
 							</div>
@@ -41,7 +41,7 @@
 								<label for="logo" class="text-capitalize">URL Image (320 X 463 px)</label>
 								{!! Form::text('image_sm[]', null, [
 											'class'         => 'form-control input-image-sm', 
-											'tabindex'      => '11',
+											'tabindex'      => '14',
 											'placeholder'   => 'Masukkan url image sm',
 								]) !!}
 							</div>
@@ -51,7 +51,7 @@
 								<label for="logo" class="text-capitalize">URL Image (772 X 1043 px)</label>
 								{!! Form::text('image_md[]', null, [
 											'class'         => 'form-control input-image-md', 
-											'tabindex'      => '11',
+											'tabindex'      => '15',
 											'placeholder'   => 'Masukkan url image md',
 								]) !!}
 							</div>
@@ -61,7 +61,7 @@
 								<label for="logo" class="text-capitalize">URL Image (992 X 1434 px)</label>
 								{!! Form::text('image_lg[]', null, [
 											'class'         => 'form-control input-image-lg', 
-											'tabindex'      => '11',
+											'tabindex'      => '16',
 											'placeholder'   => 'Masukkan url image lg',
 								]) !!}
 							</div>
@@ -69,7 +69,7 @@
 						<div class="col-md-3">
 							<div class="form-group">					
 								<label for="default" class="text-capitalize">Default</label>
-								<select name="default[]" class="form-control default" tabindex="11" onchange="ImageDefaultValidation(this)">
+								<select name="default[]" class="form-control default" tabindex="17" onchange="ImageDefaultValidation(this)">
 							        <option value="0" selected="selected">False</option>
 							        <option value="1" >True</option>
 								</select>							
@@ -154,6 +154,18 @@
 					]) !!}
 				</div>
 			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					<label for="care">Cara Perawatan</label>
+					{!! Form::textarea('care', $data['data']['care'], [
+								'class'         => 'summernote form-control', 
+								'placeholder'   => 'Masukkan product care',
+								'rows'          => '1',
+								'tabindex'      => '6',
+								'style'         => 'resize:none;',
+					]) !!}
+				</div>
+			</div>
 		</div>
 
 		<div class="clearfix">&nbsp;</div>
@@ -168,7 +180,7 @@
 					<label for="category">Kategori</label>
 					{!! Form::text('category', null, [
 								'class'         => 'select-category', 
-								'tabindex'      => '6',
+								'tabindex'      => '7',
 								'id'            => 'find_category',
 								'style'         => 'width:100%',
 					]) !!}
@@ -179,7 +191,7 @@
 					<label for="tag">Tag</label>
 					{!! Form::text('tag', null, [
 								'class'         => 'select-tag', 
-								'tabindex'      => '7',
+								'tabindex'      => '8',
 								'id'            => 'find_tag',
 								'style'         => 'width:100%',
 					]) !!}
@@ -199,7 +211,7 @@
 					<label for="category">Mulai</label>
 					{!! Form::text('started_at', $data['data']['price_start'], [
 								'class'         => 'form-control date-time-format',
-								'tabindex'      => '8', 
+								'tabindex'      => '9', 
 								'placeholder'   => 'Isikan tanggal dan waktu mulai'
 					]) !!}
 				</div>  
@@ -209,7 +221,7 @@
 					<label for="category">Harga</label>
 					{!! Form::text('price', $data['data']['price'], [
 								'class'        		=> 'form-control money', 
-								'tabindex'     		=> '9', 
+								'tabindex'     		=> '10', 
 								'placeholder'  		=> 'harga',
 					]) !!}
 				</div>  
@@ -219,7 +231,7 @@
 					<label for="category">Harga Promo</label>
 					{!! Form::text('promo_price', $data['data']['promo_price'], [
 								'class'         => 'form-control money', 
-								'tabindex'      => '10', 
+								'tabindex'      => '11', 
 								'placeholder'   => '(kosongkan bila tidak ada promo)'
 					]) !!}
 				</div>  
@@ -245,8 +257,8 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group text-right">
-					<a href="{{ URL::route('goods.product.index') }}" class="btn btn-md btn-default" tabindex="13">Batal</a>
-					<button type="submit" class="btn btn-md btn-primary" tabindex="12">Simpan</button>
+					<a href="{{ URL::route('goods.product.index') }}" class="btn btn-md btn-default" tabindex="19">Batal</a>
+					<button type="submit" class="btn btn-md btn-primary" tabindex="18">Simpan</button>
 				</div>        
 			</div>        
 		</div> 
