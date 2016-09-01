@@ -374,10 +374,6 @@
 															<h4 class="m-t-md" style="color:green;">
 																Live
 															</h4>
-														@elseif(strtotime($dt['ended_at']) <= strtotime('now'))
-															<h4 class="m-t-md" style="color:red;">
-																Disabled
-															</h4>
 														@else
 															<h4 class="m-t-md">
 																Waiting
