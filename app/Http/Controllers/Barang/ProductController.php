@@ -260,7 +260,7 @@ class ProductController extends AdminController
 			$tmp									= json_decode($data['data']['description'], true);
 			$data['data']['description']			= $tmp['description'];			
 			$data['data']['fit']					= $tmp['fit'];
-			$data['data']['care']					= $tmp['care'];
+			$data['data']['care']					= (isset($tmp['care']) ? $tmp['care'] : '');
 			$data['data']['price_start']			= \Carbon\Carbon::parse($data['data']['price_start'])->format('d-m-Y H:i');		
 
 			$breadcrumb								=	[
