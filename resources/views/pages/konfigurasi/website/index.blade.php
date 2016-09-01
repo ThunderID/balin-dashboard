@@ -370,7 +370,7 @@
 													</td>													
 													<td class="text-center">
 														<h4 class="m-t-md">&nbsp;</h4>
-														@if(strtotime($dt['started_at']) <= strtotime('now'))
+														@if(strtotime($dt['ended_at']) >= strtotime('now'))
 															<h4 class="m-t-md" style="color:green;">
 																Live
 															</h4>
