@@ -251,7 +251,7 @@ class CategoryController extends AdminController
 		}
 
 		//return view
-		$this->page_attributes->success 			= "Data Produk Telah Dihapus";
+		$this->page_attributes->success 			= "Data Kategori Telah Dihapus";
 		
 		return $this->generateRedirectRoute('goods.category.index');	
 	}		
