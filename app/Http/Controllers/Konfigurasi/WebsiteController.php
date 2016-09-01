@@ -97,7 +97,6 @@ class WebsiteController extends AdminController
 																								"",
 																								Carbon::now()->format('Y-m-d H:i:s')
 																							],
-																			'default'	=> 'true',
 																		],
 														'sort' 		=> 	[
 																			'name'	=> 'asc',
@@ -112,7 +111,6 @@ class WebsiteController extends AdminController
 																								"",
 																								Carbon::now()->format('Y-m-d H:i:s')
 																							],
-																			'default'	=> 'true',
 																			'type'		=> 'banner',
 																		],
 														'sort' 		=> 	[
@@ -126,7 +124,6 @@ class WebsiteController extends AdminController
 																								"",
 																								Carbon::now()->format('Y-m-d H:i:s')
 																							],
-																			'default'	=> 'true',
 																			'type'		=> 'banner_instagram',
 																		],
 														'sort' 		=> 	[
