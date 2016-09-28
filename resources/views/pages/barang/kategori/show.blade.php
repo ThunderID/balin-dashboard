@@ -166,7 +166,7 @@
 											</tr>       
 										@endforeach 
 										
-										@include('page_elements.modalDelete', [
+										@include('page_elements.modaldelete', [
 												'modal_id'      => 'product_del', 
 												'modal_route'   => route('goods.product.destroy')
 										])						
