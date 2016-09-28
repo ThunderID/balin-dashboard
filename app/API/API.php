@@ -5,14 +5,19 @@ use GuzzleHttp\Client;
 
 class API
 {
-	// protected $domain			= 'http://192.168.1.118';
-	protected $domain			= 'http://localhost';
-	protected $port				= '8800';
-	public $timeout				= 2;
+	protected $domain;
+	protected $port;
+	protected $lives 			= 10;
+
+	public $timeout				= 100;
 	public $basic_url;
 
 	public function __construct()
 	{
+		$this->domain 			= env('RESOURCE_DOMAIN', 'localhost');
+		$this->port 			= env('RESOURCE_PORT', '');
+		
+
 		$this->basic_url 		= $this->domain;
 
 		if(!is_null($this->port))
