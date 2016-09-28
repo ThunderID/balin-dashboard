@@ -45,7 +45,8 @@ class AuthController extends AdminController
 		}
 		else
 		{
-			return Redirect::route('auth.login');
+			$this->errors 					= $result['message'];
+			return $this->generateRedirectRoute('auth.login');		
 		}
 	}	
 
