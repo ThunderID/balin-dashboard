@@ -133,7 +133,14 @@ class AdministrativeController extends AdminController
 		$APIAdmin 									= new APIAdmin;
 		$admin 										= $APIAdmin->getShow($id);
 
-		$collection 								= collect($admin['data']['audits']);
+		if(isset($admin['data']['audits']))
+		{
+			$collection 							= collect($admin['data']['audits']);
+		}
+		else
+		{
+			$collection								= [];
+		}
 
 		// filters & collection
 		if(Input::has('start') && Input::has('end'))
@@ -165,9 +172,6 @@ class AdministrativeController extends AdminController
 			$page 									= Input::get('page');
 		}
 
-
-		//data paging	
-		$collection 								= collect($admin['data']['audits']);
 
 		if(count($collection) != 0)
 		{
