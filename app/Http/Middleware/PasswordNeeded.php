@@ -76,7 +76,7 @@ class PasswordNeeded
 			return Redirect::back()->withErrors('Password tidak valid')->with('msg-type', 'danger');
 		}
 
-		Session::set('APIToken', $result['data']['token']['access_token']);
+		Session::set('APIToken', $result['data']['token']['token']);
 		Session::set('userID', $result['data']['me']['id']);
 
 		return $next($request);
