@@ -281,6 +281,9 @@ class WebsiteController extends AdminController
 			$this->page_attributes->success 		= "Data website Telah Ditambahkan";
 		}
 
+		//6. Set data from
+		Session::flash('from', Input::get('from'));
+
 		return $this->generateRedirectRoute('config.website.index', ['id' => Input::get('website')]);
 	}
 
