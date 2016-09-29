@@ -89,29 +89,22 @@ abstract class APIData
 
 	private function validateResponse($result)
 	{
+
 		// validate response
 		try 
 		{
 		    if(empty($result['status']))
 		    {
-				print_r("RESPONSE ERROR : NO STATUS FROM SERVER!");
-				dd($result);
+		    	Redirect::route('admin.dashboard', ['header' => '500', 'msg' => 'No status from server']);
 		    }
-
-		  //   if(empty($result['data']))
-		  //   {
-				// print_r("RESPONSE ERROR : NO DATA FROM SERVER!");
-				// dd($result);
-		  //   }
 		} 
 		catch (Exception $e) 
 		{
-			print_r("ERROR : UNKNOWN RESPONSE FROM SERVER!");
-			dd($result);
+			Redirect::route('admin.dashboard', ['header' => '500', 'msg' => 'Unknown response from server']);
 		}
 
 		// data
-		if(empty($result['data']) || is_null($result['data']))
+		if(!isset($result['data']) || is_null($result['data']))
 		{
 			$result['data'] 		= [];
 		}

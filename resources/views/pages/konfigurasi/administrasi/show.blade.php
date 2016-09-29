@@ -79,22 +79,6 @@
 						<div class="col-md-12 col-sm-6 col-xs-11">
 							<div class="row">
 								<div class="col-md-3 col-sm-7 col-xs-5">
-									<h4>Kode Referral</h4> 
-								</div>
-								<div class="col-md-1 col-sm-1 col-xs-2">
-									<h4>:</h4> 
-								</div>
-								<div class="col-md-8 col-sm-3 col-xs-5">
-									<h4>{{$dt['code_referral']}}</h4> 
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-12 col-sm-6 col-xs-11">
-							<div class="row">
-								<div class="col-md-3 col-sm-7 col-xs-5">
 									<h4>Terakhir Login</h4> 
 								</div>
 								<div class="col-md-1 col-sm-1 col-xs-2">
@@ -110,7 +94,8 @@
 			</div>
 
 			<div class="row clearfix m-b-md">&nbsp;</div>
-
+			
+			@if(isset($dt['audits']))
 			<div class="row">
 				<div class="col-md-12">
 					<h3>Data Audit</h3>
@@ -162,7 +147,7 @@
 					@include('page_elements.ajaxPaging')
 				</div>
 			</div>
-
+			@endif
 		</div>
 	</div>
 <!-- end of content -->

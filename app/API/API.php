@@ -8,14 +8,16 @@ class API
 	protected $domain;
 	protected $port;
 
-	public $timeout				= 2;
+	protected $lives 			= 10;
+	public $timeout				= 100;
+
 	public $basic_url;
 
 	public function __construct()
 	{
-		$this->domain 			= env('RESOURCE_DOMAIN', '');
+		$this->domain 			= env('RESOURCE_DOMAIN', 'localhost');
 		$this->port 			= env('RESOURCE_PORT', '');
-		
+
 		$this->basic_url 		= $this->domain;
 
 		if(!is_null($this->port))

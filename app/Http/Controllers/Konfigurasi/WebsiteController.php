@@ -230,7 +230,7 @@ class WebsiteController extends AdminController
 
 			$website['id']							= $data['data']['id'];
 			$website['type']						= $data['data']['type'];
-			$website['value']						= $data['data']['value'];
+			$website['value']						= Input::get('value');
 
 			if(in_array($data['data']['type'], ['slider', 'banner', 'banner_instagram']))
 			{
