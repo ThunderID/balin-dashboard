@@ -65,7 +65,7 @@
 											{{ $dt['name'] }}
 										</td>
 										<td class="text-left">
-											{{ $dt['email'] }}
+											<!--email_off-->{{ $dt['email'] }}<!--/email_off-->
 										</td>
 										<td class="text-left">
 											{{ $dt['code_referral'] }}
