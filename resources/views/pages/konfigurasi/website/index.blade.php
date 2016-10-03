@@ -1,5 +1,8 @@
 @extends('page_templates.layout')
 @section('content')
+<?php
+	$from = Session::get('from');
+?>
 <div class="container-fluid">
 <!-- head -->
 	<div class="row">
@@ -32,20 +35,20 @@
 			<div role="tabpanel">
 		<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active">
+					<li role="presentation" class="{{ ($from == null || $from == 'banner') ? 'active' : '' }}">
 						<a href="#banner" aria-controls="banner" role="tab" data-toggle="tab">Banner</a>
 					</li>
-					<li role="presentation">
+					<li role="presentation" class="{{ ($from == 'ig') ? 'active' : '' }}">
 						<a href="#instagram" aria-controls="instagram" role="tab" data-toggle="tab">Instagram</a>
 					</li>
-					<li role="presentation">
+					<li role="presentation" class="{{ ($from == 'slider') ? 'active' : '' }}">
 						<a href="#slider" aria-controls="slider" role="tab" data-toggle="tab">Slider</a>
 					</li>
-					<li role="presentation">
+					<li role="presentation" class="{{ ($from == 'toko') ? 'active' : '' }}">
 						<a href="#toko" aria-controls="toko" role="tab" data-toggle="tab">Store Info</a>
 					</li>
 					@foreach($data['storepage']['data']['data'] as $key => $value)
-						 <li role="presentation">
+						 <li role="presentation" class="{{ ($from == $value['type']) ? 'active' : '' }}">
 							<a href="#{{$value['type']}}" aria-controls="{{$value['type']}}" role="tab" data-toggle="tab">{{ucwords(str_replace('_', ' ', $value['type']))}}</a>
 						</li>
 					@endforeach
@@ -55,13 +58,13 @@
 		<!-- Tab panes -->
 				<div class="tab-content">
 					<!-- tab banner -->
-					<div role="tabpanel" class="tab-pane active" id="banner">
+					<div role="tabpanel" class="tab-pane {{ ($from == null || $from == 'banner') ? 'active' : '' }}" id="banner">
 						<div class="panel-group" id="accordionbanner" style="margin-top:5px;">
 							<h2>Banner Baru</h2>
 							<div class="table-responsive">
 								<table class="table">
 									<tbody>									    								
-									    {!! Form::open(['url' => route('config.website.store' , ['type' => 'banner'])]) !!}
+									    {!! Form::open(['url' => route('config.website.store' , ['type' => 'banner', 'from' => 'banner'])]) !!}
 									    <tr>
 									    	<td class="col-md-4">
 												<h4 class="m-t-sm">Link Gambar</h4>
@@ -122,7 +125,7 @@
 									</thead>
 									<tbody>									    								
 										@forelse($data['banner']['data']['data'] as $key => $dt)
-											{!! Form::open(['url' => route('config.website.update', ['id' => $dt['id'], 'image' => $dt['thumbnail']] ), 'method' => 'PATCH']) !!}
+											{!! Form::open(['url' => route('config.website.update', ['id' => $dt['id'], 'image' => $dt['thumbnail'], 'from' => 'banner'] ), 'method' => 'PATCH']) !!}
 												<tr>
 													<td class="text-left col-sm-6">
 														<h4 class="m-t-md">Action Link</h4>
@@ -185,13 +188,13 @@
 					</div>
 			<!-- end of tab banner -->
 			<!-- tab instagram -->
-					<div role="tabpanel" class="tab-pane" id="instagram">
+					<div role="tabpanel" class="tab-pane {{ ($from == 'ig') ? 'active' : '' }}" id="instagram">
 						<div class="panel-group" id="accordioninstagram" style="margin-top:5px;">
 							<h2>Instagram Baru</h2>
 							<div class="table-responsive">
 								<table class="table">
 									<tbody>									    								
-									    {!! Form::open(['url' => route('config.website.store' , ['type' => 'banner_instagram'])]) !!}
+									    {!! Form::open(['url' => route('config.website.store' , ['type' => 'banner_instagram', 'from' => 'ig'] )]) !!}
 									    <tr>
 									    	<td class="col-md-4">
 												<h4 class="m-t-sm">Link Gambar</h4>
@@ -237,7 +240,7 @@
 									</thead>
 									<tbody>									    								
 										@forelse($data['instagram']['data']['data'] as $key => $dt)
-											{!! Form::open(['url' => route('config.website.update', ['id' => $dt['id'], 'image' => $dt['thumbnail']] ), 'method' => 'PATCH']) !!}
+											{!! Form::open(['url' => route('config.website.update', ['id' => $dt['id'], 'image' => $dt['thumbnail'] , 'from' => 'ig' ] ), 'method' => 'PATCH']) !!}
 												<tr>
 													<td class="text-left col-sm-6">
 														<h4 class="m-t-md">Action Link</h4>
@@ -298,13 +301,13 @@
 					</div>
 			<!-- end of tab instagram -->
 			<!-- tab slider -->
-					<div role="tabpanel" class="tab-pane" id="slider">
+					<div role="tabpanel" class="tab-pane {{ ($from == 'slider') ? 'active' : '' }}" id="slider">
 						<div class="panel-group" id="accordionslider" style="margin-top:5px;">
 							<h2>Slider Baru</h2>
 							<div class="table-responsive">
 								<table class="table">
 									<tbody>									    								
-									    {!! Form::open(['url' => route('config.website.store' , ['type' => 'slider'])]) !!}
+									    {!! Form::open(['url' => route('config.website.store' , ['type' => 'slider', 'from' => 'slider']) ]) !!}
 									    <tr>
 									    	<td class="col-md-4">
 												<h4 class="m-t-sm">Link Gambar</h4>
@@ -350,7 +353,7 @@
 									</thead>
 									<tbody>									    								
 										@forelse($data['slider']['data']['data'] as $key => $dt)
-											{!! Form::open(['url' => route('config.website.update', ['id' => $dt['id'], 'image' => $dt['thumbnail']] ), 'method' => 'PATCH']) !!}
+											{!! Form::open(['url' => route('config.website.update', ['id' => $dt['id'], 'image' => $dt['thumbnail'], 'from' => 'slider'] ), 'method' => 'PATCH']) !!}
 												<tr>
 													<td class="text-left col-sm-6">
 														<h4 class="m-t-md">Action Link</h4>
@@ -412,13 +415,13 @@
 			<!-- end of tab slider -->
 
 			<!-- tab toko -->
-					<div role="tabpanel" class="tab-pane" id="toko">
+					<div role="tabpanel" class="tab-pane {{ ($from == 'toko') ? 'active' : '' }}" id="toko">
 						<div class="panel-group" id="accordionToko" style="margin-top:5px;">
 							<div class="table-responsive">
 								<table class="table table-hover">
 									<tbody>
 										@forelse($data['storeinfo']['data']['data'] as $key => $dt)
-										    {!! Form::open(['url' => route('config.website.update', $dt['id']), 'method' => 'PATCH']) !!}
+										    {!! Form::open(['url' => route('config.website.update', ['id' => $dt['id'], 'from' => 'toko']), 'method' => 'PATCH']) !!}
 												<tr>
 													<td class="text-left">
 														{{ucwords(str_replace('_', ' ', $dt['type']))}}
@@ -457,9 +460,9 @@
 
 			<!-- tab {{$value['type']}} -->
 				@foreach($data['storepage']['data']['data'] as $key => $value)
-					<div role="tabpanel" class="tab-pane" id="{{$value['type']}}">
+					<div role="tabpanel" class="tab-pane {{ ($from == $value['type']) ? 'active' : '' }}" id="{{$value['type']}}">
 						<div class="panel-group" id="accordion{{$value['type']}}" style="margin-top:5px;">
-							{!! Form::open(['url' => route('config.website.update', $value['id']), 'method' => 'PATCH']) !!}
+							{!! Form::open(['url' => route('config.website.update', ['id' => $value['id'], 'from' => $value['type']] ), 'method' => 'PATCH']) !!}
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">

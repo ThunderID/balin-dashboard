@@ -6,7 +6,7 @@ use App\API\Connectors\APISendMail;
 
 use App\Http\Controllers\AdminController;
 
-use Input;
+use Input, Redirect;
 
 /**
  * Handle resend mail
@@ -71,6 +71,15 @@ class ResendMailController extends AdminController
 		}
 
 		$this->page_attributes->success 		= $type." sudah di kirim ";
+
+		$from 						= Input::get('from');
+
+		if($from != null){
+			return Redirect::to($from)
+				->with('msg','Email pengingat berhasil dikirim.')
+				->with('msg-type', 'success')
+				;
+		} 
 
 		return $this->generateRedirectRoute('report.product.sale', ['id' => $id]);
 	}

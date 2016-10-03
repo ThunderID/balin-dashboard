@@ -41,7 +41,8 @@
 								<th class="text-center col-md-1">No.</th>
 								<th class="text-left col-md-2">SKU</th>
 								<th class="text-left col-md-3">Nama Produk</th>
-								<th class="text-center col-md-2">Ukuran</th>
+								<th class="text-center col-md-1">Ukuran</th>
+								<th class="text-center col-md-2">Total Stok Keluar</th>
 								<th class="text-center col-md-1">Stok Gudang</th>
 								<th class="text-center col-md-2">Kontrol</th>
 							</tr>
@@ -68,6 +69,9 @@
 										<td class="text-center">
 											{{ $dt['size'] }}
 										</td>
+										<td class="text-center">
+											{{ $dt['sold_item'] }}
+										</td>										
 										<td class="text-center">
 											{{ $dt['inventory_stock'] }}
 										</td>
