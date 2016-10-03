@@ -143,9 +143,14 @@ class AbandonedController extends AdminController
 														];
 
 		//3. Generate breadcrumb
+		$ref 										= $sale['data']['ref_number'];
+		if(empty($ref)){
+			$ref 									= '#';					
+		}
+
 		$breadcrumb 								=	[
 															'Laporan Abandoned Cart' 		=> route('report.product.abandoned'),
-															$sale['data']['ref_number'] => route('report.product.abandoned.detail', ['id' => $id])
+															$ref => route('report.product.abandoned.detail', ['id' => $id])
 														];	
 		$this->page_attributes->breadcrumb			= array_merge($this->page_attributes->breadcrumb, $breadcrumb);
 
