@@ -284,7 +284,7 @@
 												</tr>
 										    {!! Form::close() !!}
 											@include('page_elements.modaldelete', [
-													'modal_id'      => 'banner_del', 
+													'modal_id'      => 'instagram_del', 
 													'modal_route'   => route('config.website.banner.delete', ['id' => $dt['id']] )
 											])											    
 										@empty 
