@@ -7,6 +7,6 @@ This version contain dockerfile to build it's own images
 
 
 1. build image 
-	docker build -t balin/web .
+	docker build -t balin/dashboard .
 2. run container 
-	docker run -d balin/web 
+	docker run -d balin/dashboard 
