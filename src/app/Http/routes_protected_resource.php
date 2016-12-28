@@ -24,6 +24,7 @@ Route::group(['prefix' => 'barang', 'namespace' => 'Barang\\', 'middleware' => '
 
 	Route::resource('pembelian', 	'BuyController',		['names' => ['index' => 'shop.buy.index', 'create' => 'shop.buy.create', 'store' => 'shop.buy.store', 'show' => 'shop.buy.show', 'edit' => 'shop.buy.edit', 'update' => 'shop.buy.update', 'destroy' => 'shop.buy.destroy']]);
 
+	Route::resource('penjualan', 	'SellController',		['names' => ['index' => 'shop.sell.index', 'create' => 'shop.sell.create', 'store' => 'shop.sell.store', 'show' => 'shop.sell.show', 'edit' => 'shop.sell.edit', 'update' => 'shop.sell.update', 'destroy' => 'shop.sell.destroy']]);
 	/**
 	* Routes untuk select2 ajax
 	*

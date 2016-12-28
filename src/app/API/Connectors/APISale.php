@@ -36,4 +36,12 @@ class APISale extends APIData
 
 		return $this->get();
 	}
+	
+	public function postDataThirdParty($data)
+	{
+		$this->apiUrl 					= '/sale/third/party';
+		$this->apiData 					= array_merge($this->apiData, ["sale" => $data]);
+
+		return $this->post();
+	}	
 }

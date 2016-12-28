@@ -29,6 +29,7 @@
 								<li><a href="{{ URL::route('goods.tag.index') }}">Tag</a></li>
 								<li><a href="{{ URL::route('goods.label.index') }}">Label</a></li>
 								<li><a href="{{ URL::route('shop.buy.index') }}">Pengadaan Barang</a></li>
+								<li><a href="{{ URL::route('shop.sell.index') }}">Penjualan Offline</a></li>
 							</ul>
 						</li>
 
@@ -377,6 +378,13 @@
 									<a href="{{ URL::route('shop.buy.index') }}" class="btn btn-default btn-block btn-sm pull-left">
 										<h4>
 											Pengadaan Barang
+										</h4>
+									</a>
+								</div>
+								<div class="col-sm-12 col-xs-12 m-b-sm">
+									<a href="{{ URL::route('shop.buy.index') }}" class="btn btn-default btn-block btn-sm pull-left">
+										<h4>
+											Penjualan Offline
 										</h4>
 									</a>
 								</div>								
