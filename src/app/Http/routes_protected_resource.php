@@ -50,6 +50,10 @@ Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan\\'], function()
 
 	Route::get('rekap/penjualan',								['uses' => 'RecapController@sale', 'as' => 'report.recap.sale']);
 	Route::resource('penjualan',  	'SaleController',			['names' => ['index' => 'report.product.sale', 'show' => 'report.product.sale.detail'], 'only' => ['show', 'index']]);
+	
+	Route::get('print/invoice/{id}',							['uses' => 'SaleController@invoice', 'as' => 'print.invoice']);
+	Route::get('print/shipping/note/{id}',							['uses' => 'SaleController@shipping_note', 'as' => 'print.shipping.note']);
+	
 	Route::resource('transaksibatal','CanceledTransactionController',['names' => ['index' => 'report.product.cancel', 'show' => 'report.product.cancel.detail'], 'only' => ['show', 'index']]);
 	Route::resource('abandonedcart','AbandonedController',		['names' => ['index' => 'report.product.abandoned', 'show' => 'report.product.abandoned.detail'], 'only' => ['show', 'index']]);
 

@@ -46,7 +46,7 @@
 								<th class="col-md-2">
 									Tanggal
 								</th>
-								<th class="col-md-2 text-left">
+								<th class="col-md-1 text-left">
 									No Nota
 								</th>
 								<th class="col-md-2">
@@ -55,10 +55,10 @@
 								<th class="col-md-2 text-right">
 									Tagihan
 								</th>
-								<th class="col-md-2 text-center">
+								<th class="col-md-1 text-center">
 									Status
 								</th>
-								<th class="col-md-1 text-center">
+								<th class="col-md-3 text-center">
 									Kontrol
 								</th>							
 							</tr>
@@ -92,7 +92,9 @@
 											{{$dt['status']}}
 										</td>
 										<td class="text-center">
-											<a href="{{ route('report.product.sale.detail', $dt['id']) }}"> Detail</a>
+											<a href="{{ route('report.product.sale.detail', $dt['id']) }}"> Detail</a>, 
+ 											<a href="{{ route('print.invoice', $dt['id']) }}" target="_blank">Invoice</a>,
+ 											<a href="{{ route('print.shipping.note', $dt['id']) }}" target="_blank">Shipping Note</a>
 										</td>    
 									</tr>       
 								@endforeach 
