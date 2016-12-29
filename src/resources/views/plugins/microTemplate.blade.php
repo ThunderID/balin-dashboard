@@ -40,7 +40,7 @@ function change_button_add(e)
 	// end of section product create
 @endif
 
-@if($section == "buy")
+@if($section == "buy" || $section == "sell")
 	var ptr = 0;
 
 	$('.btn-del').click(function() {template_del_product($(this))});

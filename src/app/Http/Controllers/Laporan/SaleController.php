@@ -165,4 +165,50 @@ class SaleController extends AdminController
 		return $this->generateView();
 	}
 
+
+	public function invoice($id)
+	{
+		$pdf = \App::make('dompdf.wrapper');
+
+		//1. Get data from API
+		$APISale 									= new APISale;
+		$sale 										= $APISale->getShow($id);
+
+		//2. Check return status
+		if($sale['status'] != 'success')
+		{
+			$this->errors 							= $sale['message'];
+			
+			return $this->generateRedirectRoute('report.product.sale');	
+		}
+
+		$data 		= $sale['data'];
+
+		$pdf->loadHTML(view('pages.laporan.penjualan.invoice', compact('data')));
+		
+		return $pdf->stream();
+	}
+
+	public function shipping_note($id)
+	{
+		$pdf = \App::make('dompdf.wrapper');
+
+		//1. Get data from API
+		$APISale 									= new APISale;
+		$sale 										= $APISale->getShow($id);
+
+		//2. Check return status
+		if($sale['status'] != 'success')
+		{
+			$this->errors 							= $sale['message'];
+			
+			return $this->generateRedirectRoute('report.product.sale');	
+		}
+
+		$data 		= $sale['data'];
+
+		$pdf->loadHTML(view('pages.laporan.penjualan.shipping_note', compact('data')));
+		
+		return $pdf->stream();
+	}
 }

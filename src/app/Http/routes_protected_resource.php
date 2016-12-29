@@ -24,6 +24,7 @@ Route::group(['prefix' => 'barang', 'namespace' => 'Barang\\', 'middleware' => '
 
 	Route::resource('pembelian', 	'BuyController',		['names' => ['index' => 'shop.buy.index', 'create' => 'shop.buy.create', 'store' => 'shop.buy.store', 'show' => 'shop.buy.show', 'edit' => 'shop.buy.edit', 'update' => 'shop.buy.update', 'destroy' => 'shop.buy.destroy']]);
 
+	Route::resource('penjualan', 	'SellController',		['names' => ['index' => 'shop.sell.index', 'create' => 'shop.sell.create', 'store' => 'shop.sell.store', 'show' => 'shop.sell.show', 'edit' => 'shop.sell.edit', 'update' => 'shop.sell.update', 'destroy' => 'shop.sell.destroy']]);
 	/**
 	* Routes untuk select2 ajax
 	*
@@ -49,6 +50,10 @@ Route::group(['prefix' => 'laporan', 'namespace' => 'Laporan\\'], function()
 
 	Route::get('rekap/penjualan',								['uses' => 'RecapController@sale', 'as' => 'report.recap.sale']);
 	Route::resource('penjualan',  	'SaleController',			['names' => ['index' => 'report.product.sale', 'show' => 'report.product.sale.detail'], 'only' => ['show', 'index']]);
+	
+	Route::get('print/invoice/{id}',							['uses' => 'SaleController@invoice', 'as' => 'print.invoice']);
+	Route::get('print/shipping/note/{id}',							['uses' => 'SaleController@shipping_note', 'as' => 'print.shipping.note']);
+	
 	Route::resource('transaksibatal','CanceledTransactionController',['names' => ['index' => 'report.product.cancel', 'show' => 'report.product.cancel.detail'], 'only' => ['show', 'index']]);
 	Route::resource('abandonedcart','AbandonedController',		['names' => ['index' => 'report.product.abandoned', 'show' => 'report.product.abandoned.detail'], 'only' => ['show', 'index']]);
 

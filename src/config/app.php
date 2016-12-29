@@ -145,7 +145,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        Barryvdh\DomPDF\ServiceProvider::class,
     ],
 
     /*
@@ -198,6 +198,7 @@ return [
         'Collection'=> Illuminate\Database\Eloquent\Collection::class,
         'Carbon'    => 'Carbon\Carbon',
         'Excel'     => 'Maatwebsite\Excel\Facades\Excel',
+        'PDF'       => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];
