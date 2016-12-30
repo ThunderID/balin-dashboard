@@ -123,7 +123,7 @@ ADD src/ /var/www/html/
 ADD errors/ /var/www/errors/
 
 # run composer install
-RUN cd /var/www/html && composer install
+RUN cd /var/www/html && composer install && composer update
 
 # share .env file
 #ADD ./.env /var/www/html/.env
