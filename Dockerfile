@@ -128,6 +128,9 @@ RUN cd /var/www/html && composer install
 # share .env file
 #ADD ./.env /var/www/html/.env
 
+# change app.php after composer install & update
+ADD src/config/app.php.init /var/www/html/config/app.php
+
 VOLUME /var/www/html
 
 EXPOSE 443 80
